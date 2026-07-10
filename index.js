@@ -91,20 +91,29 @@ app.post('/api/xp/update', async (req, res) => {
 app.get('/api/sensei/limit/:userId', async (req, res) => {
   const { userId } = req.params;
   try {
-    const result = await db.query('SELECT questions_today, last_reset, subscription_tier FROM users WHERE id = $1', [userId]);
+    const result = await db.query(
+      'SELECT questions_today, last_reset, subscription_tier FROM users WHERE id = $1',
+      [userId]
+    );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronadjen' });
     const user = result.rows[0];
-    const today = new Date().toDateString();
-    const lastReset = new Date(user.last_reset).toDateString();
-    if (today !== lastReset) {
-      await db.query('UPDATE users SET questions_today = 0, last_reset = NOW() WHERE id = $1', [userId]);
-      user.questions_today = 0;
+    const isPremium = user.subscription_tier === 'premium';
+
+    if (isPremium) {
+      // Premium: 5 dnevno
+      const today = new Date().toDateString();
+      const lastReset = new Date(user.last_reset).toDateString();
+      if (today !== lastReset) {
+        await db.query('UPDATE users SET questions_today = 0, last_reset = NOW() WHERE id = $1', [userId]);
+        user.questions_today = 0;
+      }
+      res.json({ used: user.questions_today, limit: 5, remaining: 5 - user.questions_today, type: 'daily' });
+    } else {
+      // Free: 3 ukupno lifetime
+      res.json({ used: user.questions_today, limit: 3, remaining: 3 - user.questions_today, type: 'lifetime' });
     }
-    const dailyLimit = 5;
-    res.json({ used: user.questions_today, limit: dailyLimit, remaining: dailyLimit - user.questions_today });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
-
 app.post('/api/sensei/use', async (req, res) => {
   const { userId } = req.body;
   try {
