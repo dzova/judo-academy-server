@@ -140,3 +140,6 @@ app.post('/api/sensei/ask', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, '0.0.0.0', () => console.log('Server radi na portu ' + PORT));
