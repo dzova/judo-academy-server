@@ -3350,6 +3350,16 @@ body.light-mode .auth-btn { background:#f4f1ec; }
       <!-- Divider -->
       <div style="height:1px;background:var(--border);margin-bottom:12px;"></div>
 
+      <!-- Promo kod -->
+      <div style="margin-bottom:14px;background:var(--kartica);border:1px solid var(--border);border-radius:14px;padding:12px 14px;">
+        <div style="font-size:.7rem;font-weight:900;color:var(--siva2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">🎟️ Promo kod</div>
+        <div style="display:flex;gap:8px;">
+          <input id="promoCodeInput" type="text" placeholder="Unesi kod..." style="flex:1;padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:var(--tatami);color:var(--bela);font-family:'Nunito',sans-serif;font-size:.85rem;outline:none;" />
+          <button onclick="redeemPromoCode()" style="padding:8px 14px;border-radius:10px;background:linear-gradient(135deg,var(--zlatna),#e8be3c);border:none;color:var(--tatami);font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:900;cursor:pointer;">Aktiviraj</button>
+        </div>
+        <div id="promoCodeMsg" style="font-size:.75rem;margin-top:6px;color:var(--siva2);min-height:16px;"></div>
+      </div>
+
       <!-- Bug report -->
       <button onclick="openBugReport()" style="width:100%;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--siva);font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;text-align:left;transition:all .15s;" onmouseover="this.style.borderColor='var(--ijf-red)';this.style.color='var(--ijf-red)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--siva)'">
         <span style="font-size:1rem;">🐛</span>
@@ -3941,6 +3951,47 @@ async function pushXPToServer(xp, belt) {
       body: JSON.stringify({ userId: auth.userId, xp, belt })
     });
   } catch(e) {}
+}
+
+async function redeemPromoCode() {
+  const input = document.getElementById('promoCodeInput');
+  const msg = document.getElementById('promoCodeMsg');
+  const code = input.value.trim().toUpperCase();
+  if (!code) { msg.style.color = 'var(--ijf-red)'; msg.textContent = 'Unesi kod.'; return; }
+  const auth = getAuthState();
+  if (!auth || !auth.userId) {
+    msg.style.color = 'var(--ijf-red)';
+    msg.textContent = 'Moraš biti ulogovan da aktiviraš kod.';
+    return;
+  }
+  msg.style.color = 'var(--siva2)';
+  msg.textContent = 'Proveravam...';
+  try {
+    const res = await fetch(SERVER_URL + '/api/promo/redeem', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ code, userId: auth.userId })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      msg.style.color = 'var(--ijf-red)';
+      msg.textContent = data.error || 'Nevažeći kod.';
+      return;
+    }
+    auth.subscriptionTier = 'premium';
+    saveAuthState(auth);
+    msg.style.color = '#27ae60';
+    if (data.duration_days) {
+      msg.textContent = '✅ Premium aktiviran na ' + data.duration_days + ' dana!';
+    } else {
+      msg.textContent = '✅ Premium aktiviran trajno!';
+    }
+    input.value = '';
+    showXPToast('🎉 Premium aktiviran!');
+  } catch(e) {
+    msg.style.color = 'var(--ijf-red)';
+    msg.textContent = 'Greška. Pokušaj ponovo.';
+  }
 }
 
 fetchLeaderboard();
@@ -12330,7 +12381,7 @@ async function senseiSend() {
       localStorage.setItem(_dayKey, _cnt + 1);
     } else {
       const _total = parseInt(localStorage.getItem('judoSenseiTotal') || '0');
-      if (_total >= 5) { showPremiumModal('sensei'); return; }
+      if (_total >= 3) { showPremiumModal('sensei'); return; }
       localStorage.setItem('judoSenseiTotal', _total + 1);
     }
   }
@@ -12507,6 +12558,14 @@ function closeAddNote() {
 function saveManualNote() {
   const text = document.getElementById('notesNewText').value.trim();
   if (!text) return;
+  // Free limit: 3 unosa ukupno
+  if (!isPremiumUser()) {
+    const notes = loadNotes();
+    if (notes.length >= 3) {
+      showPremiumModal('journal');
+      return;
+    }
+  }
   addNote(text, 'moja');
   closeAddNote();
   renderNotes();
@@ -14628,6 +14687,10 @@ function hasAccessToFeature(type) {
 }
 
 function isPremiumUser() {
+  // Proveri server auth state prvo
+  const auth = getAuthState();
+  if (auth && auth.signedIn && auth.subscriptionTier === 'premium') return true;
+  // Fallback na localStorage
   const state = getPremiumState();
   return state === 'paid' || state === 'trial';
 }
@@ -15214,19 +15277,24 @@ function resetScouting() {
 }
 
 async function generateScoutingPlan() {
-  // ── Premium check i dnevni limit ─────────────────────────────
+  // ── Premium check i limit ─────────────────────────────
   if (!isPremiumUser()) {
-    showPremiumModal('scouting');
-    return;
+    const _scTotal = parseInt(localStorage.getItem('judoScoutingTotal') || '0');
+    if (_scTotal >= 1) {
+      showPremiumModal('scouting');
+      return;
+    }
+    localStorage.setItem('judoScoutingTotal', _scTotal + 1);
+  } else {
+    const _today   = new Date().toDateString();
+    const _scKey   = 'judoScoutingDay_' + _today;
+    const _scCount = parseInt(localStorage.getItem(_scKey) || '0');
+    if (_scCount >= 5) {
+      alert('Dostigao si dnevni limit od 5 skauting analiza. Vrati se sutra! 🎯');
+      return;
+    }
+    localStorage.setItem(_scKey, _scCount + 1);
   }
-  const _today   = new Date().toDateString();
-  const _scKey   = 'judoScoutingDay_' + _today;
-  const _scCount = parseInt(localStorage.getItem(_scKey) || '0');
-  if (_scCount >= 5) {
-    alert('Dostigao si dnevni limit od 5 skauting analiza. Vrati se sutra! 🎯');
-    return;
-  }
-  localStorage.setItem(_scKey, _scCount + 1);
   // ─────────────────────────────────────────────────────────────
 
   const visina = document.querySelector('#scVisina .sq-btn.selected, #scVisina .dn-tag.active')?.textContent.trim() || '';
@@ -19547,9 +19615,22 @@ checkPremiumReturnFromStripe();
       name: authData.username,
       belt: authData.belt || 'white',
       xp: parseInt(authData.xp) || 0,
+      subscriptionTier: authData.subscriptionTier || 'free',
       email: '',
       photoUrl: ''
     });
+    // Dohvati subscription tier sa servera
+    fetch(SERVER_URL + '/api/user/' + authData.userId)
+      .then(r => r.json())
+      .then(user => {
+        if (user && user.subscription_tier) {
+          const auth = getAuthState();
+          if (auth) {
+            auth.subscriptionTier = user.subscription_tier;
+            saveAuthState(auth);
+          }
+        }
+      }).catch(()=>{});
     setTimeout(() => {
       if (typeof renderAuthCard === 'function') renderAuthCard();
       if (typeof showXPToast === 'function') showXPToast('✅ Ulogovan kao ' + authData.username + '!');
@@ -19691,4 +19772,3 @@ function openBugReport() {
 
 </body>
 </html>
- 
