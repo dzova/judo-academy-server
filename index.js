@@ -161,5 +161,29 @@ app.get('/api/user/:userId', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+app.post('/api/promo/redeem', async (req, res) => {
+  const { code, userId } = req.body;
+  if (!code || !userId) return res.status(400).json({ error: 'Nedostaju podaci' });
+  try {
+    const promo = await db.query('SELECT * FROM promo_codes WHERE code = $1', [code.toUpperCase()]);
+    if (promo.rows.length === 0) return res.status(404).json({ error: 'Kod nije validan' });
+    const p = promo.rows[0];
+    if (p.valid_until && new Date(p.valid_until) < new Date()) return res.status(400).json({ error: 'Kod je istekao' });
+    if (p.used_count >= p.max_uses) return res.status(400).json({ error: 'Kod je iskorišćen' });
+    
+    let expiresAt = null;
+    if (p.duration_days) {
+      expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + p.duration_days);
+    }
+    
+    await db.query('UPDATE users SET subscription_tier = $1, subscription_expires = $2 WHERE id = $3',
+      ['premium', expiresAt, userId]);
+    await db.query('UPDATE promo_codes SET used_count = used_count + 1 WHERE code = $1', [code.toUpperCase()]);
+    
+    res.json({ success: true, duration_days: p.duration_days, expires_at: expiresAt });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => console.log('Server radi na portu ' + PORT));
