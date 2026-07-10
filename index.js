@@ -1,6 +1,4 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
+if (process.env.NODE_ENV !== 'production') { require('dotenv').config(); }
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
@@ -11,17 +9,11 @@ const { Pool } = require('pg');
 const app = express();
 app.use(cors({ origin: '*', credentials: false }));
 app.use(express.json());
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'judo2024',
-  resave: false,
-  saveUninitialized: false
-}));
+app.use(session({ secret: process.env.SESSION_SECRET || 'judo2024', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 const db = new Pool({ connectionString: process.env.DATABASE_URL });
-
-// ── GOOGLE AUTH ──────────────────────────────────────
 
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
@@ -34,15 +26,10 @@ passport.use(new GoogleStrategy({
     const googleId = profile.id;
     let result = await db.query('SELECT * FROM users WHERE google_id = $1', [googleId]);
     if (result.rows.length === 0) {
-      result = await db.query(
-        'INSERT INTO users (username, email, google_id) VALUES ($1, $2, $3) RETURNING *',
-        [name, email, googleId]
-      );
+      result = await db.query('INSERT INTO users (username, email, google_id) VALUES ($1, $2, $3) RETURNING *', [name, email, googleId]);
     }
     return done(null, result.rows[0]);
-  } catch (err) {
-    return done(err);
-  }
+  } catch (err) { return done(err); }
 }));
 
 passport.serializeUser((user, done) => done(null, user.id));
@@ -52,35 +39,26 @@ passport.deserializeUser(async (id, done) => {
 });
 
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
-  (req, res) => {
-    const user = req.user;
-    res.redirect(`https://judoacademy.app/auth-callback?userId=${user.id}&username=${encodeURIComponent(user.username)}&belt=${user.belt}&xp=${user.xp}`);
-  }
-);
+
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+  const user = req.user;
+  res.redirect('https://judo-academy-server-production.up.railway.app/auth-success?userId=' + user.id + '&username=' + encodeURIComponent(user.username) + '&belt=' + user.belt + '&xp=' + user.xp);
+});
+
 app.get('/auth/me', (req, res) => {
   if (req.user) res.json(req.user);
   else res.status(401).json({ error: 'Nije ulogovan' });
 });
 
-// ── HEALTH ───────────────────────────────────────────
-
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'Judo Academy server radi!' });
 });
 
-// ── RANG LISTA ──────────────────────────────────────
-
 app.get('/api/leaderboard', async (req, res) => {
   try {
-    const result = await db.query(
-      'SELECT username, belt, xp, club FROM users ORDER BY xp DESC LIMIT 50'
-    );
+    const result = await db.query('SELECT username, belt, xp, club FROM users ORDER BY xp DESC LIMIT 50');
     res.json(result.rows);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 app.post('/api/xp/update', async (req, res) => {
@@ -88,21 +66,14 @@ app.post('/api/xp/update', async (req, res) => {
   try {
     await db.query('UPDATE users SET xp = $1, belt = $2 WHERE id = $3', [xp, belt, userId]);
     res.json({ success: true });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  } catch (err) { res.status(500).json({ error: err.message }); }
 });
-
-// ── AI SENSEI LIMITI ─────────────────────────────────
 
 app.get('/api/sensei/limit/:userId', async (req, res) => {
   const { userId } = req.params;
   try {
-    const result = await db.query(
-      'SELECT questions_today, last_reset, subscription_tier FROM users WHERE id = $1',
-      [userId]
-    );
-    if (result.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronađen' });
+    const result = await db.query('SELECT questions_today, last_reset, subscription_tier FROM users WHERE id = $1', [userId]);
+    if (result.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronadjen' });
     const user = result.rows[0];
     const today = new Date().toDateString();
     const lastReset = new Date(user.last_reset).toDateString();
@@ -112,9 +83,7 @@ app.get('/api/sensei/limit/:userId', async (req, res) => {
     }
     const dailyLimit = 5;
     res.json({ used: user.questions_today, limit: dailyLimit, remaining: dailyLimit - user.questions_today });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 app.post('/api/sensei/use', async (req, res) => {
@@ -122,12 +91,8 @@ app.post('/api/sensei/use', async (req, res) => {
   try {
     await db.query('UPDATE users SET questions_today = questions_today + 1 WHERE id = $1', [userId]);
     res.json({ success: true });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// ── START ────────────────────────────────────────────
-
 const PORT = process.env.PORT || 3000;
-app.listen(POR
+app.listen(PORT, '0.0.0.0', () => console.log('Server radi na portu ' + PORT));
