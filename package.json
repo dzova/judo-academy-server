@@ -15,5 +15,13 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "pg": "^8.22.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dzova/judo-academy-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dzova/judo-academy-server/issues"
+  },
+  "homepage": "https://github.com/dzova/judo-academy-server#readme"
 }
