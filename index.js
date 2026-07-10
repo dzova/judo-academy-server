@@ -50,6 +50,14 @@ app.get('/auth/me', (req, res) => {
   else res.status(401).json({ error: 'Nije ulogovan' });
 });
 
+app.get('/auth-success', (req, res) => {
+  const { userId, username, belt, xp } = req.query;
+  res.send(`<html><body><script>
+    window.opener && window.opener.postMessage({type:'AUTH_SUCCESS',userId:'${userId}',username:decodeURIComponent('${username}'),belt:'${belt}',xp:'${xp}'},'*');
+    window.location.href = 'about:blank';
+    window.close();
+  </script><p>Ulogovan! Možeš zatvoriti ovaj prozor.</p></body></html>`);
+});
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'Judo Academy server radi!' });
 });
