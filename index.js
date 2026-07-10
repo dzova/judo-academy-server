@@ -9,6 +9,7 @@ const { Pool } = require('pg');
 const app = express();
 app.use(cors({ origin: '*', credentials: false }));
 app.use(express.json());
+app.use(express.static('public'));
 app.use(session({ secret: process.env.SESSION_SECRET || 'judo2024', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
