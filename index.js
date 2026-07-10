@@ -1,91 +1,76 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const session = require('express-session');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { Pool } = require('pg');
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'judo2024',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-// Konekcija na bazu
 const db = new Pool({ connectionString: process.env.DATABASE_URL });
 
-// Test endpoint — proveri da server radi
+// ── GOOGLE AUTH ──────────────────────────────────────
+
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: '/auth/google/callback'
+}, async (accessToken, refreshToken, profile, done) => {
+  try {
+    const email = profile.emails[0].value;
+    const name = profile.displayName;
+    const googleId = profile.id;
+
+    let result = await db.query('SELECT * FROM users WHERE google_id = $1', [googleId]);
+    
+    if (result.rows.length === 0) {
+      result = await db.query(`
+        INSERT INTO users (username, email, google_id)
+        VALUES ($1, $2, $3) RETURNING *
+      `, [name, email, googleId]);
+    }
+    
+    return done(null, result.rows[0]);
+  } catch (err) {
+    return done(err);
+  }
+}));
+
+passport.serializeUser((user, done) => done(null, user.id));
+passport.deserializeUser(async (id, done) => {
+  const result = await db.query('SELECT * FROM users WHERE id = $1', [id]);
+  done(null, result.rows[0]);
+});
+
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res) => {
+    const user = req.user;
+    res.redirect(`judoacademy://auth?userId=${user.id}&username=${encodeURIComponent(user.username)}&belt=${user.belt}&xp=${user.xp}`);
+  }
+);
+
+app.get('/auth/me', (req, res) => {
+  if (req.user) res.json(req.user);
+  else res.status(401).json({ error: 'Nije ulogovan' });
+});
+
+// ── HEALTH ───────────────────────────────────────────
+
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'Judo Academy server radi!' });
 });
 
-// ── RANG LISTA ──────────────────────────────────────
-
-// Dohvati top 50
-app.get('/api/leaderboard', async (req, res) => {
-  try {
-    const result = await db.query(`
-      SELECT username, belt, xp, club
-      FROM users
-      ORDER BY xp DESC
-      LIMIT 50
-    `);
-    res.json(result.rows);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Ažuriraj XP korisnika
-app.post('/api/xp/update', async (req, res) => {
-  const { userId, xp, belt } = req.body;
-  try {
-    await db.query(`
-      UPDATE users SET xp = $1, belt = $2 
-      WHERE id = $3
-    `, [xp, belt, userId]);
-    res.json({ success: true });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// ── AI SENSEI LIMITI ─────────────────────────────────
-
-app.get('/api/sensei/limit/:userId', async (req, res) => {
-  const { userId } = req.params;
-  try {
-    const result = await db.query(`
-      SELECT questions_today, last_reset, subscription_tier
-      FROM users WHERE id = $1
-    `, [userId]);
-    
-    const user = result.rows[0];
-    const today = new Date().toDateString();
-    const lastReset = new Date(user.last_reset).toDateString();
-    
-    // Reset ako je novi dan
-    if (today !== lastReset) {
-      await db.query(`
-        UPDATE users 
-        SET questions_today = 0, last_reset = NOW() 
-        WHERE id = $1
-      `, [userId]);
-      user.questions_today = 0;
-    }
-    
-    const limits = { free: 5, learning: 5, competitive: 10 };
-    const dailyLimit = limits[user.subscription_tier] || 5;
-    
-    res.json({
-      used: user.questions_today,
-      limit: dailyLimit,
-      remaining: dailyLimit - user.questions_today
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// ── START ────────────────────────────────────────────
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server radi na portu ${PORT}`);
-});
+//
