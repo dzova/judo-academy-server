@@ -9,7 +9,10 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { Pool } = require('pg');
 
 const app = express();
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors({
+  origin: '*',
+  credentials: false
+}));
 app.use(express.json());
 app.use(session({
   secret: process.env.SESSION_SECRET || 'judo2024',
