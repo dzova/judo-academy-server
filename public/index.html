@@ -19522,23 +19522,38 @@ checkPremiumReturnFromStripe();
   const params = new URLSearchParams(window.location.search);
   const userId = params.get('userId');
   const username = params.get('username');
-  const belt = params.get('belt');
-  const xp = params.get('xp');
+  const pending = localStorage.getItem('judo_auth_pending');
+
+  let authData = null;
   if (userId && username) {
-    const authState = {
+    authData = {
+      userId,
+      username: decodeURIComponent(username),
+      belt: params.get('belt') || 'beli',
+      xp: parseInt(params.get('xp')) || 0
+    };
+    window.history.replaceState({}, document.title, window.location.pathname);
+  } else if (pending) {
+    try {
+      authData = JSON.parse(pending);
+    } catch(e) {}
+    localStorage.removeItem('judo_auth_pending');
+  }
+
+  if (authData) {
+    saveAuthState({
       signedIn: true,
-      userId: userId,
-      name: decodeURIComponent(username),
-      belt: belt || 'beli',
-      xp: parseInt(xp) || 0,
+      userId: authData.userId,
+      name: authData.username,
+      belt: authData.belt || 'white',
+      xp: parseInt(authData.xp) || 0,
       email: '',
       photoUrl: ''
-    };
-    saveAuthState(authState);
-    // Ukloni parametre iz URL-a
-    window.history.replaceState({}, document.title, window.location.pathname);
-    showXPToast('✅ Ulogovan kao ' + authState.name + '!');
-    renderAuthCard();
+    });
+    setTimeout(() => {
+      if (typeof renderAuthCard === 'function') renderAuthCard();
+      if (typeof showXPToast === 'function') showXPToast('✅ Ulogovan kao ' + authData.username + '!');
+    }, 1500);
   }
 })();
 
