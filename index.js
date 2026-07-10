@@ -113,7 +113,6 @@ app.post('/api/sensei/use', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-const PORT = process.env.PORT || 3000;
 // ── AI SENSEI PROXY ──────────────────────────────────
 const https = require('https');
 
