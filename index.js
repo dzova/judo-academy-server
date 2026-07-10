@@ -53,16 +53,19 @@ app.get('/auth/me', (req, res) => {
 
 app.get('/auth-success', (req, res) => {
   const { userId, username, belt, xp } = req.query;
-  res.send(`<!DOCTYPE html><html><body>
+  res.send(`<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>
     <script>
-      localStorage.setItem('judo_auth_pending', JSON.stringify({
-        userId: '${userId}',
-        username: '${decodeURIComponent(username)}',
-        belt: '${belt}',
-        xp: '${xp}'
-      }));
-      window.location.href = '/';
+      try {
+        window.localStorage.setItem('judo_auth_pending', JSON.stringify({
+          userId: '${userId}',
+          username: '${username}',
+          belt: '${belt || "white"}',
+          xp: '${xp || "0"}'
+        }));
+      } catch(e) { console.error('localStorage error', e); }
+      setTimeout(function(){ window.location.href = '/'; }, 200);
     </script>
+    <p>Ulogovan! Preusmeravamo...</p>
   </body></html>`);
 });
 
