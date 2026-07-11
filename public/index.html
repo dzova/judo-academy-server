@@ -171,14 +171,7 @@ body.light-mode::before {
   position:sticky;top:0;z-index:50;
 }
 /* ── Breadcrumb (current screen indicator) ── */
-.header-breadcrumb {
-  flex:1;
-  min-width:0;
-  display:flex;
-  align-items:center;
-  gap:7px;
-  overflow:hidden;
-}
+.header-breadcrumb { display:none!important; }
 .header-breadcrumb-icon {
   flex-shrink:0;
   opacity:.85;
@@ -410,21 +403,22 @@ body.light-mode .site-header #hLevelName { color:#a07a10; }
 
 /* XP STRIP ON LANDING */
 .landing-xp-strip {
-  margin:0 14px 20px;
-  background:linear-gradient(135deg, var(--kartica) 0%, var(--kartica2) 100%);
-  border:1px solid var(--border2);
-  border-radius:18px;
-  padding:14px 18px;
-  display:flex;align-items:center;gap:14px;
-  box-shadow:0 4px 20px rgba(0,0,0,.25), inset 0 1px 0 rgba(212,168,51,.08);
+  margin:0 14px 16px;
+  background:transparent;
+  border:none;
+  border-top:1px solid rgba(255,255,255,.07);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  border-radius:0;
+  padding:10px 4px;
+  display:flex;align-items:center;gap:12px;
 }
-.lxp-icon { font-size:2rem;flex-shrink:0; }
+.lxp-icon { font-size:1.6rem;flex-shrink:0;opacity:.85; }
 .lxp-info { flex:1;min-width:0; }
-.lxp-level { font-size:.82rem;font-weight:900;color:var(--zlatna);margin-bottom:4px; }
-.lxp-bar-wrap { height:8px;background:rgba(255,255,255,.08);border-radius:8px;overflow:hidden; }
-.lxp-bar-fill { height:100%;background:linear-gradient(90deg,var(--zlatna),#c8960a);border-radius:8px;transition:width .6s ease; }
-.lxp-sub { font-size:.68rem;color:var(--siva2);margin-top:4px; }
-.lxp-xp { font-size:.8rem;font-weight:900;color:var(--bela);flex-shrink:0; }
+.lxp-level { font-size:.78rem;font-weight:800;color:var(--zlatna);margin-bottom:4px;opacity:.9; }
+.lxp-bar-wrap { height:4px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden; }
+.lxp-bar-fill { height:100%;background:linear-gradient(90deg,var(--zlatna),#c8960a);border-radius:4px;transition:width .6s ease; }
+.lxp-sub { font-size:.63rem;color:var(--siva2);margin-top:4px; }
+.lxp-xp { font-size:.75rem;font-weight:900;color:var(--siva);flex-shrink:0; }
 
 /* MODULE GRID */
 .module-grid {
@@ -555,6 +549,30 @@ body.light-mode .bottom-nav {
 .bnav-item.active { color:var(--zlatna); }
 .bnav-item .bnav-icon { font-size:1.3rem;line-height:1; }
 .bnav-item .bnav-label { font-size:.6rem;font-weight:700;letter-spacing:.3px; }
+
+/* Home center button */
+.bnav-home-center {
+  position:relative;
+  margin-top:-18px;
+  flex:1.2;
+}
+.bnav-home-icon {
+  display:flex;align-items:center;justify-content:center;
+  width:52px;height:52px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--zlatna),#c9392b);
+  box-shadow:0 4px 16px rgba(201,162,39,.45);
+  color:#fff !important;
+  transition:transform .15s, box-shadow .15s;
+}
+.bnav-home-center:hover .bnav-home-icon {
+  transform:scale(1.08);
+  box-shadow:0 6px 20px rgba(201,162,39,.6);
+}
+.bnav-home-center.active .bnav-home-icon {
+  background:linear-gradient(135deg,#e8c840,#e63521);
+}
+.bnav-home-center .bnav-label { color:var(--zlatna); font-size:.58rem; margin-top:4px; }
 .bnav-pip {
   width:4px;height:4px;border-radius:50%;
   background:var(--zlatna);
@@ -1656,15 +1674,8 @@ body.light-mode select.bp-input option {
 }
 .placeholder-screen .ph-progress strong { color:var(--zlatna);display:block;margin-bottom:4px; }
 .screen-back-btn {
-  display:flex;align-items:center;gap:6px;
-  background:none;border:none;color:var(--siva);
-  font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:700;
-  cursor:pointer;padding:16px 0 8px;
-  transition:color .15s;
+  display:none!important;
 }
-.screen-back-btn:hover { color:var(--bela); }
-.screen-back-btn .back-arrow { font-size:1.1rem; }
-
 .back-btn {
   padding:12px 24px;
   background:var(--kartica);
@@ -2226,22 +2237,12 @@ body.light-mode .auth-btn { background:#f4f1ec; }
 <!-- HEADER -->
 <!-- SITE HEADER (quiz screens) -->
 <div class="site-header" id="siteHeader" style="display:none;">
-  <div class="logo-group" id="appLogoGroup" style="display:none;">
-    <!-- App logo placeholder – zameni sa finalnim logom -->
-    <div style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.08);border:1.5px dashed rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;" id="appLogoPlaceholder">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-        <rect width="24" height="24" rx="5" fill="none"/>
-        <path d="M12 3L3 8v8l9 5 9-5V8L12 3z" stroke="rgba(255,255,255,.4)" stroke-width="1.5" fill="none"/>
-      </svg>
-    </div>
-  </div>
-  </div>
-  <div class="logo-text">
-    <h1 style="font-family:'Oswald',sans-serif;font-size:1.1rem;letter-spacing:1.5px;text-transform:uppercase;color:#fff;">JUDO<span style="color:var(--ijf-red);">ACADEMY</span></h1>
-  </div>
+  <a onclick="navTo('screenLanding','home')" style="text-decoration:none;cursor:pointer;display:flex;align-items:center;flex:1;">
+    <h1 style="font-family:'Oswald',sans-serif;font-size:1.1rem;letter-spacing:1.5px;text-transform:uppercase;color:#fff;margin:0;">JUDO<span style="color:var(--ijf-red);">ACADEMY</span></h1>
+  </a>
 
   <!-- BREADCRUMB – current screen indicator -->
-  <div class="header-breadcrumb" id="headerBreadcrumb" style="display:none;">
+  <div class="header-breadcrumb" id="headerBreadcrumb" style="display:none!important;">
     <span class="header-breadcrumb-icon" id="headerBreadcrumbIcon"></span>
     <span class="header-breadcrumb-label" id="headerBreadcrumbLabel"></span>
   </div>
@@ -2258,14 +2259,15 @@ body.light-mode .auth-btn { background:#f4f1ec; }
 
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav" id="bottomNav">
-  <button class="bnav-item active" id="bnav-home" onclick="navTo('screenLanding','home')">
-    <span class="bnav-icon"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M3 10L11 3l8 7v9H14v-5h-4v5H3z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/></svg></span><span class="bnav-label" id="bnavLabelHome">Početna</span>
-  </button>
   <button class="bnav-item" id="bnav-kviz" onclick="navTo('screenHome','kviz')">
     <span class="bnav-icon"><svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="11" cy="11" r="5" stroke="currentColor" stroke-width="1.2" fill="none"/><circle cx="11" cy="11" r="2" fill="currentColor"/></svg></span><span class="bnav-label" id="bnavLabelKviz">Kviz</span>
   </button>
   <button class="bnav-item" id="bnav-tehnike" onclick="navTo('screenTehnike','tehnike')">
     <span class="bnav-icon"><svg width="22" height="22" viewBox="0 0 22 22"><rect x="3" y="4" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="3" y1="8" x2="19" y2="8" stroke="currentColor" stroke-width="1.2"/><line x1="7" y1="12" x2="15" y2="12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="7" y1="15" x2="13" y2="15" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span><span class="bnav-label" id="bnavLabelTehnike">Tehnike</span>
+  </button>
+  <!-- HOME - centralno dugme -->
+  <button class="bnav-item bnav-home-center active" id="bnav-home" onclick="navTo('screenLanding','home')">
+    <span class="bnav-icon bnav-home-icon"><svg width="24" height="24" viewBox="0 0 22 22"><path d="M3 10L11 3l8 7v9H14v-5h-4v5H3z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/></svg></span><span class="bnav-label" id="bnavLabelHome">Početna</span>
   </button>
   <button class="bnav-item" id="bnav-sensei" onclick="navTo('screenSensei','sensei')">
     <span class="bnav-icon"><svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="7" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M5 18c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/><rect x="7" y="15" width="8" height="1.5" rx=".75" fill="currentColor" opacity=".6"/></svg></span><span class="bnav-label" id="bnavLabelSensei">Sensei</span>
@@ -2325,7 +2327,12 @@ body.light-mode .auth-btn { background:#f4f1ec; }
       <div style="display:flex;align-items:center;gap:14px;">
         <span class="module-card-icon" style="margin:0;flex-shrink:0;"><svg width="26" height="26" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="6" fill="#C9A227"/><line x1="16" y1="3" x2="16" y2="7" stroke="#C9A227" stroke-width="2.5" stroke-linecap="round"/><line x1="16" y1="25" x2="16" y2="29" stroke="#C9A227" stroke-width="2.5" stroke-linecap="round"/><line x1="3" y1="16" x2="7" y2="16" stroke="#C9A227" stroke-width="2.5" stroke-linecap="round"/><line x1="25" y1="16" x2="29" y2="16" stroke="#C9A227" stroke-width="2.5" stroke-linecap="round"/></svg></span>
         <div style="flex:1;min-width:0;">
-          <div class="module-card-title" id="mtDaily" style="font-size:.9rem;margin-bottom:2px;">Dnevni Izazov</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
+            <div class="module-card-title" id="mtDaily" style="font-size:.9rem;margin:0;">Dnevni Izazov</div>
+            <div id="landingStreakPill" style="display:none;align-items:center;gap:3px;background:rgba(255,150,30,.15);border:1px solid rgba(255,120,0,.35);border-radius:20px;padding:2px 8px;font-size:.7rem;font-weight:900;color:#ff9a3c;">
+              🔥 <span id="landingStreakNum">0</span>
+            </div>
+          </div>
           <div class="module-card-desc" id="mdDaily" style="font-size:.75rem;margin:0;">Tehnika, pitanje, citat i mini-zadatak.</div>
         </div>
         <span class="module-tag live" id="dailyCardTag" style="flex-shrink:0;">✓</span>
@@ -2553,56 +2560,11 @@ body.light-mode .auth-btn { background:#f4f1ec; }
 
   <!-- ONBOARDING (shown if no belt profile) -->
   <div id="pojasOnboarding" style="display:none;">
-    <div style="padding:20px 0 10px;text-align:center;">
-  
-      <h2 style="font-family:'Oswald',sans-serif;letter-spacing:.5px;font-size:1.4rem;color:var(--zlatna);margin-bottom:6px;" id="bpFormTitle">Moj Pojas</h2>
-      <p style="font-size:.85rem;color:var(--siva);line-height:1.6;" id="bpFormSubtitle">Unesi svoje podatke i prati put do sledećeg pojasa.</p>
-    </div>
-    <div class="q-card" style="margin-top:12px;">
-      <div style="display:flex;flex-direction:column;gap:16px;">
-
-        <div class="bp-field">
-          <label class="bp-label" id="bpBirthYearLbl">🎂 Godina rođenja</label>
-          <input class="bp-input" type="number" id="bpGodiste" placeholder="npr. 2012" min="1990" max="2020" />
-        </div>
-
-        <div class="bp-field">
-          <label class="bp-label" id="bpCurrentBeltLbl">🥋 Trenutni pojas</label>
-          <div class="bp-belt-grid" id="bpBeltPicker"></div>
-        </div>
-
-        <div class="bp-field">
-          <label class="bp-label" id="bpExamDateLbl">📅 Mesec i godina polaganja</label>
-          <div style="display:flex;gap:8px;">
-            <select class="bp-input" id="bpMesec" style="flex:1;">
-              <option value="" id="bpMonthPlaceholderOpt">Mesec...</option>
-              <option value="1" id="bpMonthOpt1">Januar</option><option value="2" id="bpMonthOpt2">Februar</option>
-              <option value="3" id="bpMonthOpt3">Mart</option><option value="4" id="bpMonthOpt4">April</option>
-              <option value="5" id="bpMonthOpt5">Maj</option><option value="6" id="bpMonthOpt6">Jun</option>
-              <option value="7" id="bpMonthOpt7">Jul</option><option value="8" id="bpMonthOpt8">Avgust</option>
-              <option value="9" id="bpMonthOpt9">Septembar</option><option value="10" id="bpMonthOpt10">Oktobar</option>
-              <option value="11" id="bpMonthOpt11">Novembar</option><option value="12" id="bpMonthOpt12">Decembar</option>
-            </select>
-            <select class="bp-input" id="bpGodina" style="flex:1;">
-              <option value="" id="bpYearPlaceholderOpt">Godina...</option>
-              <option value="2025">2025</option><option value="2024">2024</option>
-              <option value="2023">2023</option><option value="2022">2022</option>
-              <option value="2021">2021</option><option value="2020">2020</option>
-              <option value="2019">2019</option>
-            </select>
-          </div>
-          <span style="font-size:.7rem;color:var(--siva2);margin-top:3px;" id="bpExamHint">Ažuriraj kada položiš novi pojas. Od kluba zavisi kada se organizuje polaganje.</span>
-        </div>
-
-        <div style="display:flex;gap:10px;margin-top:4px;">
-          <button class="start-btn" style="flex:1;" onclick="saveBeltProfile()">
-            <span id="bpSaveLabel">Sačuvaj profil →</span>
-          </button>
-          <button id="bpCancelEdit" style="display:none;padding:14px 18px;border-radius:14px;border:1.5px solid var(--border);background:none;color:var(--siva);font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;" onclick="cancelBpEdit()">
-            Otkaži
-          </button>
-        </div>
-      </div>
+    <div style="padding:40px 20px;text-align:center;">
+      <div style="font-size:3rem;margin-bottom:12px;">🥋</div>
+      <h2 style="font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--zlatna);margin-bottom:8px;">Popuni profil</h2>
+      <p style="font-size:.85rem;color:var(--siva);margin-bottom:20px;">Unesi podatke u profilu da vidiš napredak pojasa.</p>
+      <button class="start-btn" onclick="navTo('screenProfil','profil')">Idi na Profil →</button>
     </div>
   </div>
 
@@ -2691,10 +2653,13 @@ body.light-mode .auth-btn { background:#f4f1ec; }
   </div>
 
   <!-- SEARCH -->
-  <div class="tech-search-wrap">
+  <div class="tech-search-wrap" style="position:relative;">
     <input class="tech-search" id="techSearch" type="text"
       placeholder="🔍 Pretraži tehnike..."
-      oninput="filterTechniques()" />
+      oninput="filterTechniques();showTechSuggestions()"
+      onkeydown="if(event.key==='Enter'){hideTechSuggestions();filterTechniques()}"
+      onblur="setTimeout(hideTechSuggestions,200)" />
+    <div id="techSuggestions" style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--kartica);border:1px solid var(--border);border-radius:12px;z-index:100;max-height:200px;overflow-y:auto;box-shadow:0 4px 20px rgba(0,0,0,.3);margin-top:4px;"></div>
   </div>
 
   <!-- FAVOURITES TOGGLE -->
@@ -2707,6 +2672,9 @@ body.light-mode .auth-btn { background:#f4f1ec; }
 
   <!-- LEVEL TABS -->
   <div class="tech-level-tabs">
+    <button class="tech-lvl-btn" id="tlvlMy" onclick="setTechLevelMyBelt()" style="display:none;">
+      <svg width="12" height="12" viewBox="0 0 12 12" style="display:inline-block;vertical-align:middle;margin-right:5px;"><circle cx="6" cy="6" r="5" fill="var(--zlatna)" stroke="#C9A227" stroke-width="1.5"/></svg><span id="tlvlMyTxt">Moj pojas</span>
+    </button>
     <button class="tech-lvl-btn active" id="tlvl1" onclick="setTechLevel('pocetni')">
       <svg width="12" height="12" viewBox="0 0 12 12" style="display:inline-block;vertical-align:middle;margin-right:5px;"><circle cx="6" cy="6" r="5" fill="#f0c040" stroke="#C9A227" stroke-width="1.5"/></svg><span id="tlvl1Txt">Početni</span>
     </button>
@@ -2871,8 +2839,11 @@ body.light-mode .auth-btn { background:#f4f1ec; }
       <div class="dc-check-circle" id="dcCheckCircle">○</div>
       <div class="dc-check-label" id="dcCheckLabel">Označi kao završeno</div>
     </div>
-    <button class="dc-finish-btn" id="dcFinishBtn" onclick="dcFinish()" disabled>
+    <button class="dc-finish-btn" id="dcFinishBtn" onclick="dcFinish(false)" disabled>
       ✅ Završi dnevni izazov
+    </button>
+    <button id="dcSkipTaskBtn" onclick="dcFinish(true)" style="margin-top:8px;width:100%;padding:12px;border-radius:14px;border:1.5px solid var(--border);background:transparent;color:var(--siva);font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;">
+      ⏭️ Preskoči zadatak <span id="dcSkipXPLabel" style="color:var(--siva2);font-size:.75rem;">(−5 XP)</span>
     </button>
   </div>
 
@@ -3003,7 +2974,7 @@ body.light-mode .auth-btn { background:#f4f1ec; }
   </div>
 
   <!-- STATS -->
-  <div style="display:flex;gap:10px;margin-bottom:14px;">
+  <div style="display:flex;gap:10px;margin-bottom:10px;">
     <div style="flex:1;background:var(--kartica);border:1px solid var(--border);border-radius:12px;padding:10px;text-align:center;">
       <div style="font-size:1.3rem;font-weight:900;color:var(--zlatna);" id="randoriScore">0</div>
       <div style="font-size:.65rem;color:var(--siva);margin-top:2px;" id="randoriStatCorrectLbl">Tačnih</div>
@@ -3013,10 +2984,17 @@ body.light-mode .auth-btn { background:#f4f1ec; }
       <div style="font-size:.65rem;color:var(--siva);margin-top:2px;" id="randoriStatPlayedLbl">Odigranih</div>
     </div>
     <div style="flex:1;background:var(--kartica);border:1px solid var(--border);border-radius:12px;padding:10px;text-align:center;">
+      <div style="font-size:1.3rem;font-weight:900;color:var(--zlatna);" id="randoriPct">0%</div>
+      <div style="font-size:.65rem;color:var(--siva);margin-top:2px;" id="randoriAccuracyLbl">Tačnost</div>
+    </div>
+    <div style="flex:1;background:var(--kartica);border:1px solid var(--border);border-radius:12px;padding:10px;text-align:center;">
       <div style="font-size:1.3rem;font-weight:900;color:var(--ijf-red);" id="randoriStreak">0</div>
       <div style="font-size:.65rem;color:var(--siva);margin-top:2px;" id="randoriStatStreakLbl">Niz</div>
     </div>
   </div>
+
+  <!-- STATISTIKA PO KATEGORIJI -->
+  <div id="randoriCatStats" style="display:none;background:var(--kartica);border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin-bottom:12px;font-size:.75rem;"></div>
 
   <!-- CATEGORY FILTER -->
   <div class="tech-cat-strip" style="margin-bottom:12px;" id="randoriCatStrip">
@@ -3352,10 +3330,10 @@ body.light-mode .auth-btn { background:#f4f1ec; }
 
       <!-- Promo kod -->
       <div style="margin-bottom:14px;background:var(--kartica);border:1px solid var(--border);border-radius:14px;padding:12px 14px;">
-        <div style="font-size:.7rem;font-weight:900;color:var(--siva2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">🎟️ Promo kod</div>
+        <div id="promoTitleEl" style="font-size:.7rem;font-weight:900;color:var(--siva2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">🎟️ Promo kod</div>
         <div style="display:flex;gap:8px;">
           <input id="promoCodeInput" type="text" placeholder="Unesi kod..." style="flex:1;padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:var(--tatami);color:var(--bela);font-family:'Nunito',sans-serif;font-size:.85rem;outline:none;" />
-          <button onclick="redeemPromoCode()" style="padding:8px 14px;border-radius:10px;background:linear-gradient(135deg,var(--zlatna),#e8be3c);border:none;color:var(--tatami);font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:900;cursor:pointer;">Aktiviraj</button>
+          <button id="promoActivateBtn" onclick="redeemPromoCode()" style="padding:8px 14px;border-radius:10px;background:linear-gradient(135deg,var(--zlatna),#e8be3c);border:none;color:var(--tatami);font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:900;cursor:pointer;">Aktiviraj</button>
         </div>
         <div id="promoCodeMsg" style="font-size:.75rem;margin-top:6px;color:var(--siva2);min-height:16px;"></div>
       </div>
@@ -3413,22 +3391,13 @@ body.light-mode .auth-btn { background:#f4f1ec; }
 
         <div class="bp-field">
           <label class="bp-label">🌍 Zemlja</label>
-          <select class="bp-input" id="pfZemlja">
-            <option value="">Izaberi zemlju...</option>
-            <option value="🇷🇸 Srbija">🇷🇸 Srbija</option>
-            <option value="🇧🇦 Bosna i Hercegovina">🇧🇦 Bosna i Hercegovina</option>
-            <option value="🇭🇷 Hrvatska">🇭🇷 Hrvatska</option>
-            <option value="🇲🇪 Crna Gora">🇲🇪 Crna Gora</option>
-            <option value="🇲🇰 Severna Makedonija">🇲🇰 Severna Makedonija</option>
-            <option value="🇸🇮 Slovenija">🇸🇮 Slovenija</option>
-            <option value="🇦🇹 Austrija">🇦🇹 Austrija</option>
-            <option value="🇩🇪 Nemačka">🇩🇪 Nemačka</option>
-            <option value="🇫🇷 Francuska">🇫🇷 Francuska</option>
-            <option value="🇬🇧 Velika Britanija">🇬🇧 Velika Britanija</option>
-            <option value="🇮🇹 Italija">🇮🇹 Italija</option>
-            <option value="🇯🇵 Japan">🇯🇵 Japan</option>
-            <option value="🌍 Ostalo">🌍 Ostalo</option>
-          </select>
+          <div style="position:relative;">
+            <input class="bp-input" type="text" id="pfZemljaSearch" placeholder="Pretraži zemlju..." autocomplete="off"
+              oninput="filterCountries()" onfocus="showCountryDropdown()" onblur="setTimeout(hideCountryDropdown,200)"
+              style="width:100%;box-sizing:border-box;" />
+            <input type="hidden" id="pfZemlja" />
+            <div id="countryDropdown" style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--kartica);border:1px solid var(--border);border-radius:12px;z-index:200;max-height:180px;overflow-y:auto;box-shadow:0 4px 20px rgba(0,0,0,.4);margin-top:4px;"></div>
+          </div>
         </div>
 
         <div class="bp-field">
@@ -3443,6 +3412,39 @@ body.light-mode .auth-btn { background:#f4f1ec; }
               <div id="pfCompetitorDot" style="width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:all .2s;"></div>
             </div>
           </div>
+        </div>
+
+        <div class="bp-field">
+          <label class="bp-label">🎂 Godina rođenja</label>
+          <input class="bp-input" type="number" id="pfGodiste" placeholder="npr. 2012" min="1990" max="2020" />
+        </div>
+
+        <div class="bp-field">
+          <label class="bp-label">🥋 Trenutni pojas</label>
+          <div class="bp-belt-grid" id="pfBeltPicker"></div>
+        </div>
+
+        <div class="bp-field">
+          <label class="bp-label">📅 Mesec i godina polaganja</label>
+          <div style="display:flex;gap:8px;">
+            <select class="bp-input" id="pfMesec" style="flex:1;">
+              <option value="">Mesec...</option>
+              <option value="1">Januar</option><option value="2">Februar</option>
+              <option value="3">Mart</option><option value="4">April</option>
+              <option value="5">Maj</option><option value="6">Jun</option>
+              <option value="7">Jul</option><option value="8">Avgust</option>
+              <option value="9">Septembar</option><option value="10">Oktobar</option>
+              <option value="11">Novembar</option><option value="12">Decembar</option>
+            </select>
+            <select class="bp-input" id="pfGodina" style="flex:1;">
+              <option value="">Godina...</option>
+              <option value="2026">2026</option><option value="2025">2025</option>
+              <option value="2024">2024</option><option value="2023">2023</option>
+              <option value="2022">2022</option><option value="2021">2021</option>
+              <option value="2020">2020</option><option value="2019">2019</option>
+            </select>
+          </div>
+          <span style="font-size:.7rem;color:var(--siva2);margin-top:3px;">Ažuriraj kada položiš novi pojas.</span>
         </div>
 
         <div style="display:flex;gap:10px;margin-top:4px;">
@@ -3923,7 +3925,7 @@ async function fetchLeaderboard() {
         correct: 0,
         belt: u.belt || 'beli',
         klub: u.club || '',
-        zemlja: '',
+        zemlja: u.country || '',
         date: 'server'
       }));
       localStorage.setItem('judoLB', JSON.stringify(leaderboard));
@@ -3960,7 +3962,7 @@ async function redeemPromoCode() {
     return;
   }
   msg.style.color = 'var(--siva2)';
-  msg.textContent = 'Proveravam...';
+  msg.textContent = t('promoChecking') || 'Proveravam...';
   try {
     const res = await fetch(SERVER_URL + '/api/promo/redeem', {
       method: 'POST',
@@ -3970,23 +3972,195 @@ async function redeemPromoCode() {
     const data = await res.json();
     if (!res.ok) {
       msg.style.color = 'var(--ijf-red)';
-      msg.textContent = data.error || 'Nevažeći kod.';
+      msg.textContent = t('promoErrorInvalid') || data.error || 'Nevažeći kod.';
       return;
     }
     auth.subscriptionTier = 'premium';
     saveAuthState(auth);
     msg.style.color = '#27ae60';
     if (data.duration_days) {
-      msg.textContent = '✅ Premium aktiviran na ' + data.duration_days + ' dana!';
+      msg.textContent = data.duration_days === 30 ? (t('promoSuccess30') || '✅ Premium aktiviran na 30 dana!') : (t('promoSuccess90') || '✅ Premium aktiviran na 90 dana!');
     } else {
-      msg.textContent = '✅ Premium aktiviran trajno!';
+      msg.textContent = t('promoSuccessPerm') || '✅ Premium aktiviran trajno!';
     }
     input.value = '';
     showXPToast('🎉 Premium aktiviran!');
   } catch(e) {
     msg.style.color = 'var(--ijf-red)';
-    msg.textContent = 'Greška. Pokušaj ponovo.';
+    msg.textContent = t('promoErrorGeneral') || 'Greška. Pokušaj ponovo.';
   }
+}
+
+// ════════════════════════════════════════════════
+//  ONBOARDING
+// ════════════════════════════════════════════════
+let obBeltPicked = 0;
+
+function showOnboarding() {
+  const overlay = document.getElementById('onboardingOverlay');
+  overlay.style.display = 'flex';
+  obGoStep(1);
+}
+
+function closeOnboarding() {
+  document.getElementById('onboardingOverlay').style.display = 'none';
+  localStorage.setItem('judoOnboardingDone', '1');
+}
+
+function obGoStep(step) {
+  [1,2,3,4].forEach(i => {
+    document.getElementById('obStep' + i).style.display = i === step ? 'block' : 'none';
+    const dot = document.getElementById('obDot' + i);
+    dot.className = 'ob-dot' + (i < step ? ' done' : i === step ? ' active' : '');
+  });
+
+  // Init belt picker on step 3
+  if (step === 3) {
+    const beltSVGMap = {beli:'Beli pojas',zuti:'Žuti pojas',narandzasti:'Narandžasti pojas',zeleni:'Zeleni pojas',plavi:'Plavi pojas',braon:'Braon pojas'};
+    const grid = document.getElementById('obBeltPicker');
+    grid.innerHTML = BELT_SYSTEM.slice(0, 6).map((b, i) => `
+      <div class="bp-belt-opt${obBeltPicked === i ? ' selected' : ''}"
+        onclick="obBeltPicked=${i};document.querySelectorAll('#obBeltPicker .bp-belt-opt').forEach(x=>x.classList.remove('selected'));this.classList.add('selected')">
+        <span class="bo-icon">${beltSVG(beltSVGMap[b.id] || 'Beli pojas', 28)}</span>
+        <span class="bo-name">${escH(translateBeltName(b.id) || b.name.split(' ')[0])}</span>
+      </div>`).join('');
+  }
+}
+
+function obSaveStep2() {
+  const ime = document.getElementById('obIme').value.trim();
+  if (!ime) {
+    document.getElementById('obIme').style.borderColor = 'var(--ijf-red)';
+    document.getElementById('obIme').focus();
+    return;
+  }
+  document.getElementById('obIme').style.borderColor = '';
+
+  const prezime = document.getElementById('obPrezime').value.trim();
+  const klub = document.getElementById('obKlub').value.trim();
+
+  // Sačuvaj profil
+  const profil = { ime, prezime, klub, email: '', zemlja: '', jeTakmicar: false, savedAt: new Date().toISOString() };
+  saveProfilData(profil);
+
+  // Sync nick
+  const s = loadXPState();
+  s.nick = prezime ? `${ime} ${prezime[0]}.` : ime;
+  saveXPState(s);
+  updateXPHeader();
+
+  obGoStep(3);
+}
+
+function obSaveStep3() {
+  const godiste = parseInt(document.getElementById('obGodiste').value);
+  if (obBeltPicked !== undefined) {
+    const bpData = {
+      beltIdx: obBeltPicked,
+      godiste: godiste || null,
+      datumPolaganja: null,
+      polaganjeMesec: null,
+      polaganjeGodina: null,
+    };
+    saveBeltProfileData(bpData);
+    updateXPHeader();
+  }
+  obGoStep(4);
+}
+
+function obSkip() {
+  const currentStep = [1,2,3,4].find(i => document.getElementById('obStep' + i).style.display !== 'none');
+  if (currentStep < 4) obGoStep(currentStep + 1);
+  else closeOnboarding();
+}
+
+// ════════════════════════════════════════════════
+//  COUNTRY SEARCH
+// ════════════════════════════════════════════════
+const COUNTRIES = [
+  '🇦🇫 Avganistan','🇦🇱 Albanija','🇩🇿 Alžir','🇦🇩 Andora','🇦🇴 Angola',
+  '🇦🇬 Antigva i Barbuda','🇦🇷 Argentina','🇦🇲 Armenija','🇦🇺 Australija',
+  '🇦🇹 Austrija','🇦🇿 Azerbejdžan','🇧🇸 Bahami','🇧🇭 Bahrein','🇧🇩 Bangladeš',
+  '🇧🇧 Barbados','🇧🇾 Belorusija','🇧🇪 Belgija','🇧🇿 Belize','🇧🇯 Benin',
+  '🇧🇹 Butan','🇧🇴 Bolivija','🇧🇦 Bosna i Hercegovina','🇧🇼 Bocvana',
+  '🇧🇷 Brazil','🇧🇳 Brunej','🇧🇬 Bugarska','🇧🇫 Burkina Faso','🇧🇮 Burundi',
+  '🇨🇻 Kabo Verde','🇨🇲 Kamerun','🇨🇦 Kanada','🇨🇫 Centralna Afrić. Rep.',
+  '🇹🇩 Čad','🇨🇱 Čile','🇨🇳 Kina','🇨🇴 Kolumbija','🇰🇲 Komori',
+  '🇨🇬 Kongo','🇨🇷 Kostarika','🇨🇮 Obala Slonovače','🇭🇷 Hrvatska',
+  '🇨🇺 Kuba','🇨🇾 Kipar','🇨🇿 Češka','🇩🇰 Danska','🇩🇯 Džibuti',
+  '🇩🇲 Dominika','🇩🇴 Dominikanska Rep.','🇪🇨 Ekvador','🇪🇬 Egipat',
+  '🇸🇻 El Salvador','🇬🇶 Ekvatorijalna Gvineja','🇪🇷 Eritreja','🇪🇪 Estonija',
+  '🇸🇿 Esvatini','🇪🇹 Etiopija','🇫🇯 Fidži','🇫🇮 Finska','🇫🇷 Francuska',
+  '🇬🇦 Gabon','🇬🇲 Gambija','🇬🇪 Gruzija','🇩🇪 Nemačka','🇬🇭 Gana',
+  '🇬🇷 Grčka','🇬🇩 Grenada','🇬🇹 Gvatemala','🇬🇳 Gvineja',
+  '🇬🇼 Gvineja Bisao','🇬🇾 Gvajana','🇭🇹 Haiti','🇭🇳 Honduras',
+  '🇭🇺 Mađarska','🇮🇸 Island','🇮🇳 Indija','🇮🇩 Indonezija','🇮🇷 Iran',
+  '🇮🇶 Irak','🇮🇪 Irska','🇮🇱 Izrael','🇮🇹 Italija','🇯🇲 Jamajka',
+  '🇯🇵 Japan','🇯🇴 Jordan','🇰🇿 Kazahstan','🇰🇪 Kenija','🇰🇮 Kiribati',
+  '🇽🇰 Kosovo','🇰🇼 Kuvajt','🇰🇬 Kirgistan','🇱🇦 Laos','🇱🇻 Letonija',
+  '🇱🇧 Liban','🇱🇸 Lesoto','🇱🇷 Liberija','🇱🇾 Libija','🇱🇮 Lihtenštajn',
+  '🇱🇹 Litvanija','🇱🇺 Luksemburg','🇲🇬 Madagaskar','🇲🇼 Malavi',
+  '🇲🇾 Malezija','🇲🇻 Maldivi','🇲🇱 Mali','🇲🇹 Malta','🇲🇷 Mauritanija',
+  '🇲🇺 Mauricijus','🇲🇽 Meksiko','🇫🇲 Mikronezija','🇲🇩 Moldavija',
+  '🇲🇨 Monako','🇲🇳 Mongolija','🇲🇪 Crna Gora','🇲🇦 Maroko',
+  '🇲🇿 Mozambik','🇲🇲 Mjanmar','🇳🇦 Namibija','🇳🇷 Nauru','🇳🇵 Nepal',
+  '🇳🇱 Holandija','🇳🇿 Novi Zeland','🇳🇮 Nikaragva','🇳🇪 Niger',
+  '🇳🇬 Nigerija','🇲🇰 Severna Makedonija','🇳🇴 Norveška','🇴🇲 Oman',
+  '🇵🇰 Pakistan','🇵🇼 Palau','🇵🇦 Panama','🇵🇬 Papua Nova Gvineja',
+  '🇵🇾 Paragvaj','🇵🇪 Peru','🇵🇭 Filipini','🇵🇱 Poljska','🇵🇹 Portugalija',
+  '🇶🇦 Katar','🇷🇴 Rumunija','🇷🇺 Rusija','🇷🇼 Ruanda',
+  '🇰🇳 Sveti Kits i Nevis','🇱🇨 Sveta Lucija','🇻🇨 Sveti Vinsent',
+  '🇼🇸 Samoa','🇸🇲 San Marino','🇸🇹 Sao Tome i Principe','🇸🇦 Saudijska Arabija',
+  '🇸🇳 Senegal','🇷🇸 Srbija','🇸🇨 Sejšeli','🇸🇱 Sijera Leone',
+  '🇸🇬 Singapur','🇸🇰 Slovačka','🇸🇮 Slovenija','🇸🇧 Solomonska Ostrva',
+  '🇸🇴 Somalija','🇿🇦 Južna Afrika','🇸🇸 Južni Sudan','🇪🇸 Španija',
+  '🇱🇰 Šri Lanka','🇸🇩 Sudan','🇸🇷 Surinam','🇸🇪 Švedska','🇨🇭 Švajcarska',
+  '🇸🇾 Sirija','🇹🇼 Tajvan','🇹🇯 Tadžikistan','🇹🇿 Tanzanija','🇹🇭 Tajland',
+  '🇹🇱 Timor Leste','🇹🇬 Togo','🇹🇴 Tonga','🇹🇹 Trinidad i Tobago',
+  '🇹🇳 Tunis','🇹🇷 Turska','🇹🇲 Turkmenistan','🇹🇻 Tuvalu','🇺🇬 Uganda',
+  '🇺🇦 Ukrajna','🇦🇪 UAE','🇬🇧 Velika Britanija','🇺🇸 SAD','🇺🇾 Urugvaj',
+  '🇺🇿 Uzbekistan','🇻🇺 Vanuatu','🇻🇪 Venecuela','🇻🇳 Vijetnam',
+  '🇾🇪 Jemen','🇿🇲 Zambija','🇿🇼 Zimbabve'
+];
+
+function showCountryDropdown() {
+  filterCountries(true);
+}
+function hideCountryDropdown() {
+  const d = document.getElementById('countryDropdown');
+  if (d) d.style.display = 'none';
+}
+function filterCountries(showAll) {
+  const inp = document.getElementById('pfZemljaSearch');
+  const drop = document.getElementById('countryDropdown');
+  if (!inp || !drop) return;
+  const term = inp.value.toLowerCase();
+  const filtered = showAll && !term
+    ? COUNTRIES
+    : COUNTRIES.filter(c => c.toLowerCase().includes(term));
+  if (!filtered.length) { drop.style.display = 'none'; return; }
+  const frag = document.createDocumentFragment();
+  filtered.slice(0, 30).forEach(c => {
+    const div = document.createElement('div');
+    div.textContent = c;
+    div.style.cssText = 'padding:10px 14px;cursor:pointer;font-size:.85rem;border-bottom:1px solid var(--border);';
+    div.addEventListener('mouseover', () => div.style.background = 'var(--tatami)');
+    div.addEventListener('mouseout', () => div.style.background = '');
+    div.addEventListener('click', () => { selectCountry(c); });
+    frag.appendChild(div);
+  });
+  drop.innerHTML = '';
+  drop.appendChild(frag);
+  drop.style.display = 'block';
+}
+function selectCountry(val) {
+  const inp = document.getElementById('pfZemljaSearch');
+  const hidden = document.getElementById('pfZemlja');
+  // val može biti element ili string
+  const v = (typeof val === 'string') ? val : (val?.getAttribute?.('data-v') || '');
+  if (inp) inp.value = v;
+  if (hidden) hidden.value = v;
+  hideCountryDropdown();
 }
 
 fetchLeaderboard();
@@ -4014,10 +4188,30 @@ function initHome() {
   renderLeaderboard();
   renderQuotes();
   updateHomeStats();
-  // Show/hide nick input based on saved profile
   refreshNickUI();
-  // Takmičarski Mod – Scouting kartica vidljiva samo takmičarima
   updateScoutingCardVisibility();
+  updateLandingStreakPill();
+}
+
+function updateLandingStreakPill() {
+  const pill = document.getElementById('landingStreakPill');
+  const numEl = document.getElementById('landingStreakNum');
+  if (!pill || !numEl) return;
+  const saved = loadDCState();
+  if (!saved || !saved.streak || saved.streak < 2) {
+    pill.style.display = 'none';
+    return;
+  }
+  // Proveri da li je streak aktivan (završen juče ili danas)
+  const today = new Date().toDateString();
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+  const lastDate = saved.lastDate;
+  if (lastDate === today || lastDate === yesterday) {
+    numEl.textContent = saved.streak;
+    pill.style.display = 'flex';
+  } else {
+    pill.style.display = 'none';
+  }
 }
 
 // ── Takmičarski Mod (minimalna verzija) ────────────────────────
@@ -4057,13 +4251,23 @@ function renderLeaderboard() {
     el.innerHTML = '<div style="font-size:.8rem;color:var(--siva2);text-align:center;padding:10px 0;">Budi prvi na listi! 🏆</div>';
     return;
   }
-  el.innerHTML = top10.map((r,i)=>`
-    <div class="lb-row">
+  el.innerHTML = top10.map((r,i)=>{
+    const flag = r.zemlja ? r.zemlja.split(' ')[0] : '';
+    const klub = r.klub ? `<span style="font-size:.65rem;color:var(--siva2);font-weight:600;">${escH(r.klub)}</span>` : '';
+    const flagEl = flag ? `<span style="font-size:.9rem;">${flag}</span>` : '';
+    return `<div class="lb-row">
       <div class="lb-rank ${i===0?'gold':i===1?'silver':i===2?'bronze':''}">${i+1}</div>
-      <div class="lb-name">${escH(r.nick)}</div>
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:5px;">
+          ${flagEl}
+          <span class="lb-name" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escH(r.nick)}</span>
+        </div>
+        ${klub}
+      </div>
       <div class="lb-score">${r.score}</div>
       <div class="lb-belt">🥋</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function renderQuotes() {
@@ -4427,6 +4631,12 @@ function updateBreadcrumb(screenId) {
 }
 
 function navTo(screenId, navKey) {
+  // Ako je tech modal otvoren, zatvori ga umesto navigacije
+  if (isTechModalOpen()) {
+    closeTechModalBtn();
+    return;
+  }
+
   // Site header visible on all screens except landing (which has its own hero)
   const hideHeaderScreens = ['screenLanding'];
   const hdr = document.getElementById('siteHeader');
@@ -4939,7 +5149,9 @@ function showProfilForm(editMode, existing) {
       document.getElementById('pfKlub').value = existing.klub || '';
       document.getElementById('pfEmail').value = existing.email || '';
       const zEl = document.getElementById('pfZemlja');
+      const zSearch = document.getElementById('pfZemljaSearch');
       if (zEl) zEl.value = existing.zemlja || '';
+      if (zSearch) zSearch.value = existing.zemlja || '';
       pfCompetitorSelected = !!existing.jeTakmicar;
     }
   } else {
@@ -4953,6 +5165,28 @@ function showProfilForm(editMode, existing) {
     pfCompetitorSelected = false;
   }
   renderCompetitorToggle();
+
+  // Inicijalizuj belt picker u profil formi
+  window._pfBeltPicked = undefined;
+  const pfBeltGrid = document.getElementById('pfBeltPicker');
+  if (pfBeltGrid) {
+    const bpExisting = loadBeltProfile();
+    window._pfBeltPicked = bpExisting ? bpExisting.beltIdx : 0;
+    if (bpExisting) {
+      const gEl = document.getElementById('pfGodiste');
+      const mEl = document.getElementById('pfMesec');
+      const yEl = document.getElementById('pfGodina');
+      if (gEl) gEl.value = bpExisting.godiste || '';
+      if (mEl) mEl.value = bpExisting.polaganjeMesec || '';
+      if (yEl) yEl.value = bpExisting.polaganjeGodina || '';
+    }
+    const beltSVGMap = {beli:'Beli pojas',zuti:'Žuti pojas',narandzasti:'Narandžasti pojas',zeleni:'Zeleni pojas',plavi:'Plavi pojas',braon:'Braon pojas'};
+    pfBeltGrid.innerHTML = BELT_SYSTEM.slice(0, 6).map((b, i) => `
+      <div class="bp-belt-opt${window._pfBeltPicked === i ? ' selected' : ''}" onclick="window._pfBeltPicked=${i};document.querySelectorAll('#pfBeltPicker .bp-belt-opt').forEach(x=>x.classList.remove('selected'));this.classList.add('selected')">
+        <span class="bo-icon">${beltSVG(beltSVGMap[b.id] || 'Beli pojas', 28)}</span>
+        <span class="bo-name">${escH(translateBeltName(b.id) || b.name.split(' ')[0])}</span>
+      </div>`).join('');
+  }
 }
 
 // ── Takmičar toggle ────────────────────────────────────────────
@@ -4997,8 +5231,35 @@ function saveProfilForm() {
   s.nick = prezime ? `${ime} ${prezime[0]}.` : ime;
   saveXPState(s);
 
+  // Sačuvaj pojas podatke iz profil forme
+  const godiste = parseInt(document.getElementById('pfGodiste')?.value);
+  const mesec = document.getElementById('pfMesec')?.value;
+  const godina = document.getElementById('pfGodina')?.value;
+  const bpPicked = window._pfBeltPicked;
+  if (godiste && bpPicked !== undefined) {
+    const polaganjeDate = (mesec && godina) ? new Date(parseInt(godina), parseInt(mesec) - 1, 1).toISOString() : null;
+    saveBeltProfileData({
+      beltIdx: bpPicked,
+      godiste,
+      datumPolaganja: polaganjeDate,
+      polaganjeMesec: mesec || null,
+      polaganjeGodina: godina || null,
+    });
+  }
+
   // Takmičarski Mod – odmah ažuriraj vidljivost Scouting kartice
   updateScoutingCardVisibility();
+
+  // Sinkronizuj klub i zemlju na server
+  const authForSync = getAuthState();
+  if (authForSync && authForSync.userId) {
+    fetch(SERVER_URL + '/api/user/update', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ userId: authForSync.userId, club: klub, country: zemlja })
+    }).catch(() => {});
+  }
+
   showProfilDashboard(profil);
 }
 
@@ -11700,7 +11961,7 @@ function renderDCProgressStrip(active) {
   });
 }
 
-function dcFinish() {
+function dcFinish(skipped) {
   const d = new Date();
   const todayStr = d.toDateString();
   const saved = loadDCState();
@@ -11712,18 +11973,22 @@ function dcFinish() {
     else if (diff === 0) streak = saved.streak || 1;
   }
 
+  // XP: baza 15, +5 za tačno pitanje, -5 ako je zadatak preskočen
+  let xpGain = 15 + (dcState.qCorrect ? 5 : 0) - (skipped ? 5 : 0);
+  if (xpGain < 5) xpGain = 5; // minimum 5 XP
+
   const dcData = {
     lastDate: todayStr,
     streak,
     completed: true,
+    skipped: !!skipped,
     tehnika: dcState.content.tehnika,
     qCorrect: dcState.qCorrect,
-    xpGain: 15 + (dcState.qCorrect ? 5 : 0),
+    xpGain,
   };
   saveDCState(dcData);
 
   // Award XP
-  const xpGain = dcData.xpGain;
   const s = loadXPState();
   const prevLevel = getLevelForXP(s.totalXP);
   s.totalXP += xpGain;
@@ -11783,23 +12048,40 @@ function showDCCompleted(data, streak, xpGain, newBadges) {
   document.getElementById('dcDoneCountdown').textContent = `${hLeft}h ${mLeft}min`;
 
   // Summary
-  const dcSumToday = t('dcSumToday') || 'Danas si naučio';
-  const dcSumTeh   = t('dcStepTehnika') || 'Tehnika';
-  const dcSumQ     = t('dcStepPitanje') || 'Pitanje';
-  const dcSumTask  = t('dcStepZadatak') || 'Mini zadatak';
-  const dcSumQuote = t('dcSumQuote') || 'Džudo mudrost dana pročitana';
-  const dcSumRight = t('dcSumRight') || 'Tačan odgovor';
-  const dcSumLearnt= t('dcSumLearnt') || 'Naučio si nešto novo';
   const tehName = dcLangField(data, 'tehnika');
+  const tehDesc = dcState.content ? dcLangField(dcState.content, 'opis') : '';
+  const qText = dcState.content ? dcLangField(dcState.content, 'pitanje') : '';
+  const taskText = dcState.content ? dcLangField(dcState.content, 'zadatak') : '';
+
   document.getElementById('dcDoneSummary').innerHTML = `
-    <strong>${escH(dcSumToday)}:</strong><br>
-    🥋 ${escH(dcSumTeh)}: ${escH(tehName)}<br>
-    ❓ ${escH(dcSumQ)}: ${data.qCorrect ? '✅ ' + escH(dcSumRight) : '📚 ' + escH(dcSumLearnt)}<br>
-    ⚡ ${escH(dcSumTask)}: ✅ ${t('dcTagDone') || 'Završen'}<br>
-    💬 ${escH(dcSumQuote)}
+    <div style="background:var(--kartica);border:1px solid var(--border);border-radius:14px;padding:14px;margin-top:12px;text-align:left;">
+      <div style="font-size:.65rem;font-weight:900;color:var(--siva2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">📋 Danas si naučio</div>
+      
+      <div style="margin-bottom:10px;padding:10px;background:rgba(201,162,39,.08);border-radius:10px;border-left:3px solid var(--zlatna);">
+        <div style="font-size:.7rem;font-weight:800;color:var(--zlatna);margin-bottom:4px;">🥋 Tehnika dana</div>
+        <div style="font-size:.9rem;font-weight:900;color:var(--bela);">${escH(tehName)}</div>
+        ${tehDesc ? `<div style="font-size:.75rem;color:var(--siva);margin-top:3px;">${escH(tehDesc)}</div>` : ''}
+      </div>
+
+      ${qText ? `<div style="margin-bottom:10px;padding:10px;background:rgba(255,255,255,.04);border-radius:10px;">
+        <div style="font-size:.7rem;font-weight:800;color:var(--siva2);margin-bottom:4px;">❓ Pitanje</div>
+        <div style="font-size:.8rem;color:var(--bela);">${escH(qText)}</div>
+        <div style="font-size:.75rem;margin-top:4px;">${data.qCorrect ? '✅ Tačan odgovor' : '📚 Naučio si nešto novo'}</div>
+      </div>` : ''}
+
+      <div style="display:flex;gap:8px;font-size:.75rem;">
+        <div style="flex:1;padding:8px;background:rgba(255,255,255,.04);border-radius:8px;text-align:center;">
+          ⚡ Zadatak<br><strong>${data.skipped ? '⏭️ Preskočen' : '✅ Završen'}</strong>
+        </div>
+        <div style="flex:1;padding:8px;background:rgba(255,255,255,.04);border-radius:8px;text-align:center;">
+          💬 Citat<br><strong>✅ Pročitan</strong>
+        </div>
+      </div>
+    </div>
   `;
 
   renderDCProgressStrip(5); // all done
+  if (typeof updateLandingStreakPill === 'function') updateLandingStreakPill();
 }
 
 // ════════════════════════════════════════════════
@@ -11818,7 +12100,7 @@ const RANDORI_SCENARIOS = [
   {setup:"Protivnik je manji od tebe ali neverovatno brz.", question:"Kako menjač taktiku u odnosu na sporije protivnike?"},
   {setup:"Si u Golden Score situaciji 0-0. Svaki Shido znači poraz.",
    question:"Kako balansiraš aktivnost i oprez?",
-   options:["Napadam agresivno jer moram da pobedim","Ostao aktivan ali biran – izbegavam kaznu","Čekam Uke-ov napad i kontriranje","Idem direktno u prizemnu borbu"]},,
+   options:["Napadam agresivno jer moram da pobedim","Ostao aktivan ali biran – izbegavam kaznu","Čekam Uke-ov napad i kontriranje","Idem direktno u prizemnu borbu"]},
 // ── GRIP FIGHTING ─────────────────────────────────────────────────────────
   {setup:"Protivnik odmah pri početku borbe pokušava da uzme visoki hvat (za kragnu i rame).",
    question:"Kako reagujuješ u prvim sekundama borbe?",
@@ -12376,7 +12658,11 @@ async function senseiSend() {
       localStorage.setItem(_dayKey, _cnt + 1);
     } else {
       const _total = parseInt(localStorage.getItem('judoSenseiTotal') || '0');
-      if (_total >= 3) { showPremiumModal('sensei'); return; }
+      if (_total >= 3) {
+        appendSenseiMsg('sensei', '🎓 Iskoristio si sve 3 besplatne Sensei sesije! Nadam se da su ti bile korisne. Otključaj Premium da nastaviš učenje bez ograničenja. 🥋');
+        setTimeout(() => showPremiumModal('sensei'), 1800);
+        return;
+      }
       localStorage.setItem('judoSenseiTotal', _total + 1);
     }
   }
@@ -13488,11 +13774,11 @@ function initSettingsScreen() {
 
 function initTehnikeScreen() {
   updateFavCount();
-  // Sve tehnike su slobodne – ukloni lock ikone ako postoje
   ['tlvl2Lock','tlvl3Lock'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.textContent = '';
   });
+  initTechMyBeltBtn();
   renderTechniques();
 }
 
@@ -13510,30 +13796,84 @@ function setTechLevel(level) {
   document.getElementById(map[level])?.classList.add('active');
   techCatFilter = 'sve';
   document.querySelectorAll('.tech-cat-btn').forEach((b,i) => b.classList.toggle('active', i===0));
-  // Sve tehnike su slobodne
   renderTechniques();
+}
+
+function setTechLevelMyBelt() {
+  // Odredi nivo na osnovu pojasa iz profila
+  const bp = loadBeltProfile();
+  if (!bp) { setTechLevel('pocetni'); return; }
+  const beltIdx = bp.beltIdx || 0;
+  // 0-1 = beli/žuti = početni, 2-3 = naran/zeleni = srednji, 4+ = plavi/braon/crni = napredni
+  const level = beltIdx <= 1 ? 'pocetni' : beltIdx <= 3 ? 'srednji' : 'napredni';
+  techLevelFilter = level;
+  document.querySelectorAll('.tech-lvl-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tlvlMy')?.classList.add('active');
+  techCatFilter = 'sve';
+  document.querySelectorAll('.tech-cat-btn').forEach((b,i) => b.classList.toggle('active', i===0));
+  renderTechniques();
+}
+
+function initTechMyBeltBtn() {
+  const btn = document.getElementById('tlvlMy');
+  if (!btn) return;
+  const bp = loadBeltProfile();
+  if (bp) {
+    const beltNamesT = t('beltNames') || ['Beli','Žuti','Naran.','Zeleni','Plavi','Braon','Crni'];
+    const name = beltNamesT[bp.beltIdx] || (t('randoriMyBelt') || 'Moj pojas');
+    document.getElementById('tlvlMyTxt').textContent = name + ' →';
+    btn.style.display = 'inline-flex';
+  } else {
+    btn.style.display = 'none';
+  }
 }
 
 function filterTechniques() {
-  techSearchTerm = document.getElementById('techSearch').value.toLowerCase();
+  techSearchTerm = document.getElementById('techSearch').value.toLowerCase().trim();
   renderTechniques();
 }
 
-function renderTechniques() {
-  // learnedNames uklonjeno – stiklirano je samo u Moj Pojas, ne ovde
+function showTechSuggestions() {
+  const term = document.getElementById('techSearch').value.toLowerCase().trim();
+  const box = document.getElementById('techSuggestions');
+  if (!term || term.length < 2) { box.style.display = 'none'; return; }
 
-  // Sve tehnike su slobodne – nema premium brave
+  const matches = TEHNIKA_DB.filter(tech =>
+    tech.name.toLowerCase().includes(term) ||
+    tech.jp.toLowerCase().includes(term)
+  ).slice(0, 6);
+
+  if (!matches.length) { box.style.display = 'none'; return; }
+
+  box.innerHTML = matches.map(tech => `
+    <div onclick="document.getElementById('techSearch').value='${tech.name}';filterTechniques();hideTechSuggestions()"
+      style="padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border);font-size:.85rem;display:flex;align-items:center;gap:10px;"
+      onmouseover="this.style.background='var(--tatami)'" onmouseout="this.style.background=''">
+      <span style="font-weight:800;color:var(--bela);">${tech.name}</span>
+      <span style="color:var(--siva2);font-size:.75rem;">${tech.jp}</span>
+    </div>`).join('');
+  box.style.display = 'block';
+}
+
+function hideTechSuggestions() {
+  const box = document.getElementById('techSuggestions');
+  if (box) box.style.display = 'none';
+}
+
+function renderTechniques() {
   const levelLocked = false;
 
-  let filtered = TEHNIKA_DB.filter(t => {
-    if (showOnlyFavs) return techFavs.has(t.id);
-    const levelOk = !t.level || t.level === techLevelFilter;
-    const catOk = techCatFilter === 'sve' || t.cat === techCatFilter;
-    const searchOk = !techSearchTerm ||
-      t.name.toLowerCase().includes(techSearchTerm) ||
-      t.jp.includes(techSearchTerm) ||
-      t.opis.toLowerCase().includes(techSearchTerm);
-    return levelOk && catOk && searchOk;
+  let filtered = TEHNIKA_DB.filter(tech => {
+    if (showOnlyFavs) return techFavs.has(tech.id);
+    // Kada pretražujemo — ignorišemo level i category filter
+    if (techSearchTerm) {
+      return tech.name.toLowerCase().includes(techSearchTerm) ||
+             tech.jp.toLowerCase().includes(techSearchTerm) ||
+             (tech.opis && tech.opis.toLowerCase().includes(techSearchTerm));
+    }
+    const levelOk = !tech.level || tech.level === techLevelFilter;
+    const catOk = techCatFilter === 'sve' || tech.cat === techCatFilter;
+    return levelOk && catOk;
   });
 
   // Favourites uvek na vrhu
@@ -13666,6 +14006,11 @@ function closeTechModal(event) {
 function closeTechModalBtn() {
   document.getElementById('techModal').style.display = 'none';
   document.body.style.overflow = '';
+}
+
+function isTechModalOpen() {
+  const m = document.getElementById('techModal');
+  return m && m.style.display !== 'none';
 }
 
 // ════════════════════════════════════════════════
@@ -14281,6 +14626,7 @@ let randoriState = {
   currentQ: null,
   answered: false,
   usedIndices: new Set(),
+  byCategory: {}
 };
 
 function initRandoriScreen() {
@@ -14288,6 +14634,7 @@ function initRandoriScreen() {
   randoriState.score = saved.score || 0;
   randoriState.total = saved.total || 0;
   randoriState.streak = saved.streak || 0;
+  randoriState.byCategory = saved.byCategory || {};
   updateRandoriStats();
   document.getElementById('randoriScenarioArea').innerHTML = `
     <div style="text-align:center;padding:40px 20px;color:var(--siva);">
@@ -14362,6 +14709,11 @@ function answerRandori(idx) {
   } else {
     randoriState.streak = 0;
   }
+  // Prati po kategoriji
+  const cat = q.cat || 'ostalo';
+  if (!randoriState.byCategory[cat]) randoriState.byCategory[cat] = {correct:0, total:0};
+  randoriState.byCategory[cat].total++;
+  if (isRight) randoriState.byCategory[cat].correct++;
   saveRandoriState();
   updateRandoriStats();
 
@@ -14397,6 +14749,34 @@ function updateRandoriStats() {
   if (el_s) el_s.textContent = randoriState.score;
   if (el_t) el_t.textContent = randoriState.total;
   if (el_k) el_k.textContent = randoriState.streak;
+
+  // Procenat tacnih
+  const pctEl = document.getElementById('randoriPct');
+  if (pctEl) {
+    const pct = randoriState.total > 0 ? Math.round(randoriState.score / randoriState.total * 100) : 0;
+    pctEl.textContent = pct + '%';
+    pctEl.style.color = pct >= 70 ? 'var(--zelena2)' : pct >= 50 ? 'var(--zlatna)' : 'var(--ijf-red)';
+  }
+
+  // Statistika po kategoriji
+  const catEl = document.getElementById('randoriCatStats');
+  if (catEl && Object.keys(randoriState.byCategory).length > 0) {
+    const catIcons = {taktika:'🧠',tehnika:'🥋',situacija:'⚡',odbrana:'🛡️',filozofija:'🧘',ostalo:'📋'};
+    const catNamesT = t('catNames') || {};
+    catEl.innerHTML = Object.entries(randoriState.byCategory)
+      .sort((a,b) => b[1].total - a[1].total)
+      .map(([cat, data]) => {
+        const pct = Math.round(data.correct / data.total * 100);
+        const icon = catIcons[cat] || '📋';
+        const color = pct >= 70 ? 'var(--zelena2)' : pct >= 50 ? 'var(--zlatna)' : 'var(--ijf-red)';
+        const catLabel = (typeof catNamesT === 'object' && catNamesT[cat]) || cat.charAt(0).toUpperCase()+cat.slice(1);
+        return `<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);">
+          <span style="font-size:.78rem;color:var(--siva);">${icon} ${catLabel}</span>
+          <span style="font-size:.78rem;font-weight:900;color:${color};">${data.correct}/${data.total} (${pct}%)</span>
+        </div>`;
+      }).join('');
+    catEl.style.display = 'block';
+  }
 }
 
 function saveRandoriState() {
@@ -14404,6 +14784,7 @@ function saveRandoriState() {
     score: randoriState.score,
     total: randoriState.total,
     streak: randoriState.streak,
+    byCategory: randoriState.byCategory,
   }));
 }
 
@@ -15721,6 +16102,36 @@ function applyLang() {
       setText('authCloudNote', t('authCloudNote'));
       setText('recnikHeaderSub', t('recnikHeaderSub'));
       setText('profilScreenTitle', t('profilTitle'));
+
+      // Onboarding translations
+      const obW = document.getElementById('obWelcomeTitle');
+      if (obW) obW.innerHTML = t('obWelcome') + ' <span style="color:var(--ijf-red);">JUDO ACADEMY</span>';
+      setText('obWelcomeSub', t('obWelcomeSub'));
+      setText('obBeginBtn', t('obBegin'));
+      setText('obStep1Label', t('obStep1of3'));
+      setText('obStep2Label', t('obStep2of3'));
+      setText('obStep3Label', t('obStep3of3'));
+      setText('obBasicTitle', t('obBasicData'));
+      setText('obBasicSub', t('obBasicSub'));
+      setText('obJudoTitle', t('obJudoData'));
+      setText('obJudoSub', t('obJudoSub'));
+      setText('obConnectTitle', t('obConnect'));
+      setText('obConnectSub', t('obConnectSub'));
+      const obSkips = document.querySelectorAll('.ob-skip-btn');
+      obSkips.forEach(b => b.textContent = t('obSkipNow'));
+      const obNexts = document.querySelectorAll('.ob-next-btn');
+      obNexts.forEach(b => b.textContent = t('obNext'));
+      setText('obConnectGoogleBtn', t('obConnectGoogle'));
+
+      // Promo kod translations
+      setText('promoTitleEl', t('promoTitle'));
+      const promoInp = document.getElementById('promoCodeInput');
+      if (promoInp) promoInp.placeholder = t('promoPlaceholder');
+      setText('promoActivateBtn', t('promoActivate'));
+
+      // Daily challenge skip button
+      const dcSkipEl = document.getElementById('dcSkipTaskBtn');
+      if (dcSkipEl) dcSkipEl.innerHTML = t('dcSkipTask') + ' <span style="color:var(--siva2);font-size:.75rem;">' + t('dcSkipXP') + '</span>';
       setText('dailyScreenTitle', t('dailyTitle'));
       setText('randoriScreenTitle', t('randoriTitle'));
       setText('senseiScreenTitle', t('senseiTitle'));
@@ -15816,6 +16227,7 @@ function applyLang() {
       setText('randoriStatCorrectLbl', t('randoriStatCorrect'));
       setText('randoriStatPlayedLbl', t('randoriStatPlayed'));
       setText('randoriStatStreakLbl', t('randoriStatStreak'));
+      setText('randoriAccuracyLbl', t('randoriAccuracy') || 'Tačnost');
     },
     function senseiScreen() {
       const senStatus = document.getElementById('senseiStatus');
@@ -16597,7 +17009,47 @@ const TRANSLATIONS = {
     dcSumToday:'Danas si naučio',
     senseiSavedToast:'Sačuvano u Beleškama!',
     senseiSavedBtn:'Sačuvano',
-    senseiSaveBtn:'Sačuvaj u Beleške'
+    senseiSaveBtn:'Sačuvaj u Beleške',
+    // Onboarding
+    obWelcome:'Dobrodošao u',
+    obWelcomeSub:'Aplikacija za učenje tehnika, praćenje napretka i razvoj džudo duha.',
+    obBegin:'Počnimo →',
+    obStep1of3:'Korak 1 od 3',
+    obStep2of3:'Korak 2 od 3',
+    obStep3of3:'Korak 3 od 3',
+    obBasicData:'Osnovni podaci',
+    obBasicSub:'Kako da te zovemo?',
+    obJudoData:'Džudo podaci',
+    obJudoSub:'Gde si na svom džudo putu?',
+    obConnect:'Poveži nalog',
+    obConnectSub:'Sačuvaj napredak na svim uređajima i dobij pristup premium funkcijama.',
+    obSkipNow:'Preskoči za sada',
+    obNext:'Dalje →',
+    obConnectGoogle:'Poveži Google nalog',
+    obCurrentBelt:'Trenutni pojas',
+    obBirthYear:'Godina rođenja',
+    // Promo kod
+    promoTitle:'🎟️ Promo kod',
+    promoPlaceholder:'Unesi kod...',
+    promoActivate:'Aktiviraj',
+    promoChecking:'Proveravam...',
+    promoSuccess30:'✅ Premium aktiviran na 30 dana!',
+    promoSuccess90:'✅ Premium aktiviran na 90 dana!',
+    promoSuccessPerm:'✅ Premium aktiviran trajno!',
+    promoErrorEmpty:'Unesi kod.',
+    promoErrorLogin:'Moraš biti ulogovan da aktiviraš kod.',
+    promoErrorInvalid:'Nevažeći kod.',
+    promoErrorGeneral:'Greška. Pokušaj ponovo.',
+    // Daily challenge skip
+    dcSkipTask:'⏭️ Preskoči zadatak',
+    dcSkipXP:'(−5 XP)',
+    // AI Sensei remaining
+    senseiRemaining:'preostalih pitanja danas',
+    senseiRemainingFree:'preostalih pitanja ukupno',
+    randoriAccuracy:'Tačnost',
+    randoriMyBelt:'Moj pojas',
+    beltNames:['Beli','Žuti','Naran.','Zeleni','Plavi','Braon','Crni'],
+    catNames:{taktika:'Taktika',tehnika:'Tehnika',situacija:'Situacija',odbrana:'Odbrana',filozofija:'Filozofija',ostalo:'Ostalo'},
   },
   en: {
     home:'Home',
@@ -17050,7 +17502,55 @@ const TRANSLATIONS = {
     dcSumToday:'Today you learned',
     senseiSavedToast:'Saved to Notes!',
     senseiSavedBtn:'Saved',
-    senseiSaveBtn:'Save to Notes'
+    senseiSaveBtn:'Save to Notes',
+    obWelcome:'Welcome to',
+    obWelcomeSub:'App for learning techniques, tracking progress and developing judo spirit.',
+    obBegin:'Let\'s start →',
+    obStep1of3:'Step 1 of 3',
+    obStep2of3:'Step 2 of 3',
+    obStep3of3:'Step 3 of 3',
+    obBasicData:'Basic info',
+    obBasicSub:'What shall we call you?',
+    obJudoData:'Judo info',
+    obJudoSub:'Where are you on your judo journey?',
+    obConnect:'Connect account',
+    obConnectSub:'Save progress across all devices and get access to premium features.',
+    obSkipNow:'Skip for now',
+    obNext:'Next →',
+    obConnectGoogle:'Connect Google account',
+    obCurrentBelt:'Current belt',
+    obBirthYear:'Year of birth',
+    promoTitle:'🎟️ Promo code',
+    promoPlaceholder:'Enter code...',
+    promoActivate:'Activate',
+    promoChecking:'Checking...',
+    promoSuccess30:'✅ Premium activated for 30 days!',
+    promoSuccess90:'✅ Premium activated for 90 days!',
+    promoSuccessPerm:'✅ Premium activated permanently!',
+    promoErrorEmpty:'Enter a code.',
+    promoErrorLogin:'You must be logged in to activate a code.',
+    promoErrorInvalid:'Invalid code.',
+    promoErrorGeneral:'Error. Please try again.',
+    dcSkipTask:'⏭️ Skip task',
+    dcSkipXP:'(−5 XP)',
+    senseiRemaining:'questions remaining today',
+    senseiRemainingFree:'questions remaining total',
+    randoriAccuracy:'Accuracy',
+    randoriMyBelt:'My belt',
+    beltNames:['White','Yellow','Orange','Green','Blue','Brown','Black'],
+    catNames:{taktika:'Tactics',tehnika:'Technique',situacija:'Situation',odbrana:'Defence',filozofija:'Philosophy',ostalo:'Other'},
+    nextBtn:'Next question →',
+    bpSetupTitle:'Set up belt profile',
+    bpBirthYear:'Year of birth',
+    bpMonthYear:'Month and year of grading',
+    notesEmpty:'No notes yet.',
+    randoriSubtitle:'Make a tactical decision and see if you are right',
+    senseiSend:'Send',
+    scoutingSubtitle:'5 questions → AI tactical plan for the contest',
+    scoutingResetBtn:'← New scouting',
+    premiumBtn:'Got it',
+    continue:'Continue →',
+    navSettings:'Settings',
   },
   de: {
     home:'Startseite', quiz:'Quiz', techniques:'Techniken', profile:'Profil',
@@ -17099,7 +17599,6 @@ const TRANSLATIONS = {
     randoriCats:['Alle','🧠 Taktik','🥋 Technik','⚡ Situation','🛡️ Verteidigung'],
     senseiTitle:'KI-Sensei', senseiWelcome:'Hallo! Ich bin Sensei Kano, dein KI-Judolehrer. 🥋',
     senseiPlaceholder:'Sensei fragen...', senseiSend:'Senden',
-    quizDailyLimitMsg:'Du hast das Quiz heute schon gespielt. Komm morgen wieder oder werde Premium! 🥋',
     scoutingTitle:'Gegner-Scouting', scoutingSubtitle:'5 Fragen → KI-Taktikplan',
     scoutingGenerateBtn:'🤖 Taktikplan erstellen',
     scoutingSaveBtn:'📌 In Notizen speichern', scoutingResetBtn:'← Neues Scouting',
@@ -17468,7 +17967,57 @@ const TRANSLATIONS = {
     dcSumToday:'Heute hast du gelernt',
     senseiSavedToast:'In Notizen gespeichert!',
     senseiSavedBtn:'Gespeichert',
-    senseiSaveBtn:'In Notizen speichern'
+    senseiSaveBtn:'In Notizen speichern',
+    obWelcome:'Willkommen bei',
+    obWelcomeSub:'App zum Erlernen von Techniken, Verfolgen des Fortschritts und Entwickeln des Judo-Geistes.',
+    obBegin:'Los geht\'s →',
+    obStep1of3:'Schritt 1 von 3',
+    obStep2of3:'Schritt 2 von 3',
+    obStep3of3:'Schritt 3 von 3',
+    obBasicData:'Grunddaten',
+    obBasicSub:'Wie sollen wir dich nennen?',
+    obJudoData:'Judo-Daten',
+    obJudoSub:'Wo stehst du auf deinem Judo-Weg?',
+    obConnect:'Konto verbinden',
+    obConnectSub:'Fortschritt auf allen Geräten speichern und Zugang zu Premium-Funktionen erhalten.',
+    obSkipNow:'Jetzt überspringen',
+    obNext:'Weiter →',
+    obConnectGoogle:'Google-Konto verbinden',
+    obCurrentBelt:'Aktueller Gürtel',
+    obBirthYear:'Geburtsjahr',
+    promoTitle:'🎟️ Promo-Code',
+    promoPlaceholder:'Code eingeben...',
+    promoActivate:'Aktivieren',
+    promoChecking:'Wird geprüft...',
+    promoSuccess30:'✅ Premium für 30 Tage aktiviert!',
+    promoSuccess90:'✅ Premium für 90 Tage aktiviert!',
+    promoSuccessPerm:'✅ Premium dauerhaft aktiviert!',
+    promoErrorEmpty:'Code eingeben.',
+    promoErrorLogin:'Du musst angemeldet sein, um einen Code zu aktivieren.',
+    promoErrorInvalid:'Ungültiger Code.',
+    promoErrorGeneral:'Fehler. Bitte erneut versuchen.',
+    dcSkipTask:'⏭️ Aufgabe überspringen',
+    dcSkipXP:'(−5 XP)',
+    senseiRemaining:'verbleibende Fragen heute',
+    senseiRemainingFree:'verbleibende Fragen insgesamt',
+    randoriAccuracy:'Genauigkeit',
+    randoriMyBelt:'Mein Gürtel',
+    beltNames:['Weiß','Gelb','Orange','Grün','Blau','Braun','Schwarz'],
+    catNames:{taktika:'Taktik',tehnika:'Technik',situacija:'Situation',odbrana:'Verteidigung',filozofija:'Philosophie',ostalo:'Sonstige'},
+    nextBtn:'Nächste Frage →',
+    bpSetupTitle:'Gürtelprofil einrichten',
+    bpBirthYear:'Geburtsjahr',
+    bpMonthYear:'Monat und Jahr der Prüfung',
+    notesEmpty:'Noch keine Notizen.',
+    randoriSubtitle:'Triff eine taktische Entscheidung und schau, ob du richtig liegst',
+    senseiSend:'Senden',
+    scoutingSubtitle:'5 Fragen → KI-Taktikplan für den Kampf',
+    scoutingResetBtn:'← Neues Scouting',
+    premiumBtn:'Verstanden',
+    continue:'Weiter →',
+    navSettings:'Einstellungen',
+    quizDailyLimitMsg:'Du hast das Quiz heute bereits gespielt. Komm morgen wieder oder werde Premium für unbegrenztes Spielen! 🥋',
+    quizScreenSub:'Teste dein Judo-Wissen'
   },
   fr: {
     home:'Accueil', quiz:'Quiz', techniques:'Techniques', profile:'Profil',
@@ -17517,7 +18066,6 @@ const TRANSLATIONS = {
     randoriCats:['Tous','🧠 Tactique','🥋 Technique','⚡ Situation','🛡️ Défense'],
     senseiTitle:'IA Sensei', senseiWelcome:'Bonjour! Je suis Sensei Kano, ton professeur de judo IA. 🥋',
     senseiPlaceholder:'Demande au Sensei...', senseiSend:'Envoyer',
-    quizDailyLimitMsg:'Tu as déjà joué au quiz aujourd\'hui. Reviens demain ou passe Premium ! 🥋',
     scoutingTitle:'Scouting Adversaire', scoutingSubtitle:'5 questions → Plan tactique IA',
     scoutingGenerateBtn:'🤖 Générer le plan tactique',
     scoutingSaveBtn:'📌 Sauvegarder dans Notes', scoutingResetBtn:'← Nouveau scouting',
@@ -17886,7 +18434,57 @@ const TRANSLATIONS = {
     dcSumToday:'Aujourd\'hui tu as appris',
     senseiSavedToast:'Enregistré dans les notes !',
     senseiSavedBtn:'Enregistré',
-    senseiSaveBtn:'Enregistrer dans les notes'
+    senseiSaveBtn:'Enregistrer dans les notes',
+    obWelcome:'Bienvenue dans',
+    obWelcomeSub:'Application pour apprendre les techniques, suivre les progrès et développer l\'esprit judo.',
+    obBegin:'Commençons →',
+    obStep1of3:'Étape 1 sur 3',
+    obStep2of3:'Étape 2 sur 3',
+    obStep3of3:'Étape 3 sur 3',
+    obBasicData:'Informations de base',
+    obBasicSub:'Comment t\'appeler ?',
+    obJudoData:'Informations judo',
+    obJudoSub:'Où en es-tu dans ton parcours judo ?',
+    obConnect:'Connecter un compte',
+    obConnectSub:'Sauvegarde tes progrès sur tous tes appareils et accède aux fonctions premium.',
+    obSkipNow:'Passer pour l\'instant',
+    obNext:'Suivant →',
+    obConnectGoogle:'Connecter le compte Google',
+    obCurrentBelt:'Ceinture actuelle',
+    obBirthYear:'Année de naissance',
+    promoTitle:'🎟️ Code promo',
+    promoPlaceholder:'Entrer le code...',
+    promoActivate:'Activer',
+    promoChecking:'Vérification...',
+    promoSuccess30:'✅ Premium activé pour 30 jours !',
+    promoSuccess90:'✅ Premium activé pour 90 jours !',
+    promoSuccessPerm:'✅ Premium activé définitivement !',
+    promoErrorEmpty:'Entrer un code.',
+    promoErrorLogin:'Tu dois être connecté pour activer un code.',
+    promoErrorInvalid:'Code invalide.',
+    promoErrorGeneral:'Erreur. Réessayer.',
+    dcSkipTask:'⏭️ Passer la tâche',
+    dcSkipXP:'(−5 XP)',
+    senseiRemaining:'questions restantes aujourd\'hui',
+    senseiRemainingFree:'questions restantes au total',
+    randoriAccuracy:'Précision',
+    randoriMyBelt:'Ma ceinture',
+    beltNames:['Blanche','Jaune','Orange','Verte','Bleue','Marron','Noire'],
+    catNames:{taktika:'Tactique',tehnika:'Technique',situacija:'Situation',odbrana:'Défense',filozofija:'Philosophie',ostalo:'Autre'},
+    nextBtn:'Question suivante →',
+    bpSetupTitle:'Configurer le profil de ceinture',
+    bpBirthYear:'Année de naissance',
+    bpMonthYear:'Mois et année du passage de grade',
+    notesEmpty:'Pas encore de notes.',
+    randoriSubtitle:'Prends une décision tactique et vois si tu as raison',
+    senseiSend:'Envoyer',
+    scoutingSubtitle:'5 questions → plan tactique IA pour le combat',
+    scoutingResetBtn:'← Nouveau scouting',
+    premiumBtn:'Compris',
+    continue:'Continuer →',
+    navSettings:'Paramètres',
+    quizDailyLimitMsg:'Tu as déjà joué au quiz aujourd\'hui. Reviens demain ou passe en Premium pour jouer sans limite ! 🥋',
+    quizScreenSub:'Teste tes connaissances en judo'
   },
   es: {
     home:'Inicio', quiz:'Quiz', techniques:'Técnicas', profile:'Perfil',
@@ -18303,7 +18901,57 @@ const TRANSLATIONS = {
     dcSumToday:'Hoy has aprendido',
     senseiSavedToast:'¡Guardado en notas!',
     senseiSavedBtn:'Guardado',
-    senseiSaveBtn:'Guardar en notas'
+    senseiSaveBtn:'Guardar en notas',
+    obWelcome:'Bienvenido a',
+    obWelcomeSub:'Aplicación para aprender técnicas, seguir el progreso y desarrollar el espíritu del judo.',
+    obBegin:'¡Empecemos →',
+    obStep1of3:'Paso 1 de 3',
+    obStep2of3:'Paso 2 de 3',
+    obStep3of3:'Paso 3 de 3',
+    obBasicData:'Datos básicos',
+    obBasicSub:'¿Cómo te llamamos?',
+    obJudoData:'Datos de judo',
+    obJudoSub:'¿Dónde estás en tu camino del judo?',
+    obConnect:'Conectar cuenta',
+    obConnectSub:'Guarda el progreso en todos los dispositivos y accede a las funciones premium.',
+    obSkipNow:'Saltar por ahora',
+    obNext:'Siguiente →',
+    obConnectGoogle:'Conectar cuenta de Google',
+    obCurrentBelt:'Cinturón actual',
+    obBirthYear:'Año de nacimiento',
+    promoTitle:'🎟️ Código promocional',
+    promoPlaceholder:'Introducir código...',
+    promoActivate:'Activar',
+    promoChecking:'Comprobando...',
+    promoSuccess30:'✅ ¡Premium activado por 30 días!',
+    promoSuccess90:'✅ ¡Premium activado por 90 días!',
+    promoSuccessPerm:'✅ ¡Premium activado permanentemente!',
+    promoErrorEmpty:'Introduce un código.',
+    promoErrorLogin:'Debes estar conectado para activar un código.',
+    promoErrorInvalid:'Código no válido.',
+    promoErrorGeneral:'Error. Inténtalo de nuevo.',
+    dcSkipTask:'⏭️ Saltar tarea',
+    dcSkipXP:'(−5 XP)',
+    senseiRemaining:'preguntas restantes hoy',
+    senseiRemainingFree:'preguntas restantes en total',
+    randoriAccuracy:'Precisión',
+    randoriMyBelt:'Mi cinturón',
+    beltNames:['Blanco','Amarillo','Naranja','Verde','Azul','Marrón','Negro'],
+    catNames:{taktika:'Táctica',tehnika:'Técnica',situacija:'Situación',odbrana:'Defensa',filozofija:'Filosofía',ostalo:'Otro'},
+    nextBtn:'Siguiente pregunta →',
+    bpSetupTitle:'Configurar perfil de cinturón',
+    bpBirthYear:'Año de nacimiento',
+    bpMonthYear:'Mes y año del examen',
+    notesEmpty:'Aún no hay notas.',
+    randoriSubtitle:'Toma una decisión táctica y comprueba si tienes razón',
+    senseiSend:'Enviar',
+    scoutingSubtitle:'5 preguntas → plan táctico IA para el combate',
+    scoutingResetBtn:'← Nuevo scouting',
+    premiumBtn:'Entendido',
+    continue:'Continuar →',
+    navSettings:'Ajustes',
+    quizScreenSub:'Pon a prueba tus conocimientos de judo',
+    quizDailyLimitMsg:'Ya has jugado el quiz hoy. ¡Vuelve mañana o hazte Premium para jugar sin límites! 🥋'
   },
   it: {
     home:'Home', quiz:'Quiz', techniques:'Tecniche', profile:'Profilo',
@@ -18720,7 +19368,57 @@ const TRANSLATIONS = {
     dcSumToday:'Oggi hai imparato',
     senseiSavedToast:'Salvato nelle note!',
     senseiSavedBtn:'Salvato',
-    senseiSaveBtn:'Salva nelle note'
+    senseiSaveBtn:'Salva nelle note',
+    obWelcome:'Benvenuto in',
+    obWelcomeSub:'App per imparare le tecniche, monitorare i progressi e sviluppare lo spirito judo.',
+    obBegin:'Iniziamo →',
+    obStep1of3:'Passo 1 di 3',
+    obStep2of3:'Passo 2 di 3',
+    obStep3of3:'Passo 3 di 3',
+    obBasicData:'Dati di base',
+    obBasicSub:'Come ti chiamiamo?',
+    obJudoData:'Dati judo',
+    obJudoSub:'Dove sei nel tuo percorso judo?',
+    obConnect:'Collega account',
+    obConnectSub:'Salva i progressi su tutti i dispositivi e accedi alle funzioni premium.',
+    obSkipNow:'Salta per ora',
+    obNext:'Avanti →',
+    obConnectGoogle:'Collega account Google',
+    obCurrentBelt:'Cintura attuale',
+    obBirthYear:'Anno di nascita',
+    promoTitle:'🎟️ Codice promo',
+    promoPlaceholder:'Inserisci codice...',
+    promoActivate:'Attiva',
+    promoChecking:'Controllo...',
+    promoSuccess30:'✅ Premium attivato per 30 giorni!',
+    promoSuccess90:'✅ Premium attivato per 90 giorni!',
+    promoSuccessPerm:'✅ Premium attivato permanentemente!',
+    promoErrorEmpty:'Inserisci un codice.',
+    promoErrorLogin:'Devi essere connesso per attivare un codice.',
+    promoErrorInvalid:'Codice non valido.',
+    promoErrorGeneral:'Errore. Riprova.',
+    dcSkipTask:'⏭️ Salta il compito',
+    dcSkipXP:'(−5 XP)',
+    senseiRemaining:'domande rimanenti oggi',
+    senseiRemainingFree:'domande rimanenti in totale',
+    randoriAccuracy:'Precisione',
+    randoriMyBelt:'La mia cintura',
+    beltNames:['Bianca','Gialla','Arancione','Verde','Blu','Marrone','Nera'],
+    catNames:{taktika:'Tattica',tehnika:'Tecnica',situacija:'Situazione',odbrana:'Difesa',filozofija:'Filosofia',ostalo:'Altro'},
+    nextBtn:'Domanda successiva →',
+    bpSetupTitle:'Configura profilo cintura',
+    bpBirthYear:'Anno di nascita',
+    bpMonthYear:'Mese e anno dell\'esame',
+    notesEmpty:'Ancora nessuna nota.',
+    randoriSubtitle:'Prendi una decisione tattica e scopri se hai ragione',
+    senseiSend:'Invia',
+    scoutingSubtitle:'5 domande → piano tattico IA per il combattimento',
+    scoutingResetBtn:'← Nuovo scouting',
+    premiumBtn:'Capito',
+    continue:'Continua →',
+    navSettings:'Impostazioni',
+    quizDailyLimitMsg:'Hai già giocato al quiz oggi. Torna domani o diventa Premium per giocare senza limiti! 🥋',
+    quizScreenSub:'Metti alla prova le tue conoscenze di judo'
   },
   pt: {
     home:'Início', quiz:'Quiz', techniques:'Técnicas', profile:'Perfil',
@@ -19137,7 +19835,57 @@ const TRANSLATIONS = {
     dcSumToday:'Hoje você aprendeu',
     senseiSavedToast:'Salvo nas notas!',
     senseiSavedBtn:'Salvo',
-    senseiSaveBtn:'Salvar nas notas'
+    senseiSaveBtn:'Salvar nas notas',
+    obWelcome:'Bem-vindo ao',
+    obWelcomeSub:'Aplicação para aprender técnicas, acompanhar o progresso e desenvolver o espírito judo.',
+    obBegin:'Vamos começar →',
+    obStep1of3:'Passo 1 de 3',
+    obStep2of3:'Passo 2 de 3',
+    obStep3of3:'Passo 3 de 3',
+    obBasicData:'Dados básicos',
+    obBasicSub:'Como te chamar?',
+    obJudoData:'Dados de judo',
+    obJudoSub:'Onde estás na tua jornada judo?',
+    obConnect:'Ligar conta',
+    obConnectSub:'Guarda o progresso em todos os dispositivos e obtém acesso às funções premium.',
+    obSkipNow:'Saltar por agora',
+    obNext:'Seguinte →',
+    obConnectGoogle:'Ligar conta Google',
+    obCurrentBelt:'Faixa atual',
+    obBirthYear:'Ano de nascimento',
+    promoTitle:'🎟️ Código promocional',
+    promoPlaceholder:'Inserir código...',
+    promoActivate:'Ativar',
+    promoChecking:'A verificar...',
+    promoSuccess30:'✅ Premium ativado por 30 dias!',
+    promoSuccess90:'✅ Premium ativado por 90 dias!',
+    promoSuccessPerm:'✅ Premium ativado permanentemente!',
+    promoErrorEmpty:'Inserir um código.',
+    promoErrorLogin:'Tens de estar ligado para ativar um código.',
+    promoErrorInvalid:'Código inválido.',
+    promoErrorGeneral:'Erro. Tenta novamente.',
+    dcSkipTask:'⏭️ Saltar tarefa',
+    dcSkipXP:'(−5 XP)',
+    senseiRemaining:'perguntas restantes hoje',
+    senseiRemainingFree:'perguntas restantes no total',
+    randoriAccuracy:'Precisão',
+    randoriMyBelt:'A minha faixa',
+    beltNames:['Branca','Amarela','Laranja','Verde','Azul','Castanha','Preta'],
+    catNames:{taktika:'Tática',tehnika:'Técnica',situacija:'Situação',odbrana:'Defesa',filozofija:'Filosofia',ostalo:'Outro'},
+    nextBtn:'Próxima pergunta →',
+    bpSetupTitle:'Configurar perfil de faixa',
+    bpBirthYear:'Ano de nascimento',
+    bpMonthYear:'Mês e ano do exame',
+    notesEmpty:'Ainda não há notas.',
+    randoriSubtitle:'Toma uma decisão tática e vê se tens razão',
+    senseiSend:'Enviar',
+    scoutingSubtitle:'5 perguntas → plano tático IA para o combate',
+    scoutingResetBtn:'← Novo scouting',
+    premiumBtn:'Entendido',
+    continue:'Continuar →',
+    navSettings:'Definições',
+    quizScreenSub:'Testa os teus conhecimentos de judô',
+    quizDailyLimitMsg:'Já jogaste o quiz hoje. Volta amanhã ou torna-te Premium para jogar sem limites! 🥋'
   },
   ru: {
     home:'Главная', quiz:'Викторина', techniques:'Техники', profile:'Профиль',
@@ -19554,7 +20302,57 @@ const TRANSLATIONS = {
     dcSumToday:'Сегодня ты узнал',
     senseiSavedToast:'Сохранено в заметки!',
     senseiSavedBtn:'Сохранено',
-    senseiSaveBtn:'Сохранить в заметки'
+    senseiSaveBtn:'Сохранить в заметки',
+    obWelcome:'Добро пожаловать в',
+    obWelcomeSub:'Приложение для изучения техник, отслеживания прогресса и развития духа дзюдо.',
+    obBegin:'Начнём →',
+    obStep1of3:'Шаг 1 из 3',
+    obStep2of3:'Шаг 2 из 3',
+    obStep3of3:'Шаг 3 из 3',
+    obBasicData:'Основные данные',
+    obBasicSub:'Как тебя называть?',
+    obJudoData:'Данные по дзюдо',
+    obJudoSub:'Где ты на своём пути в дзюдо?',
+    obConnect:'Подключить аккаунт',
+    obConnectSub:'Сохраняй прогресс на всех устройствах и получай доступ к премиум-функциям.',
+    obSkipNow:'Пропустить пока',
+    obNext:'Далее →',
+    obConnectGoogle:'Подключить аккаунт Google',
+    obCurrentBelt:'Текущий пояс',
+    obBirthYear:'Год рождения',
+    promoTitle:'🎟️ Промо-код',
+    promoPlaceholder:'Введи код...',
+    promoActivate:'Активировать',
+    promoChecking:'Проверяю...',
+    promoSuccess30:'✅ Премиум активирован на 30 дней!',
+    promoSuccess90:'✅ Премиум активирован на 90 дней!',
+    promoSuccessPerm:'✅ Премиум активирован навсегда!',
+    promoErrorEmpty:'Введи код.',
+    promoErrorLogin:'Нужно войти в аккаунт для активации кода.',
+    promoErrorInvalid:'Недействительный код.',
+    promoErrorGeneral:'Ошибка. Попробуй снова.',
+    dcSkipTask:'⏭️ Пропустить задание',
+    dcSkipXP:'(−5 XP)',
+    senseiRemaining:'вопросов осталось сегодня',
+    senseiRemainingFree:'вопросов осталось всего',
+    randoriAccuracy:'Точность',
+    randoriMyBelt:'Мой пояс',
+    beltNames:['Белый','Жёлтый','Оранж.','Зелёный','Синий','Коричн.','Чёрный'],
+    catNames:{taktika:'Тактика',tehnika:'Техника',situacija:'Ситуация',odbrana:'Защита',filozofija:'Философия',ostalo:'Прочее'},
+    nextBtn:'Следующий вопрос →',
+    bpSetupTitle:'Настроить профиль пояса',
+    bpBirthYear:'Год рождения',
+    bpMonthYear:'Месяц и год сдачи экзамена',
+    notesEmpty:'Заметок пока нет.',
+    randoriSubtitle:'Прими тактическое решение и посмотри, прав ли ты',
+    senseiSend:'Отправить',
+    scoutingSubtitle:'5 вопросов → тактический план ИИ для боя',
+    scoutingResetBtn:'← Новый скаутинг',
+    premiumBtn:'Понятно',
+    continue:'Продолжить →',
+    navSettings:'Настройки',
+    quizDailyLimitMsg:'Ты уже сыграл в квиз сегодня. Возвращайся завтра или стань Premium для неограниченной игры! 🥋',
+    quizScreenSub:'Проверь свои знания дзюдо'
   },
 };
 
@@ -19570,15 +20368,7 @@ applyTheme();
 if (currentLang !== 'sr') setTimeout(applyLang, 0);
 // Onboarding: first visit → profil setup
 if (!loadProfilData() && !localStorage.getItem('judoOnboardingDone')) {
-  localStorage.setItem('judoOnboardingDone', '1');
-  // Show landing first, then gentle prompt after 800ms
-  setTimeout(() => {
-    showXPToast('👋 Dobrodošao! Popuni profil da personalizujemo iskustvo →');
-    setTimeout(() => {
-      const pulse = document.getElementById('kvizMainCard');
-      if (pulse) pulse.classList.add('pulse-cta');
-    }, 1200);
-  }, 800);
+  setTimeout(() => showOnboarding(), 600);
 }
 checkPremiumReturnFromStripe();
 
@@ -19661,6 +20451,114 @@ function openBugReport() {
 
 
 </script>
+
+<!-- ═══ ONBOARDING MODAL ═══ -->
+<div id="onboardingOverlay" style="display:none;position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:var(--kartica);border:1px solid var(--border);border-radius:24px;width:100%;max-width:400px;padding:28px 24px;position:relative;">
+    
+    <!-- Progress dots -->
+    <div id="obDots" style="display:flex;justify-content:center;gap:8px;margin-bottom:24px;">
+      <div class="ob-dot active" id="obDot1"></div>
+      <div class="ob-dot" id="obDot2"></div>
+      <div class="ob-dot" id="obDot3"></div>
+      <div class="ob-dot" id="obDot4"></div>
+    </div>
+
+    <!-- Step 1: Dobrodošao -->
+    <div id="obStep1">
+      <div style="text-align:center;margin-bottom:24px;">
+        <div style="font-size:3rem;margin-bottom:12px;">🥋</div>
+        <h2 id="obWelcomeTitle" style="font-family:'Oswald',sans-serif;font-size:1.6rem;color:#fff;letter-spacing:1px;margin-bottom:8px;">Dobrodošao u<br><span style="color:var(--ijf-red);">JUDO ACADEMY</span></h2>
+        <p id="obWelcomeSub" style="font-size:.85rem;color:var(--siva);line-height:1.6;">Aplikacija za učenje tehnika, praćenje napretka i razvoj džudo duha.</p>
+      </div>
+      <button id="obBeginBtn" onclick="obGoStep(2)" class="start-btn" style="width:100%;">Počnimo →</button>
+    </div>
+
+    <!-- Step 2: Osnovni podaci -->
+    <div id="obStep2" style="display:none;">
+      <div style="margin-bottom:20px;">
+        <div id="obStep1Label" style="font-size:.65rem;font-weight:900;color:var(--siva2);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Korak 1 od 3</div>
+        <h2 id="obBasicTitle" style="font-family:'Oswald',sans-serif;font-size:1.3rem;color:#fff;margin-bottom:4px;">Osnovni podaci</h2>
+        <p id="obBasicSub" style="font-size:.8rem;color:var(--siva);">Kako da te zovemo?</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px;">
+        <div>
+          <label style="font-size:.72rem;font-weight:800;color:var(--siva);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px;">👤 Ime *</label>
+          <input id="obIme" type="text" placeholder="Npr. Marko" maxlength="30" style="width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--border);background:rgba(255,255,255,.05);color:#fff;font-family:'Nunito',sans-serif;font-size:.9rem;outline:none;box-sizing:border-box;" />
+        </div>
+        <div>
+          <label style="font-size:.72rem;font-weight:800;color:var(--siva);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px;">👤 Prezime</label>
+          <input id="obPrezime" type="text" placeholder="Npr. Petrović" maxlength="30" style="width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--border);background:rgba(255,255,255,.05);color:#fff;font-family:'Nunito',sans-serif;font-size:.9rem;outline:none;box-sizing:border-box;" />
+        </div>
+        <div>
+          <label style="font-size:.72rem;font-weight:800;color:var(--siva);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px;">🥋 Džudo klub <span style="font-weight:400;text-transform:none;color:var(--siva2);">(opciono)</span></label>
+          <input id="obKlub" type="text" placeholder="Npr. JK Trudbenik Kortega" maxlength="60" style="width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--border);background:rgba(255,255,255,.05);color:#fff;font-family:'Nunito',sans-serif;font-size:.9rem;outline:none;box-sizing:border-box;" />
+        </div>
+      </div>
+      <button class="ob-next-btn start-btn" onclick="obSaveStep2()" style="width:100%;margin-bottom:10px;">Dalje →</button>
+      <button class="ob-skip-btn" onclick="obSkip()" style="width:100%;padding:10px;border:none;background:none;color:var(--siva2);font-family:'Nunito',sans-serif;font-size:.8rem;cursor:pointer;">Preskoči za sada</button>
+    </div>
+
+    <!-- Step 3: Džudo podaci -->
+    <div id="obStep3" style="display:none;">
+      <div style="margin-bottom:20px;">
+        <div id="obStep2Label" style="font-size:.65rem;font-weight:900;color:var(--siva2);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Korak 2 od 3</div>
+        <h2 id="obJudoTitle" style="font-family:'Oswald',sans-serif;font-size:1.3rem;color:#fff;margin-bottom:4px;">Džudo podaci</h2>
+        <p id="obJudoSub" style="font-size:.8rem;color:var(--siva);">Gde si na svom džudo putu?</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px;">
+        <div>
+          <label id="obCurrentBeltLabel" style="font-size:.72rem;font-weight:800;color:var(--siva);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:8px;">🥋 Trenutni pojas</label>
+          <div id="obBeltPicker" class="bp-belt-grid"></div>
+        </div>
+        <div>
+          <label id="obBirthYearLabel" style="font-size:.72rem;font-weight:800;color:var(--siva);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px;">🎂 Godina rođenja <span style="font-weight:400;text-transform:none;color:var(--siva2);">(opciono)</span></label>
+          <input id="obGodiste" type="number" placeholder="npr. 2010" min="1990" max="2020" style="width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--border);background:rgba(255,255,255,.05);color:#fff;font-family:'Nunito',sans-serif;font-size:.9rem;outline:none;box-sizing:border-box;" />
+        </div>
+      </div>
+      <button class="ob-next-btn start-btn" onclick="obSaveStep3()" style="width:100%;margin-bottom:10px;">Dalje →</button>
+      <button class="ob-skip-btn" onclick="obSkip()" style="width:100%;padding:10px;border:none;background:none;color:var(--siva2);font-family:'Nunito',sans-serif;font-size:.8rem;cursor:pointer;">Preskoči za sada</button>
+    </div>
+
+    <!-- Step 4: Google nalog -->
+    <div id="obStep4" style="display:none;">
+      <div style="margin-bottom:20px;">
+        <div id="obStep3Label" style="font-size:.65rem;font-weight:900;color:var(--siva2);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Korak 3 od 3</div>
+        <h2 id="obConnectTitle" style="font-family:'Oswald',sans-serif;font-size:1.3rem;color:#fff;margin-bottom:4px;">Poveži nalog</h2>
+        <p id="obConnectSub" style="font-size:.8rem;color:var(--siva);line-height:1.6;">Sačuvaj napredak na svim uređajima i dobij pristup premium funkcijama.</p>
+      </div>
+      <div style="background:rgba(66,133,244,.08);border:1px solid rgba(66,133,244,.25);border-radius:14px;padding:14px;margin-bottom:16px;">
+        <div style="font-size:.78rem;color:var(--siva);line-height:1.7;">
+          ☁️ Napredak se čuva u oblaku<br>
+          🏆 Rang lista sa pravim igračima<br>
+          🎟️ Promo kodovi za premium pristup
+        </div>
+      </div>
+      <button id="obConnectGoogleBtn" onclick="signInGoogle();closeOnboarding()" class="start-btn" style="width:100%;margin-bottom:10px;background:linear-gradient(135deg,#4285F4,#2b6fd9);">
+        <svg width="18" height="18" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:8px;"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#fff"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#fff"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#fff"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#fff"/></svg>
+        Poveži Google nalog
+      </button>
+      <button class="ob-skip-btn" onclick="closeOnboarding()" style="width:100%;padding:10px;border:none;background:none;color:var(--siva2);font-family:'Nunito',sans-serif;font-size:.8rem;cursor:pointer;">Preskoči za sada</button>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.ob-dot {
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(255,255,255,.2);
+  transition:all .2s;
+}
+.ob-dot.active {
+  background:var(--zlatna);
+  width:24px;
+  border-radius:4px;
+}
+.ob-dot.done {
+  background:var(--zelena);
+}
+</style>
 
 <!-- ═══ PREMIUM MODAL ═══ -->
 <!-- ═══ PREMIUM CHECKOUT MODAL ═══ -->

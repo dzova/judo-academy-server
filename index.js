@@ -9,10 +9,10 @@ const { Pool } = require('pg');
 const app = express();
 app.use(cors({ origin: '*', credentials: false }));
 app.use(express.json());
-app.use(express.static('public'));
 app.use(session({ secret: process.env.SESSION_SECRET || 'judo2024', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static('public'));
 
 const db = new Pool({ connectionString: process.env.DATABASE_URL });
 
@@ -43,12 +43,7 @@ app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'em
 
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
   const user = req.user;
-  res.redirect('https://judo-academy-server-production.up.railway.app/auth-success?userId=' + user.id + '&username=' + encodeURIComponent(user.username) + '&belt=' + user.belt + '&xp=' + user.xp);
-});
-
-app.get('/auth/me', (req, res) => {
-  if (req.user) res.json(req.user);
-  else res.status(401).json({ error: 'Nije ulogovan' });
+  res.redirect('/auth-success?userId=' + user.id + '&username=' + encodeURIComponent(user.username) + '&belt=' + (user.belt || 'white') + '&xp=' + (user.xp || 0));
 });
 
 app.get('/auth-success', (req, res) => {
@@ -62,20 +57,57 @@ app.get('/auth-success', (req, res) => {
           belt: '${belt || "white"}',
           xp: '${xp || "0"}'
         }));
-      } catch(e) { console.error('localStorage error', e); }
+      } catch(e) {}
       setTimeout(function(){ window.location.href = '/'; }, 200);
     </script>
     <p>Ulogovan! Preusmeravamo...</p>
   </body></html>`);
 });
 
+app.get('/auth/me', (req, res) => {
+  if (req.user) res.json(req.user);
+  else res.status(401).json({ error: 'Nije ulogovan' });
+});
+
+// ── HEALTH ───────────────────────────────────────────
+
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'Judo Academy server radi!' });
 });
 
+// ── KORISNIK ─────────────────────────────────────────
+
+app.get('/api/user/:userId', async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const result = await db.query(
+      'SELECT id, username, email, belt, xp, club, country, subscription_tier FROM users WHERE id = $1',
+      [userId]
+    );
+    if (result.rows.length === 0) return res.status(404).json({ error: 'Nije pronadjen' });
+    res.json(result.rows[0]);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/user/update', async (req, res) => {
+  const { userId, club, country } = req.body;
+  if (!userId) return res.status(400).json({ error: 'Nedostaje userId' });
+  try {
+    await db.query(
+      'UPDATE users SET club = $1, country = $2 WHERE id = $3',
+      [club || null, country || null, userId]
+    );
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ── RANG LISTA ──────────────────────────────────────
+
 app.get('/api/leaderboard', async (req, res) => {
   try {
-    const result = await db.query('SELECT username, belt, xp, club FROM users ORDER BY xp DESC LIMIT 50');
+    const result = await db.query(
+      'SELECT username, belt, xp, club, country FROM users ORDER BY xp DESC LIMIT 50'
+    );
     res.json(result.rows);
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
@@ -87,6 +119,8 @@ app.post('/api/xp/update', async (req, res) => {
     res.json({ success: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
+
+// ── AI SENSEI LIMITI ─────────────────────────────────
 
 app.get('/api/sensei/limit/:userId', async (req, res) => {
   const { userId } = req.params;
@@ -100,7 +134,6 @@ app.get('/api/sensei/limit/:userId', async (req, res) => {
     const isPremium = user.subscription_tier === 'premium';
 
     if (isPremium) {
-      // Premium: 5 dnevno
       const today = new Date().toDateString();
       const lastReset = new Date(user.last_reset).toDateString();
       if (today !== lastReset) {
@@ -109,11 +142,11 @@ app.get('/api/sensei/limit/:userId', async (req, res) => {
       }
       res.json({ used: user.questions_today, limit: 5, remaining: 5 - user.questions_today, type: 'daily' });
     } else {
-      // Free: 3 ukupno lifetime
       res.json({ used: user.questions_today, limit: 3, remaining: 3 - user.questions_today, type: 'lifetime' });
     }
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
+
 app.post('/api/sensei/use', async (req, res) => {
   const { userId } = req.body;
   try {
@@ -122,8 +155,33 @@ app.post('/api/sensei/use', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// ── PROMO KODOVI ─────────────────────────────────────
+
+app.post('/api/promo/redeem', async (req, res) => {
+  const { code, userId } = req.body;
+  if (!code || !userId) return res.status(400).json({ error: 'Nedostaju podaci' });
+  try {
+    const promo = await db.query('SELECT * FROM promo_codes WHERE code = $1', [code.toUpperCase()]);
+    if (promo.rows.length === 0) return res.status(404).json({ error: 'Kod nije validan' });
+    const p = promo.rows[0];
+    if (p.valid_until && new Date(p.valid_until) < new Date()) return res.status(400).json({ error: 'Kod je istekao' });
+    if (p.used_count >= p.max_uses) return res.status(400).json({ error: 'Kod je iskoristen' });
+
+    let expiresAt = null;
+    if (p.duration_days) {
+      expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + p.duration_days);
+    }
+
+    await db.query('UPDATE users SET subscription_tier = $1, subscription_expires = $2 WHERE id = $3',
+      ['premium', expiresAt, userId]);
+    await db.query('UPDATE promo_codes SET used_count = used_count + 1 WHERE code = $1', [code.toUpperCase()]);
+
+    res.json({ success: true, duration_days: p.duration_days, expires_at: expiresAt });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // ── AI SENSEI PROXY ──────────────────────────────────
-const https = require('https');
 
 app.post('/api/sensei/ask', async (req, res) => {
   const { messages, system } = req.body;
@@ -135,53 +193,10 @@ app.post('/api/sensei/ask', async (req, res) => {
         'x-api-key': process.env.ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01'
       },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 400,
-        system,
-        messages
-      })
+      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 400, system, messages })
     });
     const data = await response.json();
     res.json(data);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.get('/api/user/:userId', async (req, res) => {
-  const { userId } = req.params;
-  try {
-    const result = await db.query(
-      'SELECT id, username, email, belt, xp, club, subscription_tier FROM users WHERE id = $1',
-      [userId]
-    );
-    if (result.rows.length === 0) return res.status(404).json({ error: 'Nije pronadjen' });
-    res.json(result.rows[0]);
-  } catch (err) { res.status(500).json({ error: err.message }); }
-});
-
-app.post('/api/promo/redeem', async (req, res) => {
-  const { code, userId } = req.body;
-  if (!code || !userId) return res.status(400).json({ error: 'Nedostaju podaci' });
-  try {
-    const promo = await db.query('SELECT * FROM promo_codes WHERE code = $1', [code.toUpperCase()]);
-    if (promo.rows.length === 0) return res.status(404).json({ error: 'Kod nije validan' });
-    const p = promo.rows[0];
-    if (p.valid_until && new Date(p.valid_until) < new Date()) return res.status(400).json({ error: 'Kod je istekao' });
-    if (p.used_count >= p.max_uses) return res.status(400).json({ error: 'Kod je iskorišćen' });
-    
-    let expiresAt = null;
-    if (p.duration_days) {
-      expiresAt = new Date();
-      expiresAt.setDate(expiresAt.getDate() + p.duration_days);
-    }
-    
-    await db.query('UPDATE users SET subscription_tier = $1, subscription_expires = $2 WHERE id = $3',
-      ['premium', expiresAt, userId]);
-    await db.query('UPDATE promo_codes SET used_count = used_count + 1 WHERE code = $1', [code.toUpperCase()]);
-    
-    res.json({ success: true, duration_days: p.duration_days, expires_at: expiresAt });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
