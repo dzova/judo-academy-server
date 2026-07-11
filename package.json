@@ -12,6 +12,11 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@capacitor/android": "^8.4.1",
+    "@capacitor/app": "^8.1.0",
+    "@capacitor/browser": "^8.0.3",
+    "@capacitor/cli": "^8.4.1",
+    "@capacitor/core": "^8.4.1",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
