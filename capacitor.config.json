@@ -1,5 +1,15 @@
 {
   "appId": "com.judoacademy.app",
   "appName": "Judo Academy",
-  "webDir": "public"
+  "webDir": "public",
+  "android": {
+    "backgroundColor": "#0A0D14"
+  },
+  "plugins": {
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#0A0D14",
+      "overlaysWebView": true
+    }
+  }
 }

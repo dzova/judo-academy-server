@@ -105,7 +105,15 @@ body.light-mode .feedback.correct { background:rgba(26,110,50,.1);color:#1a5c2c;
 body.light-mode .feedback.wrong { background:rgba(184,40,32,.1);color:#8b1a1a;border:1px solid rgba(184,40,32,.2); }
 
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{min-height:100vh;overflow-x:hidden;width:100%;}
+html, body {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.site-header {
+  padding-top: calc(10px + env(safe-area-inset-top, 0px));
+}
+.screen#screenLanding {
+  padding-top: env(safe-area-inset-top, 0px);
+}
 
 body {
   font-family:'Nunito',sans-serif;
@@ -2465,10 +2473,10 @@ body.light-mode .auth-btn { background:#f4f1ec; }
   <div class="start-card" style="margin-top:16px;">
     <h3 id="quizCardTitle">🎯 Džudo Kviz Challenge</h3>
     <p id="quizCardDesc">Igraj dok ne dobiješ 3 Shido – pitanja su sve teža!<br>Tačan odgovor = 5, 10 ili 20 poena.</p>
-    <div class="nick-wrap" id="nickWrap">
+    <div class="nick-wrap" id="nickWrap" style="display:none;">
       <input class="nick-input" id="nickInput" placeholder="Tvoj nadimak..." maxlength="20" />
     </div>
-    <div id="nickGreet" style="display:none;font-size:.88rem;color:var(--siva);margin-bottom:14px;text-align:center;"></div>
+    <div id="nickGreet" style="font-size:.88rem;color:var(--siva);margin-bottom:14px;text-align:center;"></div>
     <button class="start-btn" onclick="startQuiz()" id="quizStartBtn">⚡ Kreni!</button>
   </div>
 
@@ -4018,7 +4026,7 @@ let obBeltPicked = 0;
 function showOnboarding() {
   const overlay = document.getElementById('onboardingOverlay');
   overlay.style.display = 'flex';
-  obGoStep(1);
+  obGoStep(0);
 }
 
 function closeOnboarding() {
@@ -4026,23 +4034,38 @@ function closeOnboarding() {
   localStorage.setItem('judoOnboardingDone', '1');
 }
 
+function obSelectLang(lang) {
+  // Primeni jezik
+  currentLang = lang;
+  localStorage.setItem('judoLang', lang);
+  if (lang !== 'sr') applyLang();
+  // Oznaci selektovano dugme
+  document.querySelectorAll('.ob-lang-btn').forEach(b => b.classList.remove('selected'));
+  event.target.classList.add('selected');
+  // Idi na sledeci korak nakon kratke pauze
+  setTimeout(() => obGoStep(1), 300);
+}
+
 function obGoStep(step) {
-  [1,2,3,4].forEach(i => {
-    document.getElementById('obStep' + i).style.display = i === step ? 'block' : 'none';
+  [0,1,2,3,4].forEach(i => {
+    const el = document.getElementById('obStep' + i);
+    if (el) el.style.display = i === step ? 'block' : 'none';
     const dot = document.getElementById('obDot' + i);
-    dot.className = 'ob-dot' + (i < step ? ' done' : i === step ? ' active' : '');
+    if (dot) dot.className = 'ob-dot' + (i < step ? ' done' : i === step ? ' active' : '');
   });
 
   // Init belt picker on step 3
   if (step === 3) {
     const beltSVGMap = {beli:'Beli pojas',zuti:'Žuti pojas',narandzasti:'Narandžasti pojas',zeleni:'Zeleni pojas',plavi:'Plavi pojas',braon:'Braon pojas'};
     const grid = document.getElementById('obBeltPicker');
-    grid.innerHTML = BELT_SYSTEM.slice(0, 6).map((b, i) => `
-      <div class="bp-belt-opt${obBeltPicked === i ? ' selected' : ''}"
-        onclick="obBeltPicked=${i};document.querySelectorAll('#obBeltPicker .bp-belt-opt').forEach(x=>x.classList.remove('selected'));this.classList.add('selected')">
-        <span class="bo-icon">${beltSVG(beltSVGMap[b.id] || 'Beli pojas', 28)}</span>
-        <span class="bo-name">${escH(translateBeltName(b.id) || b.name.split(' ')[0])}</span>
-      </div>`).join('');
+    if (grid) {
+      grid.innerHTML = BELT_SYSTEM.slice(0, 6).map((b, i) => `
+        <div class="bp-belt-opt${obBeltPicked === i ? ' selected' : ''}"
+          onclick="obBeltPicked=${i};document.querySelectorAll('#obBeltPicker .bp-belt-opt').forEach(x=>x.classList.remove('selected'));this.classList.add('selected')">
+          <span class="bo-icon">${beltSVG(beltSVGMap[b.id] || 'Beli pojas', 28)}</span>
+          <span class="bo-name">${escH(translateBeltName(b.id) || b.name.split(' ')[0])}</span>
+        </div>`).join('');
+    }
   }
 }
 
@@ -4088,8 +4111,11 @@ function obSaveStep3() {
 }
 
 function obSkip() {
-  const currentStep = [1,2,3,4].find(i => document.getElementById('obStep' + i).style.display !== 'none');
-  if (currentStep < 4) obGoStep(currentStep + 1);
+  const currentStep = [0,1,2,3,4].find(i => {
+    const el = document.getElementById('obStep' + i);
+    return el && el.style.display !== 'none';
+  });
+  if (currentStep !== undefined && currentStep < 4) obGoStep(currentStep + 1);
   else closeOnboarding();
 }
 
@@ -4182,15 +4208,29 @@ function selectCountry(val) {
   hideCountryDropdown();
 }
 
-// ── Android back dugme (Capacitor) ───────────────────
-document.addEventListener('deviceready', () => {
-  if (window.Capacitor) {
-    import('@capacitor/app').then(({ App }) => {
-      App.addListener('backButton', ({ canGoBack }) => {
-        navBack();
-      });
-    }).catch(() => {});
-  }
+// ── Capacitor init ───────────────────────────────────
+async function initCapacitor() {
+  if (!window.Capacitor || !window.Capacitor.isNativePlatform()) return;
+
+  // Status bar - sakrij potpuno
+  try {
+    const StatusBar = window.Capacitor.Plugins.StatusBar;
+    if (StatusBar) {
+      await StatusBar.hide();
+    }
+  } catch(e) {}
+
+  // Back dugme
+  try {
+    const App = window.Capacitor.Plugins.App;
+    if (App) {
+      App.addListener('backButton', () => { navBack(); });
+    }
+  } catch(e) {}
+}
+
+window.addEventListener('load', () => {
+  setTimeout(initCapacitor, 300);
 });
 
 fetchLeaderboard();
@@ -4255,16 +4295,21 @@ function updateScoutingCardVisibility() {
 
 function refreshNickUI() {
   const s = loadXPState();
+  const profil = loadProfilData();
   const nickWrap = document.getElementById('nickWrap');
   const nickGreet = document.getElementById('nickGreet');
   if (!nickWrap || !nickGreet) return;
-  if (s.nick) {
-    nickWrap.style.display = 'none';
+
+  // Uzmi ime iz profila ili XP state
+  const name = profil?.ime ? (profil.prezime ? `${profil.ime} ${profil.prezime[0]}.` : profil.ime) : s.nick;
+
+  // Input je uvek sakriven
+  nickWrap.style.display = 'none';
+
+  if (name) {
     nickGreet.style.display = 'block';
-    nickGreet.innerHTML = `${t('quizGreeting').replace('{name}', `<strong>${escH(s.nick)}</strong>`)} ${LEVELS[getLevelForXP(s.totalXP)].icon}
-      <button onclick="clearNick()" style="margin-left:10px;font-size:.7rem;background:none;border:1px solid var(--border);border-radius:8px;padding:3px 8px;color:var(--siva);cursor:pointer;">${escH(t('quizChangeBtn'))}</button>`;
+    nickGreet.innerHTML = `${t('quizGreeting').replace('{name}', `<strong>${escH(name)}</strong>`)} ${LEVELS[getLevelForXP(s.totalXP)].icon}`;
   } else {
-    nickWrap.style.display = 'flex';
     nickGreet.style.display = 'none';
   }
 }
@@ -14236,26 +14281,13 @@ function beltSVG(beltName, size=22) {
 //  CENTRAL VIDEO RENDERER
 // ════════════════════════════════════════════════
 async function openYouTube(videoId) {
-  const ytUrl = 'https://www.youtube.com/watch?v=' + videoId;
-  
-  // Capacitor Browser plugin - otvara unutar app-a
-  if (window.Capacitor && window.Capacitor.isNativePlatform()) {
-    try {
-      const { Browser } = await import('@capacitor/browser');
-      await Browser.open({ url: ytUrl, presentationStyle: 'fullscreen' });
-      return;
-    } catch(e) {}
+  // Android native bridge - otvara YouTube app direktno
+  if (window.AndroidBridge) {
+    window.AndroidBridge.openYouTube(videoId);
+    return;
   }
-  
-  // Fallback za browser - pokušaj YouTube app intent
-  const intentUrl = 'intent://www.youtube.com/watch?v=' + videoId +
-    '#Intent;package=com.google.android.youtube;scheme=https;end;';
-  try {
-    window.location.href = intentUrl;
-    setTimeout(function() { window.open(ytUrl, '_blank'); }, 1500);
-  } catch(e) {
-    window.open(ytUrl, '_blank');
-  }
+  // Fallback za browser
+  window.open('https://www.youtube.com/watch?v=' + videoId, '_blank');
 }
 
 function renderVideo(containerId, videoId, opts) {
@@ -20520,10 +20552,30 @@ function openBugReport() {
     
     <!-- Progress dots -->
     <div id="obDots" style="display:flex;justify-content:center;gap:8px;margin-bottom:24px;">
-      <div class="ob-dot active" id="obDot1"></div>
+      <div class="ob-dot active" id="obDot0"></div>
+      <div class="ob-dot" id="obDot1"></div>
       <div class="ob-dot" id="obDot2"></div>
       <div class="ob-dot" id="obDot3"></div>
       <div class="ob-dot" id="obDot4"></div>
+    </div>
+
+    <!-- Step 0: Choose Language -->
+    <div id="obStep0">
+      <div style="text-align:center;margin-bottom:24px;">
+        <div style="font-size:2.5rem;margin-bottom:12px;">🌍</div>
+        <h2 style="font-family:'Oswald',sans-serif;font-size:1.4rem;color:#fff;letter-spacing:1px;margin-bottom:6px;">Choose your language</h2>
+        <p style="font-size:.8rem;color:var(--siva);">Select the language for Judo Academy</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;">
+        <button onclick="obSelectLang('sr')" class="ob-lang-btn">🇷🇸 Srpski</button>
+        <button onclick="obSelectLang('en')" class="ob-lang-btn">🇬🇧 English</button>
+        <button onclick="obSelectLang('de')" class="ob-lang-btn">🇩🇪 Deutsch</button>
+        <button onclick="obSelectLang('fr')" class="ob-lang-btn">🇫🇷 Français</button>
+        <button onclick="obSelectLang('es')" class="ob-lang-btn">🇪🇸 Español</button>
+        <button onclick="obSelectLang('it')" class="ob-lang-btn">🇮🇹 Italiano</button>
+        <button onclick="obSelectLang('pt')" class="ob-lang-btn">🇵🇹 Português</button>
+        <button onclick="obSelectLang('ru')" class="ob-lang-btn">🇷🇺 Русский</button>
+      </div>
     </div>
 
     <!-- Step 1: Dobrodošao -->
@@ -20558,7 +20610,6 @@ function openBugReport() {
         </div>
       </div>
       <button class="ob-next-btn start-btn" onclick="obSaveStep2()" style="width:100%;margin-bottom:10px;">Dalje →</button>
-      <button class="ob-skip-btn" onclick="obSkip()" style="width:100%;padding:10px;border:none;background:none;color:var(--siva2);font-family:'Nunito',sans-serif;font-size:.8rem;cursor:pointer;">Preskoči za sada</button>
     </div>
 
     <!-- Step 3: Džudo podaci -->
@@ -20620,6 +20671,15 @@ function openBugReport() {
 .ob-dot.done {
   background:var(--zelena);
 }
+.ob-lang-btn {
+  padding:10px 8px;border-radius:12px;border:1.5px solid var(--border);
+  background:rgba(255,255,255,.05);color:var(--bela);
+  font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:700;
+  cursor:pointer;transition:all .15s;text-align:center;
+}
+.ob-lang-btn:hover, .ob-lang-btn.selected {
+  border-color:var(--zlatna);background:rgba(201,162,39,.1);color:var(--zlatna);
+}
 </style>
 
 <!-- ═══ PREMIUM MODAL ═══ -->
@@ -20639,79 +20699,58 @@ function openBugReport() {
 
 <div id="premiumModal" onclick="if(event.target===this)closePremiumModal()" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);align-items:flex-end;justify-content:center;padding:0;">
 
-  <!-- Bottom sheet style -->
   <div style="background:var(--tatami2);border:1px solid rgba(201,162,39,.3);border-radius:22px 22px 0 0;padding:24px 20px 32px;max-width:460px;width:100%;max-height:92vh;overflow-y:auto;position:relative;">
 
-    <!-- Handle -->
     <div style="width:40px;height:4px;background:var(--border);border-radius:4px;margin:0 auto 18px;"></div>
-
-    <!-- Close -->
     <button onclick="closePremiumModal()" style="position:absolute;top:16px;right:18px;background:none;border:none;color:var(--siva2);font-size:1.2rem;cursor:pointer;padding:4px;">✕</button>
 
-    <!-- Icon + Title (locked feature name) -->
+    <!-- Icon + Title -->
     <div style="text-align:center;margin-bottom:16px;">
       <div style="font-size:2rem;margin-bottom:8px;" id="premiumModalIcon">🔒</div>
       <div style="font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:700;color:var(--bela);margin-bottom:4px;" id="premiumModalTitle">Premium funkcija</div>
       <div style="font-size:.8rem;color:var(--siva);line-height:1.5;" id="premiumModalDesc"></div>
     </div>
 
-    <!-- Concrete value example -->
-    <div id="premiumExampleBox" style="display:none;background:rgba(79,70,229,.08);border:1px solid rgba(79,70,229,.22);border-radius:12px;padding:12px 14px;margin-bottom:16px;text-align:left;">
-      <div style="font-size:.65rem;font-weight:900;color:#818cf8;letter-spacing:.6px;text-transform:uppercase;margin-bottom:6px;">💬 Primer iz prakse</div>
-      <div id="premiumExampleQ" style="font-size:.76rem;color:var(--siva2);font-style:italic;margin-bottom:5px;"></div>
-      <div id="premiumExampleA" style="font-size:.79rem;color:var(--bela);line-height:1.5;"></div>
-    </div>
-
-    <!-- Monthly / Yearly toggle -->
-    <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;">
-      <span style="font-size:.78rem;color:var(--siva);" id="pmToggleLblM">Mesečno</span>
-      <div onclick="togglePremiumBilling()" id="pmBillingToggle" style="width:42px;height:24px;border-radius:12px;background:var(--zlatna);cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;">
-        <div id="pmBillingKnob" style="width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:left .2s;"></div>
-      </div>
-      <span style="font-size:.78rem;color:var(--siva);" id="pmToggleLblY">Godišnje</span>
-      <span style="font-size:.65rem;font-weight:900;color:var(--zelena2);background:rgba(35,134,54,.12);border:1px solid rgba(35,134,54,.3);border-radius:8px;padding:2px 7px;">Uštedi 50%</span>
-    </div>
-
-    <!-- Jedan Premium tier -->
-    <div id="pmTierCards" style="margin-bottom:14px;">
-      <div id="pmCard_premium" style="border:2px solid var(--zlatna);border-radius:14px;padding:16px;text-align:center;background:rgba(201,162,39,.06);position:relative;">
-        <div style="font-size:1.5rem;margin-bottom:4px;">🥋</div>
-        <div style="font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;color:var(--bela);margin-bottom:6px;">Premium</div>
-        <div style="font-size:1.3rem;font-weight:900;color:var(--zlatna);font-family:'Oswald',sans-serif;" id="pmPrice_premium">499 RSD</div>
-        <div style="font-size:.65rem;color:var(--siva);margin-top:2px;margin-bottom:12px;">/mesečno</div>
-        <div style="text-align:left;font-size:.77rem;color:var(--siva2);line-height:1.9;background:rgba(255,255,255,.03);border-radius:10px;padding:10px 12px;">
-          🤖 AI Sensei – 5 pitanja dnevno<br>
-          📝 Kviz – neograničeno<br>
-          📓 Džudo Dnevnik – neograničeno<br>
-          🎯 Skauting – 5 analiza dnevno
-        </div>
+    <!-- Šta dobijaš -->
+    <div style="background:rgba(201,162,39,.06);border:1px solid rgba(201,162,39,.2);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
+      <div style="font-size:.65rem;font-weight:900;color:var(--zlatna);letter-spacing:.6px;text-transform:uppercase;margin-bottom:10px;">🥋 Premium uključuje</div>
+      <div style="font-size:.82rem;color:var(--siva2);line-height:2;">
+        🤖 AI Sensei – 5 pitanja dnevno<br>
+        📓 Džudo Dnevnik – neograničeno unosa<br>
+        🎯 Skauting protivnika – 5 analiza dnevno<br>
+        📊 Napredna statistika i analiza
       </div>
     </div>
 
-    <!-- Yearly note -->
-    <div id="pmYearlyNote" style="display:none;text-align:center;font-size:.72rem;color:var(--zelena2);margin-bottom:12px;font-weight:700;">
-      📅 Plati 6 meseci, koristi godinu — poklapa se sa judaškom sezonom (sep–jun)
+    <!-- Cena -->
+    <div style="display:flex;gap:10px;margin-bottom:16px;">
+      <div style="flex:1;border:1.5px solid var(--border);border-radius:12px;padding:12px;text-align:center;">
+        <div style="font-size:1.2rem;font-weight:900;color:var(--zlatna);font-family:'Oswald',sans-serif;" id="pmPriceMonthly">499 RSD</div>
+        <div style="font-size:.65rem;color:var(--siva);margin-top:2px;" id="pmLabelMonthly">mesečno</div>
+      </div>
+      <div style="flex:1;border:2px solid var(--zlatna);border-radius:12px;padding:12px;text-align:center;background:rgba(201,162,39,.06);position:relative;">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--zelena2);color:#fff;font-size:.6rem;font-weight:900;padding:2px 8px;border-radius:8px;">UŠTEDI 50%</div>
+        <div style="font-size:1.2rem;font-weight:900;color:var(--zlatna);font-family:'Oswald',sans-serif;" id="pmPriceYearly">2,990 RSD</div>
+        <div style="font-size:.65rem;color:var(--siva);margin-top:2px;" id="pmLabelYearly">godišnje</div>
+      </div>
     </div>
 
-    <!-- CTA: Postani Premium -->
+    <!-- CTA -->
     <button onclick="startPremiumCheckout()" id="premiumCheckoutBtn"
-      style="width:100%;padding:16px;border-radius:14px;background:linear-gradient(135deg,var(--zlatna),#e8be3c);border:none;color:var(--tatami);font-family:'Nunito',sans-serif;font-size:1rem;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px;">
+      style="width:100%;padding:16px;border-radius:14px;background:linear-gradient(135deg,var(--zlatna),#e8be3c);border:none;color:var(--tatami);font-family:'Nunito',sans-serif;font-size:1rem;font-weight:900;cursor:pointer;margin-bottom:12px;">
       <span id="premiumBtnText">🔓 Postani Premium</span>
     </button>
 
-    <!-- Trial badge -->
-    <div id="premiumTrialBadge" style="display:none;background:rgba(35,134,54,.1);border:1px solid rgba(35,134,54,.3);border-radius:10px;padding:8px 12px;margin-bottom:10px;font-size:.76rem;font-weight:800;color:var(--zelena2);text-align:center;"></div>
-
-    <!-- Trial btn (free users) -->
-    <button onclick="startTrialFlow()" id="premiumTrialBtn" style="display:none;width:100%;padding:13px;border-radius:13px;background:linear-gradient(135deg,var(--zelena),var(--zelena2));border:none;color:#fff;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:900;cursor:pointer;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;">
-      🎁 Probaj besplatno 7 dana
-    </button>
-
-    <div style="font-size:.67rem;color:var(--siva2);text-align:center;margin-bottom:6px;">
-      🔒 Sigurno plaćanje · Bez automatskog obnavljanja bez potvrde · Otkaži bilo kada
+    <!-- Promo kod -->
+    <div style="margin-bottom:12px;">
+      <div style="font-size:.7rem;color:var(--siva2);text-align:center;margin-bottom:8px;">Imaš promo kod? Unesi ga u Podešavanjima → Promo kod</div>
     </div>
 
-    <button onclick="closePremiumModal()" style="width:100%;padding:10px;border-radius:12px;background:none;border:none;color:var(--siva);font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;">Možda kasnije</button>
+    <div style="font-size:.67rem;color:var(--siva2);text-align:center;margin-bottom:6px;">
+      🔒 Sigurno plaćanje · Otkaži bilo kada
+    </div>
+
+    <button onclick="closePremiumModal()" style="width:100%;padding:10px;border-radius:12px;background:none;border:none;color:var(--siva);font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;" id="pmLaterBtn">Možda kasnije</button>
   </div>
 </div>
 
