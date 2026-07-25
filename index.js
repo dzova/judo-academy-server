@@ -7,6 +7,16 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { Pool } = require('pg');
 const fs = require('fs');
 
+if (process.env.NODE_ENV !== 'production') { require('dotenv').config(); }
+const express = require('express');
+const cors = require('cors');
+const session = require('express-session');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const { Pool } = require('pg');
+const fs = require('fs');
+const path = require('path');
+
 const app = express();
 app.use(cors({ origin: '*', credentials: false }));
 app.use(express.json());
@@ -187,7 +197,8 @@ app.post('/api/promo/redeem', async (req, res) => {
 app.get('/api/questions', (req, res) => {
   res.setHeader('Cache-Control', 'public, max-age=86400');
   try {
-    const data = fs.readFileSync(__dirname + '/public/data/all_questions_v2.json', 'utf-8');
+    const filePath = path.join(__dirname, 'public', 'data', 'all_questions_v2.json');
+    const data = fs.readFileSync(filePath, 'utf-8');
     res.json(JSON.parse(data));
   } catch (err) {
     res.status(500).json({ error: 'Questions file not found: ' + err.message });
@@ -197,7 +208,8 @@ app.get('/api/questions', (req, res) => {
 app.get('/api/randori', (req, res) => {
   res.setHeader('Cache-Control', 'public, max-age=86400');
   try {
-    const data = fs.readFileSync(__dirname + '/public/data/randori_db_v2.json', 'utf-8');
+    const filePath = path.join(__dirname, 'public', 'data', 'randori_db_v2.json');
+    const data = fs.readFileSync(filePath, 'utf-8');
     res.json(JSON.parse(data));
   } catch (err) {
     res.status(500).json({ error: 'Randori file not found: ' + err.message });
