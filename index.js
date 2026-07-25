@@ -183,6 +183,18 @@ app.post('/api/promo/redeem', async (req, res) => {
 
 // ── AI SENSEI PROXY ──────────────────────────────────
 
+// ════════════════════════════════════════ KVIZ I RANDORI (NEW) ════════════════════════════════════════
+
+app.get('/api/questions', (req, res) => {
+  res.setHeader('Cache-Control', 'public, max-age=86400');
+  res.sendFile('./public/data/all_questions_v2.json');
+});
+
+app.get('/api/randori', (req, res) => {
+  res.setHeader('Cache-Control', 'public, max-age=86400');
+  res.sendFile('./public/data/randori_db_v2.json');
+});
+
 app.post('/api/sensei/ask', async (req, res) => {
   const { messages, system } = req.body;
   try {
