@@ -5,6 +5,7 @@ const session = require('express-session');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { Pool } = require('pg');
+const fs = require('fs');
 
 const app = express();
 app.use(cors({ origin: '*', credentials: false }));
@@ -69,13 +70,13 @@ app.get('/auth/me', (req, res) => {
   else res.status(401).json({ error: 'Nije ulogovan' });
 });
 
-// ── HEALTH ───────────────────────────────────────────
+// ════════════════════════════════════════ HEALTH ════════════════════════════════════════
 
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'Judo Academy server radi!' });
 });
 
-// ── KORISNIK ─────────────────────────────────────────
+// ════════════════════════════════════════ KORISNIK ════════════════════════════════════════
 
 app.get('/api/user/:userId', async (req, res) => {
   const { userId } = req.params;
@@ -101,7 +102,7 @@ app.post('/api/user/update', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// ── RANG LISTA ──────────────────────────────────────
+// ════════════════════════════════════════ RANG LISTA ════════════════════════════════════════
 
 app.get('/api/leaderboard', async (req, res) => {
   try {
@@ -120,7 +121,7 @@ app.post('/api/xp/update', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// ── AI SENSEI LIMITI ─────────────────────────────────
+// ════════════════════════════════════════ AI SENSEI LIMITI ════════════════════════════════════════
 
 app.get('/api/sensei/limit/:userId', async (req, res) => {
   const { userId } = req.params;
@@ -155,7 +156,7 @@ app.post('/api/sensei/use', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// ── PROMO KODOVI ─────────────────────────────────────
+// ════════════════════════════════════════ PROMO KODOVI ════════════════════════════════════════
 
 app.post('/api/promo/redeem', async (req, res) => {
   const { code, userId } = req.body;
@@ -181,19 +182,29 @@ app.post('/api/promo/redeem', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// ── AI SENSEI PROXY ──────────────────────────────────
-
 // ════════════════════════════════════════ KVIZ I RANDORI (NEW) ════════════════════════════════════════
 
 app.get('/api/questions', (req, res) => {
   res.setHeader('Cache-Control', 'public, max-age=86400');
-  res.sendFile('./public/data/all_questions_v2.json');
+  try {
+    const data = fs.readFileSync('./public/data/all_questions_v2.json', 'utf-8');
+    res.json(JSON.parse(data));
+  } catch (err) {
+    res.status(500).json({ error: 'Questions file not found: ' + err.message });
+  }
 });
 
 app.get('/api/randori', (req, res) => {
   res.setHeader('Cache-Control', 'public, max-age=86400');
-  res.sendFile('./public/data/randori_db_v2.json');
+  try {
+    const data = fs.readFileSync('./public/data/randori_db_v2.json', 'utf-8');
+    res.json(JSON.parse(data));
+  } catch (err) {
+    res.status(500).json({ error: 'Randori file not found: ' + err.message });
+  }
 });
+
+// ════════════════════════════════════════ AI SENSEI PROXY ════════════════════════════════════════
 
 app.post('/api/sensei/ask', async (req, res) => {
   const { messages, system } = req.body;
