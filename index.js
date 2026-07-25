@@ -6,15 +6,6 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { Pool } = require('pg');
 const fs = require('fs');
-
-if (process.env.NODE_ENV !== 'production') { require('dotenv').config(); }
-const express = require('express');
-const cors = require('cors');
-const session = require('express-session');
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const { Pool } = require('pg');
-const fs = require('fs');
 const path = require('path');
 
 const app = express();
