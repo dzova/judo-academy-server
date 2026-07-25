@@ -4345,7 +4345,10 @@ function renderLeaderboard() {
   }).join('');
 }
 
+let _quoteRendered = false;
 function renderQuotes() {
+  if (_quoteRendered) return; // ne menjaj citat pri svakom navBack
+  _quoteRendered = true;
   const el = document.getElementById('quotesHome');
   if (!el) return;
   const q = QUOTES[Math.floor(Math.random()*QUOTES.length)];

@@ -14,7 +14,6 @@ app.use(express.json());
 app.use(session({ secret: process.env.SESSION_SECRET || 'judo2024', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static('public'));
 
 const db = new Pool({ connectionString: process.env.DATABASE_URL });
 
@@ -185,7 +184,7 @@ app.post('/api/promo/redeem', async (req, res) => {
 
 // ════════════════════════════════════════ KVIZ I RANDORI (NEW) ════════════════════════════════════════
 
-app.get('/api/questions', (req, res) => {
+app.get('/api/quiz', (req, res) => {
   res.setHeader('Cache-Control', 'public, max-age=86400');
   try {
     const filePath = path.join(__dirname, 'public', 'data', 'all_questions_v2.json');
@@ -230,5 +229,6 @@ app.post('/api/sensei/ask', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+app.use(express.static('public'));
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => console.log('Server radi na portu ' + PORT));
