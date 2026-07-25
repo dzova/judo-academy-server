@@ -9,6 +9,16 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
+
+// CORS headers — MORAJU biti pre ostalih middleware-a
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.sendStatus(200);
+  next();
+});
+
 app.use(cors({ origin: '*', credentials: false }));
 app.use(express.json());
 app.use(session({ secret: process.env.SESSION_SECRET || 'judo2024', resave: false, saveUninitialized: false }));
@@ -188,11 +198,9 @@ app.get('/api/quiz', (req, res) => {
   res.setHeader('Cache-Control', 'public, max-age=86400');
   try {
     const filePath = path.join(__dirname, 'public', 'data', 'all_questions_v2.json');
-    console.log('[DEBUG] Reading from:', filePath);
     const data = fs.readFileSync(filePath, 'utf-8');
     res.json(JSON.parse(data));
   } catch (err) {
-    console.error('[ERROR]', err);
     res.status(500).json({ error: 'Questions file not found: ' + err.message });
   }
 });
@@ -201,11 +209,9 @@ app.get('/api/randori', (req, res) => {
   res.setHeader('Cache-Control', 'public, max-age=86400');
   try {
     const filePath = path.join(__dirname, 'public', 'data', 'randori_db_v2.json');
-    console.log('[DEBUG] Reading from:', filePath);
     const data = fs.readFileSync(filePath, 'utf-8');
     res.json(JSON.parse(data));
   } catch (err) {
-    console.error('[ERROR]', err);
     res.status(500).json({ error: 'Randori file not found: ' + err.message });
   }
 });
@@ -229,6 +235,8 @@ app.post('/api/sensei/ask', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// Static files — MORA biti posle ruta
 app.use(express.static('public'));
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => console.log('Server radi na portu ' + PORT));
