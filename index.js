@@ -187,7 +187,7 @@ app.post('/api/promo/redeem', async (req, res) => {
 app.get('/api/questions', (req, res) => {
   res.setHeader('Cache-Control', 'public, max-age=86400');
   try {
-    const data = fs.readFileSync('./public/data/all_questions_v2.json', 'utf-8');
+    const data = fs.readFileSync(__dirname + '/public/data/all_questions_v2.json', 'utf-8');
     res.json(JSON.parse(data));
   } catch (err) {
     res.status(500).json({ error: 'Questions file not found: ' + err.message });
@@ -197,7 +197,7 @@ app.get('/api/questions', (req, res) => {
 app.get('/api/randori', (req, res) => {
   res.setHeader('Cache-Control', 'public, max-age=86400');
   try {
-    const data = fs.readFileSync('./public/data/randori_db_v2.json', 'utf-8');
+    const data = fs.readFileSync(__dirname + '/public/data/randori_db_v2.json', 'utf-8');
     res.json(JSON.parse(data));
   } catch (err) {
     res.status(500).json({ error: 'Randori file not found: ' + err.message });
