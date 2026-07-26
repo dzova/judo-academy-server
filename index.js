@@ -235,6 +235,14 @@ app.post('/api/sensei/ask', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// Legal documents
+app.get('/terms', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'terms.pdf'));
+});
+app.get('/privacy', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'privacy.pdf'));
+});
+
 // Static files — MORA biti posle ruta
 app.use(express.static('public'));
 
