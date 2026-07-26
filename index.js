@@ -122,6 +122,7 @@ app.get('/api/auth/pending/:token', async (req, res) => {
 });
 
 
+app.get('/auth/me', (req, res) => {
   if (req.user) res.json(req.user);
   else res.status(401).json({ error: 'Nije ulogovan' });
 });
