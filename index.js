@@ -52,26 +52,36 @@ passport.deserializeUser(async (id, done) => {
 
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: 'judoacademy://auth-failed' }), (req, res) => {
   const user = req.user;
-  res.redirect('/auth-success?userId=' + user.id + '&username=' + encodeURIComponent(user.username) + '&belt=' + (user.belt || 'white') + '&xp=' + (user.xp || 0));
+  const params = new URLSearchParams({
+    userId: user.id,
+    username: user.username || '',
+    email: user.email || '',
+    belt: user.belt || 'white',
+    xp: user.xp || 0
+  });
+  // Deep link — otvara Capacitor app direktno
+  res.redirect('judoacademy://auth-success?' + params.toString());
 });
 
+// Fallback web stranica ako deep link ne radi
 app.get('/auth-success', (req, res) => {
-  const { userId, username, belt, xp } = req.query;
-  res.send(`<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>
-    <script>
-      try {
-        window.localStorage.setItem('judo_auth_pending', JSON.stringify({
-          userId: '${userId}',
-          username: '${username}',
-          belt: '${belt || "white"}',
-          xp: '${xp || "0"}'
-        }));
-      } catch(e) {}
-      setTimeout(function(){ window.location.href = '/'; }, 200);
-    </script>
-    <p>Ulogovan! Preusmeravamo...</p>
+  const { userId, username, belt, xp, email } = req.query;
+  res.send(`<!DOCTYPE html><html><head><meta charset="utf-8">
+  <title>Judo Academy - Login</title>
+  <style>body{font-family:sans-serif;text-align:center;padding:40px;background:#0F1520;color:#fff;}
+  .btn{display:inline-block;padding:12px 24px;background:#D4A833;color:#000;border-radius:10px;text-decoration:none;font-weight:bold;margin-top:20px;}</style>
+  </head><body>
+  <h2>Uspesno ulogovan!</h2>
+  <p>Vrati se u Judo Academy app.</p>
+  <a class="btn" href="judoacademy://auth-success?userId=${encodeURIComponent(userId)}&username=${encodeURIComponent(username)}&belt=${encodeURIComponent(belt||'white')}&xp=${encodeURIComponent(xp||0)}&email=${encodeURIComponent(email||'')}">Otvori app</a>
+  <script>
+    // Pokusaj automatski
+    setTimeout(function(){
+      window.location.href = 'judoacademy://auth-success?userId=${encodeURIComponent(userId)}&username=${encodeURIComponent(username)}&belt=${encodeURIComponent(belt||'white')}&xp=${encodeURIComponent(xp||0)}&email=${encodeURIComponent(email||'')}';
+    }, 500);
+  </script>
   </body></html>`);
 });
 
