@@ -50,42 +50,78 @@ passport.deserializeUser(async (id, done) => {
   done(null, result.rows[0]);
 });
 
+const crypto = require('crypto');
+const pendingAuth = {}; // In-memory token store
+
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: 'judoacademy://auth-failed' }), (req, res) => {
   const user = req.user;
-  const params = new URLSearchParams({
+  // Generisi jednokratni token
+  const token = crypto.randomBytes(16).toString('hex');
+  pendingAuth[token] = {
     userId: user.id,
-    username: user.username || '',
+    username: user.username || user.displayName || '',
     email: user.email || '',
     belt: user.belt || 'white',
     xp: user.xp || 0
-  });
-  // Deep link — otvara Capacitor app direktno
-  res.redirect('judoacademy://auth-success?' + params.toString());
+  };
+  // Obrisi token posle 5 minuta
+  setTimeout(function() { delete pendingAuth[token]; }, 5 * 60 * 1000);
+
+  // Pokusaj deep link, sa fallback na web stranicu
+  const deepLink = 'judoacademy://auth-success?token=' + token;
+  const webFallback = '/auth-success?token=' + token + '&userId=' + user.id + '&username=' + encodeURIComponent(user.username || '') + '&belt=' + (user.belt || 'white') + '&xp=' + (user.xp || 0) + '&email=' + encodeURIComponent(user.email || '');
+  
+  res.send(`<!DOCTYPE html><html><head><meta charset="utf-8">
+  <title>Judo Academy</title>
+  <style>body{font-family:sans-serif;text-align:center;padding:40px;background:#0F1520;color:#fff;}
+  .btn{display:inline-block;padding:14px 28px;background:#D4A833;color:#000;border-radius:12px;text-decoration:none;font-weight:900;margin-top:20px;font-size:1rem;}</style>
+  </head><body>
+  <h2 style="color:#D4A833;">Uspesno ulogovan!</h2>
+  <p style="color:#aaa;">Vracamo te u Judo Academy...</p>
+  <a class="btn" href="${deepLink}">Otvori Judo Academy</a>
+  <script>
+    setTimeout(function(){ window.location.href = '${deepLink}'; }, 300);
+  </script>
+  </body></html>`);
 });
 
 // Fallback web stranica ako deep link ne radi
 app.get('/auth-success', (req, res) => {
   const { userId, username, belt, xp, email } = req.query;
+  const userData = JSON.stringify({ userId, username: username || '', email: email || '', belt: belt || 'white', xp: xp || 0 });
+  const deepLink = `judoacademy://auth-success?userId=${encodeURIComponent(userId)}&username=${encodeURIComponent(username||'')}&belt=${encodeURIComponent(belt||'white')}&xp=${encodeURIComponent(xp||0)}&email=${encodeURIComponent(email||'')}`;
   res.send(`<!DOCTYPE html><html><head><meta charset="utf-8">
   <title>Judo Academy - Login</title>
   <style>body{font-family:sans-serif;text-align:center;padding:40px;background:#0F1520;color:#fff;}
-  .btn{display:inline-block;padding:12px 24px;background:#D4A833;color:#000;border-radius:10px;text-decoration:none;font-weight:bold;margin-top:20px;}</style>
+  .btn{display:inline-block;padding:12px 24px;background:#D4A833;color:#000;border-radius:10px;text-decoration:none;font-weight:bold;margin-top:20px;cursor:pointer;border:none;font-size:16px;}</style>
   </head><body>
-  <h2>Uspesno ulogovan!</h2>
+  <h2>&#10003; Uspesno ulogovan!</h2>
   <p>Vrati se u Judo Academy app.</p>
-  <a class="btn" href="judoacademy://auth-success?userId=${encodeURIComponent(userId)}&username=${encodeURIComponent(username)}&belt=${encodeURIComponent(belt||'white')}&xp=${encodeURIComponent(xp||0)}&email=${encodeURIComponent(email||'')}">Otvori app</a>
+  <button class="btn" onclick="openApp()">Otvori app</button>
   <script>
-    // Pokusaj automatski
-    setTimeout(function(){
-      window.location.href = 'judoacademy://auth-success?userId=${encodeURIComponent(userId)}&username=${encodeURIComponent(username)}&belt=${encodeURIComponent(belt||'white')}&xp=${encodeURIComponent(xp||0)}&email=${encodeURIComponent(email||'')}';
-    }, 500);
+    // Sacuvaj u localStorage ovog WebView-a
+    try { localStorage.setItem('judo_auth_pending', '${userData.replace(/'/g, "\\'")}'); } catch(e) {}
+    function openApp() {
+      window.location.href = '${deepLink}';
+    }
+    // Automatski pokusaj
+    setTimeout(openApp, 800);
   </script>
   </body></html>`);
 });
 
-app.get('/auth/me', (req, res) => {
+// Auth pending - app fetchuje posle Google login-a
+app.get('/api/auth/pending/:token', async (req, res) => {
+  const token = req.params.token;
+  const data = pendingAuth[token];
+  if (!data) return res.status(404).json({ error: 'Token nije validan ili je istekao' });
+  delete pendingAuth[token]; // Jednokratno koriscenje
+  res.json(data);
+});
+
+
   if (req.user) res.json(req.user);
   else res.status(401).json({ error: 'Nije ulogovan' });
 });
