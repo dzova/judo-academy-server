@@ -282,6 +282,67 @@ app.post('/api/sensei/ask', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// ════════════════════════════════════════ KVIZ STATISTIKE ════════════════════════════════════════
+
+app.post('/api/quiz/stats', async (req, res) => {
+  const { userId, score, correct, total, maxStreak, category } = req.body;
+  if (!userId) return res.status(400).json({ error: 'Nedostaje userId' });
+  try {
+    await db.query(
+      'INSERT INTO quiz_stats (user_id, score, correct, total, max_streak, category) VALUES ($1, $2, $3, $4, $5, $6)',
+      [userId, score || 0, correct || 0, total || 0, maxStreak || 0, category || 'mixed']
+    );
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/quiz/stats/:userId', async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const allTime = await db.query(`
+      SELECT
+        COUNT(*)::int AS games,
+        COALESCE(SUM(correct), 0)::int AS correct,
+        COALESCE(SUM(total), 0)::int AS total,
+        COALESCE(MAX(score), 0)::int AS record,
+        COALESCE(MAX(max_streak), 0)::int AS best_streak,
+        COALESCE(ROUND(SUM(correct)::numeric / NULLIF(SUM(total),0) * 100), 0)::int AS accuracy
+      FROM quiz_stats WHERE user_id = $1
+    `, [userId]);
+
+    const thisMonth = await db.query(`
+      SELECT
+        COUNT(*)::int AS games,
+        COALESCE(SUM(correct), 0)::int AS correct,
+        COALESCE(SUM(total), 0)::int AS total,
+        COALESCE(MAX(score), 0)::int AS record,
+        COALESCE(ROUND(SUM(correct)::numeric / NULLIF(SUM(total),0) * 100), 0)::int AS accuracy
+      FROM quiz_stats
+      WHERE user_id = $1
+        AND DATE_TRUNC('month', played_at) = DATE_TRUNC('month', NOW())
+    `, [userId]);
+
+    const byCategory = await db.query(`
+      SELECT
+        category,
+        COUNT(*)::int AS games,
+        COALESCE(SUM(correct), 0)::int AS correct,
+        COALESCE(SUM(total), 0)::int AS total,
+        COALESCE(ROUND(SUM(correct)::numeric / NULLIF(SUM(total),0) * 100), 0)::int AS accuracy
+      FROM quiz_stats
+      WHERE user_id = $1
+      GROUP BY category
+      ORDER BY games DESC
+    `, [userId]);
+
+    res.json({
+      allTime: allTime.rows[0],
+      thisMonth: thisMonth.rows[0],
+      byCategory: byCategory.rows
+    });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // Legal documents
 app.get('/terms', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'terms.pdf'));
