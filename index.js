@@ -343,6 +343,20 @@ app.get('/api/quiz/stats/:userId', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// ════════════════════════════════════════ ANALITIKA ════════════════════════════════════════
+
+app.post('/api/analytics/event', async (req, res) => {
+  const { userId, eventName, eventData } = req.body;
+  if (!userId || !eventName) return res.status(400).json({ error: 'Nedostaju parametri' });
+  try {
+    await db.query(
+      'INSERT INTO analytics_events (user_id, event_name, event_data) VALUES ($1, $2, $3)',
+      [userId, eventName, eventData ? JSON.stringify(eventData) : null]
+    );
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // Legal documents
 app.get('/terms', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'terms.pdf'));
