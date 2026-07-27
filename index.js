@@ -343,6 +343,53 @@ app.get('/api/quiz/stats/:userId', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// ════════════════════════════════════════ BACKGROUND SYNC ════════════════════════════════════════
+
+// Provjeri koje fajlove treba ažurirati
+app.post('/api/check-updates', async (req, res) => {
+  const { versions } = req.body; // { 'translations_v2.json': 1, 'all_questions_v2.json': 1, ... }
+  if (!versions) return res.status(400).json({ error: 'Nedostaju versions' });
+  try {
+    const result = await db.query('SELECT filename, version FROM data_versions');
+    const serverVersions = {};
+    result.rows.forEach(row => { serverVersions[row.filename] = row.version; });
+
+    const toUpdate = [];
+    Object.keys(versions).forEach(filename => {
+      const serverV = serverVersions[filename] || 1;
+      const clientV = versions[filename] || 0;
+      if (serverV > clientV) toUpdate.push({ filename, version: serverV });
+    });
+
+    res.json({ toUpdate, serverVersions });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// Ažuriraj verziju fajla (admin operacija)
+app.post('/api/data/bump-version', async (req, res) => {
+  const { filename, secret } = req.body;
+  if (secret !== (process.env.ADMIN_SECRET || 'judo-admin-2026')) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+  if (!filename) return res.status(400).json({ error: 'Nedostaje filename' });
+  try {
+    await db.query(
+      'INSERT INTO data_versions (filename, version, updated_at) VALUES ($1, 1, NOW()) ON CONFLICT (filename) DO UPDATE SET version = data_versions.version + 1, updated_at = NOW()',
+      [filename]
+    );
+    const result = await db.query('SELECT version FROM data_versions WHERE filename = $1', [filename]);
+    res.json({ success: true, filename, version: result.rows[0].version });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// Dohvati sve verzije
+app.get('/api/data/versions', async (req, res) => {
+  try {
+    const result = await db.query('SELECT filename, version, updated_at FROM data_versions ORDER BY filename');
+    res.json(result.rows);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // ════════════════════════════════════════ ANALITIKA ════════════════════════════════════════
 
 app.post('/api/analytics/event', async (req, res) => {
