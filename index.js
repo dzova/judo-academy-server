@@ -404,6 +404,50 @@ app.post('/api/analytics/event', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// ════════════════════════════════════════ USER DATA SYNC (Data Service Layer) ════════════════════════════════════════
+// Generička sinhronizacija za Beleške, Dnevnik, Scouting planove i Podešavanja.
+// Šema: user_data(user_id UUID, data_type TEXT, data_key TEXT, payload JSONB, updated_at TIMESTAMPTZ)
+// Napravi tabelu ručno u Railway Query editoru pre upotrebe (vidi user_data_schema.sql).
+
+app.post('/api/userdata/sync', async (req, res) => {
+  const { userId, dataType, items } = req.body;
+  if (!userId || !dataType || !Array.isArray(items)) {
+    return res.status(400).json({ error: 'Nedostaju userId, dataType ili items' });
+  }
+  try {
+    for (const item of items) {
+      if (!item || !item.key) continue;
+      if (item.deleted) {
+        await db.query(
+          'DELETE FROM user_data WHERE user_id = $1 AND data_type = $2 AND data_key = $3',
+          [userId, dataType, item.key]
+        );
+      } else {
+        await db.query(
+          `INSERT INTO user_data (user_id, data_type, data_key, payload, updated_at)
+           VALUES ($1, $2, $3, $4, $5)
+           ON CONFLICT (user_id, data_type, data_key)
+           DO UPDATE SET payload = $4, updated_at = $5
+           WHERE user_data.updated_at < $5`,
+          [userId, dataType, item.key, JSON.stringify(item.payload), item.updatedAt || new Date().toISOString()]
+        );
+      }
+    }
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/userdata/:userId/:dataType', async (req, res) => {
+  const { userId, dataType } = req.params;
+  try {
+    const result = await db.query(
+      'SELECT data_key AS key, payload, updated_at AS "updatedAt" FROM user_data WHERE user_id = $1 AND data_type = $2',
+      [userId, dataType]
+    );
+    res.json(result.rows);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // Legal documents
 app.get('/terms', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'terms.pdf'));
