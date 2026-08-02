@@ -412,6 +412,369 @@ app.get('/privacy', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'privacy.pdf'));
 });
 
+// ============================================================
+// Judo Academy — Admin Dashboard Endpoint
+//
+// KAKO DODATI: Nalepi CEO ovaj blok u index.js, TAČNO PRE linije:
+//   app.use(express.static('public'));
+// (tj. posle sekcije "ANALITIKA", pre "Static files" komentara)
+//
+// Na Railway -> Variables (vec si dodao) treba: ADMIN_DASHBOARD_KEY
+// Posle nalepljivanja ovog koda, commit + deploy na Railway kao i obicno.
+// ============================================================
+
+const TECHNIQUE_IDS = [
+  'o-goshi',
+  'o-soto-gari',
+  'seoi-nage',
+  'uchi-mata',
+  'harai-goshi',
+  'tai-otoshi',
+  'ko-uchi-gari',
+  'tomoe-nage',
+  'kesa-gatame',
+  'yoko-shiho-gatame',
+  'juji-gatame',
+  'okuri-eri-jime',
+  'hadaka-jime',
+  'yoko-ukemi',
+  'ushiro-ukemi',
+  'zenpo-kaiten',
+  'ippon-seoi-nage',
+  'hane-goshi',
+  'sumi-gaeshi',
+  'sukui-nage',
+  'tate-shiho-gatame',
+  'kami-shiho-gatame',
+  'morote-seoi-nage',
+  'ura-nage',
+  'kata-guruma',
+  'sode-tsurikomi-goshi',
+  'o-soto-guruma',
+  'gyaku-juji-jime',
+  'de-ashi-barai',
+  'hiza-guruma',
+  'o-uchi-gari',
+  'ko-soto-gari',
+  'tsuri-goshi',
+  'sasae-tsurikomi-ashi',
+  'ko-soto-gake',
+  'o-soto-otoshi',
+  'uchi-mata-sukashi',
+  'o-guruma',
+  'harai-tsurikomi-ashi',
+  'ko-uchi-makikomi',
+  'tani-otoshi',
+  'ura-otoshi',
+  'yoko-otoshi',
+  'koshi-guruma',
+  'ashi-guruma',
+  'okuri-ashi-barai',
+  'uki-goshi',
+  'seoi-otoshi',
+  'uchi-mata-makikomi',
+  'o-uchi-makikomi',
+  'harai-makikomi',
+  'o-soto-makikomi',
+  'yoko-gake',
+  'sumi-otoshi',
+  'daki-wakare',
+  'yoko-wakare',
+  'kuzure-kesa-gatame',
+  'mune-gatame',
+  'ushiro-kesa-gatame',
+  'kuzure-kami-shiho',
+  'sangaku-gatame',
+  'ude-gatame',
+  'waki-gatame',
+  'sankaku-jime',
+  'tobi-ukemi',
+  'uki-otoshi',
+  'tsurikomi-goshi',
+  'uki-waza',
+  'eri-seoi-nage',
+  'ko-soto-otoshi',
+  'hane-makikomi',
+  'utsuri-goshi',
+  'nami-juji-jime',
+  'kata-juji-jime',
+  'kata-ha-jime',
+  'o-soto-gaeshi',
+  'o-uchi-gaeshi',
+  'uchi-mata-gaeshi',
+  'harai-goshi-gaeshi',
+  'hane-goshi-gaeshi',
+  'kuzure-tate-shiho-gatame',
+  'hikkomi-gaeshi',
+  'soto-makikomi',
+  'seoi-makikomi',
+  'ushiro-goshi',
+  'yoko-guruma',
+  'eri-tsurikomi-goshi',
+  'ko-uchi-gake',
+  'tomoe-gaeshi',
+  'yoko-tomoe-nage'
+];
+
+function buildTechniqueIdsCTE() {
+  const rows = TECHNIQUE_IDS.map(id => `('${id}')`).join(',\n    ');
+  return `(VALUES\n    ${rows}\n  ) AS all_techniques(id)`;
+}
+
+// ════════════════════════════════════════ ADMIN DASHBOARD ════════════════════════════════════════
+
+app.get('/api/admin/dashboard', async (req, res) => {
+  const key = req.query.key || req.headers['x-admin-key'];
+  if (!process.env.ADMIN_DASHBOARD_KEY || key !== process.env.ADMIN_DASHBOARD_KEY) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const q = (sql) => db.query(sql).then(r => r.rows).catch(err => ({ error: err.message }));
+
+  const queries = {
+
+      // ---------- PAYWALL ----------
+      paywall_top_features: q(`
+        SELECT event_data->>'source' AS feature, COUNT(*) AS views
+        FROM analytics_events
+        WHERE event_name = 'premium_modal_view' AND created_at > now() - interval '30 days'
+        GROUP BY 1 ORDER BY views DESC
+      `),
+      paywall_checkout_funnel: q(`
+        SELECT event_name, COUNT(*) AS n
+        FROM analytics_events
+        WHERE event_name IN ('premium_checkout_intent','premium_checkout_cancelled','premium_checkout_confirmed')
+          AND created_at > now() - interval '30 days'
+        GROUP BY 1 ORDER BY 2 DESC
+      `),
+      paywall_billing_choice: q(`
+        SELECT event_data->>'billing' AS billing_period, COUNT(*) AS n
+        FROM analytics_events
+        WHERE event_name = 'premium_checkout_confirmed' AND created_at > now() - interval '90 days'
+        GROUP BY 1
+      `),
+      paywall_retarget_candidates: q(`
+        SELECT user_id, COUNT(*) AS paywall_hits, MAX(created_at) AS last_hit
+        FROM analytics_events
+        WHERE event_name = 'premium_modal_view' AND user_id IS NOT NULL
+          AND created_at > now() - interval '14 days'
+        GROUP BY user_id
+        HAVING COUNT(*) >= 3
+          AND user_id NOT IN (SELECT user_id FROM analytics_events WHERE event_name = 'premium_checkout_confirmed')
+        ORDER BY paywall_hits DESC
+      `),
+      paywall_daily_trend: q(`
+        SELECT date_trunc('day', created_at) AS day, COUNT(*) AS modal_views
+        FROM analytics_events
+        WHERE event_name = 'premium_modal_view' AND created_at > now() - interval '30 days'
+        GROUP BY 1 ORDER BY 1
+      `),
+
+      // ---------- ONBOARDING ----------
+      onboarding_funnel: q(`
+        SELECT event_data->>'step' AS step, COUNT(DISTINCT user_id) AS unique_users, COUNT(*) AS total_views
+        FROM analytics_events
+        WHERE event_name = 'onboarding_step' AND created_at > now() - interval '30 days'
+        GROUP BY 1
+        ORDER BY CASE event_data->>'step'
+          WHEN '0' THEN 0 WHEN '1' THEN 1 WHEN '1b' THEN 2 WHEN 'reg' THEN 3
+          WHEN 'con' THEN 4 WHEN '2' THEN 5 WHEN '3' THEN 6 WHEN 'tut' THEN 7
+          WHEN '4' THEN 8 ELSE 99 END
+      `),
+      onboarding_abandon_points: q(`
+        SELECT event_data->>'step' AS abandoned_at_step, COUNT(*) AS abandons
+        FROM analytics_events
+        WHERE event_name = 'onboarding_closed' AND (event_data->>'completed')::boolean = false
+          AND created_at > now() - interval '30 days'
+        GROUP BY 1 ORDER BY abandons DESC
+      `),
+      onboarding_completion_rate: q(`
+        SELECT event_data->>'completed' AS completed, COUNT(*) AS n,
+          ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (), 1) AS percent
+        FROM analytics_events
+        WHERE event_name = 'onboarding_closed' AND created_at > now() - interval '30 days'
+        GROUP BY 1
+      `),
+
+      // ---------- SESSION ----------
+      sessions_per_day: q(`
+        SELECT date_trunc('day', created_at) AS day, COUNT(*) AS sessions, COUNT(DISTINCT user_id) AS unique_users
+        FROM analytics_events
+        WHERE event_name = 'app_session_start' AND created_at > now() - interval '30 days'
+        GROUP BY 1 ORDER BY 1
+      `),
+      session_length_distribution: q(`
+        SELECT (event_data->>'totalMinutes')::int AS minutes_reached, COUNT(*) AS n
+        FROM analytics_events
+        WHERE event_name = 'session_heartbeat' AND created_at > now() - interval '30 days'
+        GROUP BY 1 ORDER BY 1
+      `),
+
+      // ---------- FEATURE USAGE ----------
+      top_screens: q(`
+        SELECT event_data->>'screen' AS screen, COUNT(*) AS views, COUNT(DISTINCT user_id) AS unique_users
+        FROM analytics_events
+        WHERE event_name = 'screen_view' AND created_at > now() - interval '30 days'
+        GROUP BY 1 ORDER BY views DESC
+      `),
+      top_sections: q(`
+        SELECT event_data->>'navKey' AS section, COUNT(*) AS views, COUNT(DISTINCT user_id) AS unique_users
+        FROM analytics_events
+        WHERE event_name = 'screen_view' AND created_at > now() - interval '30 days'
+        GROUP BY 1 ORDER BY views DESC
+      `),
+
+      // ---------- ERRORS ----------
+      error_top_contexts: q(`
+        SELECT event_data->>'context' AS context, COUNT(*) AS occurrences,
+          COUNT(DISTINCT user_id) AS affected_users, MAX(created_at) AS last_seen
+        FROM analytics_events
+        WHERE event_name = 'silent_error' AND created_at > now() - interval '7 days'
+        GROUP BY 1 ORDER BY occurrences DESC
+      `),
+      error_top_messages: q(`
+        SELECT event_data->>'context' AS context, event_data->>'message' AS message,
+          COUNT(*) AS occurrences, MIN(created_at) AS first_seen, MAX(created_at) AS last_seen
+        FROM analytics_events
+        WHERE event_name = 'silent_error' AND created_at > now() - interval '7 days'
+        GROUP BY 1, 2 ORDER BY occurrences DESC LIMIT 30
+      `),
+      error_daily_trend: q(`
+        SELECT date_trunc('day', created_at) AS day, COUNT(*) AS total_errors, COUNT(DISTINCT user_id) AS affected_users
+        FROM analytics_events
+        WHERE event_name = 'silent_error' AND created_at > now() - interval '30 days'
+        GROUP BY 1 ORDER BY 1
+      `),
+      error_top_users: q(`
+        SELECT user_id, COUNT(*) AS error_count, COUNT(DISTINCT event_data->>'context') AS distinct_contexts,
+          MAX(created_at) AS last_error
+        FROM analytics_events
+        WHERE event_name = 'silent_error' AND created_at > now() - interval '14 days'
+          AND user_id IS NOT NULL AND user_id != 'anonymous'
+        GROUP BY user_id HAVING COUNT(*) >= 3 ORDER BY error_count DESC
+      `),
+      error_anonymous_volume: q(`
+        SELECT COUNT(*) AS anonymous_errors
+        FROM analytics_events
+        WHERE event_name = 'silent_error' AND user_id = 'anonymous' AND created_at > now() - interval '14 days'
+      `),
+      error_by_screen: q(`
+        SELECT event_data->>'screen' AS screen, COUNT(*) AS errors_on_screen
+        FROM analytics_events
+        WHERE event_name = 'silent_error' AND created_at > now() - interval '7 days'
+        GROUP BY 1 ORDER BY 2 DESC
+      `),
+
+      // ---------- RETENTION ----------
+      retention_aggregate: q(`
+        WITH first_seen AS (
+          SELECT user_id, date_trunc('day', MIN(created_at)) AS cohort_day
+          FROM analytics_events WHERE user_id IS NOT NULL AND user_id != 'anonymous' GROUP BY user_id
+        ),
+        activity AS (
+          SELECT DISTINCT user_id, date_trunc('day', created_at) AS activity_day
+          FROM analytics_events WHERE event_name = 'app_session_start' AND user_id IS NOT NULL AND user_id != 'anonymous'
+        )
+        SELECT
+          COUNT(DISTINCT f.user_id) AS total_new_users,
+          COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '1 day' THEN a.user_id END) AS d1_users,
+          COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '7 day' THEN a.user_id END) AS d7_users,
+          COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '30 day' THEN a.user_id END) AS d30_users,
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '1 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT f.user_id),0), 1) AS d1_pct,
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '7 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT f.user_id),0), 1) AS d7_pct,
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '30 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT f.user_id),0), 1) AS d30_pct
+        FROM first_seen f LEFT JOIN activity a ON a.user_id = f.user_id
+      `),
+      retention_by_cohort_day: q(`
+        WITH first_seen AS (
+          SELECT user_id, date_trunc('day', MIN(created_at)) AS cohort_day
+          FROM analytics_events WHERE user_id IS NOT NULL AND user_id != 'anonymous' GROUP BY user_id
+        ),
+        activity AS (
+          SELECT DISTINCT user_id, date_trunc('day', created_at) AS activity_day
+          FROM analytics_events WHERE event_name = 'app_session_start' AND user_id IS NOT NULL AND user_id != 'anonymous'
+        )
+        SELECT
+          f.cohort_day::date AS cohort_day,
+          COUNT(DISTINCT f.user_id) AS cohort_size,
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '1 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT f.user_id),0), 1) AS d1_pct,
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '7 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT f.user_id),0), 1) AS d7_pct,
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '30 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT f.user_id),0), 1) AS d30_pct
+        FROM first_seen f LEFT JOIN activity a ON a.user_id = f.user_id
+        GROUP BY f.cohort_day ORDER BY f.cohort_day
+      `),
+      retention_by_language: q(`
+        WITH first_session AS (
+          SELECT DISTINCT ON (user_id) user_id, date_trunc('day', created_at) AS cohort_day, event_data->>'lang' AS first_lang
+          FROM analytics_events
+          WHERE event_name = 'app_session_start' AND user_id IS NOT NULL AND user_id != 'anonymous'
+          ORDER BY user_id, created_at ASC
+        ),
+        activity AS (
+          SELECT DISTINCT user_id, date_trunc('day', created_at) AS activity_day
+          FROM analytics_events WHERE event_name = 'app_session_start' AND user_id IS NOT NULL AND user_id != 'anonymous'
+        )
+        SELECT
+          f.first_lang,
+          COUNT(DISTINCT f.user_id) AS cohort_size,
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '7 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT f.user_id),0), 1) AS d7_retention_pct,
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '30 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT f.user_id),0), 1) AS d30_retention_pct
+        FROM first_session f LEFT JOIN activity a ON a.user_id = f.user_id
+        GROUP BY f.first_lang ORDER BY d7_retention_pct DESC NULLS LAST
+      `),
+
+      // ---------- CONTENT ----------
+      content_top_techniques: q(`
+        SELECT event_data->>'name' AS technique, event_data->>'cat' AS category,
+          COUNT(*) AS views, COUNT(DISTINCT user_id) AS unique_users
+        FROM analytics_events
+        WHERE event_name = 'technique_view' AND created_at > now() - interval '30 days'
+        GROUP BY 1, 2 ORDER BY views DESC LIMIT 30
+      `),
+      content_never_viewed_techniques: q(`
+        WITH viewed AS (
+          SELECT DISTINCT event_data->>'id' AS id FROM analytics_events
+          WHERE event_name = 'technique_view' AND created_at > now() - interval '30 days'
+        )
+        SELECT a.id AS never_viewed_technique
+        FROM ${buildTechniqueIdsCTE()} a
+        LEFT JOIN viewed v ON a.id = v.id
+        WHERE v.id IS NULL ORDER BY a.id
+      `),
+      content_quiz_accuracy_by_category: q(`
+        SELECT event_data->>'type' AS category, COUNT(*) AS total_answers,
+          COUNT(*) FILTER (WHERE (event_data->>'correct')::boolean = true) AS correct_answers,
+          ROUND(100.0 * COUNT(*) FILTER (WHERE (event_data->>'correct')::boolean = true) / COUNT(*), 1) AS accuracy_pct
+        FROM analytics_events
+        WHERE event_name = 'quiz_answer' AND created_at > now() - interval '30 days'
+        GROUP BY 1 ORDER BY accuracy_pct ASC
+      `),
+      content_randori_by_category: q(`
+        SELECT event_data->>'cat' AS category, COUNT(*) AS views, COUNT(DISTINCT user_id) AS unique_users
+        FROM analytics_events
+        WHERE event_name = 'randori_scenario_view' AND created_at > now() - interval '30 days'
+        GROUP BY 1 ORDER BY views DESC
+      `),
+      content_overview: q(`
+        SELECT 'technique_view' AS content_type, COUNT(*) AS total_views, COUNT(DISTINCT user_id) AS unique_users
+        FROM analytics_events WHERE event_name = 'technique_view' AND created_at > now() - interval '30 days'
+        UNION ALL
+        SELECT 'quiz_answer', COUNT(*), COUNT(DISTINCT user_id)
+        FROM analytics_events WHERE event_name = 'quiz_answer' AND created_at > now() - interval '30 days'
+        UNION ALL
+        SELECT 'randori_scenario_view', COUNT(*), COUNT(DISTINCT user_id)
+        FROM analytics_events WHERE event_name = 'randori_scenario_view' AND created_at > now() - interval '30 days'
+      `),
+    };
+
+  const keys = Object.keys(queries);
+  const results = await Promise.all(Object.values(queries));
+  const out = {};
+  keys.forEach((k, i) => { out[k] = results[i]; });
+
+  res.json(out);
+});
+
 // Static files — MORA biti posle ruta
 app.use(express.static('public'));
 
