@@ -394,11 +394,11 @@ app.get('/api/data/versions', async (req, res) => {
 
 app.post('/api/analytics/event', async (req, res) => {
   const { userId, eventName, eventData } = req.body;
-  if (!userId || !eventName) return res.status(400).json({ error: 'Nedostaju parametri' });
+  if (!eventName) return res.status(400).json({ error: 'Nedostaje eventName' });
   try {
     await db.query(
       'INSERT INTO analytics_events (user_id, event_name, event_data) VALUES ($1, $2, $3)',
-      [userId, eventName, eventData ? JSON.stringify(eventData) : null]
+      [userId || null, eventName, eventData ? JSON.stringify(eventData) : null]
     );
     res.json({ success: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
@@ -518,7 +518,7 @@ const TECHNIQUE_IDS = [
 
 function buildTechniqueIdsCTE() {
   const rows = TECHNIQUE_IDS.map(id => `('${id}')`).join(',\n    ');
-  return `(VALUES\n    ${rows}\n  ) AS all_techniques(id)`;
+  return `(VALUES\n    ${rows}\n  ) AS a(id)`;
 }
 
 // ════════════════════════════════════════ ADMIN DASHBOARD ════════════════════════════════════════
@@ -650,13 +650,13 @@ app.get('/api/admin/dashboard', async (req, res) => {
           MAX(created_at) AS last_error
         FROM analytics_events
         WHERE event_name = 'silent_error' AND created_at > now() - interval '14 days'
-          AND user_id IS NOT NULL AND user_id != 'anonymous'
+          AND user_id IS NOT NULL
         GROUP BY user_id HAVING COUNT(*) >= 3 ORDER BY error_count DESC
       `),
       error_anonymous_volume: q(`
         SELECT COUNT(*) AS anonymous_errors
         FROM analytics_events
-        WHERE event_name = 'silent_error' AND user_id = 'anonymous' AND created_at > now() - interval '14 days'
+        WHERE event_name = 'silent_error' AND user_id IS NULL AND created_at > now() - interval '14 days'
       `),
       error_by_screen: q(`
         SELECT event_data->>'screen' AS screen, COUNT(*) AS errors_on_screen
@@ -669,11 +669,11 @@ app.get('/api/admin/dashboard', async (req, res) => {
       retention_aggregate: q(`
         WITH first_seen AS (
           SELECT user_id, date_trunc('day', MIN(created_at)) AS cohort_day
-          FROM analytics_events WHERE user_id IS NOT NULL AND user_id != 'anonymous' GROUP BY user_id
+          FROM analytics_events WHERE user_id IS NOT NULL GROUP BY user_id
         ),
         activity AS (
           SELECT DISTINCT user_id, date_trunc('day', created_at) AS activity_day
-          FROM analytics_events WHERE event_name = 'app_session_start' AND user_id IS NOT NULL AND user_id != 'anonymous'
+          FROM analytics_events WHERE event_name = 'app_session_start' AND user_id IS NOT NULL
         )
         SELECT
           COUNT(DISTINCT f.user_id) AS total_new_users,
@@ -688,11 +688,11 @@ app.get('/api/admin/dashboard', async (req, res) => {
       retention_by_cohort_day: q(`
         WITH first_seen AS (
           SELECT user_id, date_trunc('day', MIN(created_at)) AS cohort_day
-          FROM analytics_events WHERE user_id IS NOT NULL AND user_id != 'anonymous' GROUP BY user_id
+          FROM analytics_events WHERE user_id IS NOT NULL GROUP BY user_id
         ),
         activity AS (
           SELECT DISTINCT user_id, date_trunc('day', created_at) AS activity_day
-          FROM analytics_events WHERE event_name = 'app_session_start' AND user_id IS NOT NULL AND user_id != 'anonymous'
+          FROM analytics_events WHERE event_name = 'app_session_start' AND user_id IS NOT NULL
         )
         SELECT
           f.cohort_day::date AS cohort_day,
@@ -707,12 +707,12 @@ app.get('/api/admin/dashboard', async (req, res) => {
         WITH first_session AS (
           SELECT DISTINCT ON (user_id) user_id, date_trunc('day', created_at) AS cohort_day, event_data->>'lang' AS first_lang
           FROM analytics_events
-          WHERE event_name = 'app_session_start' AND user_id IS NOT NULL AND user_id != 'anonymous'
+          WHERE event_name = 'app_session_start' AND user_id IS NOT NULL
           ORDER BY user_id, created_at ASC
         ),
         activity AS (
           SELECT DISTINCT user_id, date_trunc('day', created_at) AS activity_day
-          FROM analytics_events WHERE event_name = 'app_session_start' AND user_id IS NOT NULL AND user_id != 'anonymous'
+          FROM analytics_events WHERE event_name = 'app_session_start' AND user_id IS NOT NULL
         )
         SELECT
           f.first_lang,
@@ -737,7 +737,7 @@ app.get('/api/admin/dashboard', async (req, res) => {
           WHERE event_name = 'technique_view' AND created_at > now() - interval '30 days'
         )
         SELECT a.id AS never_viewed_technique
-        FROM ${buildTechniqueIdsCTE()} a
+        FROM ${buildTechniqueIdsCTE()}
         LEFT JOIN viewed v ON a.id = v.id
         WHERE v.id IS NULL ORDER BY a.id
       `),
