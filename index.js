@@ -139,7 +139,7 @@ app.get('/api/user/:userId', async (req, res) => {
   const { userId } = req.params;
   try {
     const result = await db.query(
-      'SELECT id, username, email, belt, xp, club, country, subscription_tier FROM users WHERE id = $1',
+      'SELECT id, username, email, belt, xp, club, country, subscription_tier, exam_date FROM users WHERE id = $1',
       [userId]
     );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Nije pronadjen' });
@@ -148,12 +148,18 @@ app.get('/api/user/:userId', async (req, res) => {
 });
 
 app.post('/api/user/update', async (req, res) => {
-  const { userId, club, country } = req.body;
+  const { userId, username, club, country, belt, examDate } = req.body;
   if (!userId) return res.status(400).json({ error: 'Nedostaje userId' });
   try {
     await db.query(
-      'UPDATE users SET club = $1, country = $2 WHERE id = $3',
-      [club || null, country || null, userId]
+      `UPDATE users SET
+        club = $1,
+        country = $2,
+        username = COALESCE($3, username),
+        belt = COALESCE($4, belt),
+        exam_date = COALESCE($5, exam_date)
+       WHERE id = $6`,
+      [club || null, country || null, username || null, belt || null, examDate || null, userId]
     );
     res.json({ success: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
