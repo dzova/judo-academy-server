@@ -245,6 +245,75 @@ app.post('/api/promo/redeem', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+function _checkAdminKey(req, res) {
+  const key = req.query.key || req.headers['x-admin-key'];
+  if (!process.env.ADMIN_DASHBOARD_KEY || key !== process.env.ADMIN_DASHBOARD_KEY) {
+    res.status(401).json({ error: 'Unauthorized' });
+    return false;
+  }
+  return true;
+}
+
+function _generatePromoCode() {
+  // Bezbedan alfabet bez slova/brojeva koji se lako mešaju (0/O, 1/I/l)
+  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let part1 = '', part2 = '';
+  for (let i = 0; i < 4; i++) part1 += alphabet[crypto.randomInt(alphabet.length)];
+  for (let i = 0; i < 4; i++) part2 += alphabet[crypto.randomInt(alphabet.length)];
+  return `JA-${part1}-${part2}`;
+}
+
+// Generiše N jedinstvenih promo kodova, svaki upotrebljiv samo jednom (max_uses=1).
+// Rešava problem deljenja jednog opšteg koda unutar kluba/grupe — svaki član dobija svoj kod.
+app.post('/api/admin/promo/generate', async (req, res) => {
+  if (!_checkAdminKey(req, res)) return;
+  const { count, duration_days, note, valid_days } = req.body;
+  const n = parseInt(count);
+  const duration = parseInt(duration_days);
+  if (!n || n < 1 || n > 200) return res.status(400).json({ error: 'count mora biti između 1 i 200' });
+  if (![30, 90, 120].includes(duration)) return res.status(400).json({ error: 'duration_days mora biti 30, 90 ili 120' });
+
+  let validUntil = null;
+  if (valid_days) {
+    validUntil = new Date();
+    validUntil.setDate(validUntil.getDate() + parseInt(valid_days));
+  }
+
+  try {
+    const codes = [];
+    for (let i = 0; i < n; i++) {
+      let code, attempts = 0;
+      do {
+        code = _generatePromoCode();
+        attempts++;
+        const existing = await db.query('SELECT 1 FROM promo_codes WHERE code = $1', [code]);
+        if (existing.rows.length === 0) break;
+      } while (attempts < 10);
+
+      await db.query(
+        `INSERT INTO promo_codes (code, duration_days, max_uses, used_count, valid_until, note)
+         VALUES ($1, $2, 1, 0, $3, $4)`,
+        [code, duration, validUntil, note || null]
+      );
+      codes.push(code);
+    }
+    res.json({ success: true, codes, duration_days: duration, valid_until: validUntil });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// Pregled svih generisanih kodova — status (iskorišćen/slobodan), napomena, datum isteka
+app.get('/api/admin/promo/list', async (req, res) => {
+  if (!_checkAdminKey(req, res)) return;
+  try {
+    const result = await db.query(
+      `SELECT code, duration_days, max_uses, used_count, valid_until, note, created_at
+       FROM promo_codes
+       ORDER BY created_at DESC NULLS LAST, code DESC`
+    );
+    res.json(result.rows);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // ════════════════════════════════════════ KVIZ I RANDORI (NEW) ════════════════════════════════════════
 
 app.get('/api/quiz', (req, res) => {
@@ -281,7 +350,7 @@ app.post('/api/sensei/ask', async (req, res) => {
         'x-api-key': process.env.ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01'
       },
-      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 400, system, messages })
+      body: JSON.stringify({ model: 'claude-sonnet-5', max_tokens: 2048, system, messages })
     });
     const data = await response.json();
     res.json(data);
