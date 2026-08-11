@@ -267,11 +267,13 @@ function _generatePromoCode() {
 // Rešava problem deljenja jednog opšteg koda unutar kluba/grupe — svaki član dobija svoj kod.
 app.post('/api/admin/promo/generate', async (req, res) => {
   if (!_checkAdminKey(req, res)) return;
-  const { count, duration_days, note, valid_days } = req.body;
+  const { count, duration_days, note, valid_days, max_uses } = req.body;
   const n = parseInt(count);
   const duration = parseInt(duration_days);
+  const uses = max_uses ? parseInt(max_uses) : 1;
   if (!n || n < 1 || n > 200) return res.status(400).json({ error: 'count mora biti između 1 i 200' });
-  if (![30, 90, 120].includes(duration)) return res.status(400).json({ error: 'duration_days mora biti 30, 90 ili 120' });
+  if (![10, 30, 90, 120, 365].includes(duration)) return res.status(400).json({ error: 'duration_days mora biti 10, 30, 90, 120 ili 365' });
+  if (!uses || uses < 1 || uses > 10000) return res.status(400).json({ error: 'max_uses mora biti između 1 i 10000' });
 
   let validUntil = null;
   if (valid_days) {
@@ -292,12 +294,54 @@ app.post('/api/admin/promo/generate', async (req, res) => {
 
       await db.query(
         `INSERT INTO promo_codes (code, duration_days, max_uses, used_count, valid_until, note)
-         VALUES ($1, $2, 1, 0, $3, $4)`,
-        [code, duration, validUntil, note || null]
+         VALUES ($1, $2, $3, 0, $4, $5)`,
+        [code, duration, uses, validUntil, note || null]
       );
       codes.push(code);
     }
-    res.json({ success: true, codes, duration_days: duration, valid_until: validUntil });
+    res.json({ success: true, codes, duration_days: duration, max_uses: uses, valid_until: validUntil });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// Pregled koji korisnici bi bili pogođeni bulk dodelom premiuma po klubu — PRE stvarne izmene
+app.get('/api/admin/premium/club-preview', async (req, res) => {
+  if (!_checkAdminKey(req, res)) return;
+  const clubQuery = (req.query.club || '').trim();
+  if (!clubQuery) return res.status(400).json({ error: 'Nedostaje club parametar' });
+  try {
+    const result = await db.query(
+      `SELECT id, username, club, subscription_tier, subscription_expires
+       FROM users
+       WHERE club ILIKE $1
+       ORDER BY username`,
+      [`%${clubQuery}%`]
+    );
+    res.json(result.rows);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// Stvarna dodela premiuma svim korisnicima čiji klub (slobodan tekst) odgovara pretrazi.
+// Uvek prvo pozvati /club-preview da se potvrdi tačan spisak pre ove akcije.
+app.post('/api/admin/premium/club-grant', async (req, res) => {
+  if (!_checkAdminKey(req, res)) return;
+  const { club, duration_days } = req.body;
+  const clubQuery = (club || '').trim();
+  const duration = parseInt(duration_days);
+  if (!clubQuery) return res.status(400).json({ error: 'Nedostaje club parametar' });
+  if (![10, 30, 90, 120, 365].includes(duration)) return res.status(400).json({ error: 'duration_days mora biti 10, 30, 90, 120 ili 365' });
+
+  try {
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + duration);
+
+    const result = await db.query(
+      `UPDATE users
+       SET subscription_tier = 'premium', subscription_expires = $1
+       WHERE club ILIKE $2
+       RETURNING id, username, club`,
+      [expiresAt, `%${clubQuery}%`]
+    );
+    res.json({ success: true, updated_count: result.rows.length, updated_users: result.rows, expires_at: expiresAt });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
@@ -311,6 +355,16 @@ app.get('/api/admin/promo/list', async (req, res) => {
        ORDER BY created_at DESC NULLS LAST, code DESC`
     );
     res.json(result.rows);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// Brisanje jednog promo koda (npr. stari/probni kodovi koje više ne treba deliti)
+app.delete('/api/admin/promo/:code', async (req, res) => {
+  if (!_checkAdminKey(req, res)) return;
+  try {
+    const result = await db.query('DELETE FROM promo_codes WHERE code = $1 RETURNING code', [req.params.code.toUpperCase()]);
+    if (result.rows.length === 0) return res.status(404).json({ error: 'Kod nije pronađen' });
+    res.json({ success: true, deleted: result.rows[0].code });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
