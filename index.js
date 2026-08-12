@@ -206,7 +206,7 @@ app.get('/api/sensei/limit/:userId', async (req, res) => {
       }
       res.json({ used: user.questions_today, limit: 5, remaining: 5 - user.questions_today, type: 'daily' });
     } else {
-      res.json({ used: user.questions_today, limit: 3, remaining: 3 - user.questions_today, type: 'lifetime' });
+      res.json({ used: user.questions_today, limit: 5, remaining: 5 - user.questions_today, type: 'lifetime' });
     }
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
