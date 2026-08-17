@@ -51,6 +51,7 @@ passport.deserializeUser(async (id, done) => {
 });
 
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 const pendingAuth = {}; // In-memory token store
 
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -59,12 +60,15 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
   const user = req.user;
   // Generisi jednokratni token
   const token = crypto.randomBytes(16).toString('hex');
+  let authToken = null;
+  try { authToken = _issueAuthToken(user.id); } catch (e) { console.error('[auth] Neuspesno izdavanje JWT tokena:', e.message); }
   pendingAuth[token] = {
     userId: user.id,
     username: user.username || user.displayName || '',
     email: user.email || '',
     belt: user.belt || 'white',
-    xp: user.xp || 0
+    xp: user.xp || 0,
+    authToken
   };
   // Obrisi token posle 5 minuta
   setTimeout(function() { delete pendingAuth[token]; }, 5 * 60 * 1000);
@@ -135,8 +139,8 @@ app.get('/health', (req, res) => {
 
 // ════════════════════════════════════════ KORISNIK ════════════════════════════════════════
 
-app.get('/api/user/:userId', async (req, res) => {
-  const { userId } = req.params;
+app.get('/api/user/me', _requireAuth, async (req, res) => {
+  const userId = req.userId;
   try {
     const result = await db.query(
       'SELECT id, username, email, belt, xp, club, country, subscription_tier, exam_date FROM users WHERE id = $1',
@@ -147,9 +151,9 @@ app.get('/api/user/:userId', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-app.post('/api/user/update', async (req, res) => {
-  const { userId, username, club, country, belt, examDate } = req.body;
-  if (!userId) return res.status(400).json({ error: 'Nedostaje userId' });
+app.post('/api/user/update', _requireAuth, async (req, res) => {
+  const { username, club, country, belt, examDate } = req.body;
+  const userId = req.userId;
   try {
     await db.query(
       `UPDATE users SET
@@ -176,8 +180,9 @@ app.get('/api/leaderboard', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-app.post('/api/xp/update', async (req, res) => {
-  const { userId, xp, belt } = req.body;
+app.post('/api/xp/update', _requireAuth, async (req, res) => {
+  const { xp, belt } = req.body;
+  const userId = req.userId;
   try {
     await db.query('UPDATE users SET xp = $1, belt = $2 WHERE id = $3', [xp, belt, userId]);
     res.json({ success: true });
@@ -186,8 +191,8 @@ app.post('/api/xp/update', async (req, res) => {
 
 // ════════════════════════════════════════ AI SENSEI LIMITI ════════════════════════════════════════
 
-app.get('/api/sensei/limit/:userId', async (req, res) => {
-  const { userId } = req.params;
+app.get('/api/sensei/limit/me', _requireAuth, async (req, res) => {
+  const userId = req.userId;
   try {
     const result = await db.query(
       'SELECT questions_today, last_reset, subscription_tier FROM users WHERE id = $1',
@@ -206,24 +211,17 @@ app.get('/api/sensei/limit/:userId', async (req, res) => {
       }
       res.json({ used: user.questions_today, limit: 5, remaining: 5 - user.questions_today, type: 'daily' });
     } else {
-      res.json({ used: user.questions_today, limit: 3, remaining: 3 - user.questions_today, type: 'lifetime' });
+      res.json({ used: user.questions_today, limit: 5, remaining: 5 - user.questions_today, type: 'lifetime' });
     }
-  } catch (err) { res.status(500).json({ error: err.message }); }
-});
-
-app.post('/api/sensei/use', async (req, res) => {
-  const { userId } = req.body;
-  try {
-    await db.query('UPDATE users SET questions_today = questions_today + 1 WHERE id = $1', [userId]);
-    res.json({ success: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 // ════════════════════════════════════════ PROMO KODOVI ════════════════════════════════════════
 
-app.post('/api/promo/redeem', async (req, res) => {
-  const { code, userId } = req.body;
-  if (!code || !userId) return res.status(400).json({ error: 'Nedostaju podaci' });
+app.post('/api/promo/redeem', _requireAuth, async (req, res) => {
+  const { code } = req.body;
+  const userId = req.userId;
+  if (!code) return res.status(400).json({ error: 'Nedostaju podaci' });
   try {
     const promo = await db.query('SELECT * FROM promo_codes WHERE code = $1', [code.toUpperCase()]);
     if (promo.rows.length === 0) return res.status(404).json({ error: 'Kod nije validan' });
@@ -242,6 +240,153 @@ app.post('/api/promo/redeem', async (req, res) => {
     await db.query('UPDATE promo_codes SET used_count = used_count + 1 WHERE code = $1', [code.toUpperCase()]);
 
     res.json({ success: true, duration_days: p.duration_days, expires_at: expiresAt });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+function _checkAdminKey(req, res) {
+  const key = req.query.key || req.headers['x-admin-key'];
+  if (!process.env.ADMIN_DASHBOARD_KEY || key !== process.env.ADMIN_DASHBOARD_KEY) {
+    res.status(401).json({ error: 'Unauthorized' });
+    return false;
+  }
+  return true;
+}
+
+// Izdaje potpisan JWT token posle uspesnog Google login-a. Token sadrzi userId
+// i istice posle 90 dana (korisnik ostaje ulogovan dugo, konzistentno sa mobile app UX).
+function _issueAuthToken(userId) {
+  if (!process.env.JWT_SECRET) throw new Error('JWT_SECRET nije podesen na serveru');
+  return jwt.sign({ userId: String(userId) }, process.env.JWT_SECRET, { expiresIn: '90d' });
+}
+
+// Middleware koji verifikuje JWT token iz Authorization header-a (format: "Bearer <token>")
+// i postavlja req.userId iz VERIFIKOVANOG tokena - nikad iz req.body/req.params/req.query,
+// jer bi to omogucilo bilo kome da se predstavlja kao drugi korisnik samo slanjem njegovog ID-ja.
+function _requireAuth(req, res, next) {
+  const header = req.headers['authorization'] || '';
+  const token = header.startsWith('Bearer ') ? header.slice(7) : null;
+  if (!token) return res.status(401).json({ error: 'Nedostaje autentifikacioni token' });
+  if (!process.env.JWT_SECRET) return res.status(500).json({ error: 'Server nije ispravno podesen (JWT_SECRET)' });
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    req.userId = payload.userId;
+    next();
+  } catch (err) {
+    return res.status(401).json({ error: 'Token je nevazeci ili je istekao' });
+  }
+}
+
+function _generatePromoCode() {
+  // Bezbedan alfabet bez slova/brojeva koji se lako mešaju (0/O, 1/I/l)
+  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let part1 = '', part2 = '';
+  for (let i = 0; i < 4; i++) part1 += alphabet[crypto.randomInt(alphabet.length)];
+  for (let i = 0; i < 4; i++) part2 += alphabet[crypto.randomInt(alphabet.length)];
+  return `JA-${part1}-${part2}`;
+}
+
+// Generiše N jedinstvenih promo kodova, svaki upotrebljiv samo jednom (max_uses=1).
+// Rešava problem deljenja jednog opšteg koda unutar kluba/grupe — svaki član dobija svoj kod.
+app.post('/api/admin/promo/generate', async (req, res) => {
+  if (!_checkAdminKey(req, res)) return;
+  const { count, duration_days, note, valid_days, max_uses } = req.body;
+  const n = parseInt(count);
+  const duration = parseInt(duration_days);
+  const uses = max_uses ? parseInt(max_uses) : 1;
+  if (!n || n < 1 || n > 200) return res.status(400).json({ error: 'count mora biti između 1 i 200' });
+  if (![10, 30, 90, 120, 365].includes(duration)) return res.status(400).json({ error: 'duration_days mora biti 10, 30, 90, 120 ili 365' });
+  if (!uses || uses < 1 || uses > 10000) return res.status(400).json({ error: 'max_uses mora biti između 1 i 10000' });
+
+  let validUntil = null;
+  if (valid_days) {
+    validUntil = new Date();
+    validUntil.setDate(validUntil.getDate() + parseInt(valid_days));
+  }
+
+  try {
+    const codes = [];
+    for (let i = 0; i < n; i++) {
+      let code, attempts = 0;
+      do {
+        code = _generatePromoCode();
+        attempts++;
+        const existing = await db.query('SELECT 1 FROM promo_codes WHERE code = $1', [code]);
+        if (existing.rows.length === 0) break;
+      } while (attempts < 10);
+
+      await db.query(
+        `INSERT INTO promo_codes (code, duration_days, max_uses, used_count, valid_until, note)
+         VALUES ($1, $2, $3, 0, $4, $5)`,
+        [code, duration, uses, validUntil, note || null]
+      );
+      codes.push(code);
+    }
+    res.json({ success: true, codes, duration_days: duration, max_uses: uses, valid_until: validUntil });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// Pregled koji korisnici bi bili pogođeni bulk dodelom premiuma po klubu — PRE stvarne izmene
+app.get('/api/admin/premium/club-preview', async (req, res) => {
+  if (!_checkAdminKey(req, res)) return;
+  const clubQuery = (req.query.club || '').trim();
+  if (!clubQuery) return res.status(400).json({ error: 'Nedostaje club parametar' });
+  try {
+    const result = await db.query(
+      `SELECT id, username, club, subscription_tier, subscription_expires
+       FROM users
+       WHERE club ILIKE $1
+       ORDER BY username`,
+      [`%${clubQuery}%`]
+    );
+    res.json(result.rows);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// Stvarna dodela premiuma svim korisnicima čiji klub (slobodan tekst) odgovara pretrazi.
+// Uvek prvo pozvati /club-preview da se potvrdi tačan spisak pre ove akcije.
+app.post('/api/admin/premium/club-grant', async (req, res) => {
+  if (!_checkAdminKey(req, res)) return;
+  const { club, duration_days } = req.body;
+  const clubQuery = (club || '').trim();
+  const duration = parseInt(duration_days);
+  if (!clubQuery) return res.status(400).json({ error: 'Nedostaje club parametar' });
+  if (![10, 30, 90, 120, 365].includes(duration)) return res.status(400).json({ error: 'duration_days mora biti 10, 30, 90, 120 ili 365' });
+
+  try {
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + duration);
+
+    const result = await db.query(
+      `UPDATE users
+       SET subscription_tier = 'premium', subscription_expires = $1
+       WHERE club ILIKE $2
+       RETURNING id, username, club`,
+      [expiresAt, `%${clubQuery}%`]
+    );
+    res.json({ success: true, updated_count: result.rows.length, updated_users: result.rows, expires_at: expiresAt });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// Pregled svih generisanih kodova — status (iskorišćen/slobodan), napomena, datum isteka
+app.get('/api/admin/promo/list', async (req, res) => {
+  if (!_checkAdminKey(req, res)) return;
+  try {
+    const result = await db.query(
+      `SELECT code, duration_days, max_uses, used_count, valid_until, note, created_at
+       FROM promo_codes
+       ORDER BY created_at DESC NULLS LAST, code DESC`
+    );
+    res.json(result.rows);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// Brisanje jednog promo koda (npr. stari/probni kodovi koje više ne treba deliti)
+app.delete('/api/admin/promo/:code', async (req, res) => {
+  if (!_checkAdminKey(req, res)) return;
+  try {
+    const result = await db.query('DELETE FROM promo_codes WHERE code = $1 RETURNING code', [req.params.code.toUpperCase()]);
+    if (result.rows.length === 0) return res.status(404).json({ error: 'Kod nije pronađen' });
+    res.json({ success: true, deleted: result.rows[0].code });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
@@ -271,9 +416,32 @@ app.get('/api/randori', (req, res) => {
 
 // ════════════════════════════════════════ AI SENSEI PROXY ════════════════════════════════════════
 
-app.post('/api/sensei/ask', async (req, res) => {
+app.post('/api/sensei/ask', _requireAuth, async (req, res) => {
   const { messages, system } = req.body;
+  const userId = req.userId;
+
   try {
+    const userResult = await db.query(
+      'SELECT questions_today, last_reset, subscription_tier FROM users WHERE id = $1',
+      [userId]
+    );
+    if (userResult.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronadjen' });
+    const user = userResult.rows[0];
+    const isPremium = user.subscription_tier === 'premium';
+
+    if (isPremium) {
+      const today = new Date().toDateString();
+      const lastReset = new Date(user.last_reset).toDateString();
+      if (today !== lastReset) {
+        await db.query('UPDATE users SET questions_today = 0, last_reset = NOW() WHERE id = $1', [userId]);
+        user.questions_today = 0;
+      }
+    }
+    // I premium (5x dnevno) i free (5x lifetime) korisnici imaju limit od 5 - vidi Terms of Use v1.2
+    if (user.questions_today >= 5) {
+      return res.status(429).json({ error: 'Dostignut je limit pitanja', limit: 5, used: user.questions_today });
+    }
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -281,18 +449,24 @@ app.post('/api/sensei/ask', async (req, res) => {
         'x-api-key': process.env.ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01'
       },
-      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 400, system, messages })
+      body: JSON.stringify({ model: 'claude-sonnet-5', max_tokens: 2048, system, messages })
     });
     const data = await response.json();
+
+    // Broji pitanje samo ako je Anthropic poziv uspeo (ne trosi limit na neuspesne pokusaje)
+    if (!data.error) {
+      await db.query('UPDATE users SET questions_today = questions_today + 1 WHERE id = $1', [userId]);
+    }
+
     res.json(data);
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 // ════════════════════════════════════════ KVIZ STATISTIKE ════════════════════════════════════════
 
-app.post('/api/quiz/stats', async (req, res) => {
-  const { userId, score, correct, total, maxStreak, category } = req.body;
-  if (!userId) return res.status(400).json({ error: 'Nedostaje userId' });
+app.post('/api/quiz/stats', _requireAuth, async (req, res) => {
+  const { score, correct, total, maxStreak, category } = req.body;
+  const userId = req.userId;
   try {
     await db.query(
       'INSERT INTO quiz_stats (user_id, score, correct, total, max_streak, category) VALUES ($1, $2, $3, $4, $5, $6)',
@@ -302,8 +476,8 @@ app.post('/api/quiz/stats', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-app.get('/api/quiz/stats/:userId', async (req, res) => {
-  const { userId } = req.params;
+app.get('/api/quiz/stats/me', _requireAuth, async (req, res) => {
+  const userId = req.userId;
   try {
     const allTime = await db.query(`
       SELECT
@@ -415,10 +589,11 @@ app.post('/api/analytics/event', async (req, res) => {
 // Šema: user_data(user_id UUID, data_type TEXT, data_key TEXT, payload JSONB, updated_at TIMESTAMPTZ)
 // Napravi tabelu ručno u Railway Query editoru pre upotrebe (vidi user_data_schema.sql).
 
-app.post('/api/userdata/sync', async (req, res) => {
-  const { userId, dataType, items } = req.body;
-  if (!userId || !dataType || !Array.isArray(items)) {
-    return res.status(400).json({ error: 'Nedostaju userId, dataType ili items' });
+app.post('/api/userdata/sync', _requireAuth, async (req, res) => {
+  const { dataType, items } = req.body;
+  const userId = req.userId;
+  if (!dataType || !Array.isArray(items)) {
+    return res.status(400).json({ error: 'Nedostaju dataType ili items' });
   }
   try {
     for (const item of items) {
@@ -443,8 +618,9 @@ app.post('/api/userdata/sync', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-app.get('/api/userdata/:userId/:dataType', async (req, res) => {
-  const { userId, dataType } = req.params;
+app.get('/api/userdata/:dataType', _requireAuth, async (req, res) => {
+  const { dataType } = req.params;
+  const userId = req.userId;
   try {
     const result = await db.query(
       'SELECT data_key AS key, payload, updated_at AS "updatedAt" FROM user_data WHERE user_id = $1 AND data_type = $2',
