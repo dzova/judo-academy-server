@@ -36,9 +36,13 @@ passport.use(new GoogleStrategy({
     const email = profile.emails[0].value;
     const name = profile.displayName;
     const googleId = profile.id;
+    const photoUrl = (profile.photos && profile.photos[0] && profile.photos[0].value) || '';
     let result = await db.query('SELECT * FROM users WHERE google_id = $1', [googleId]);
     if (result.rows.length === 0) {
-      result = await db.query('INSERT INTO users (username, email, google_id) VALUES ($1, $2, $3) RETURNING *', [name, email, googleId]);
+      result = await db.query('INSERT INTO users (username, email, google_id, photo_url) VALUES ($1, $2, $3, $4) RETURNING *', [name, email, googleId, photoUrl]);
+    } else if (photoUrl && photoUrl !== result.rows[0].photo_url) {
+      // Google slika se mogla promeniti od poslednjeg login-a - osvezi je
+      result = await db.query('UPDATE users SET photo_url = $1 WHERE google_id = $2 RETURNING *', [photoUrl, googleId]);
     }
     return done(null, result.rows[0]);
   } catch (err) { return done(err); }
@@ -68,6 +72,7 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
     email: user.email || '',
     belt: user.belt || 'white',
     xp: user.xp || 0,
+    photoUrl: user.photo_url || '',
     authToken
   };
   // Obrisi token posle 5 minuta
@@ -143,7 +148,7 @@ app.get('/api/user/me', _requireAuth, async (req, res) => {
   const userId = req.userId;
   try {
     const result = await db.query(
-      'SELECT id, username, email, belt, xp, club, country, subscription_tier, exam_date FROM users WHERE id = $1',
+      'SELECT id, username, email, belt, xp, club, country, subscription_tier, exam_date, photo_url FROM users WHERE id = $1',
       [userId]
     );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Nije pronadjen' });
