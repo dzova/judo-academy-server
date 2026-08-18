@@ -149,11 +149,18 @@ app.get('/api/user/me', _requireAuth, async (req, res) => {
   const userId = req.userId;
   try {
     const result = await db.query(
-      'SELECT id, username, email, belt, xp, club, country, subscription_tier, exam_date, photo_url FROM users WHERE id = $1',
+      'SELECT id, username, email, belt, xp, club, country, subscription_tier, subscription_expires, exam_date, photo_url FROM users WHERE id = $1',
       [userId]
     );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Nije pronadjen' });
-    res.json(result.rows[0]);
+    const user = result.rows[0];
+    // Ako je subscription_tier 'premium' u bazi ali je datum isteka prosao, javi klijentu
+    // stvarno stanje ('free') umesto zastarelog baza flaga - baza se ne azurira automatski
+    // kad pretplata istekne, samo se runtime proverava pri svakom pristupu
+    if (user.subscription_tier === 'premium' && !_isPremiumActive(user)) {
+      user.subscription_tier = 'free';
+    }
+    res.json(user);
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
