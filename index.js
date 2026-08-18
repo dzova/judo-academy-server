@@ -56,6 +56,7 @@ passport.deserializeUser(async (id, done) => {
 
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+const { google } = require('googleapis');
 const pendingAuth = {}; // In-memory token store
 
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -248,6 +249,62 @@ app.post('/api/promo/redeem', _requireAuth, async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// Product ID-jevi definisani u Play Console (Monetize -> Products -> Subscriptions)
+const PLAY_BILLING_PRODUCT_IDS = ['premium_monthly', 'premium_annual'];
+
+app.post('/api/billing/verify', _requireAuth, async (req, res) => {
+  const { purchaseToken, productId } = req.body;
+  const userId = req.userId;
+  if (!purchaseToken || !productId) {
+    return res.status(400).json({ error: 'Nedostaju purchaseToken ili productId' });
+  }
+  if (!PLAY_BILLING_PRODUCT_IDS.includes(productId)) {
+    return res.status(400).json({ error: 'Nepoznat productId' });
+  }
+  try {
+    const publisher = await _getAndroidPublisher();
+    const result = await publisher.purchases.subscriptionsv2.get({
+      packageName: 'com.judoacademy.app',
+      token: purchaseToken,
+    });
+
+    const subscription = result.data;
+    const state = subscription.subscriptionState;
+    // SUBSCRIPTION_STATE_ACTIVE ili SUBSCRIPTION_STATE_IN_GRACE_PERIOD znace da korisnik
+    // trenutno ima vazecu pretplatu (grace period = placanje kasni ali jos nije otkazano)
+    const isActive = state === 'SUBSCRIPTION_STATE_ACTIVE' || state === 'SUBSCRIPTION_STATE_IN_GRACE_PERIOD';
+
+    if (!isActive) {
+      return res.status(400).json({ error: 'Pretplata nije aktivna', state });
+    }
+
+    const lineItem = (subscription.lineItems || [])[0];
+    const expiresAt = lineItem && lineItem.expiryTime ? new Date(lineItem.expiryTime) : null;
+
+    await db.query(
+      'UPDATE users SET subscription_tier = $1, subscription_expires = $2, play_purchase_token = $3 WHERE id = $4',
+      ['premium', expiresAt, purchaseToken, userId]
+    );
+
+    // Potvrdi kupovinu (acknowledge) ako jos nije potvrdjena - Google ponistava
+    // kupovine koje ostanu nepotvrdjene duze od 3 dana
+    if (subscription.acknowledgementState === 'ACKNOWLEDGEMENT_STATE_PENDING') {
+      try {
+        await publisher.purchases.subscriptions.acknowledge({
+          packageName: 'com.judoacademy.app',
+          subscriptionId: productId,
+          token: purchaseToken,
+        });
+      } catch (ackErr) { console.error('[billing] Acknowledge greska:', ackErr.message); }
+    }
+
+    res.json({ success: true, expires_at: expiresAt, state });
+  } catch (err) {
+    console.error('[billing] Verifikacija neuspesna:', err.message);
+    res.status(500).json({ error: 'Verifikacija nije uspela: ' + err.message });
+  }
+});
+
 function _checkAdminKey(req, res) {
   const key = req.query.key || req.headers['x-admin-key'];
   if (!process.env.ADMIN_DASHBOARD_KEY || key !== process.env.ADMIN_DASHBOARD_KEY) {
@@ -279,6 +336,24 @@ function _requireAuth(req, res, next) {
   } catch (err) {
     return res.status(401).json({ error: 'Token je nevazeci ili je istekao' });
   }
+}
+
+// Google Play Developer API klijent za server-side verifikaciju kupovina.
+// Kredencijali Service Account-a se citaju iz GOOGLE_SERVICE_ACCOUNT_JSON env promenljive
+// (ceo JSON fajl kao string), NIKAD iz fajla u repo-u - to bi bio bezbednosni rizik.
+let _androidPublisherClient = null;
+async function _getAndroidPublisher() {
+  if (_androidPublisherClient) return _androidPublisherClient;
+  if (!process.env.GOOGLE_SERVICE_ACCOUNT_JSON) {
+    throw new Error('GOOGLE_SERVICE_ACCOUNT_JSON nije podesen na serveru');
+  }
+  const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON);
+  const auth = new google.auth.GoogleAuth({
+    credentials,
+    scopes: ['https://www.googleapis.com/auth/androidpublisher'],
+  });
+  _androidPublisherClient = google.androidpublisher({ version: 'v3', auth });
+  return _androidPublisherClient;
 }
 
 function _generatePromoCode() {
