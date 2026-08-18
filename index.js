@@ -201,12 +201,12 @@ app.get('/api/sensei/limit/me', _requireAuth, async (req, res) => {
   const userId = req.userId;
   try {
     const result = await db.query(
-      'SELECT questions_today, last_reset, subscription_tier FROM users WHERE id = $1',
+      'SELECT questions_today, last_reset, subscription_tier, subscription_expires FROM users WHERE id = $1',
       [userId]
     );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronadjen' });
     const user = result.rows[0];
-    const isPremium = user.subscription_tier === 'premium';
+    const isPremium = _isPremiumActive(user);
 
     if (isPremium) {
       const today = new Date().toDateString();
@@ -356,6 +356,16 @@ async function _getAndroidPublisher() {
   return _androidPublisherClient;
 }
 
+// Proverava da li je korisnik STVARNO trenutno premium - i subscription_tier='premium'
+// i (subscription_expires je null (lifetime/bez isteka) ili je u buducnosti).
+// Koristiti umesto direktne provere `subscription_tier === 'premium'` svuda u kodu,
+// jer sam tier flag ne govori nista o tome da li je pretplata i dalje vazeca.
+function _isPremiumActive(user) {
+  if (user.subscription_tier !== 'premium') return false;
+  if (!user.subscription_expires) return true; // lifetime/promo bez isteka
+  return new Date(user.subscription_expires) > new Date();
+}
+
 function _generatePromoCode() {
   // Bezbedan alfabet bez slova/brojeva koji se lako mešaju (0/O, 1/I/l)
   const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -502,12 +512,12 @@ app.post('/api/sensei/ask', _requireAuth, async (req, res) => {
 
   try {
     const userResult = await db.query(
-      'SELECT questions_today, last_reset, subscription_tier FROM users WHERE id = $1',
+      'SELECT questions_today, last_reset, subscription_tier, subscription_expires FROM users WHERE id = $1',
       [userId]
     );
     if (userResult.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronadjen' });
     const user = userResult.rows[0];
-    const isPremium = user.subscription_tier === 'premium';
+    const isPremium = _isPremiumActive(user);
 
     if (isPremium) {
       const today = new Date().toDateString();
