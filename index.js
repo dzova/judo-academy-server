@@ -4,11 +4,17 @@ const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const rateLimit = require('express-rate-limit');
 const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
 
 const app = express();
+
+// Railway (i vecina PaaS-a) sedi iza load balancer/proxy-ja - bez ovoga bi express-rate-limit
+// video IP proxy-ja umesto pravog IP-a klijenta za SVE zahteve, sto bi ili blokiralo sve
+// korisnike zajedno kao da su jedan klijent, ili ucinilo rate limiting potpuno neefektivnim.
+app.set('trust proxy', 1);
 
 // CORS headers — MORAJU biti pre ostalih middleware-a
 app.use((req, res, next) => {
@@ -21,9 +27,51 @@ app.use((req, res, next) => {
 
 app.use(cors({ origin: '*', credentials: false }));
 app.use(express.json());
-app.use(session({ secret: process.env.SESSION_SECRET || 'judo2024', resave: false, saveUninitialized: false }));
+if (!process.env.SESSION_SECRET) {
+  console.error('[startup] SESSION_SECRET nije podesen - server se ne pokrece bez njega');
+  process.exit(1);
+}
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// ════════════════════════════════════════ RATE LIMITING ════════════════════════════════════════
+// Dodatni sloj zastite iznad postojecih dnevnih limita (questions_today, itd.) - fokusiran na
+// zloupotrebu na nivou minuta (brute-force, spam, skriptovani napadi), ne na dnevne kvote koje
+// vec postoje po feature-u. Svi limiteri koriste standardne RateLimit-* headere (standardHeaders:
+// true) da klijent moze da vidi koliko mu je ostalo, i legacyHeaders: false jer stariji X-RateLimit-*
+// headeri nisu potrebni ovde.
+
+// Strog limiter za auth/promo rute - ove su najosetljivije na brute-force (pogadjanje promo
+// kodova, pokusaji pogadjanja pending auth tokena).
+const strictLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 min
+  limit: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Previse pokusaja, pokusaj ponovo kasnije' }
+});
+
+// Umeren limiter za AI pozive (Sensei/Scouting) - dnevni limit od 5 vec postoji na nivou
+// korisnika u bazi, ovo je dodatna zastita da neko ne pokusa da "potrosi" ili testira taj
+// limit ekstremno brzo (npr. 100 poziva u sekundi pre nego sto server stigne da azurira brojac).
+const aiLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 min
+  limit: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Previse zahteva, sacekaj malo' }
+});
+
+// Labaviji limiter za analytics - ocekivano je da klijent salje dosta eventa tokom koriscenja
+// app-a, cilj je samo sprecavanje ociglednog spam/DoS scenarija, ne normalne upotrebe.
+const analyticsLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 60,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Previse zahteva' }
+});
 
 const db = new Pool({ connectionString: process.env.DATABASE_URL });
 
@@ -57,6 +105,7 @@ passport.deserializeUser(async (id, done) => {
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { google } = require('googleapis');
+const { OAuth2Client } = require('google-auth-library');
 const pendingAuth = {}; // In-memory token store
 
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -123,7 +172,7 @@ app.get('/auth-success', (req, res) => {
 });
 
 // Auth pending - app fetchuje posle Google login-a
-app.get('/api/auth/pending/:token', async (req, res) => {
+app.get('/api/auth/pending/:token', strictLimiter, async (req, res) => {
   const token = req.params.token;
   const data = pendingAuth[token];
   if (!data) return res.status(404).json({ error: 'Token nije validan ili je istekao' });
@@ -149,7 +198,7 @@ app.get('/api/user/me', _requireAuth, async (req, res) => {
   const userId = req.userId;
   try {
     const result = await db.query(
-      'SELECT id, username, email, belt, xp, club, country, subscription_tier, subscription_expires, exam_date, photo_url FROM users WHERE id = $1',
+      'SELECT id, username, email, belt, xp, club, country, subscription_tier, subscription_expires, exam_date, photo_url, unlocked_badges, birth_year FROM users WHERE id = $1',
       [userId]
     );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Nije pronadjen' });
@@ -164,9 +213,35 @@ app.get('/api/user/me', _requireAuth, async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// ════════════════════════════════════════ KORISNIK ════════════════════════════════════════
+
+// Redosled odgovara stvarnim id vrednostima iz frontenda (BELT_TECHNIQUES / pojas lista) -
+// bilo koja druga vrednost je odbijena da spreci direktan API poziv sa izmisljenim pojasom.
+// Definisano ovde (pre prve rute koja je koristi) radi jasnoce, mada bi zbog function-scope
+// izvrsavanja radilo i kad je bilo definisano nize u fajlu.
+const VALID_BELTS = ['beli', 'zuti', 'narandzasti', 'zeleni', 'plavi', 'braon', 'crni'];
+
 app.post('/api/user/update', _requireAuth, async (req, res) => {
-  const { username, club, country, belt, examDate } = req.body;
+  const { username, club, country, belt, examDate, birthYear } = req.body;
   const userId = req.userId;
+
+  if (belt !== undefined && belt !== null && !VALID_BELTS.includes(belt)) {
+    return res.status(400).json({ error: 'Nevalidna belt vrednost' });
+  }
+  // Osnovna duzinska ogranicenja - ova polja se prikazuju na javnom /api/leaderboard bez
+  // autentikacije, pa ogranicavamo duzinu da spreci ocigledan abuse (npr. ogroman string koji
+  // razbija UI layout). Frontend leaderboard renderer vec radi escH() escaping za XSS zastitu,
+  // ovo je dodatna higijena na nivou podataka.
+  if (username !== undefined && username !== null && (typeof username !== 'string' || username.length > 40)) {
+    return res.status(400).json({ error: 'Nevalidno korisnicko ime' });
+  }
+  if (club !== undefined && club !== null && (typeof club !== 'string' || club.length > 60)) {
+    return res.status(400).json({ error: 'Nevalidan naziv kluba' });
+  }
+  if (country !== undefined && country !== null && (typeof country !== 'string' || country.length > 60)) {
+    return res.status(400).json({ error: 'Nevalidna drzava' });
+  }
+
   try {
     await db.query(
       `UPDATE users SET
@@ -174,9 +249,10 @@ app.post('/api/user/update', _requireAuth, async (req, res) => {
         country = $2,
         username = COALESCE($3, username),
         belt = COALESCE($4, belt),
-        exam_date = COALESCE($5, exam_date)
-       WHERE id = $6`,
-      [club || null, country || null, username || null, belt || null, examDate || null, userId]
+        exam_date = COALESCE($5, exam_date),
+        birth_year = COALESCE($6, birth_year)
+       WHERE id = $7`,
+      [club || null, country || null, username || null, belt || null, examDate || null, birthYear || null, userId]
     );
     res.json({ success: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
@@ -186,19 +262,54 @@ app.post('/api/user/update', _requireAuth, async (req, res) => {
 
 app.get('/api/leaderboard', async (req, res) => {
   try {
-    const result = await db.query(
-      'SELECT username, belt, xp, club, country FROM users ORDER BY xp DESC LIMIT 50'
-    );
+    const result = await db.query(`
+      SELECT u.username, u.belt, u.xp, u.club, u.country, u.updated_at,
+             COALESCE(qs.best_score, 0) AS quiz_score,
+             COALESCE(qs.total_correct, 0) AS correct
+      FROM users u
+      LEFT JOIN (
+        SELECT user_id, MAX(score) AS best_score, SUM(correct) AS total_correct
+        FROM quiz_stats
+        GROUP BY user_id
+      ) qs ON qs.user_id = u.id
+      ORDER BY u.xp DESC LIMIT 50
+    `);
     res.json(result.rows);
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// Gornja granica je namerno velikodusna (ne pokusavamo tacno izracunati teoretski max iz
+// svih izvora XP-a) - cilj je samo da odbijemo ocigledno lazirane vrednosti (npr. 999999999),
+// ne da fino tuniramo legitimni max napredak
+const MAX_PLAUSIBLE_XP = 200000;
+
 app.post('/api/xp/update', _requireAuth, async (req, res) => {
-  const { xp, belt } = req.body;
+  const { xp, belt, unlockedBadges } = req.body;
   const userId = req.userId;
+
+  if (typeof xp !== 'number' || !Number.isFinite(xp) || xp < 0 || xp > MAX_PLAUSIBLE_XP) {
+    return res.status(400).json({ error: 'Nevalidna xp vrednost' });
+  }
+  if (belt !== undefined && belt !== null && !VALID_BELTS.includes(belt)) {
+    return res.status(400).json({ error: 'Nevalidna belt vrednost' });
+  }
+
   try {
-    await db.query('UPDATE users SET xp = $1, belt = $2 WHERE id = $3', [xp, belt, userId]);
-    res.json({ success: true });
+    const newBadges = Array.isArray(unlockedBadges) ? unlockedBadges : [];
+    const result = await db.query(
+      `UPDATE users SET
+        xp = $1,
+        belt = $2,
+        updated_at = NOW(),
+        unlocked_badges = (
+          SELECT COALESCE(jsonb_agg(DISTINCT badge), '[]'::jsonb)
+          FROM jsonb_array_elements_text(COALESCE(unlocked_badges, '[]'::jsonb) || $4::jsonb) AS badge
+        )
+       WHERE id = $3
+       RETURNING unlocked_badges`,
+      [xp, belt, userId, JSON.stringify(newBadges)]
+    );
+    res.json({ success: true, unlockedBadges: result.rows[0] ? result.rows[0].unlocked_badges : newBadges });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
@@ -231,16 +342,33 @@ app.get('/api/sensei/limit/me', _requireAuth, async (req, res) => {
 
 // ════════════════════════════════════════ PROMO KODOVI ════════════════════════════════════════
 
-app.post('/api/promo/redeem', _requireAuth, async (req, res) => {
+app.post('/api/promo/redeem', strictLimiter, _requireAuth, _requireIntegrity, async (req, res) => {
   const { code } = req.body;
   const userId = req.userId;
   if (!code) return res.status(400).json({ error: 'Nedostaju podaci' });
+
+  const client = await db.connect();
   try {
-    const promo = await db.query('SELECT * FROM promo_codes WHERE code = $1', [code.toUpperCase()]);
-    if (promo.rows.length === 0) return res.status(404).json({ error: 'Kod nije validan' });
+    await client.query('BEGIN');
+
+    // FOR UPDATE zakljucava red da spreci race condition kad dva zahteva sa
+    // istim kodom stignu istovremeno pri poslednjem dostupnom koriscenju
+    // (npr. max_uses=1, dva brza klika/zahteva) - bez ovoga oba mogu proci
+    // proveru used_count < max_uses pre nego sto ijedan upise novu vrednost.
+    const promo = await client.query('SELECT * FROM promo_codes WHERE code = $1 FOR UPDATE', [code.toUpperCase()]);
+    if (promo.rows.length === 0) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ error: 'Kod nije validan' });
+    }
     const p = promo.rows[0];
-    if (p.valid_until && new Date(p.valid_until) < new Date()) return res.status(400).json({ error: 'Kod je istekao' });
-    if (p.used_count >= p.max_uses) return res.status(400).json({ error: 'Kod je iskoristen' });
+    if (p.valid_until && new Date(p.valid_until) < new Date()) {
+      await client.query('ROLLBACK');
+      return res.status(400).json({ error: 'Kod je istekao' });
+    }
+    if (p.used_count >= p.max_uses) {
+      await client.query('ROLLBACK');
+      return res.status(400).json({ error: 'Kod je iskoristen' });
+    }
 
     let expiresAt = null;
     if (p.duration_days) {
@@ -248,18 +376,76 @@ app.post('/api/promo/redeem', _requireAuth, async (req, res) => {
       expiresAt.setDate(expiresAt.getDate() + p.duration_days);
     }
 
-    await db.query('UPDATE users SET subscription_tier = $1, subscription_expires = $2 WHERE id = $3',
+    // Oba UPDATE-a u istoj transakciji - ili oba prodju ili nijedan (sprecava
+    // da korisnik dobije premium a kod ostane "neiskoriscen" ako server padne
+    // izmedju ove dve linije).
+    await client.query('UPDATE users SET subscription_tier = $1, subscription_expires = $2 WHERE id = $3',
       ['premium', expiresAt, userId]);
-    await db.query('UPDATE promo_codes SET used_count = used_count + 1 WHERE code = $1', [code.toUpperCase()]);
+    await client.query('UPDATE promo_codes SET used_count = used_count + 1 WHERE code = $1', [code.toUpperCase()]);
 
+    await client.query('COMMIT');
     res.json({ success: true, duration_days: p.duration_days, expires_at: expiresAt });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) {
+    await client.query('ROLLBACK').catch(() => {});
+    res.status(500).json({ error: err.message });
+  } finally {
+    client.release();
+  }
 });
 
 // Product ID-jevi definisani u Play Console (Monetize -> Products -> Subscriptions)
 const PLAY_BILLING_PRODUCT_IDS = ['premium_monthly', 'premium_annual'];
 
-app.post('/api/billing/verify', _requireAuth, async (req, res) => {
+// Zajednicka logika za verifikaciju kupovine preko Google Play Developer API-ja i upis
+// u bazu. Koristi se i pri prvoj kupovini (/api/billing/verify) i pri periodicnom
+// osvezavanju statusa postojece pretplate (/api/billing/refresh), jer bez RTDN webhook-a
+// server ne saznaje automatski kad se pretplata obnovi svakog meseca/godine.
+async function _verifyAndApplySubscription(userId, purchaseToken, productId) {
+  const publisher = await _getAndroidPublisher();
+  const result = await publisher.purchases.subscriptionsv2.get({
+    packageName: 'com.judoacademy.app',
+    token: purchaseToken,
+  });
+
+  const subscription = result.data;
+  const state = subscription.subscriptionState;
+  const isActive = state === 'SUBSCRIPTION_STATE_ACTIVE' || state === 'SUBSCRIPTION_STATE_IN_GRACE_PERIOD';
+
+  if (!isActive) {
+    return { ok: false, status: 400, error: 'Pretplata nije aktivna', state };
+  }
+
+  const lineItem = (subscription.lineItems || [])[0];
+  const expiresAt = lineItem && lineItem.expiryTime ? new Date(lineItem.expiryTime) : null;
+  // Uzimamo productId iz same Google API odgovora (autoritativan izvor) umesto da se
+  // oslanjamo na prosledjeni parametar - bitno za /api/billing/refresh i webhook pozive
+  // koji ne znaju productId unapred i prosledjuju prazan string
+  const resolvedProductId = (lineItem && lineItem.productId) || productId;
+
+  const existingOwner = await db.query('SELECT id FROM users WHERE play_purchase_token = $1', [purchaseToken]);
+  if (existingOwner.rows.length > 0 && existingOwner.rows[0].id !== userId) {
+    return { ok: false, status: 409, error: 'Ova kupovina je vec povezana sa drugim nalogom' };
+  }
+
+  await db.query(
+    'UPDATE users SET subscription_tier = $1, subscription_expires = $2, play_purchase_token = $3 WHERE id = $4',
+    ['premium', expiresAt, purchaseToken, userId]
+  );
+
+  if (subscription.acknowledgementState === 'ACKNOWLEDGEMENT_STATE_PENDING') {
+    try {
+      await publisher.purchases.subscriptions.acknowledge({
+        packageName: 'com.judoacademy.app',
+        subscriptionId: resolvedProductId,
+        token: purchaseToken,
+      });
+    } catch (ackErr) { console.error('[billing] Acknowledge greska:', ackErr.message); }
+  }
+
+  return { ok: true, expiresAt, state };
+}
+
+app.post('/api/billing/verify', _requireAuth, _requireIntegrity, async (req, res) => {
   const { purchaseToken, productId } = req.body;
   const userId = req.userId;
   if (!purchaseToken || !productId) {
@@ -269,46 +455,157 @@ app.post('/api/billing/verify', _requireAuth, async (req, res) => {
     return res.status(400).json({ error: 'Nepoznat productId' });
   }
   try {
-    const publisher = await _getAndroidPublisher();
-    const result = await publisher.purchases.subscriptionsv2.get({
-      packageName: 'com.judoacademy.app',
-      token: purchaseToken,
-    });
-
-    const subscription = result.data;
-    const state = subscription.subscriptionState;
-    // SUBSCRIPTION_STATE_ACTIVE ili SUBSCRIPTION_STATE_IN_GRACE_PERIOD znace da korisnik
-    // trenutno ima vazecu pretplatu (grace period = placanje kasni ali jos nije otkazano)
-    const isActive = state === 'SUBSCRIPTION_STATE_ACTIVE' || state === 'SUBSCRIPTION_STATE_IN_GRACE_PERIOD';
-
-    if (!isActive) {
-      return res.status(400).json({ error: 'Pretplata nije aktivna', state });
-    }
-
-    const lineItem = (subscription.lineItems || [])[0];
-    const expiresAt = lineItem && lineItem.expiryTime ? new Date(lineItem.expiryTime) : null;
-
-    await db.query(
-      'UPDATE users SET subscription_tier = $1, subscription_expires = $2, play_purchase_token = $3 WHERE id = $4',
-      ['premium', expiresAt, purchaseToken, userId]
-    );
-
-    // Potvrdi kupovinu (acknowledge) ako jos nije potvrdjena - Google ponistava
-    // kupovine koje ostanu nepotvrdjene duze od 3 dana
-    if (subscription.acknowledgementState === 'ACKNOWLEDGEMENT_STATE_PENDING') {
-      try {
-        await publisher.purchases.subscriptions.acknowledge({
-          packageName: 'com.judoacademy.app',
-          subscriptionId: productId,
-          token: purchaseToken,
-        });
-      } catch (ackErr) { console.error('[billing] Acknowledge greska:', ackErr.message); }
-    }
-
-    res.json({ success: true, expires_at: expiresAt, state });
+    const result = await _verifyAndApplySubscription(userId, purchaseToken, productId);
+    if (!result.ok) return res.status(result.status).json({ error: result.error, state: result.state });
+    res.json({ success: true, expires_at: result.expiresAt, state: result.state });
   } catch (err) {
     console.error('[billing] Verifikacija neuspesna:', err.message);
     res.status(500).json({ error: 'Verifikacija nije uspela: ' + err.message });
+  }
+});
+
+// Osvezava status postojece pretplate koristeci VEC SACUVAN token iz baze (ne novi token
+// sa klijenta). Klijent poziva ovo pri svakom otvaranju Profil ekrana za premium korisnike -
+// throttle ispod sprecava da to postane cest poziv ka Google Play API-ju, jer RTDN webhook
+// (linija ~432) vec hvata stvarne promene pretplate u realnom vremenu; ovaj poziv je samo
+// dodatni safety-net za slucaj da webhook zakasni/promasi, pa ne mora da bude trenutan.
+const _billingRefreshThrottle = new Map(); // userId -> timestamp poslednjeg stvarnog Google Play poziva
+const BILLING_REFRESH_THROTTLE_MS = 30 * 60 * 1000; // 30 min
+
+app.post('/api/billing/refresh', _requireAuth, async (req, res) => {
+  const userId = req.userId;
+  try {
+    const lastCall = _billingRefreshThrottle.get(userId);
+    if (lastCall && (Date.now() - lastCall) < BILLING_REFRESH_THROTTLE_MS) {
+      // Prescoceno - vrati trenutno stanje iz baze bez novog Google Play poziva
+      const cached = await db.query('SELECT subscription_tier, subscription_expires FROM users WHERE id = $1', [userId]);
+      if (cached.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronadjen' });
+      const u = cached.rows[0];
+      return res.json({ success: true, active: _isPremiumActive(u), expires_at: u.subscription_expires, throttled: true });
+    }
+
+    const userResult = await db.query('SELECT play_purchase_token FROM users WHERE id = $1', [userId]);
+    if (userResult.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronadjen' });
+    const token = userResult.rows[0].play_purchase_token;
+    if (!token) return res.status(400).json({ error: 'Nema sacuvane kupovine za osvezavanje' });
+
+    // productId nije poznat iz baze (ne cuvamo ga posebno), ali je potreban samo za
+    // acknowledge poziv koji se svakako preskace ako je pretplata vec potvrdjena -
+    // koristimo prazan string jer je acknowledge grana retko dostignuta ovde
+    const result = await _verifyAndApplySubscription(userId, token, '');
+    // Throttle se upisuje tek NAKON uspesnog poziva - ako Google API privremeno ne radi
+    // (mreza, kvota, itd.), sledeci pokusaj korisnika sme odmah da proba ponovo umesto da
+    // ceka 30 min na osnovu neuspesnog pokusaja.
+    _billingRefreshThrottle.set(userId, Date.now());
+    if (!result.ok) {
+      // Pretplata vise nije aktivna (otkazana/istekla) - eksplicitno postavi na free
+      // umesto da ostavimo zastareo 'premium' status u bazi
+      await db.query('UPDATE users SET subscription_tier = $1 WHERE id = $2', ['free', userId]);
+      return res.json({ success: true, active: false, state: result.state || null });
+    }
+    res.json({ success: true, active: true, expires_at: result.expiresAt, state: result.state });
+  } catch (err) {
+    console.error('[billing] Osvezavanje neuspesno:', err.message);
+    res.status(500).json({ error: 'Osvezavanje nije uspelo: ' + err.message });
+  }
+});
+
+// Real-time Developer Notifications (RTDN) webhook - Google Play salje Pub/Sub push
+// notifikaciju ovde kad se stanje pretplate promeni (obnova, otkazivanje, grace period, itd.)
+// Payload je SAMO signal da se nesto desilo - uvek se poziva Google Play API da se dobije
+// pravo, trenutno stanje, nikad se ne veruje notificationType broju direktno za odluke.
+const _processedRtdnMessageIds = new Set();
+const _pubsubAuthClient = new OAuth2Client();
+
+// Verifikuje da POST zahtev STVARNO dolazi od Google Pub/Sub servisa (ne od bilo koga ko
+// zna URL endpointa). Pub/Sub push zahtevi nose Google-potpisan OIDC token u Authorization
+// header-u; ovde se taj token verifikuje protiv Google-ovih javnih kljuceva, proverava se
+// da audience odgovara nasem endpointu, i da je izdat od servisnog naloga
+async function _verifyPubSubRequest(req) {
+  const authHeader = req.headers['authorization'] || '';
+  const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
+  if (!token) return false;
+  if (!process.env.PUBSUB_WEBHOOK_AUDIENCE) {
+    console.error('[billing][rtdn] PUBSUB_WEBHOOK_AUDIENCE nije podesen na serveru - webhook odbija sve zahteve dok se ne podesi');
+    return false;
+  }
+  try {
+    const ticket = await _pubsubAuthClient.verifyIdToken({
+      idToken: token,
+      audience: process.env.PUBSUB_WEBHOOK_AUDIENCE,
+    });
+    const payload = ticket.getPayload();
+    return !!(payload && payload.email && payload.email.endsWith('.gserviceaccount.com'));
+  } catch (err) {
+    console.error('[billing][rtdn] JWT verifikacija neuspesna:', err.message);
+    return false;
+  }
+}
+
+app.post('/api/billing/webhook', async (req, res) => {
+  try {
+    const isVerified = await _verifyPubSubRequest(req);
+    if (!isVerified) {
+      return res.status(403).send('Forbidden: invalid or missing Pub/Sub authentication');
+    }
+
+    const message = req.body && req.body.message;
+    if (!message || !message.data) {
+      // Nevalidan payload - potvrdi da ne bi Google ponavljao unedogled
+      return res.status(200).send('ignored: no message data');
+    }
+
+    // Idempotentnost - Google Pub/Sub garantuje at-least-once delivery i redovno salje
+    // duplikate. Preskacemo poruke koje smo vec obradili (in-memory, dovoljno za jedan
+    // server proces; restart servera bi teoretski mogao ponovo obraditi poruku, ali
+    // _verifyAndApplySubscription je vec idempotentna - upisuje isto stanje ponovo)
+    const messageId = message.messageId || message.message_id;
+    if (messageId && _processedRtdnMessageIds.has(messageId)) {
+      return res.status(200).send('duplicate, already processed');
+    }
+
+    const decoded = Buffer.from(message.data, 'base64').toString('utf8');
+    const notification = JSON.parse(decoded);
+
+    const subNotif = notification.subscriptionNotification;
+    if (!subNotif || !subNotif.purchaseToken) {
+      // VoidedPurchaseNotification ili druga vrsta koju trenutno ne obradjujemo
+      if (messageId) _processedRtdnMessageIds.add(messageId);
+      return res.status(200).send('ignored: not a subscription notification');
+    }
+
+    const purchaseToken = subNotif.purchaseToken;
+    const userResult = await db.query('SELECT id FROM users WHERE play_purchase_token = $1', [purchaseToken]);
+    if (userResult.rows.length === 0) {
+      // Token jos nije povezan ni sa jednim korisnikom (npr. RTDN je stigao pre nego sto
+      // je klijent stigao da pozove /api/billing/verify posle kupovine) - beleze se u log,
+      // ne pokusavamo ponovo, Google ce poslati sledeci event kad korisnik zavrsi verify
+      console.error('[billing][rtdn] Token nije povezan ni sa jednim korisnikom:', purchaseToken);
+      if (messageId) _processedRtdnMessageIds.add(messageId);
+      return res.status(200).send('token not yet linked to a user');
+    }
+
+    const userId = userResult.rows[0].id;
+    const result = await _verifyAndApplySubscription(userId, purchaseToken, '');
+    if (!result.ok) {
+      await db.query('UPDATE users SET subscription_tier = $1 WHERE id = $2', ['free', userId]);
+    }
+
+    if (messageId) {
+      _processedRtdnMessageIds.add(messageId);
+      // Sprecava neograniceni rast Set-a tokom dugog rada servera
+      if (_processedRtdnMessageIds.size > 5000) {
+        const oldest = _processedRtdnMessageIds.values().next().value;
+        _processedRtdnMessageIds.delete(oldest);
+      }
+    }
+
+    res.status(200).send('processed');
+  } catch (err) {
+    // I dalje odgovaramo 200 - gresku beleze u log za rucnu istragu, ne zelimo da Google
+    // beskonacno ponavlja isporuku za greske koje mi moramo da resimo (npr. bug u kodu)
+    console.error('[billing][rtdn] Obrada notifikacije neuspesna:', err.message);
+    res.status(200).send('error logged');
   }
 });
 
@@ -361,6 +658,109 @@ async function _getAndroidPublisher() {
   });
   _androidPublisherClient = google.androidpublisher({ version: 'v3', auth });
   return _androidPublisherClient;
+}
+
+// ════════════════════════════════════════ PLAY INTEGRITY API ════════════════════════════════════════
+// Isti Service Account (GOOGLE_SERVICE_ACCOUNT_JSON) kao za Billing, drugaciji OAuth scope.
+// Klijent (Capacitor @capacitor-community/play-integrity plugin) generise integrity token pre
+// osetljivih akcija (kupovina, promo redeem, AI pozivi) i salje ga u X-Integrity-Token headeru.
+// Server dekriptuje token preko Google Play servera (token se ne moze falsifikovati na klijentu)
+// i proverava da je app genuine, uredjaj neupitan, i nalog licenciran.
+let _playIntegrityClient = null;
+async function _getPlayIntegrityClient() {
+  if (_playIntegrityClient) return _playIntegrityClient;
+  if (!process.env.GOOGLE_SERVICE_ACCOUNT_JSON) {
+    throw new Error('GOOGLE_SERVICE_ACCOUNT_JSON nije podesen na serveru');
+  }
+  const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON);
+  const auth = new google.auth.GoogleAuth({
+    credentials,
+    scopes: ['https://www.googleapis.com/auth/playintegrity'],
+  });
+  _playIntegrityClient = google.playintegrity({ version: 'v1', auth });
+  return _playIntegrityClient;
+}
+
+const JUDO_ACADEMY_PACKAGE_NAME = 'com.judoacademy.app';
+// Nonce cache za replay-zastitu - svaki nonce sme da se iskoristi samo jednom, i mora biti
+// nedavno izdat od strane OVOG servera (sprecava da neko presretne/ponovo koristi stari token).
+const _integrityNonceCache = new Map(); // nonce -> {userId, expiresAt}
+const INTEGRITY_NONCE_TTL_MS = 5 * 60 * 1000; // 5 min - dovoljno vremena da klijent zatrazi i posalje token
+
+function _cleanupExpiredNonces() {
+  const now = Date.now();
+  for (const [nonce, data] of _integrityNonceCache) {
+    if (data.expiresAt < now) _integrityNonceCache.delete(nonce);
+  }
+}
+
+// Server izdaje nonce (ne klijent) da bi mogao da potvrdi da je integrity token nastao kao
+// odgovor na NJEGOV zahtev, ne na neki stari/tudji zahtev. crypto.randomBytes daje dovoljno
+// entropije da nonce ne moze biti pogodjen.
+app.get('/api/integrity/nonce', _requireAuth, (req, res) => {
+  _cleanupExpiredNonces();
+  const nonce = crypto.randomBytes(24).toString('base64url');
+  _integrityNonceCache.set(nonce, { userId: req.userId, expiresAt: Date.now() + INTEGRITY_NONCE_TTL_MS });
+  res.json({ nonce });
+});
+
+// Middleware koji verifikuje integrity token poslat u X-Integrity-Token headeru. Ne baca gresku
+// ako Play Integrity API nije podesen (INTEGRITY_ENFORCEMENT env var kontrolise da li je
+// odbijanje strogo ili samo upozorenje) - ovo omogucava postepeno uvodjenje bez rizika da
+// jedna pogresno podesena varijabla srusi kompletnu kupovinu/AI funkcionalnost za sve korisnike.
+async function _requireIntegrity(req, res, next) {
+  const token = req.headers['x-integrity-token'];
+  const strict = process.env.INTEGRITY_ENFORCEMENT === 'strict';
+
+  if (!token) {
+    if (strict) return res.status(400).json({ error: 'Integrity token nedostaje' });
+    console.warn('[integrity] Token nedostaje za ' + req.path + ' (soft mode, propusteno)');
+    return next();
+  }
+
+  try {
+    const client = await _getPlayIntegrityClient();
+    const result = await client.v1.decodeIntegrityToken({
+      packageName: JUDO_ACADEMY_PACKAGE_NAME,
+      requestBody: { integrityToken: token },
+    });
+    const payload = result.data && result.data.tokenPayloadExternal;
+    if (!payload) throw new Error('Prazan integrity payload');
+
+    const { requestDetails, appIntegrity, deviceIntegrity, accountDetails } = payload;
+
+    // Nonce mora postojati u kesu (izdat od ovog servera), pripadati istom korisniku, i biti
+    // svez - ovo sprecava replay napade gde se stari validan token ponovo salje.
+    const nonceData = requestDetails && _integrityNonceCache.get(requestDetails.nonce);
+    if (!nonceData || nonceData.userId !== req.userId) {
+      throw new Error('Nonce nevalidan, istekao, ili ne pripada ovom korisniku');
+    }
+    _integrityNonceCache.delete(requestDetails.nonce); // jednokratna upotreba
+
+    if (!requestDetails || requestDetails.requestPackageName !== JUDO_ACADEMY_PACKAGE_NAME) {
+      throw new Error('Package name se ne poklapa');
+    }
+    if (Date.now() - Number(requestDetails.timestampMillis) >= 120000) {
+      throw new Error('Token je prestar (>2 min)');
+    }
+    if (!appIntegrity || appIntegrity.appRecognitionVerdict !== 'PLAY_RECOGNIZED') {
+      throw new Error('App nije prepoznata kao genuine Play verzija: ' + (appIntegrity && appIntegrity.appRecognitionVerdict));
+    }
+    // MEETS_BASIC_INTEGRITY je najslabiji nivo koji i dalje prihvatamo - MEETS_DEVICE_INTEGRITY
+    // i MEETS_STRONG_INTEGRITY su bolji, ali odbijanje SVIH osim najjaceg bi blokiralo legitimne
+    // starije/jeftinije uredjaje koji nemaju hardversku podrsku za jaci nivo.
+    const deviceVerdicts = (deviceIntegrity && deviceIntegrity.deviceRecognitionVerdict) || [];
+    if (deviceVerdicts.length === 0) {
+      throw new Error('Uredjaj ne ispunjava nijedan integrity nivo');
+    }
+
+    req.integrityVerdict = { appIntegrity, deviceIntegrity, accountDetails };
+    next();
+  } catch (err) {
+    console.error('[integrity] Verifikacija neuspesna za ' + req.path + ':', err.message);
+    if (strict) return res.status(403).json({ error: 'Provera integriteta nije uspela' });
+    next(); // soft mode - propusti uz log, ne blokiraj korisnike dok se ne potvrdi da sve radi
+  }
 }
 
 // Proverava da li je korisnik STVARNO trenutno premium - i subscription_tier='premium'
@@ -513,30 +913,65 @@ app.get('/api/randori', (req, res) => {
 
 // ════════════════════════════════════════ AI SENSEI PROXY ════════════════════════════════════════
 
-app.post('/api/sensei/ask', _requireAuth, async (req, res) => {
-  const { messages, system } = req.body;
+// Osnovna zastita protiv zloupotrebe: limit velicine payload-a (sprecava da 5x/dan limit
+// bude zaobidjen slanjem ogromnih poruka) i provera da system prompt zaista dolazi iz
+// jednog od nasih poznatih izvora - bez ovoga bilo ko sa validnim JWT tokenom moze
+// direktnim pozivom API-ja zameniti prompt proizvoljnim tekstom i koristiti server kao
+// besplatan opsti Claude proxy na nas racun.
+// Sensei chat/Dnevnik analiza i Scouting koriste RAZLICITE system promptove - oba moraju
+// biti prihvacena (ranija verzija je proveravala samo Sensei potpis i time slomila Scouting).
+const SENSEI_SYSTEM_SIGNATURE = 'Ti si Sensei Kano';
+const SCOUTING_SYSTEM_SIGNATURE = 'Ti si taktički analitičar i scouting specijalista';
+// Stvarno izmereno: staticni deo buildSenseiSystemPrompt() u index.html je ~8200 karaktera
+// SAM PO SEBI, pre userContext/modeInstructions i pre istorije poruka - limit mora imati
+// solidnu marzu iznad toga da ne blokira legitimne pozive, uz i dalje odsecanje ociglednog abuse-a
+const MAX_SENSEI_PAYLOAD_CHARS = 20000;
+
+app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (req, res) => {
+  const { messages, system, feature } = req.body;
   const userId = req.userId;
+  // Scouting i Sensei/Dnevnik dele isti endpoint ali imaju odvojene dnevne limite - klijent
+  // salje feature='scouting' eksplicitno, sve ostalo (chat, dnevnik analiza) tretiramo kao
+  // sensei (podrazumevana vrednost) radi kompatibilnosti sa starijim verzijama klijenta.
+  const isScouting = feature === 'scouting';
+
+  const isSenseiPrompt = typeof system === 'string' && system.includes(SENSEI_SYSTEM_SIGNATURE);
+  const isScoutingPrompt = typeof system === 'string' && system.includes(SCOUTING_SYSTEM_SIGNATURE);
+  if (!isSenseiPrompt && !isScoutingPrompt) {
+    return res.status(400).json({ error: 'Nevalidan system prompt' });
+  }
+  if (!Array.isArray(messages) || messages.length === 0) {
+    return res.status(400).json({ error: 'Nedostaju messages' });
+  }
+  const totalChars = system.length + messages.reduce((sum, m) => sum + (typeof m.content === 'string' ? m.content.length : JSON.stringify(m.content || '').length), 0);
+  if (totalChars > MAX_SENSEI_PAYLOAD_CHARS) {
+    return res.status(400).json({ error: 'Zahtev je prevelik' });
+  }
+
+  const counterColumn = isScouting ? 'scouting_questions_today' : 'questions_today';
+  const resetColumn = isScouting ? 'scouting_last_reset' : 'last_reset';
 
   try {
     const userResult = await db.query(
-      'SELECT questions_today, last_reset, subscription_tier, subscription_expires FROM users WHERE id = $1',
+      `SELECT ${counterColumn}, ${resetColumn}, subscription_tier, subscription_expires FROM users WHERE id = $1`,
       [userId]
     );
     if (userResult.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronadjen' });
     const user = userResult.rows[0];
     const isPremium = _isPremiumActive(user);
+    let usedCount = user[counterColumn];
 
     if (isPremium) {
       const today = new Date().toDateString();
-      const lastReset = new Date(user.last_reset).toDateString();
+      const lastReset = new Date(user[resetColumn]).toDateString();
       if (today !== lastReset) {
-        await db.query('UPDATE users SET questions_today = 0, last_reset = NOW() WHERE id = $1', [userId]);
-        user.questions_today = 0;
+        await db.query(`UPDATE users SET ${counterColumn} = 0, ${resetColumn} = NOW() WHERE id = $1`, [userId]);
+        usedCount = 0;
       }
     }
     // I premium (5x dnevno) i free (5x lifetime) korisnici imaju limit od 5 - vidi Terms of Use v1.2
-    if (user.questions_today >= 5) {
-      return res.status(429).json({ error: 'Dostignut je limit pitanja', limit: 5, used: user.questions_today });
+    if (usedCount >= 5) {
+      return res.status(429).json({ error: 'Dostignut je limit pitanja', limit: 5, used: usedCount });
     }
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -552,7 +987,7 @@ app.post('/api/sensei/ask', _requireAuth, async (req, res) => {
 
     // Broji pitanje samo ako je Anthropic poziv uspeo (ne trosi limit na neuspesne pokusaje)
     if (!data.error) {
-      await db.query('UPDATE users SET questions_today = questions_today + 1 WHERE id = $1', [userId]);
+      await db.query(`UPDATE users SET ${counterColumn} = ${counterColumn} + 1 WHERE id = $1`, [userId]);
     }
 
     res.json(data);
@@ -561,14 +996,82 @@ app.post('/api/sensei/ask', _requireAuth, async (req, res) => {
 
 // ════════════════════════════════════════ KVIZ STATISTIKE ════════════════════════════════════════
 
+// Read-only provera stanja limita - klijent ovo poziva PRE starta partije (startQuiz) da
+// spreci samo IGRANJE iznad limita, ne samo upis rezultata na kraju. Bez ovoga bi tehnicki
+// potkovan korisnik i dalje mogao da igra neograniceno (pitanja su lokalno kesirana), samo mu
+// rezultat ne bi bio sacuvan - ovaj endpoint zatvara tu granicu tako sto klijent moze da
+// proveri limit unapred i blokira start partije, ne samo prikaz rezultata na kraju.
+app.get('/api/quiz/limit/me', _requireAuth, async (req, res) => {
+  const userId = req.userId;
+  try {
+    const result = await db.query(
+      'SELECT quiz_plays_today, quiz_last_reset, subscription_tier, subscription_expires FROM users WHERE id = $1',
+      [userId]
+    );
+    if (result.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronadjen' });
+    const user = result.rows[0];
+    const isPremium = _isPremiumActive(user);
+
+    if (isPremium) {
+      res.json({ used: 0, limit: null, remaining: null, type: 'unlimited' });
+      return;
+    }
+
+    let playsToday = user.quiz_plays_today;
+    const today = new Date().toDateString();
+    const lastReset = new Date(user.quiz_last_reset).toDateString();
+    if (today !== lastReset) playsToday = 0; // samo za prikaz - stvarni reset se desava na upisu
+    res.json({ used: playsToday, limit: 3, remaining: Math.max(0, 3 - playsToday), type: 'daily' });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 app.post('/api/quiz/stats', _requireAuth, async (req, res) => {
   const { score, correct, total, maxStreak, category } = req.body;
   const userId = req.userId;
+
+  const s = Number(score) || 0;
+  const c = Number(correct) || 0;
+  const t = Number(total) || 0;
+  const ms = Number(maxStreak) || 0;
+  // Osnovna logicka provera - correct/maxStreak ne mogu premasiti total, sprecava
+  // ocigledno lazirane vrednosti poslate direktnim API pozivom (ne app-om). Plafon 400 je
+  // namerna rezerva iznad trenutnih ~252 pitanja u bazi (frontend salje ukupan broj pitanja
+  // u rundi, ne broj odigranih) - ostavlja prostor za buduce dodavanje pitanja bez potrebe
+  // da se server hitno menja svaki put kad JSON baza pitanja poraste.
+  if (c < 0 || t < 0 || c > t || ms > t || t > 400 || s < 0 || s > 5000) {
+    return res.status(400).json({ error: 'Nevalidni podaci o rezultatu' });
+  }
+
   try {
+    const userResult = await db.query(
+      'SELECT quiz_plays_today, quiz_last_reset, subscription_tier, subscription_expires FROM users WHERE id = $1',
+      [userId]
+    );
+    if (userResult.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronadjen' });
+    const user = userResult.rows[0];
+    const isPremium = _isPremiumActive(user);
+    let playsToday = user.quiz_plays_today;
+
+    // Free: 3x dnevno. Premium: neograniceno (vidi memorije - "Kviz unlimited" za premium),
+    // pa se limit i reset provera preskacu potpuno za premium korisnike.
+    if (!isPremium) {
+      const today = new Date().toDateString();
+      const lastReset = new Date(user.quiz_last_reset).toDateString();
+      if (today !== lastReset) {
+        await db.query('UPDATE users SET quiz_plays_today = 0, quiz_last_reset = NOW() WHERE id = $1', [userId]);
+        playsToday = 0;
+      }
+      if (playsToday >= 3) {
+        return res.status(429).json({ error: 'Dostignut je dnevni limit kviza', limit: 3, used: playsToday });
+      }
+      await db.query('UPDATE users SET quiz_plays_today = quiz_plays_today + 1 WHERE id = $1', [userId]);
+    }
+
     await db.query(
       'INSERT INTO quiz_stats (user_id, score, correct, total, max_streak, category) VALUES ($1, $2, $3, $4, $5, $6)',
-      [userId, score || 0, correct || 0, total || 0, maxStreak || 0, category || 'mixed']
+      [userId, s, c, t, ms, category || 'mixed']
     );
+    await db.query('UPDATE users SET updated_at = NOW() WHERE id = $1', [userId]);
     res.json({ success: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
@@ -645,7 +1148,7 @@ app.post('/api/check-updates', async (req, res) => {
 // Ažuriraj verziju fajla (admin operacija)
 app.post('/api/data/bump-version', async (req, res) => {
   const { filename, secret } = req.body;
-  if (secret !== (process.env.ADMIN_SECRET || 'judo-admin-2026')) {
+  if (!process.env.ADMIN_SECRET || secret !== process.env.ADMIN_SECRET) {
     return res.status(403).json({ error: 'Forbidden' });
   }
   if (!filename) return res.status(400).json({ error: 'Nedostaje filename' });
@@ -669,7 +1172,7 @@ app.get('/api/data/versions', async (req, res) => {
 
 // ════════════════════════════════════════ ANALITIKA ════════════════════════════════════════
 
-app.post('/api/analytics/event', async (req, res) => {
+app.post('/api/analytics/event', analyticsLimiter, async (req, res) => {
   const { userId, eventName, eventData } = req.body;
   if (!eventName) return res.status(400).json({ error: 'Nedostaje eventName' });
   try {
@@ -692,6 +1195,56 @@ app.post('/api/userdata/sync', _requireAuth, async (req, res) => {
   if (!dataType || !Array.isArray(items)) {
     return res.status(400).json({ error: 'Nedostaju dataType ili items' });
   }
+
+  // Dnevnik limit (3x lifetime free / 3x dnevno premium) primenjen samo na journal tip i
+  // samo na NOVE unose (ne na brisanje ili na jednokratnu migraciju postojecih lokalnih
+  // podataka pri prvom loginu - migrateAndPull salje ceo postojeci spisak odjednom i taj
+  // slucaj ne sme biti blokiran istim limitom kao svakodnevno kreiranje novih unosa).
+  if (dataType === 'journal') {
+    const newEntries = items.filter(function(it) { return it && it.key && !it.deleted; });
+    if (newEntries.length > 0) {
+      try {
+        const userResult = await db.query(
+          'SELECT journal_entries_today, journal_last_reset, subscription_tier, subscription_expires FROM users WHERE id = $1',
+          [userId]
+        );
+        if (userResult.rows.length > 0) {
+          const user = userResult.rows[0];
+          const isPremium = _isPremiumActive(user);
+
+          if (isPremium) {
+            const today = new Date().toDateString();
+            const lastReset = new Date(user.journal_last_reset).toDateString();
+            let usedToday = user.journal_entries_today;
+            if (today !== lastReset) {
+              await db.query('UPDATE users SET journal_entries_today = 0, journal_last_reset = NOW() WHERE id = $1', [userId]);
+              usedToday = 0;
+            }
+            if (usedToday >= 3) {
+              return res.status(429).json({ error: 'Dostignut je dnevni limit dnevnika', limit: 3, used: usedToday });
+            }
+            await db.query('UPDATE users SET journal_entries_today = journal_entries_today + 1 WHERE id = $1', [userId]);
+          } else {
+            // Free: 3x lifetime - brojimo postojece zapise u bazi (tacnije od posebnog
+            // brojaca jer automatski iskljucuje duplikate/re-sync istog id-a)
+            const countResult = await db.query(
+              "SELECT COUNT(*)::int AS n FROM user_data WHERE user_id = $1 AND data_type = 'journal'",
+              [userId]
+            );
+            const existing = countResult.rows[0].n;
+            if (existing >= 3) {
+              return res.status(429).json({ error: 'Dostignut je limit dnevnika', limit: 3, used: existing });
+            }
+          }
+        }
+      } catch (limitErr) {
+        // Ne blokiramo sync zbog greske u proveri limita - beleziti u log za istragu,
+        // bolje propustiti unos nego izgubiti korisnikove podatke zbog nase greske
+        console.error('[userdata][journal-limit] Greska pri proveri limita:', limitErr.message);
+      }
+    }
+  }
+
   try {
     for (const item of items) {
       if (!item || !item.key) continue;
