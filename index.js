@@ -669,25 +669,12 @@ if (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && proce
 // Nodemailer transporter za obavestenja o novim prijavama problema (Gmail App Password,
 // vidi GMAIL_USER / GMAIL_APP_PASSWORD u Railway Variables). Ako promenljive nisu podesene,
 // transporter ostaje null i slanje se tiho preskace - bug report i dalje uspesno stize u bazu,
-// samo bez email obavestenja (ne zelimo da nedostatak email konfiguracije obori celu funkciju).
-let _mailTransporter = null;
-if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
-  const nodemailer = require('nodemailer');
-  _mailTransporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // STARTTLS na portu 587, ne SSL direktno kao na 465
-    auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASSWORD },
-    // Railway kontejneri cesto nemaju izlaznu IPv6 rutu - bez ovoga Node ume da izabere
-    // IPv6 adresu iz DNS odgovora i konekcija pukne sa ENETUNREACH. family:4 prisiljava
-    // IPv4, koji Railway izlazna mreza pouzdano podrzava.
-    family: 4,
-    connectionTimeout: 10000
-  });
-}
-
-async function _sendBugReportEmail(report, screenshotFilePath) {
-  if (!_mailTransporter) return;
+// Obavestenja o novim prijavama problema idu preko Resend HTTPS API-ja (RESEND_API_KEY u
+// Railway Variables), NE preko SMTP-a. Railway blokira sav izlazni SMTP saobracaj (portovi
+// 25/465/587/2525) na Free/Trial/Hobby planovima - potvrdjeno u zvanicnoj Railway dokumentaciji,
+// SMTP je dostupan tek od Pro plana. Resend zaobilazi ovo potpuno jer koristi obican HTTPS poziv.
+async function _sendBugReportEmail(report, screenshotUrl) {
+  if (!process.env.RESEND_API_KEY) return;
   try {
     const lines = [
       'Izvor: ' + (report.source || '—'),
@@ -698,15 +685,30 @@ async function _sendBugReportEmail(report, screenshotFilePath) {
       'Korisnik ID: ' + (report.userId || '—'),
       '',
       'Opis:',
-      report.description
+      report.description,
+      '',
+      screenshotUrl ? ('Screenshot: ' + screenshotUrl) : 'Bez screenshot-a'
     ];
-    await _mailTransporter.sendMail({
-      from: process.env.GMAIL_USER,
-      to: process.env.GMAIL_USER,
+
+    const emailPayload = {
+      from: 'Judo Academy <onboarding@resend.dev>', // test posiljalac - radi bez verifikacije domena
+      to: [process.env.GMAIL_USER || 'judo.academy.world@gmail.com'],
       subject: '[Judo Academy] Nova prijava problema — ' + (report.category || report.source || 'opšte'),
-      text: lines.join('\n'),
-      attachments: screenshotFilePath ? [{ path: screenshotFilePath }] : []
+      text: lines.join('\n')
+    };
+
+    const resp = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + process.env.RESEND_API_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(emailPayload)
     });
+    if (!resp.ok) {
+      const errText = await resp.text().catch(function(){ return ''; });
+      throw new Error('Resend HTTP ' + resp.status + ': ' + errText);
+    }
   } catch (err) {
     // Neuspesno slanje emaila ne sme da obori bug-report rutu - prijava je vec sacuvana u bazi
     console.error('[bug-report][email] Slanje obavestenja neuspesno:', err.message);
@@ -1232,6 +1234,19 @@ app.post('/api/admin/bug-reports/:id/status', async (req, res) => {
   }
 });
 
+// Brisanje prijave iz admin dashboarda. Brise samo SQL red - ako je screenshot na Cloudinary-ju,
+// on ostaje tamo (nije obavezno brisati ga sa Cloudinary-a, storage je besplatan do velike kolicine).
+app.delete('/api/admin/bug-reports/:id', async (req, res) => {
+  if (!_checkAdminKey(req, res)) return;
+  try {
+    const result = await db.query('DELETE FROM bug_reports WHERE id=$1 RETURNING id', [req.params.id]);
+    if (result.rows.length === 0) return res.status(404).json({ error: 'Prijava nije pronađena' });
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Brisanje nije uspelo' });
+  }
+});
+
 app.get('/api/quiz/stats/me', _requireAuth, async (req, res) => {
   const userId = req.userId;
   try {
@@ -1659,14 +1674,16 @@ app.get('/api/admin/dashboard', async (req, res) => {
       // ---------- ERRORS ----------
       error_top_contexts: q(`
         SELECT event_data->>'context' AS context, COUNT(*) AS occurrences,
-          COUNT(DISTINCT user_id) AS affected_users, MAX(created_at) AS last_seen
+          COUNT(DISTINCT user_id) AS affected_users, MAX(created_at) AS last_seen,
+          MAX(event_data->>'appVersion') AS last_app_version
         FROM analytics_events
         WHERE event_name = 'silent_error' AND created_at > now() - interval '7 days'
         GROUP BY 1 ORDER BY occurrences DESC
       `),
       error_top_messages: q(`
         SELECT event_data->>'context' AS context, event_data->>'message' AS message,
-          COUNT(*) AS occurrences, MIN(created_at) AS first_seen, MAX(created_at) AS last_seen
+          COUNT(*) AS occurrences, MIN(created_at) AS first_seen, MAX(created_at) AS last_seen,
+          array_agg(DISTINCT event_data->>'appVersion') FILTER (WHERE event_data->>'appVersion' IS NOT NULL) AS app_versions
         FROM analytics_events
         WHERE event_name = 'silent_error' AND created_at > now() - interval '7 days'
         GROUP BY 1, 2 ORDER BY occurrences DESC LIMIT 30
