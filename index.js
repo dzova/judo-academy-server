@@ -677,8 +677,14 @@ let _mailTransporter = null;
 if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
   const nodemailer = require('nodemailer');
   _mailTransporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASSWORD }
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASSWORD },
+    // Railway kontejneri cesto nemaju izlaznu IPv6 rutu - bez ovoga Node ume da izabere
+    // IPv6 adresu iz DNS odgovora i konekcija pukne sa ENETUNREACH. family:4 prisiljava
+    // IPv4, koji Railway izlazna mreza pouzdano podrzava.
+    family: 4
   });
 }
 
