@@ -669,7 +669,47 @@ const bugReportUpload = multer({
   }
 });
 
-// Google Play Developer API klijent za server-side verifikaciju kupovina.
+// Nodemailer transporter za obavestenja o novim prijavama problema (Gmail App Password,
+// vidi GMAIL_USER / GMAIL_APP_PASSWORD u Railway Variables). Ako promenljive nisu podesene,
+// transporter ostaje null i slanje se tiho preskace - bug report i dalje uspesno stize u bazu,
+// samo bez email obavestenja (ne zelimo da nedostatak email konfiguracije obori celu funkciju).
+let _mailTransporter = null;
+if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
+  const nodemailer = require('nodemailer');
+  _mailTransporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASSWORD }
+  });
+}
+
+async function _sendBugReportEmail(report, screenshotFilePath) {
+  if (!_mailTransporter) return;
+  try {
+    const lines = [
+      'Izvor: ' + (report.source || '—'),
+      'Kategorija: ' + (report.category || '—'),
+      'Tip problema: ' + (report.issueType || '—'),
+      'Kontakt: ' + (report.replyEmail || '—'),
+      'Verzija app-a: ' + (report.appVersion || '—'),
+      'Korisnik ID: ' + (report.userId || '—'),
+      '',
+      'Opis:',
+      report.description
+    ];
+    await _mailTransporter.sendMail({
+      from: process.env.GMAIL_USER,
+      to: process.env.GMAIL_USER,
+      subject: '[Judo Academy] Nova prijava problema — ' + (report.category || report.source || 'opšte'),
+      text: lines.join('\n'),
+      attachments: screenshotFilePath ? [{ path: screenshotFilePath }] : []
+    });
+  } catch (err) {
+    // Neuspesno slanje emaila ne sme da obori bug-report rutu - prijava je vec sacuvana u bazi
+    console.error('[bug-report][email] Slanje obavestenja neuspesno:', err.message);
+  }
+}
+
+
 // Kredencijali Service Account-a se citaju iz GOOGLE_SERVICE_ACCOUNT_JSON env promenljive
 // (ceo JSON fajl kao string), NIKAD iz fajla u repo-u - to bi bio bezbednosni rizik.
 let _androidPublisherClient = null;
@@ -1133,6 +1173,13 @@ app.post('/api/bug-report', _requireAuth, bugReportUpload.single('screenshot'), 
       ]
     );
     res.json({ success: true, id: result.rows[0].id, createdAt: result.rows[0].created_at });
+
+    // Email obavestenje se salje POSLE odgovora korisniku (fire-and-forget) - korisnik ne
+    // ceka da email stigne, i eventualna greska u slanju emaila ne utice na njegov odgovor.
+    _sendBugReportEmail(
+      { source, category, issueType, replyEmail, appVersion, userId: req.userId, description: description.trim() },
+      req.file ? req.file.path : null
+    );
   } catch (err) {
     console.error('[bug-report] greška:', err.message);
     res.status(500).json({ error: 'Slanje prijave nije uspelo' });
