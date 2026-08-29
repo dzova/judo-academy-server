@@ -643,31 +643,28 @@ function _requireAuth(req, res, next) {
   }
 }
 
-// Multer konfiguracija za bug report screenshot upload. Fajlovi idu na disk u
-// uploads/bug-reports/ - NAPOMENA: Railway ima efemeran fajl-sistem, fajlovi
-// nestaju pri redeploy-u/restartu servera. SQL red sa opisom ostaje trajno,
-// samo screenshot_path posle toga vise ne vodi ka postojecem fajlu. Ako
-// screenshot-ovi budu bitni dugorocno, treba preci na Railway Volume ili
-// eksterni storage (Cloudinary/S3/B2).
-const BUG_REPORT_DIR = path.join(__dirname, 'uploads', 'bug-reports');
-if (!fs.existsSync(BUG_REPORT_DIR)) {
-  fs.mkdirSync(BUG_REPORT_DIR, { recursive: true });
+// Bug report screenshot-ovi se cuvaju na Cloudinary (trajni storage) umesto na lokalni disk -
+// Railway kontejneri imaju efemeran fajl-sistem, svaki redeploy/restart brise sve upisano na
+// disk tokom prethodne sesije. Cloudinary vraca stabilan javni URL koji prezivljava redeploy.
+// Ako CLOUDINARY_* promenljive nisu podesene, bugReportUpload ostaje null i ruta ispod
+// preskace upload screenshot-a (opis i dalje uspesno stize u bazu, samo bez slike).
+let bugReportUpload = null;
+if (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET) {
+  const cloudinary = require('cloudinary').v2;
+  const { CloudinaryStorage } = require('multer-storage-cloudinary');
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+  });
+  bugReportUpload = multer({
+    storage: new CloudinaryStorage({
+      cloudinary: cloudinary,
+      params: { folder: 'judo-academy/bug-reports', allowed_formats: ['png', 'jpg', 'jpeg'] }
+    }),
+    limits: { fileSize: 8 * 1024 * 1024 } // 8MB max po screenshotu
+  });
 }
-const bugReportUpload = multer({
-  storage: multer.diskStorage({
-    destination: function (req, file, cb) { cb(null, BUG_REPORT_DIR); },
-    filename: function (req, file, cb) {
-      const stamp = Date.now();
-      const safe = (file.originalname || 'screenshot.png').replace(/[^a-zA-Z0-9._-]/g, '_');
-      cb(null, stamp + '-' + safe);
-    }
-  }),
-  limits: { fileSize: 8 * 1024 * 1024 }, // 8MB max po screenshotu
-  fileFilter: function (req, file, cb) {
-    if (file.mimetype === 'image/png' || file.mimetype === 'image/jpeg') cb(null, true);
-    else cb(new Error('Samo PNG/JPEG screenshot-ovi su dozvoljeni'));
-  }
-});
 
 // Nodemailer transporter za obavestenja o novim prijavama problema (Gmail App Password,
 // vidi GMAIL_USER / GMAIL_APP_PASSWORD u Railway Variables). Ako promenljive nisu podesene,
@@ -678,13 +675,14 @@ if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
   const nodemailer = require('nodemailer');
   _mailTransporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
+    port: 587,
+    secure: false, // STARTTLS na portu 587, ne SSL direktno kao na 465
     auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASSWORD },
     // Railway kontejneri cesto nemaju izlaznu IPv6 rutu - bez ovoga Node ume da izabere
     // IPv6 adresu iz DNS odgovora i konekcija pukne sa ENETUNREACH. family:4 prisiljava
     // IPv4, koji Railway izlazna mreza pouzdano podrzava.
-    family: 4
+    family: 4,
+    connectionTimeout: 10000
   });
 }
 
@@ -1151,13 +1149,21 @@ app.post('/api/quiz/stats', _requireAuth, async (req, res) => {
 
 // Prima prijavu problema iz app-a (opis + opciono screenshot). Koristi _requireAuth
 // isto kao ostale korisnicke rute - req.userId dolazi iz verifikovanog JWT tokena.
-app.post('/api/bug-report', _requireAuth, bugReportUpload.single('screenshot'), async (req, res) => {
+// Middleware je uslovan - ako Cloudinary nije podesen (bugReportUpload === null), preskace
+// se upload korak i ruta i dalje radi (samo bez screenshot-a), umesto da baci gresku.
+const _bugReportUploadMiddleware = bugReportUpload
+  ? bugReportUpload.single('screenshot')
+  : (req, res, next) => next();
+
+app.post('/api/bug-report', _requireAuth, _bugReportUploadMiddleware, async (req, res) => {
   try {
     const { subject, body, source, contentId, category, issueType, description, replyEmail, appVersion } = req.body;
     if (!description || !description.trim()) {
       return res.status(400).json({ error: 'Opis problema je obavezan' });
     }
-    const screenshotPath = req.file ? req.file.filename : null;
+    // req.file.path je pun Cloudinary URL (npr. https://res.cloudinary.com/.../judo-academy/bug-reports/xyz.png),
+    // ne lokalni filename kao sto je bilo sa diskom - cuvamo ga direktno kao trajni link.
+    const screenshotPath = req.file ? req.file.path : null;
 
     const result = await db.query(
       `INSERT INTO bug_reports
@@ -1205,9 +1211,7 @@ app.get('/api/admin/bug-reports', async (req, res) => {
     );
     const rows = result.rows.map(r => ({
       ...r,
-      screenshotUrl: r.screenshot_path
-        ? `${req.protocol}://${req.get('host')}/uploads/bug-reports/${r.screenshot_path}`
-        : null
+      screenshotUrl: r.screenshot_path || null
     }));
     res.json({ reports: rows });
   } catch (err) {
@@ -1804,7 +1808,6 @@ app.get('/api/admin/dashboard', async (req, res) => {
 });
 
 // Static files — MORA biti posle ruta
-app.use('/uploads/bug-reports', express.static(BUG_REPORT_DIR));
 app.use(express.static('public'));
 
 const PORT = process.env.PORT || 3000;
