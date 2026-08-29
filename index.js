@@ -8,6 +8,7 @@ const rateLimit = require('express-rate-limit');
 const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
+const multer = require('multer');
 
 const app = express();
 
@@ -642,6 +643,32 @@ function _requireAuth(req, res, next) {
   }
 }
 
+// Multer konfiguracija za bug report screenshot upload. Fajlovi idu na disk u
+// uploads/bug-reports/ - NAPOMENA: Railway ima efemeran fajl-sistem, fajlovi
+// nestaju pri redeploy-u/restartu servera. SQL red sa opisom ostaje trajno,
+// samo screenshot_path posle toga vise ne vodi ka postojecem fajlu. Ako
+// screenshot-ovi budu bitni dugorocno, treba preci na Railway Volume ili
+// eksterni storage (Cloudinary/S3/B2).
+const BUG_REPORT_DIR = path.join(__dirname, 'uploads', 'bug-reports');
+if (!fs.existsSync(BUG_REPORT_DIR)) {
+  fs.mkdirSync(BUG_REPORT_DIR, { recursive: true });
+}
+const bugReportUpload = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) { cb(null, BUG_REPORT_DIR); },
+    filename: function (req, file, cb) {
+      const stamp = Date.now();
+      const safe = (file.originalname || 'screenshot.png').replace(/[^a-zA-Z0-9._-]/g, '_');
+      cb(null, stamp + '-' + safe);
+    }
+  }),
+  limits: { fileSize: 8 * 1024 * 1024 }, // 8MB max po screenshotu
+  fileFilter: function (req, file, cb) {
+    if (file.mimetype === 'image/png' || file.mimetype === 'image/jpeg') cb(null, true);
+    else cb(new Error('Samo PNG/JPEG screenshot-ovi su dozvoljeni'));
+  }
+});
+
 // Google Play Developer API klijent za server-side verifikaciju kupovina.
 // Kredencijali Service Account-a se citaju iz GOOGLE_SERVICE_ACCOUNT_JSON env promenljive
 // (ceo JSON fajl kao string), NIKAD iz fajla u repo-u - to bi bio bezbednosni rizik.
@@ -1074,6 +1101,78 @@ app.post('/api/quiz/stats', _requireAuth, async (req, res) => {
     await db.query('UPDATE users SET updated_at = NOW() WHERE id = $1', [userId]);
     res.json({ success: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// Prima prijavu problema iz app-a (opis + opciono screenshot). Koristi _requireAuth
+// isto kao ostale korisnicke rute - req.userId dolazi iz verifikovanog JWT tokena.
+app.post('/api/bug-report', _requireAuth, bugReportUpload.single('screenshot'), async (req, res) => {
+  try {
+    const { subject, body, source, contentId, category, issueType, description, replyEmail, appVersion } = req.body;
+    if (!description || !description.trim()) {
+      return res.status(400).json({ error: 'Opis problema je obavezan' });
+    }
+    const screenshotPath = req.file ? req.file.filename : null;
+
+    const result = await db.query(
+      `INSERT INTO bug_reports
+        (user_id, subject, body, source, content_id, category, issue_type, description, reply_email, app_version, screenshot_path)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+       RETURNING id, created_at`,
+      [
+        req.userId || null,
+        subject || null,
+        body || null,
+        source || null,
+        contentId || null,
+        category || null,
+        issueType || null,
+        description.trim(),
+        replyEmail || null,
+        appVersion || null,
+        screenshotPath
+      ]
+    );
+    res.json({ success: true, id: result.rows[0].id, createdAt: result.rows[0].created_at });
+  } catch (err) {
+    console.error('[bug-report] greška:', err.message);
+    res.status(500).json({ error: 'Slanje prijave nije uspelo' });
+  }
+});
+
+// Admin pregled prijavljenih problema - ista ADMIN_DASHBOARD_KEY zastita kao ostale admin rute
+app.get('/api/admin/bug-reports', async (req, res) => {
+  if (!_checkAdminKey(req, res)) return;
+  try {
+    const result = await db.query(
+      `SELECT id, user_id, source, category, issue_type, description, reply_email,
+              app_version, screenshot_path, status, created_at
+       FROM bug_reports
+       ORDER BY created_at DESC
+       LIMIT 200`
+    );
+    const rows = result.rows.map(r => ({
+      ...r,
+      screenshotUrl: r.screenshot_path
+        ? `${req.protocol}://${req.get('host')}/uploads/bug-reports/${r.screenshot_path}`
+        : null
+    }));
+    res.json({ reports: rows });
+  } catch (err) {
+    console.error('[admin/bug-reports] greška:', err.message);
+    res.status(500).json({ error: 'Učitavanje prijava nije uspelo' });
+  }
+});
+
+// Oznaci prijavu kao resenu/u toku (opciono, za buduci admin dashboard UI)
+app.post('/api/admin/bug-reports/:id/status', async (req, res) => {
+  if (!_checkAdminKey(req, res)) return;
+  try {
+    const { status } = req.body; // 'new' | 'in_progress' | 'resolved' | 'wontfix'
+    await db.query('UPDATE bug_reports SET status=$1 WHERE id=$2', [status, req.params.id]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Ažuriranje statusa nije uspelo' });
+  }
 });
 
 app.get('/api/quiz/stats/me', _requireAuth, async (req, res) => {
@@ -1652,6 +1751,7 @@ app.get('/api/admin/dashboard', async (req, res) => {
 });
 
 // Static files — MORA biti posle ruta
+app.use('/uploads/bug-reports', express.static(BUG_REPORT_DIR));
 app.use(express.static('public'));
 
 const PORT = process.env.PORT || 3000;
