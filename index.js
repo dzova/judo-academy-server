@@ -1154,7 +1154,17 @@ app.post('/api/quiz/stats', _requireAuth, async (req, res) => {
 // Middleware je uslovan - ako Cloudinary nije podesen (bugReportUpload === null), preskace
 // se upload korak i ruta i dalje radi (samo bez screenshot-a), umesto da baci gresku.
 const _bugReportUploadMiddleware = bugReportUpload
-  ? bugReportUpload.single('screenshot')
+  ? function(req, res, next) {
+      bugReportUpload.single('screenshot')(req, res, function(err) {
+        if (err) {
+          console.error('[bug-report][upload] Cloudinary/multer greška:', err.message);
+          // Ne prekidamo prijavu potpuno zbog neuspesnog uploada slike - nastavljamo bez
+          // screenshot-a umesto da vratimo 500 korisniku koji samo zeli da prijavi problem.
+          req.file = null;
+        }
+        next();
+      });
+    }
   : (req, res, next) => next();
 
 app.post('/api/bug-report', _requireAuth, _bugReportUploadMiddleware, async (req, res) => {
