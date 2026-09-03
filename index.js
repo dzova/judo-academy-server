@@ -199,7 +199,7 @@ app.get('/api/user/me', _requireAuth, async (req, res) => {
   const userId = req.userId;
   try {
     const result = await db.query(
-      'SELECT id, username, email, belt, xp, club, country, subscription_tier, subscription_expires, exam_date, photo_url, unlocked_badges, birth_year FROM users WHERE id = $1',
+      'SELECT id, username, email, belt, xp, club, country, subscription_tier, subscription_expires, exam_date, photo_url, unlocked_badges, birth_year, dominant_side FROM users WHERE id = $1',
       [userId]
     );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Nije pronadjen' });
@@ -221,13 +221,18 @@ app.get('/api/user/me', _requireAuth, async (req, res) => {
 // Definisano ovde (pre prve rute koja je koristi) radi jasnoce, mada bi zbog function-scope
 // izvrsavanja radilo i kad je bilo definisano nize u fajlu.
 const VALID_BELTS = ['beli', 'zuti', 'narandzasti', 'zeleni', 'plavi', 'braon', 'crni'];
+// Vrednosti odgovaraju onima koje frontend salje iz selectPfDominant() (Profil forma).
+const VALID_DOMINANT_SIDES = ['dešnjak', 'levak', 'oba'];
 
 app.post('/api/user/update', _requireAuth, async (req, res) => {
-  const { username, club, country, belt, examDate, birthYear } = req.body;
+  const { username, club, country, belt, examDate, birthYear, dominantSide } = req.body;
   const userId = req.userId;
 
   if (belt !== undefined && belt !== null && !VALID_BELTS.includes(belt)) {
     return res.status(400).json({ error: 'Nevalidna belt vrednost' });
+  }
+  if (dominantSide !== undefined && dominantSide !== null && !VALID_DOMINANT_SIDES.includes(dominantSide)) {
+    return res.status(400).json({ error: 'Nevalidna vrednost za dominantnu stranu' });
   }
   // Osnovna duzinska ogranicenja - ova polja se prikazuju na javnom /api/leaderboard bez
   // autentikacije, pa ogranicavamo duzinu da spreci ocigledan abuse (npr. ogroman string koji
@@ -251,9 +256,10 @@ app.post('/api/user/update', _requireAuth, async (req, res) => {
         username = COALESCE($3, username),
         belt = COALESCE($4, belt),
         exam_date = COALESCE($5, exam_date),
-        birth_year = COALESCE($6, birth_year)
-       WHERE id = $7`,
-      [club || null, country || null, username || null, belt || null, examDate || null, birthYear || null, userId]
+        birth_year = COALESCE($6, birth_year),
+        dominant_side = COALESCE($7, dominant_side)
+       WHERE id = $8`,
+      [club || null, country || null, username || null, belt || null, examDate || null, birthYear || null, dominantSide || null, userId]
     );
     res.json({ success: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
@@ -316,27 +322,40 @@ app.post('/api/xp/update', _requireAuth, async (req, res) => {
 
 // ════════════════════════════════════════ AI SENSEI LIMITI ════════════════════════════════════════
 
+// Zajednicka "koliko mi je jos ostalo" provera za sva tri AI feature-a (Sensei chat,
+// Scouting, Journal AI analiza) - klijent salje ?feature=scouting ili ?feature=journal u
+// query stringu; bez parametra (ili nepoznata vrednost) podrazumeva se 'sensei' radi
+// kompatibilnosti sa starijim verzijama klijenta. Isti counterColumn/resetColumn/limit
+// mapping kao u POST /api/sensei/ask, namerno drzan sinhronizovano - ako se ovde promeni
+// limit ili kolona za neki feature, ista promena mora ici i tamo.
 app.get('/api/sensei/limit/me', _requireAuth, async (req, res) => {
   const userId = req.userId;
+  const feature = req.query.feature;
+  const isScouting = feature === 'scouting';
+  const isJournal = feature === 'journal';
+  const counterColumn = isScouting ? 'scouting_questions_today' : (isJournal ? 'journal_ai_today' : 'questions_today');
+  const resetColumn = isScouting ? 'scouting_last_reset' : (isJournal ? 'journal_ai_last_reset' : 'last_reset');
+  const dailyLimit = isJournal ? 3 : 5;
   try {
     const result = await db.query(
-      'SELECT questions_today, last_reset, subscription_tier, subscription_expires FROM users WHERE id = $1',
+      `SELECT ${counterColumn}, ${resetColumn}, subscription_tier, subscription_expires FROM users WHERE id = $1`,
       [userId]
     );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronadjen' });
     const user = result.rows[0];
     const isPremium = _isPremiumActive(user);
+    let usedCount = user[counterColumn];
 
     if (isPremium) {
       const today = new Date().toDateString();
-      const lastReset = new Date(user.last_reset).toDateString();
+      const lastReset = new Date(user[resetColumn]).toDateString();
       if (today !== lastReset) {
-        await db.query('UPDATE users SET questions_today = 0, last_reset = NOW() WHERE id = $1', [userId]);
-        user.questions_today = 0;
+        await db.query(`UPDATE users SET ${counterColumn} = 0, ${resetColumn} = NOW() WHERE id = $1`, [userId]);
+        usedCount = 0;
       }
-      res.json({ used: user.questions_today, limit: 5, remaining: 5 - user.questions_today, type: 'daily' });
+      res.json({ used: usedCount, limit: dailyLimit, remaining: dailyLimit - usedCount, type: 'daily' });
     } else {
-      res.json({ used: user.questions_today, limit: 5, remaining: 5 - user.questions_today, type: 'lifetime' });
+      res.json({ used: usedCount, limit: dailyLimit, remaining: dailyLimit - usedCount, type: 'lifetime' });
     }
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
@@ -1003,10 +1022,12 @@ const MAX_SENSEI_PAYLOAD_CHARS = 20000;
 app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (req, res) => {
   const { messages, system, feature } = req.body;
   const userId = req.userId;
-  // Scouting i Sensei/Dnevnik dele isti endpoint ali imaju odvojene dnevne limite - klijent
-  // salje feature='scouting' eksplicitno, sve ostalo (chat, dnevnik analiza) tretiramo kao
-  // sensei (podrazumevana vrednost) radi kompatibilnosti sa starijim verzijama klijenta.
+  // Scouting, Sensei chat i Dnevnik (Journal) AI analiza dele isti endpoint ali imaju
+  // odvojene dnevne limite - klijent salje feature='scouting' ili feature='journal'
+  // eksplicitno; sve ostalo (obican Sensei chat) tretiramo kao 'sensei' (podrazumevana
+  // vrednost) radi kompatibilnosti sa starijim verzijama klijenta koje ne salju feature.
   const isScouting = feature === 'scouting';
+  const isJournal = feature === 'journal';
 
   const isSenseiPrompt = typeof system === 'string' && system.includes(SENSEI_SYSTEM_SIGNATURE);
   const isScoutingPrompt = typeof system === 'string' && system.includes(SCOUTING_SYSTEM_SIGNATURE);
@@ -1021,8 +1042,8 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
     return res.status(400).json({ error: 'Zahtev je prevelik' });
   }
 
-  const counterColumn = isScouting ? 'scouting_questions_today' : 'questions_today';
-  const resetColumn = isScouting ? 'scouting_last_reset' : 'last_reset';
+  const counterColumn = isScouting ? 'scouting_questions_today' : (isJournal ? 'journal_ai_today' : 'questions_today');
+  const resetColumn = isScouting ? 'scouting_last_reset' : (isJournal ? 'journal_ai_last_reset' : 'last_reset');
 
   try {
     const userResult = await db.query(
@@ -1042,9 +1063,12 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
         usedCount = 0;
       }
     }
-    // I premium (5x dnevno) i free (5x lifetime) korisnici imaju limit od 5 - vidi Terms of Use v1.2
-    if (usedCount >= 5) {
-      return res.status(429).json({ error: 'Dostignut je limit pitanja', limit: 5, used: usedCount });
+    // Limit zavisi od feature-a: Sensei i Scouting imaju 5 (i premium dnevno i free lifetime -
+    // vidi Terms of Use v1.2), Journal AI analiza ima 3 (usaglaseno sa frontend
+    // triggerDnevnikAnaliza() koja vec koristi limit=3 za lokalnu/fallback proveru).
+    const dailyLimit = isJournal ? 3 : 5;
+    if (usedCount >= dailyLimit) {
+      return res.status(429).json({ error: 'Dostignut je limit pitanja', limit: dailyLimit, used: usedCount });
     }
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -1054,7 +1078,7 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
         'x-api-key': process.env.ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01'
       },
-      body: JSON.stringify({ model: 'claude-sonnet-5', max_tokens: 2048, system, messages })
+      body: JSON.stringify({ model: 'claude-sonnet-5', max_tokens: 4000, system, messages })
     });
     const data = await response.json();
 
