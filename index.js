@@ -493,6 +493,34 @@ app.get('/api/sensei/limit/me', _requireAuth, async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// ════════════════════════════════════════ AI FEEDBACK (thumbs up/down) ════════════════════════════════════════
+
+app.post('/api/ai-feedback', _requireAuth, async (req, res) => {
+  const { feature, rating, response_excerpt, lang } = req.body;
+  const userId = req.userId;
+
+  const VALID_FEATURES = ['sensei', 'scouting', 'journal'];
+  const VALID_RATINGS = ['up', 'down'];
+  if (!VALID_FEATURES.includes(feature)) {
+    return res.status(400).json({ error: 'Nevalidan feature' });
+  }
+  if (!VALID_RATINGS.includes(rating)) {
+    return res.status(400).json({ error: 'Nevalidan rating' });
+  }
+  // Isecak odgovora je samo za kontekst u admin dashboardu (da se vidi STA je ocenjeno kao
+  // lose bez potrebe da se pamti ceo odgovor) - ogranicen na 500 karaktera da spreci
+  // ocigledan abuse (npr. neko salje ogroman string kroz ovo polje).
+  const excerpt = typeof response_excerpt === 'string' ? response_excerpt.slice(0, 500) : null;
+
+  try {
+    await db.query(
+      'INSERT INTO ai_feedback (user_id, feature, rating, response_excerpt, lang) VALUES ($1, $2, $3, $4, $5)',
+      [userId, feature, rating, excerpt, lang || null]
+    );
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // ════════════════════════════════════════ PROMO KODOVI ════════════════════════════════════════
 
 app.post('/api/promo/redeem', strictLimiter, _requireAuth, _requireIntegrity, async (req, res) => {
@@ -1980,6 +2008,39 @@ app.get('/api/admin/dashboard', async (req, res) => {
         UNION ALL
         SELECT 'randori_scenario_view', COUNT(*), COUNT(DISTINCT user_id)
         FROM analytics_events WHERE event_name = 'randori_scenario_view' AND created_at > now() - interval '30 days'
+      `),
+
+      // ---------- AI QUALITY ----------
+      ai_feedback_summary: q(`
+        SELECT feature,
+          COUNT(*) FILTER (WHERE rating = 'up') AS thumbs_up,
+          COUNT(*) FILTER (WHERE rating = 'down') AS thumbs_down,
+          ROUND(100.0 * COUNT(*) FILTER (WHERE rating = 'up') / NULLIF(COUNT(*), 0), 1) AS positive_pct
+        FROM ai_feedback
+        WHERE created_at > now() - interval '30 days'
+        GROUP BY feature ORDER BY feature
+      `),
+      ai_feedback_daily_trend: q(`
+        SELECT date_trunc('day', created_at) AS day, feature,
+          COUNT(*) FILTER (WHERE rating = 'up') AS thumbs_up,
+          COUNT(*) FILTER (WHERE rating = 'down') AS thumbs_down
+        FROM ai_feedback
+        WHERE created_at > now() - interval '30 days'
+        GROUP BY 1, 2 ORDER BY 1, 2
+      `),
+      ai_feedback_by_lang: q(`
+        SELECT lang, feature,
+          COUNT(*) FILTER (WHERE rating = 'up') AS thumbs_up,
+          COUNT(*) FILTER (WHERE rating = 'down') AS thumbs_down
+        FROM ai_feedback
+        WHERE created_at > now() - interval '30 days' AND lang IS NOT NULL
+        GROUP BY 1, 2 ORDER BY 1, 2
+      `),
+      ai_feedback_recent_negative: q(`
+        SELECT feature, response_excerpt, lang, created_at
+        FROM ai_feedback
+        WHERE rating = 'down' AND created_at > now() - interval '30 days'
+        ORDER BY created_at DESC LIMIT 50
       `),
     };
 
