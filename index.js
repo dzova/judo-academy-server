@@ -268,19 +268,64 @@ app.post('/api/user/update', _requireAuth, async (req, res) => {
 // ════════════════════════════════════════ RANG LISTA ════════════════════════════════════════
 
 app.get('/api/leaderboard', async (req, res) => {
+  const period = req.query.period === 'month' ? 'month' : 'all';
+  const metric = req.query.metric === 'quiz' ? 'quiz' : 'xp';
   try {
+    if (period === 'all') {
+      // Nepromenjeno ponasanje - all-time ostaje kumulativne users.xp / MAX(quiz_stats.score)
+      // kolone, isto kao pre ove izmene.
+      const result = await db.query(`
+        SELECT u.username, u.belt, u.xp, u.club, u.country, u.updated_at,
+               COALESCE(qs.best_score, 0) AS quiz_score,
+               COALESCE(qs.total_correct, 0) AS correct
+        FROM users u
+        LEFT JOIN (
+          SELECT user_id, MAX(score) AS best_score, SUM(correct) AS total_correct
+          FROM quiz_stats
+          GROUP BY user_id
+        ) qs ON qs.user_id = u.id
+        ORDER BY u.xp DESC LIMIT 50
+      `);
+      return res.json(result.rows);
+    }
+
+    // period === 'month': prvi dan tekuceg meseca u UTC, koristi se kao donja granica za oba
+    // upita ispod - namerno racunato u JS-u (ne date_trunc na serveru) da izbegnemo zavisnost
+    // od DB server timezone konfiguracije.
+    const now = new Date();
+    const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)).toISOString();
+
+    if (metric === 'xp') {
+      // Mesecni XP = SUM(xp_events.amount) za taj korisnik OVOG meseca - NE trenutni users.xp
+      // (koji je kumulativan svih vremena i nikad ne "resetuje" mesecno). Koristimo INNER JOIN
+      // (ne LEFT) namerno - korisnici bez ijednog xp_events reda ovog meseca jednostavno ne
+      // uzu u mesecni leaderboard, sto je tacno zeljeno ponasanje (nisu bili aktivni).
+      const result = await db.query(`
+        SELECT u.username, u.belt, u.club, u.country,
+               SUM(xe.amount) AS xp,
+               0 AS quiz_score, 0 AS correct
+        FROM xp_events xe
+        JOIN users u ON u.id = xe.user_id
+        WHERE xe.created_at >= $1
+        GROUP BY u.id, u.username, u.belt, u.club, u.country
+        ORDER BY xp DESC LIMIT 50
+      `, [monthStart]);
+      return res.json(result.rows);
+    }
+
+    // metric === 'quiz': quiz_stats vec ima created_at po partiji (za razliku od XP-a, ovde
+    // NIJE trebala nova tabela) - najbolji rezultat i suma tacnih odgovora OVOG meseca.
     const result = await db.query(`
-      SELECT u.username, u.belt, u.xp, u.club, u.country, u.updated_at,
-             COALESCE(qs.best_score, 0) AS quiz_score,
-             COALESCE(qs.total_correct, 0) AS correct
-      FROM users u
-      LEFT JOIN (
-        SELECT user_id, MAX(score) AS best_score, SUM(correct) AS total_correct
-        FROM quiz_stats
-        GROUP BY user_id
-      ) qs ON qs.user_id = u.id
-      ORDER BY u.xp DESC LIMIT 50
-    `);
+      SELECT u.username, u.belt, u.club, u.country,
+             0 AS xp,
+             MAX(qs.score) AS quiz_score,
+             SUM(qs.correct) AS correct
+      FROM quiz_stats qs
+      JOIN users u ON u.id = qs.user_id
+      WHERE qs.created_at >= $1
+      GROUP BY u.id, u.username, u.belt, u.club, u.country
+      ORDER BY quiz_score DESC LIMIT 50
+    `, [monthStart]);
     res.json(result.rows);
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
@@ -302,6 +347,16 @@ app.post('/api/xp/update', _requireAuth, async (req, res) => {
   }
 
   try {
+    // Klijent salje APSOLUTNI kumulativni xp (ceo totalXP snapshot), ne "koliko je upravo
+    // zaradjeno" - frontend ima 8+ mesta gde se totalXP uvecava (kviz, randori, DC, AI
+    // feature-i, module discovery...) i menjanje svakog da salje delta+source bi bio mnogo
+    // veci i rizicniji zahvat. Umesto toga, RACUNAMO deltu ovde - razlika izmedju stare i nove
+    // vrednosti - i logujemo je u xp_events za mesecni leaderboard. Ovo je jedino mesto koje
+    // treba da zna za xp_events; frontend se uopste ne menja za ovaj deo.
+    const prevResult = await db.query('SELECT xp FROM users WHERE id = $1', [userId]);
+    const prevXp = prevResult.rows[0] ? Number(prevResult.rows[0].xp) || 0 : 0;
+    const delta = xp - prevXp;
+
     const newBadges = Array.isArray(unlockedBadges) ? unlockedBadges : [];
     const result = await db.query(
       `UPDATE users SET
@@ -316,6 +371,20 @@ app.post('/api/xp/update', _requireAuth, async (req, res) => {
        RETURNING unlocked_badges`,
       [xp, belt, userId, JSON.stringify(newBadges)]
     );
+
+    // Samo pozitivnu deltu logujemo (XP se u praksi ne smanjuje - ako se ikad desi da nova
+    // vrednost bude manja od stare, npr. zbog lokalnog state resetovanja na klijentu, to NIJE
+    // "negativno zaradjen XP" i ne bi trebalo da unosi negativne redove u mesecni zbir).
+    if (delta > 0) {
+      try {
+        await db.query('INSERT INTO xp_events (user_id, amount, created_at) VALUES ($1, $2, NOW())', [userId, delta]);
+      } catch (evErr) {
+        // xp_events upis ne sme da obori glavni xp/update poziv - mesecni leaderboard je
+        // sekundarna funkcija, glavni (all-time) xp update mora proci bez obzira na ovo.
+        console.warn('[JA] xp_events insert failed:', evErr.message);
+      }
+    }
+
     res.json({ success: true, unlockedBadges: result.rows[0] ? result.rows[0].unlocked_badges : newBadges });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
