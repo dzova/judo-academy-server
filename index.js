@@ -330,6 +330,70 @@ app.get('/api/leaderboard', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// Trenutno ulogovan korisnik moze biti VAN top 50 (npr. 80. mesto) - glavni /api/leaderboard
+// endpoint iznad NIKAD ne bi video/vratio tu poziciju jer ima LIMIT 50. Ovaj endpoint racuna
+// TACAN rang preko cele tabele koristeci RANK() window funkciju, nezavisno od LIMIT-a gore,
+// tako da frontend uvek moze da prikaze "· · · / #80 Tvoja pozicija / 1,240 XP" cak i kad
+// korisnik nije u vidljivoj top-N listi. _requireAuth jer nam treba userId da znamo CIJI rang
+// trazimo - nema smisla bez ulogovanog korisnika.
+app.get('/api/leaderboard/me', _requireAuth, async (req, res) => {
+  const period = req.query.period === 'month' ? 'month' : 'all';
+  const metric = req.query.metric === 'quiz' ? 'quiz' : 'xp';
+  const userId = req.userId;
+  try {
+    if (period === 'all') {
+      const valueExpr = metric === 'quiz'
+        ? 'COALESCE(qs.best_score, 0)'
+        : 'u.xp';
+      const result = await db.query(`
+        SELECT rank, value FROM (
+          SELECT u.id, ${valueExpr} AS value,
+                 RANK() OVER (ORDER BY ${valueExpr} DESC) AS rank
+          FROM users u
+          LEFT JOIN (
+            SELECT user_id, MAX(score) AS best_score
+            FROM quiz_stats GROUP BY user_id
+          ) qs ON qs.user_id = u.id
+        ) ranked
+        WHERE id = $1
+      `, [userId]);
+      if (result.rows.length === 0) return res.json({ found: false });
+      return res.json({ found: true, rank: Number(result.rows[0].rank), value: Number(result.rows[0].value) });
+    }
+
+    const now = new Date();
+    const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)).toISOString();
+
+    if (metric === 'xp') {
+      const result = await db.query(`
+        SELECT rank, value FROM (
+          SELECT user_id, SUM(amount) AS value,
+                 RANK() OVER (ORDER BY SUM(amount) DESC) AS rank
+          FROM xp_events
+          WHERE created_at >= $1
+          GROUP BY user_id
+        ) ranked
+        WHERE user_id = $2
+      `, [monthStart, userId]);
+      if (result.rows.length === 0) return res.json({ found: false });
+      return res.json({ found: true, rank: Number(result.rows[0].rank), value: Number(result.rows[0].value) });
+    }
+
+    const result = await db.query(`
+      SELECT rank, value FROM (
+        SELECT user_id, MAX(score) AS value,
+               RANK() OVER (ORDER BY MAX(score) DESC) AS rank
+        FROM quiz_stats
+        WHERE created_at >= $1
+        GROUP BY user_id
+      ) ranked
+      WHERE user_id = $2
+    `, [monthStart, userId]);
+    if (result.rows.length === 0) return res.json({ found: false });
+    res.json({ found: true, rank: Number(result.rows[0].rank), value: Number(result.rows[0].value) });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // Gornja granica je namerno velikodusna (ne pokusavamo tacno izracunati teoretski max iz
 // svih izvora XP-a) - cilj je samo da odbijemo ocigledno lazirane vrednosti (npr. 999999999),
 // ne da fino tuniramo legitimni max napredak
