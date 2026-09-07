@@ -574,8 +574,12 @@ app.post('/api/promo/redeem', strictLimiter, _requireAuth, _requireIntegrity, as
   }
 });
 
-// Product ID-jevi definisani u Play Console (Monetize -> Products -> Subscriptions)
-const PLAY_BILLING_PRODUCT_IDS = ['premium_monthly', 'premium_annual'];
+// Product ID-jevi definisani u Play Console (Monetize -> Products -> Subscriptions).
+// VAZNO: godisnji je 'premium_annual_plan' (ne 'premium_annual') - to je stvaran Product ID iz
+// Play Console, razlicit od base plan ID-ja 'premium-annual-plan' (sa crticama). Klijent
+// (index.html, PREMIUM_PRODUCT_IDS) mora slati isti ID - inace ovaj server odbija verifikaciju
+// sa "Nepoznat productId" cak i kad je kupovina na Google strani validna.
+const PLAY_BILLING_PRODUCT_IDS = ['premium_monthly', 'premium_annual_plan'];
 
 // Zajednicka logika za verifikaciju kupovine preko Google Play Developer API-ja i upis
 // u bazu. Koristi se i pri prvoj kupovini (/api/billing/verify) i pri periodicnom
