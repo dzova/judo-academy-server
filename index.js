@@ -224,6 +224,51 @@ const VALID_BELTS = ['beli', 'zuti', 'narandzasti', 'zeleni', 'plavi', 'braon', 
 // Vrednosti odgovaraju onima koje frontend salje iz selectPfDominant() (Profil forma).
 const VALID_DOMINANT_SIDES = ['dešnjak', 'levak', 'oba'];
 
+// PROFANITY BLOCKLIST (09.09.2026) - imena se prikazuju javno na /api/leaderboard, bez ove
+// provere korisnik moze da postavi uvredljivo ime koje vide sva deca na rang-listi. Ovo je
+// server-side sloj (jedini kome se moze verovati - klijentska provera u index.html je samo
+// brza UX povratna informacija, moze se zaobici direktnim API pozivom). Pokriva svih 8 jezika
+// koje app podrzava (sr, en, de, fr, es, it, pt, ru). NIJE iscrpna lista - pokriva najcesce
+// psovke/uvrede po jeziku; laksa je za prosiriti dodavanjem reci u niz ispod nego za odrzavanje
+// pravog moderation servisa, sto za sada nije opravdano po broju korisnika. Poznato ogranicenje
+// (tzv. "Scunthorpe problem"): substring provera moze pogrešno pogoditi legitimno ime koje
+// SLUCAJNO sadrzi blokiranu rec kao deo sebe - prihvatljiv rizik za licna imena/nadimke ove
+// velicine korisnicke baze, ali ne 100% bezbedno za sve moguce kombinacije slova.
+const PROFANITY_BLOCKLIST = [
+  // sr/hr/bs (transliterovano - provera normalizuje dijakritike pre poredjenja)
+  'kurac','kurca','kurcina','pizda','pizdo','pizdu','jebem','jebo','jebote','jebes','picka','picke','peder','pederu','pedercina','shupak','supak','kurvo','kurva','kurvin','djubre','gandzo','seronja','pizdarija','materinu','picku','kurvetina','govno','govnar',
+  // en
+  'fuck','fucker','fucking','shit','bitch','asshole','bastard','cunt','nigger','nigga','faggot','fag','whore','dick','pussy','slut','retard','cock',
+  // de
+  'fick','ficken','ficker','scheisse','scheisze','arschloch','hurensohn','fotze','wichser','schlampe','schwuchtel',
+  // fr
+  'putain','merde','connard','connasse','salope','encule','enculé','pute','batard','bâtard','pd',
+  // es
+  'puta','putas','mierda','joder','cabron','cabrón','pendejo','maricon','maricón','coño','gilipollas',
+  // it
+  'cazzo','merda','stronzo','stronza','puttana','vaffanculo','troia','coglione',
+  // pt
+  'porra','merda','caralho','puta','foder','cacete','filho da puta','fdp',
+  // ru (cirilica - provera zadrzava cirilicna slova bez izmene)
+  'блять','блядь','сука','хуй','пизда','ебать','ебан','мудак','пидор','гандон',
+];
+
+function _normalizeForProfanityCheck(str) {
+  return String(str == null ? '' : str)
+    .toLowerCase()
+    .replace(/đ/g, 'dj').replace(/ß/g, 'ss') // ova slova se NE razlazu preko NFD ispod, moraju rucno
+    .normalize('NFD').replace(/[̀-ͯ]/g, '') // skini preostale dijakritike (č,ć,š,ü,é,ñ,itd.)
+    .replace(/0/g, 'o').replace(/1/g, 'i').replace(/3/g, 'e').replace(/4/g, 'a')
+    .replace(/5/g, 's').replace(/7/g, 't').replace(/\$/g, 's').replace(/@/g, 'a')
+    .replace(/[^a-zЀ-ӿ]/g, ''); // zadrzi samo latinicna+cirilicna slova (bez razmaka/simbola)
+}
+
+function containsProfanity(str) {
+  const norm = _normalizeForProfanityCheck(str);
+  if (!norm) return false;
+  return PROFANITY_BLOCKLIST.some(function(w) { return norm.indexOf(w) !== -1; });
+}
+
 app.post('/api/user/update', _requireAuth, async (req, res) => {
   const { username, club, country, belt, examDate, birthYear, dominantSide } = req.body;
   const userId = req.userId;
@@ -246,6 +291,15 @@ app.post('/api/user/update', _requireAuth, async (req, res) => {
   }
   if (country !== undefined && country !== null && (typeof country !== 'string' || country.length > 60)) {
     return res.status(400).json({ error: 'Nevalidna drzava' });
+  }
+  // Ime/prezime i naziv kluba se prikazuju javno na rang-listi - blokiraj uvredljive reci
+  // (vidi PROFANITY_BLOCKLIST definiciju iznad). Klijent (index.html) radi istu proveru za
+  // trenutnu povratnu informaciju, ali OVDE je jedina provera kojoj se moze verovati.
+  if (username && containsProfanity(username)) {
+    return res.status(400).json({ error: 'profanity_username' });
+  }
+  if (club && containsProfanity(club)) {
+    return res.status(400).json({ error: 'profanity_club' });
   }
 
   try {
