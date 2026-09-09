@@ -468,7 +468,13 @@ app.get('/api/sensei/limit/me', _requireAuth, async (req, res) => {
   const isJournal = feature === 'journal';
   const counterColumn = isScouting ? 'scouting_questions_today' : (isJournal ? 'journal_ai_today' : 'questions_today');
   const resetColumn = isScouting ? 'scouting_last_reset' : (isJournal ? 'journal_ai_last_reset' : 'last_reset');
-  const dailyLimit = isJournal ? 3 : 5;
+  // FIX 08.09.2026: ranije se ovde koristio JEDAN "dailyLimit" broj i za Premium (dnevni) i za
+  // Free (lifetime) korisnika, sto je slucajno bilo tacno za Sensei (5=5) i Journal (3=3) ali
+  // POGRESNO za Scouting - zvanicni Terms of Use (tabela Free/Premium planova) kaze da je
+  // Scouting za Free korisnike 3x DOZIVOTNO, ne 5x kao za Sensei, dok Premium ostaje 5x DNEVNO
+  // za oba. Sad su ta dva broja eksplicitno razdvojena po feature-u.
+  const premiumDailyLimit = isJournal ? 3 : 5;                      // Sensei 5/dan, Scouting 5/dan, Journal 3/dan
+  const freeLifetimeLimit = isScouting ? 3 : (isJournal ? 3 : 5);   // Sensei 5x, Scouting 3x, Journal 3x - doživotno
   try {
     const result = await db.query(
       `SELECT ${counterColumn}, ${resetColumn}, subscription_tier, subscription_expires FROM users WHERE id = $1`,
@@ -486,9 +492,9 @@ app.get('/api/sensei/limit/me', _requireAuth, async (req, res) => {
         await db.query(`UPDATE users SET ${counterColumn} = 0, ${resetColumn} = NOW() WHERE id = $1`, [userId]);
         usedCount = 0;
       }
-      res.json({ used: usedCount, limit: dailyLimit, remaining: dailyLimit - usedCount, type: 'daily' });
+      res.json({ used: usedCount, limit: premiumDailyLimit, remaining: premiumDailyLimit - usedCount, type: 'daily' });
     } else {
-      res.json({ used: usedCount, limit: dailyLimit, remaining: dailyLimit - usedCount, type: 'lifetime' });
+      res.json({ used: usedCount, limit: freeLifetimeLimit, remaining: freeLifetimeLimit - usedCount, type: 'lifetime' });
     }
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
@@ -1228,12 +1234,18 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
         usedCount = 0;
       }
     }
-    // Limit zavisi od feature-a: Sensei i Scouting imaju 5 (i premium dnevno i free lifetime -
-    // vidi Terms of Use v1.2), Journal AI analiza ima 3 (usaglaseno sa frontend
-    // triggerDnevnikAnaliza() koja vec koristi limit=3 za lokalnu/fallback proveru).
-    const dailyLimit = isJournal ? 3 : 5;
-    if (usedCount >= dailyLimit) {
-      return res.status(429).json({ error: 'Dostignut je limit pitanja', limit: dailyLimit, used: usedCount });
+    // FIX 08.09.2026: ispravljeno da odgovara zvanicnom Terms of Use (Free/Premium tabela) -
+    // ranije se ovde koristio isti broj za Premium dnevni i Free lifetime limit po feature-u,
+    // sto je za Scouting bilo pogresno (davalo je Free korisnicima 5x doživotno umesto tacnih 3x).
+    // Vidi identican fix i identican komentar u GET /api/sensei/limit/me iznad - ta dva mesta
+    // MORAJU ostati usaglasena (limit/limit/me samo PRIKAZUJE koliko je ostalo, ovde se limit
+    // stvarno PRIMENJUJE - razlicite vrednosti izmedju njih bi znacile da korisnik vidi jedan
+    // broj a stvarno mu se dozvoljava drugi).
+    const limit = isPremium
+      ? (isJournal ? 3 : 5)                        // Premium: Sensei 5/dan, Scouting 5/dan, Journal 3/dan
+      : (isScouting ? 3 : (isJournal ? 3 : 5));    // Free: Sensei 5x, Scouting 3x, Journal 3x - doživotno
+    if (usedCount >= limit) {
+      return res.status(429).json({ error: 'Dostignut je limit pitanja', limit: limit, used: usedCount });
     }
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
