@@ -459,6 +459,23 @@ app.get('/api/leaderboard/me', _requireAuth, async (req, res) => {
 // ne da fino tuniramo legitimni max napredak
 const MAX_PLAUSIBLE_XP = 200000;
 
+// FIX (11.09.2026, server audit): klijent salje APSOLUTNI totalXP i server ga je do sada samo
+// gornje ogranicavao (MAX_PLAUSIBLE_XP) - unutar te granice bilo koji ulogovan korisnik je mogao
+// jednim pozivom da postavi svoj XP na proizvoljnu vrednost (cheat rang liste), jer server nije
+// proveravao KOLIKO je XP-a poraslo u odnosu na prethodno stanje, samo da li je apsolutna
+// vrednost "razumna". Puno resenje (server sam racuna XP po odigranoj aktivnosti) je veci zahvat
+// jer bi zahtevao da server poznaje svih 8+ izvora XP-a sa klijenta. Kao brzu ali stvarnu meru,
+// ogranicavamo koliko XP-a SME da naraste u JEDNOM pozivu - vrednost je namerno velikodusna
+// (nekoliko desetina puta veca od najveceg legitimnog dobitka iz jedne partije) da ne blokira
+// korisnika koji je duze vreme bio offline pa salje veci nakupljeni skok od jednom, ali sprecava
+// jednokratno "teleportovanje" na visok XP. Visak iznad limita se NE odbija u potpunosti (klijent
+// ne proverava HTTP status ovog poziva, pa bi tvrdo odbijanje ostavilo server trajno "zaglavljen"
+// iza stvarnog klijentovog XP-a) - umesto toga se primenjuje najvise dozvoljeni deo, a ostatak
+// ce se prirodno uhvatiti kroz naredne sync pozive (svaki sledeci ce opet smeti da naraste za
+// najvise MAX_XP_DELTA_PER_CALL), sto sumnjivo veliki jednokratni skok pretvara u postepeno
+// "sustizanje" umesto trenutnog cheat-a.
+const MAX_XP_DELTA_PER_CALL = 2000;
+
 app.post('/api/xp/update', _requireAuth, async (req, res) => {
   const { xp, belt, unlockedBadges } = req.body;
   const userId = req.userId;
@@ -479,7 +496,13 @@ app.post('/api/xp/update', _requireAuth, async (req, res) => {
     // treba da zna za xp_events; frontend se uopste ne menja za ovaj deo.
     const prevResult = await db.query('SELECT xp FROM users WHERE id = $1', [userId]);
     const prevXp = prevResult.rows[0] ? Number(prevResult.rows[0].xp) || 0 : 0;
-    const delta = xp - prevXp;
+    let delta = xp - prevXp;
+    let appliedXp = xp;
+    if (delta > MAX_XP_DELTA_PER_CALL) {
+      console.warn('[xp][obuzdan skok] userId=' + userId + ' trazeno delta=+' + delta + ', primenjeno=+' + MAX_XP_DELTA_PER_CALL);
+      delta = MAX_XP_DELTA_PER_CALL;
+      appliedXp = prevXp + MAX_XP_DELTA_PER_CALL;
+    }
 
     const newBadges = Array.isArray(unlockedBadges) ? unlockedBadges : [];
     const result = await db.query(
@@ -493,7 +516,7 @@ app.post('/api/xp/update', _requireAuth, async (req, res) => {
         )
        WHERE id = $3
        RETURNING unlocked_badges`,
-      [xp, belt, userId, JSON.stringify(newBadges)]
+      [appliedXp, belt, userId, JSON.stringify(newBadges)]
     );
 
     // Samo pozitivnu deltu logujemo (XP se u praksi ne smanjuje - ako se ikad desi da nova
@@ -1222,6 +1245,55 @@ app.delete('/api/admin/promo/:code', adminLimiter, async (req, res) => {
   } catch (err) { _sendServerError(res, err); }
 });
 
+// ════════════════════════════════════════ ADMIN - NALOZI (spisak i brisanje) ════════════════════════════════════════
+
+// Spisak svih naloga za admin dashboard - podrzava pretragu (po username/email/google_id)
+// i stranicenje (limit/offset), podrazumevano sortirano po poslednjoj aktivnosti. Namerno se
+// ne vraca google_id/play_purchase_token u punom obliku u listi (nepotrebno za pregled/brisanje,
+// manje osetljivih podataka u odgovoru) - koristi se samo id, osnovni profil i status pretplate.
+app.get('/api/admin/users/list', adminLimiter, async (req, res) => {
+  if (!_checkAdminKey(req, res)) return;
+  try {
+    const search = (req.query.search || '').trim();
+    const limit = Math.min(parseInt(req.query.limit) || 50, 200);
+    const offset = Math.max(parseInt(req.query.offset) || 0, 0);
+
+    const whereClause = search ? 'WHERE username ILIKE $1 OR email ILIKE $1' : '';
+    const params = search ? [`%${search}%`] : [];
+
+    const countResult = await db.query(`SELECT COUNT(*)::int AS n FROM users ${whereClause}`, params);
+    const result = await db.query(
+      `SELECT id, username, email, belt, xp, club, country, subscription_tier, subscription_expires, updated_at
+       FROM users
+       ${whereClause}
+       ORDER BY updated_at DESC NULLS LAST
+       LIMIT $${params.length + 1} OFFSET $${params.length + 2}`,
+      [...params, limit, offset]
+    );
+    res.json({ users: result.rows, total: countResult.rows[0].n, limit, offset });
+  } catch (err) { _sendServerError(res, err); }
+});
+
+// Trajno brisanje naloga. FK ogranicenja na ai_feedback/xp_events/xp_history/analytics_events/
+// quiz_stats/user_data su ON DELETE CASCADE (vidi migraciju iznad u ovom fajlu) - brisanje reda
+// iz users automatski brise SVE povezane redove u tim tabelama u istoj DB transakciji koju
+// Postgres sam upravlja za FK CASCADE (ne treba rucno brisati iz svake tabele ovde).
+// bug_reports zadrzava ON DELETE SET NULL namerno (prijava problema ostaje u istoriji radi
+// analize/statistike i posle brisanja naloga koji ju je prijavio, samo joj se user_id postavi
+// na NULL - ne zelimo da brisanje naloga obrise trag o prijavljenom bagu).
+app.delete('/api/admin/users/:id', adminLimiter, async (req, res) => {
+  if (!_checkAdminKey(req, res)) return;
+  try {
+    const result = await db.query(
+      'DELETE FROM users WHERE id = $1 RETURNING id, username, email',
+      [req.params.id]
+    );
+    if (result.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronađen' });
+    console.warn('[admin][users] Obrisan nalog:', result.rows[0]);
+    res.json({ success: true, deleted: result.rows[0] });
+  } catch (err) { _sendServerError(res, err); }
+});
+
 // ════════════════════════════════════════ KVIZ I RANDORI (NEW) ════════════════════════════════════════
 
 app.get('/api/quiz', (req, res) => {
@@ -1721,6 +1793,15 @@ app.post('/api/userdata/sync', _requireAuth, async (req, res) => {
       // ijedan upise novo stanje, dozvoljavajuci limit da bude premasen za jedan unos. Sada je
       // provera+increment (premium granu) odnosno provera (free granu) unutar transakcije sa
       // FOR UPDATE lock-om na korisnickom redu, isti obrazac kao /api/promo/redeem.
+      //
+      // BATCH FIX (11.09.2026): provera je ranije gledala samo "koliko VEC postoji/je
+      // iskorisceno" i propustala ceo 'items' niz ako je ta brojka bila ispod limita - ali
+      // petlja ispod upisuje SVE stavke iz niza, bez obzira koliko ih ima. Klijent je mogao
+      // da posalje npr. 10 novih dnevnickih zapisa u JEDNOM sync pozivu i limit od 3 bi bio
+      // potpuno zaobidjen (za free: 3 zauvek -> proizvoljno mnogo; za premium: dnevni brojac
+      // se uvecavao za 1 po pozivu bez obzira na broj stavki). Sada se prvo utvrdi koliko je
+      // od poslatih kljuceva STVARNO novo (nije vec u bazi - re-sync/izmena postojeceg zapisa
+      // se ne racuna kao nov unos), pa se ta stvarna kolicina poredi sa preostalim limitom.
       const client = await db.connect();
       try {
         await client.query('BEGIN');
@@ -1732,6 +1813,15 @@ app.post('/api/userdata/sync', _requireAuth, async (req, res) => {
           const user = userResult.rows[0];
           const isPremium = _isPremiumActive(user);
 
+          const newKeys = newEntries.map(function(it) { return it.key; });
+          const existingKeysResult = await client.query(
+            "SELECT data_key FROM user_data WHERE user_id = $1 AND data_type = 'journal' AND data_key = ANY($2::text[])",
+            [userId, newKeys]
+          );
+          const existingKeySet = new Set(existingKeysResult.rows.map(function(r) { return r.data_key; }));
+          // Duplikati unutar samog batch-a se broje samo jednom - Set nad kljucevima
+          const trulyNewCount = new Set(newKeys.filter(function(k) { return !existingKeySet.has(k); })).size;
+
           if (isPremium) {
             const today = new Date().toDateString();
             const lastReset = new Date(user.journal_last_reset).toDateString();
@@ -1740,11 +1830,13 @@ app.post('/api/userdata/sync', _requireAuth, async (req, res) => {
               await client.query('UPDATE users SET journal_entries_today = 0, journal_last_reset = NOW() WHERE id = $1', [userId]);
               usedToday = 0;
             }
-            if (usedToday >= 3) {
+            if (usedToday + trulyNewCount > 3) {
               await client.query('ROLLBACK');
               return res.status(429).json({ error: 'Dostignut je dnevni limit dnevnika', limit: 3, used: usedToday });
             }
-            await client.query('UPDATE users SET journal_entries_today = journal_entries_today + 1 WHERE id = $1', [userId]);
+            if (trulyNewCount > 0) {
+              await client.query('UPDATE users SET journal_entries_today = journal_entries_today + $2 WHERE id = $1', [userId, trulyNewCount]);
+            }
           } else {
             // Free: 3x lifetime - brojimo postojece zapise u bazi (tacnije od posebnog
             // brojaca jer automatski iskljucuje duplikate/re-sync istog id-a). FOR UPDATE
@@ -1754,7 +1846,7 @@ app.post('/api/userdata/sync', _requireAuth, async (req, res) => {
               [userId]
             );
             const existing = countResult.rows[0].n;
-            if (existing >= 3) {
+            if (existing + trulyNewCount > 3) {
               await client.query('ROLLBACK');
               return res.status(429).json({ error: 'Dostignut je limit dnevnika', limit: 3, used: existing });
             }
