@@ -1310,8 +1310,17 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
   const isScouting = feature === 'scouting';
   const isJournal = feature === 'journal';
 
-  const isSenseiPrompt = typeof system === 'string' && system.includes(SENSEI_SYSTEM_SIGNATURE);
-  const isScoutingPrompt = typeof system === 'string' && system.includes(SCOUTING_SYSTEM_SIGNATURE);
+  // FIX (11.09.2026, security review): ranije se ovde koristio system.includes(potpis), sto
+  // znaci da je bilo dovoljno da potpis postoji BILO GDE u stringu - napadac (sa validnim auth
+  // tokenom, npr. presretnut/izmenjen zahtev) je mogao da posalje sopstveni system prompt sa
+  // potpisom ubacenim negde u sredini/na kraju, a stvarnim (proizvoljnim) uputstvima ISPRED
+  // potpisa - klasican prompt injection, iako ogranicen dnevnim/doživotnim limitom pitanja.
+  // Svi legitimni system promptovi sa klijenta (buildSenseiSystemPrompt() i oba inline
+  // scouting/journal template stringa) POCINJU potpisom na poziciji 0 - startsWith() ne menja
+  // ponasanje ni za jedan postojeci legitiman poziv, ali odbija svaki zahtev gde je potpis
+  // "ubacen" iza proizvoljnog teksta.
+  const isSenseiPrompt = typeof system === 'string' && system.startsWith(SENSEI_SYSTEM_SIGNATURE);
+  const isScoutingPrompt = typeof system === 'string' && system.startsWith(SCOUTING_SYSTEM_SIGNATURE);
   if (!isSenseiPrompt && !isScoutingPrompt) {
     return res.status(400).json({ error: 'Nevalidan system prompt' });
   }
