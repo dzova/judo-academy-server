@@ -28,6 +28,17 @@ app.use((req, res, next) => {
 
 app.use(cors({ origin: '*', credentials: false }));
 app.use(express.json());
+
+// BEZBEDNOST (11.09.2026): ranije su gotovo svi catch blokovi vracali err.message DIREKTNO
+// klijentu (res.status(500).json({ error: err.message })). Postgres greske (npr. "duplicate
+// key value violates unique constraint users_google_id_key") cesto otkrivaju nazive tabela/
+// kolona/constraint-a - nepotrebno curenje detalja seme svakome ko pozove endpoint (mnogi od
+// njih su neautentifikovani, npr. /api/leaderboard, /api/quiz). Ova pomocna funkcija loguje
+// pun err na serveru (za nasu istragu) i vraca klijentu generiku poruku bez internih detalja.
+function _sendServerError(res, err, context) {
+  console.error('[' + (context || 'server') + ']', err && err.message ? err.message : err);
+  if (!res.headersSent) res.status(500).json({ error: 'Doslo je do greske na serveru' });
+}
 if (!process.env.SESSION_SECRET) {
   console.error('[startup] SESSION_SECRET nije podesen - server se ne pokrece bez njega');
   process.exit(1);
@@ -72,6 +83,19 @@ const analyticsLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: 'Previse zahteva' }
+});
+
+// Strog limiter za admin rute (promo generisanje, premium grant za klub, bug-report
+// upravljanje, dashboard, bump-version) - ove nose ADMIN_DASHBOARD_KEY/ADMIN_SECRET u
+// query/header/body i nisu ranije imale nikakav rate limit, sto je omogucavalo neograniceno
+// automatizovano pogadjanje kljuca. Limit je strozi od strictLimiter jer admin rute nikad ne
+// treba da se pozivaju vise puta u minuti od strane legitimnog korisnika (samo Nikola/interni alati).
+const adminLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 min
+  limit: 15,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Previse pokusaja, pokusaj ponovo kasnije' }
 });
 
 const db = new Pool({ connectionString: process.env.DATABASE_URL });
@@ -148,9 +172,29 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 });
 
 // Fallback web stranica ako deep link ne radi
+//
+// BEZBEDNOST: userId/username/belt/xp/email dolaze direktno iz req.query (neautentifikovan,
+// javno dostupan GET endpoint) i ubacuju se u HTML/<script> koji se vraca korisniku. Ranije se
+// ovde samo escape-ovao jednostruki navodnik (.replace(/'/g, "\\'")) sto NE sprecava XSS - napadac
+// je mogao poslati npr. ?username=</script><script>...zloupotreba... i probiti se iz <script> bloka
+// jer HTML parser zatvara <script> na doslovni "</script>" bez obzira na JS string kontekst.
+// Zato sada ide kroz escapeHtml() (escape-uje <,>,&,",') pre nego sto se ubaci u markup.
+function escapeHtml(str) {
+  return String(str == null ? '' : str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 app.get('/auth-success', (req, res) => {
   const { userId, username, belt, xp, email } = req.query;
-  const userData = JSON.stringify({ userId, username: username || '', email: email || '', belt: belt || 'white', xp: xp || 0 });
+  const safeUserId = escapeHtml(userId);
+  const safeUsername = escapeHtml(username || '');
+  const safeBelt = escapeHtml(belt || 'white');
+  const safeXp = escapeHtml(xp || 0);
+  const safeEmail = escapeHtml(email || '');
+  const userData = JSON.stringify({ userId: safeUserId, username: safeUsername, email: safeEmail, belt: safeBelt, xp: safeXp });
   const deepLink = `judoacademy://auth-success?userId=${encodeURIComponent(userId)}&username=${encodeURIComponent(username||'')}&belt=${encodeURIComponent(belt||'white')}&xp=${encodeURIComponent(xp||0)}&email=${encodeURIComponent(email||'')}`;
   res.send(`<!DOCTYPE html><html><head><meta charset="utf-8">
   <title>Judo Academy - Login</title>
@@ -162,7 +206,7 @@ app.get('/auth-success', (req, res) => {
   <button class="btn" onclick="openApp()">Otvori app</button>
   <script>
     // Sacuvaj u localStorage ovog WebView-a
-    try { localStorage.setItem('judo_auth_pending', '${userData.replace(/'/g, "\\'")}'); } catch(e) {}
+    try { localStorage.setItem('judo_auth_pending', ${JSON.stringify(userData)}); } catch(e) {}
     function openApp() {
       window.location.href = '${deepLink}';
     }
@@ -211,7 +255,7 @@ app.get('/api/user/me', _requireAuth, async (req, res) => {
       user.subscription_tier = 'free';
     }
     res.json(user);
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // ════════════════════════════════════════ KORISNIK ════════════════════════════════════════
@@ -305,8 +349,8 @@ app.post('/api/user/update', _requireAuth, async (req, res) => {
   try {
     await db.query(
       `UPDATE users SET
-        club = $1,
-        country = $2,
+        club = COALESCE($1, club),
+        country = COALESCE($2, country),
         username = COALESCE($3, username),
         belt = COALESCE($4, belt),
         exam_date = COALESCE($5, exam_date),
@@ -316,7 +360,7 @@ app.post('/api/user/update', _requireAuth, async (req, res) => {
       [club || null, country || null, username || null, belt || null, examDate || null, birthYear || null, dominantSide || null, userId]
     );
     res.json({ success: true });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // ════════════════════════════════════════ RANG LISTA ════════════════════════════════════════
@@ -381,7 +425,7 @@ app.get('/api/leaderboard', async (req, res) => {
       ORDER BY quiz_score DESC LIMIT 50
     `, [monthStart]);
     res.json(result.rows);
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // Trenutno ulogovan korisnik moze biti VAN top 50 (npr. 80. mesto) - glavni /api/leaderboard
@@ -445,7 +489,7 @@ app.get('/api/leaderboard/me', _requireAuth, async (req, res) => {
     `, [monthStart, userId]);
     if (result.rows.length === 0) return res.json({ found: false });
     res.json({ found: true, rank: Number(result.rows[0].rank), value: Number(result.rows[0].value) });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // Gornja granica je namerno velikodusna (ne pokusavamo tacno izracunati teoretski max iz
@@ -504,7 +548,7 @@ app.post('/api/xp/update', _requireAuth, async (req, res) => {
     }
 
     res.json({ success: true, unlockedBadges: result.rows[0] ? result.rows[0].unlocked_badges : newBadges });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // ════════════════════════════════════════ AI SENSEI LIMITI ════════════════════════════════════════
@@ -550,7 +594,7 @@ app.get('/api/sensei/limit/me', _requireAuth, async (req, res) => {
     } else {
       res.json({ used: usedCount, limit: freeLifetimeLimit, remaining: freeLifetimeLimit - usedCount, type: 'lifetime' });
     }
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // ════════════════════════════════════════ AI FEEDBACK (thumbs up/down) ════════════════════════════════════════
@@ -578,7 +622,7 @@ app.post('/api/ai-feedback', _requireAuth, async (req, res) => {
       [userId, feature, rating, excerpt, lang || null]
     );
     res.json({ success: true });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // ════════════════════════════════════════ PROMO KODOVI ════════════════════════════════════════
@@ -628,7 +672,7 @@ app.post('/api/promo/redeem', strictLimiter, _requireAuth, _requireIntegrity, as
     res.json({ success: true, duration_days: p.duration_days, expires_at: expiresAt });
   } catch (err) {
     await client.query('ROLLBACK').catch(() => {});
-    res.status(500).json({ error: err.message });
+    _sendServerError(res, err);
   } finally {
     client.release();
   }
@@ -704,8 +748,7 @@ app.post('/api/billing/verify', _requireAuth, _requireIntegrity, async (req, res
     if (!result.ok) return res.status(result.status).json({ error: result.error, state: result.state });
     res.json({ success: true, expires_at: result.expiresAt, state: result.state });
   } catch (err) {
-    console.error('[billing] Verifikacija neuspesna:', err.message);
-    res.status(500).json({ error: 'Verifikacija nije uspela: ' + err.message });
+    _sendServerError(res, err, 'billing][verifikacija');
   }
 });
 
@@ -750,8 +793,7 @@ app.post('/api/billing/refresh', _requireAuth, async (req, res) => {
     }
     res.json({ success: true, active: true, expires_at: result.expiresAt, state: result.state });
   } catch (err) {
-    console.error('[billing] Osvezavanje neuspesno:', err.message);
-    res.status(500).json({ error: 'Osvezavanje nije uspelo: ' + err.message });
+    _sendServerError(res, err, 'billing][osvezavanje');
   }
 });
 
@@ -854,9 +896,23 @@ app.post('/api/billing/webhook', async (req, res) => {
   }
 });
 
+// Konstantno-vremensko poredjenje stringova (sprecava timing-attack - napadac ne moze da
+// izvuce info o tacnom kljucu merenjem koliko brzo server odgovara na delimicno tacne pokusaje).
+// crypto.timingSafeEqual zahteva bafere iste duzine, zato prvo proveravamo duzinu (razlicita
+// duzina vec sama po sebi odaje "pogresno", ali to je prihvatljivo - nije to informacija koja
+// pomaze pogadjanje sadrzaja kljuca).
+function _timingSafeStrEqual(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string' || a.length !== b.length) return false;
+  try {
+    return crypto.timingSafeEqual(Buffer.from(a), Buffer.from(b));
+  } catch (e) {
+    return false;
+  }
+}
+
 function _checkAdminKey(req, res) {
   const key = req.query.key || req.headers['x-admin-key'];
-  if (!process.env.ADMIN_DASHBOARD_KEY || key !== process.env.ADMIN_DASHBOARD_KEY) {
+  if (!process.env.ADMIN_DASHBOARD_KEY || !_timingSafeStrEqual(String(key || ''), process.env.ADMIN_DASHBOARD_KEY)) {
     res.status(401).json({ error: 'Unauthorized' });
     return false;
   }
@@ -1101,7 +1157,7 @@ function _generatePromoCode() {
 
 // Generiše N jedinstvenih promo kodova, svaki upotrebljiv samo jednom (max_uses=1).
 // Rešava problem deljenja jednog opšteg koda unutar kluba/grupe — svaki član dobija svoj kod.
-app.post('/api/admin/promo/generate', async (req, res) => {
+app.post('/api/admin/promo/generate', adminLimiter, async (req, res) => {
   if (!_checkAdminKey(req, res)) return;
   const { count, duration_days, note, valid_days, max_uses } = req.body;
   const n = parseInt(count);
@@ -1136,11 +1192,11 @@ app.post('/api/admin/promo/generate', async (req, res) => {
       codes.push(code);
     }
     res.json({ success: true, codes, duration_days: duration, max_uses: uses, valid_until: validUntil });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // Pregled koji korisnici bi bili pogođeni bulk dodelom premiuma po klubu — PRE stvarne izmene
-app.get('/api/admin/premium/club-preview', async (req, res) => {
+app.get('/api/admin/premium/club-preview', adminLimiter, async (req, res) => {
   if (!_checkAdminKey(req, res)) return;
   const clubQuery = (req.query.club || '').trim();
   if (!clubQuery) return res.status(400).json({ error: 'Nedostaje club parametar' });
@@ -1153,12 +1209,12 @@ app.get('/api/admin/premium/club-preview', async (req, res) => {
       [`%${clubQuery}%`]
     );
     res.json(result.rows);
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // Stvarna dodela premiuma svim korisnicima čiji klub (slobodan tekst) odgovara pretrazi.
 // Uvek prvo pozvati /club-preview da se potvrdi tačan spisak pre ove akcije.
-app.post('/api/admin/premium/club-grant', async (req, res) => {
+app.post('/api/admin/premium/club-grant', adminLimiter, async (req, res) => {
   if (!_checkAdminKey(req, res)) return;
   const { club, duration_days } = req.body;
   const clubQuery = (club || '').trim();
@@ -1178,11 +1234,11 @@ app.post('/api/admin/premium/club-grant', async (req, res) => {
       [expiresAt, `%${clubQuery}%`]
     );
     res.json({ success: true, updated_count: result.rows.length, updated_users: result.rows, expires_at: expiresAt });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // Pregled svih generisanih kodova — status (iskorišćen/slobodan), napomena, datum isteka
-app.get('/api/admin/promo/list', async (req, res) => {
+app.get('/api/admin/promo/list', adminLimiter, async (req, res) => {
   if (!_checkAdminKey(req, res)) return;
   try {
     const result = await db.query(
@@ -1191,17 +1247,17 @@ app.get('/api/admin/promo/list', async (req, res) => {
        ORDER BY created_at DESC NULLS LAST, code DESC`
     );
     res.json(result.rows);
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // Brisanje jednog promo koda (npr. stari/probni kodovi koje više ne treba deliti)
-app.delete('/api/admin/promo/:code', async (req, res) => {
+app.delete('/api/admin/promo/:code', adminLimiter, async (req, res) => {
   if (!_checkAdminKey(req, res)) return;
   try {
     const result = await db.query('DELETE FROM promo_codes WHERE code = $1 RETURNING code', [req.params.code.toUpperCase()]);
     if (result.rows.length === 0) return res.status(404).json({ error: 'Kod nije pronađen' });
     res.json({ success: true, deleted: result.rows[0].code });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // ════════════════════════════════════════ KVIZ I RANDORI (NEW) ════════════════════════════════════════
@@ -1213,7 +1269,7 @@ app.get('/api/quiz', (req, res) => {
     const data = fs.readFileSync(filePath, 'utf-8');
     res.json(JSON.parse(data));
   } catch (err) {
-    res.status(500).json({ error: 'Questions file not found: ' + err.message });
+    _sendServerError(res, err, 'quiz][fajl');
   }
 });
 
@@ -1224,7 +1280,7 @@ app.get('/api/randori', (req, res) => {
     const data = fs.readFileSync(filePath, 'utf-8');
     res.json(JSON.parse(data));
   } catch (err) {
-    res.status(500).json({ error: 'Randori file not found: ' + err.message });
+    _sendServerError(res, err, 'randori][fajl');
   }
 });
 
@@ -1270,12 +1326,26 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
   const counterColumn = isScouting ? 'scouting_questions_today' : (isJournal ? 'journal_ai_today' : 'questions_today');
   const resetColumn = isScouting ? 'scouting_last_reset' : (isJournal ? 'journal_ai_last_reset' : 'last_reset');
 
+  // RACE FIX (11.09.2026): ranije se ovde radilo SELECT -> provera u JS-u -> tek POSLE Anthropic
+  // poziva UPDATE +1. Dva istovremena zahteva istog korisnika su oba mogla procitati isti
+  // usedCount ispod limita i oba proci proveru, sto je omogucavalo da se dnevni/doživotni limit
+  // premasi za jedan placeni Anthropic poziv po "upucenom" konkurentnom zahtevu (novac ide iz
+  // dzepa, ne samo formalnost). Sada se mesto REZERVISE (increment) unutar transakcije sa
+  // FOR UPDATE lock-om PRE poziva ka Anthropic-u - isti obrazac kao /api/promo/redeem. Ako
+  // Anthropic poziv posle toga ipak ne uspe, rezervacija se vraca (decrement) da korisnik ne
+  // izgubi pokusaj koji nije stvarno iskoristio.
+  const client = await db.connect();
+  let reserved = false;
   try {
-    const userResult = await db.query(
-      `SELECT ${counterColumn}, ${resetColumn}, subscription_tier, subscription_expires FROM users WHERE id = $1`,
+    await client.query('BEGIN');
+    const userResult = await client.query(
+      `SELECT ${counterColumn}, ${resetColumn}, subscription_tier, subscription_expires FROM users WHERE id = $1 FOR UPDATE`,
       [userId]
     );
-    if (userResult.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronadjen' });
+    if (userResult.rows.length === 0) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ error: 'Korisnik nije pronadjen' });
+    }
     const user = userResult.rows[0];
     const isPremium = _isPremiumActive(user);
     let usedCount = user[counterColumn];
@@ -1284,7 +1354,7 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
       const today = new Date().toDateString();
       const lastReset = new Date(user[resetColumn]).toDateString();
       if (today !== lastReset) {
-        await db.query(`UPDATE users SET ${counterColumn} = 0, ${resetColumn} = NOW() WHERE id = $1`, [userId]);
+        await client.query(`UPDATE users SET ${counterColumn} = 0, ${resetColumn} = NOW() WHERE id = $1`, [userId]);
         usedCount = 0;
       }
     }
@@ -1299,9 +1369,22 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
       ? (isJournal ? 3 : 5)                        // Premium: Sensei 5/dan, Scouting 5/dan, Journal 3/dan
       : (isScouting ? 3 : (isJournal ? 3 : 5));    // Free: Sensei 5x, Scouting 3x, Journal 3x - doživotno
     if (usedCount >= limit) {
+      await client.query('ROLLBACK');
       return res.status(429).json({ error: 'Dostignut je limit pitanja', limit: limit, used: usedCount });
     }
 
+    await client.query(`UPDATE users SET ${counterColumn} = ${counterColumn} + 1 WHERE id = $1`, [userId]);
+    await client.query('COMMIT');
+    reserved = true;
+  } catch (err) {
+    await client.query('ROLLBACK').catch(() => {});
+    client.release();
+    return _sendServerError(res, err);
+  } finally {
+    client.release();
+  }
+
+  try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -1313,13 +1396,18 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
     });
     const data = await response.json();
 
-    // Broji pitanje samo ako je Anthropic poziv uspeo (ne trosi limit na neuspesne pokusaje)
-    if (!data.error) {
-      await db.query(`UPDATE users SET ${counterColumn} = ${counterColumn} + 1 WHERE id = $1`, [userId]);
+    // Anthropic poziv nije uspeo - vrati rezervisano mesto nazad (korisnik ne gubi pokusaj)
+    if (data.error && reserved) {
+      await db.query(`UPDATE users SET ${counterColumn} = GREATEST(${counterColumn} - 1, 0) WHERE id = $1`, [userId]).catch(() => {});
     }
 
     res.json(data);
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) {
+    if (reserved) {
+      await db.query(`UPDATE users SET ${counterColumn} = GREATEST(${counterColumn} - 1, 0) WHERE id = $1`, [userId]).catch(() => {});
+    }
+    _sendServerError(res, err);
+  }
 });
 
 // ════════════════════════════════════════ KVIZ STATISTIKE ════════════════════════════════════════
@@ -1350,7 +1438,7 @@ app.get('/api/quiz/limit/me', _requireAuth, async (req, res) => {
     const lastReset = new Date(user.quiz_last_reset).toDateString();
     if (today !== lastReset) playsToday = 0; // samo za prikaz - stvarni reset se desava na upisu
     res.json({ used: playsToday, limit: 3, remaining: Math.max(0, 3 - playsToday), type: 'daily' });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 app.post('/api/quiz/stats', _requireAuth, async (req, res) => {
@@ -1370,12 +1458,22 @@ app.post('/api/quiz/stats', _requireAuth, async (req, res) => {
     return res.status(400).json({ error: 'Nevalidni podaci o rezultatu' });
   }
 
+  // RACE FIX (11.09.2026): SELECT+provera+UPDATE +1 su ranije bila tri odvojena poziva bez
+  // zakljucavanja reda - dva istovremena POST-a (npr. skriptovan/automatizovan klijent) mogla
+  // su oba procitati playsToday ispod 3 i oba proci, dozvoljavajuci vise od 3 partije dnevno
+  // za Free korisnika. Sada je citanje+provera+increment u jednoj transakciji sa FOR UPDATE
+  // lock-om, isti obrazac kao /api/promo/redeem i /api/sensei/ask.
+  const client = await db.connect();
   try {
-    const userResult = await db.query(
-      'SELECT quiz_plays_today, quiz_last_reset, subscription_tier, subscription_expires FROM users WHERE id = $1',
+    await client.query('BEGIN');
+    const userResult = await client.query(
+      'SELECT quiz_plays_today, quiz_last_reset, subscription_tier, subscription_expires FROM users WHERE id = $1 FOR UPDATE',
       [userId]
     );
-    if (userResult.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronadjen' });
+    if (userResult.rows.length === 0) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ error: 'Korisnik nije pronadjen' });
+    }
     const user = userResult.rows[0];
     const isPremium = _isPremiumActive(user);
     let playsToday = user.quiz_plays_today;
@@ -1386,22 +1484,29 @@ app.post('/api/quiz/stats', _requireAuth, async (req, res) => {
       const today = new Date().toDateString();
       const lastReset = new Date(user.quiz_last_reset).toDateString();
       if (today !== lastReset) {
-        await db.query('UPDATE users SET quiz_plays_today = 0, quiz_last_reset = NOW() WHERE id = $1', [userId]);
+        await client.query('UPDATE users SET quiz_plays_today = 0, quiz_last_reset = NOW() WHERE id = $1', [userId]);
         playsToday = 0;
       }
       if (playsToday >= 3) {
+        await client.query('ROLLBACK');
         return res.status(429).json({ error: 'Dostignut je dnevni limit kviza', limit: 3, used: playsToday });
       }
-      await db.query('UPDATE users SET quiz_plays_today = quiz_plays_today + 1 WHERE id = $1', [userId]);
+      await client.query('UPDATE users SET quiz_plays_today = quiz_plays_today + 1 WHERE id = $1', [userId]);
     }
 
-    await db.query(
+    await client.query(
       'INSERT INTO quiz_stats (user_id, score, correct, total, max_streak, category) VALUES ($1, $2, $3, $4, $5, $6)',
       [userId, s, c, t, ms, category || 'mixed']
     );
-    await db.query('UPDATE users SET updated_at = NOW() WHERE id = $1', [userId]);
+    await client.query('UPDATE users SET updated_at = NOW() WHERE id = $1', [userId]);
+    await client.query('COMMIT');
     res.json({ success: true });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) {
+    await client.query('ROLLBACK').catch(() => {});
+    _sendServerError(res, err);
+  } finally {
+    client.release();
+  }
 });
 
 // Prima prijavu problema iz app-a (opis + opciono screenshot). Koristi _requireAuth
@@ -1466,7 +1571,7 @@ app.post('/api/bug-report', _requireAuth, _bugReportUploadMiddleware, async (req
 });
 
 // Admin pregled prijavljenih problema - ista ADMIN_DASHBOARD_KEY zastita kao ostale admin rute
-app.get('/api/admin/bug-reports', async (req, res) => {
+app.get('/api/admin/bug-reports', adminLimiter, async (req, res) => {
   if (!_checkAdminKey(req, res)) return;
   try {
     const result = await db.query(
@@ -1488,7 +1593,7 @@ app.get('/api/admin/bug-reports', async (req, res) => {
 });
 
 // Oznaci prijavu kao resenu/u toku (opciono, za buduci admin dashboard UI)
-app.post('/api/admin/bug-reports/:id/status', async (req, res) => {
+app.post('/api/admin/bug-reports/:id/status', adminLimiter, async (req, res) => {
   if (!_checkAdminKey(req, res)) return;
   try {
     const { status } = req.body; // 'new' | 'in_progress' | 'resolved' | 'wontfix'
@@ -1501,7 +1606,7 @@ app.post('/api/admin/bug-reports/:id/status', async (req, res) => {
 
 // Brisanje prijave iz admin dashboarda. Brise samo SQL red - ako je screenshot na Cloudinary-ju,
 // on ostaje tamo (nije obavezno brisati ga sa Cloudinary-a, storage je besplatan do velike kolicine).
-app.delete('/api/admin/bug-reports/:id', async (req, res) => {
+app.delete('/api/admin/bug-reports/:id', adminLimiter, async (req, res) => {
   if (!_checkAdminKey(req, res)) return;
   try {
     const result = await db.query('DELETE FROM bug_reports WHERE id=$1 RETURNING id', [req.params.id]);
@@ -1556,7 +1661,7 @@ app.get('/api/quiz/stats/me', _requireAuth, async (req, res) => {
       thisMonth: thisMonth.rows[0],
       byCategory: byCategory.rows
     });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // ════════════════════════════════════════ BACKGROUND SYNC ════════════════════════════════════════
@@ -1578,13 +1683,13 @@ app.post('/api/check-updates', async (req, res) => {
     });
 
     res.json({ toUpdate, serverVersions });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // Ažuriraj verziju fajla (admin operacija)
-app.post('/api/data/bump-version', async (req, res) => {
+app.post('/api/data/bump-version', adminLimiter, async (req, res) => {
   const { filename, secret } = req.body;
-  if (!process.env.ADMIN_SECRET || secret !== process.env.ADMIN_SECRET) {
+  if (!process.env.ADMIN_SECRET || !_timingSafeStrEqual(String(secret || ''), process.env.ADMIN_SECRET)) {
     return res.status(403).json({ error: 'Forbidden' });
   }
   if (!filename) return res.status(400).json({ error: 'Nedostaje filename' });
@@ -1595,7 +1700,7 @@ app.post('/api/data/bump-version', async (req, res) => {
     );
     const result = await db.query('SELECT version FROM data_versions WHERE filename = $1', [filename]);
     res.json({ success: true, filename, version: result.rows[0].version });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // Dohvati sve verzije
@@ -1603,7 +1708,7 @@ app.get('/api/data/versions', async (req, res) => {
   try {
     const result = await db.query('SELECT filename, version, updated_at FROM data_versions ORDER BY filename');
     res.json(result.rows);
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // ════════════════════════════════════════ ANALITIKA ════════════════════════════════════════
@@ -1617,7 +1722,7 @@ app.post('/api/analytics/event', analyticsLimiter, async (req, res) => {
       [userId || null, eventName, eventData ? JSON.stringify(eventData) : null]
     );
     res.json({ success: true });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // ════════════════════════════════════════ USER DATA SYNC (Data Service Layer) ════════════════════════════════════════
@@ -1639,9 +1744,17 @@ app.post('/api/userdata/sync', _requireAuth, async (req, res) => {
   if (dataType === 'journal') {
     const newEntries = items.filter(function(it) { return it && it.key && !it.deleted; });
     if (newEntries.length > 0) {
+      // RACE FIX (11.09.2026): SELECT + provera + UPDATE/COUNT su ranije bila odvojeni pozivi
+      // bez zakljucavanja reda - dva istovremena sync poziva (npr. dva uredjaja/tabova istog
+      // korisnika koja se sinhronizuju u isto vreme) su mogla oba proci proveru pre nego sto
+      // ijedan upise novo stanje, dozvoljavajuci limit da bude premasen za jedan unos. Sada je
+      // provera+increment (premium granu) odnosno provera (free granu) unutar transakcije sa
+      // FOR UPDATE lock-om na korisnickom redu, isti obrazac kao /api/promo/redeem.
+      const client = await db.connect();
       try {
-        const userResult = await db.query(
-          'SELECT journal_entries_today, journal_last_reset, subscription_tier, subscription_expires FROM users WHERE id = $1',
+        await client.query('BEGIN');
+        const userResult = await client.query(
+          'SELECT journal_entries_today, journal_last_reset, subscription_tier, subscription_expires FROM users WHERE id = $1 FOR UPDATE',
           [userId]
         );
         if (userResult.rows.length > 0) {
@@ -1653,30 +1766,37 @@ app.post('/api/userdata/sync', _requireAuth, async (req, res) => {
             const lastReset = new Date(user.journal_last_reset).toDateString();
             let usedToday = user.journal_entries_today;
             if (today !== lastReset) {
-              await db.query('UPDATE users SET journal_entries_today = 0, journal_last_reset = NOW() WHERE id = $1', [userId]);
+              await client.query('UPDATE users SET journal_entries_today = 0, journal_last_reset = NOW() WHERE id = $1', [userId]);
               usedToday = 0;
             }
             if (usedToday >= 3) {
+              await client.query('ROLLBACK');
               return res.status(429).json({ error: 'Dostignut je dnevni limit dnevnika', limit: 3, used: usedToday });
             }
-            await db.query('UPDATE users SET journal_entries_today = journal_entries_today + 1 WHERE id = $1', [userId]);
+            await client.query('UPDATE users SET journal_entries_today = journal_entries_today + 1 WHERE id = $1', [userId]);
           } else {
             // Free: 3x lifetime - brojimo postojece zapise u bazi (tacnije od posebnog
-            // brojaca jer automatski iskljucuje duplikate/re-sync istog id-a)
-            const countResult = await db.query(
+            // brojaca jer automatski iskljucuje duplikate/re-sync istog id-a). FOR UPDATE
+            // na users redu gore serijalizuje ovu proveru po korisniku.
+            const countResult = await client.query(
               "SELECT COUNT(*)::int AS n FROM user_data WHERE user_id = $1 AND data_type = 'journal'",
               [userId]
             );
             const existing = countResult.rows[0].n;
             if (existing >= 3) {
+              await client.query('ROLLBACK');
               return res.status(429).json({ error: 'Dostignut je limit dnevnika', limit: 3, used: existing });
             }
           }
         }
+        await client.query('COMMIT');
       } catch (limitErr) {
+        await client.query('ROLLBACK').catch(() => {});
         // Ne blokiramo sync zbog greske u proveri limita - beleziti u log za istragu,
         // bolje propustiti unos nego izgubiti korisnikove podatke zbog nase greske
         console.error('[userdata][journal-limit] Greska pri proveri limita:', limitErr.message);
+      } finally {
+        client.release();
       }
     }
   }
@@ -1701,7 +1821,7 @@ app.post('/api/userdata/sync', _requireAuth, async (req, res) => {
       }
     }
     res.json({ success: true });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 app.get('/api/userdata/:dataType', _requireAuth, async (req, res) => {
@@ -1713,7 +1833,7 @@ app.get('/api/userdata/:dataType', _requireAuth, async (req, res) => {
       [userId, dataType]
     );
     res.json(result.rows);
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { _sendServerError(res, err); }
 });
 
 // Legal documents
@@ -1835,11 +1955,8 @@ function buildTechniqueIdsCTE() {
 
 // ════════════════════════════════════════ ADMIN DASHBOARD ════════════════════════════════════════
 
-app.get('/api/admin/dashboard', async (req, res) => {
-  const key = req.query.key || req.headers['x-admin-key'];
-  if (!process.env.ADMIN_DASHBOARD_KEY || key !== process.env.ADMIN_DASHBOARD_KEY) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
+app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
+  if (!_checkAdminKey(req, res)) return;
 
   const q = (sql) => db.query(sql).then(r => r.rows).catch(err => ({ error: err.message }));
 
