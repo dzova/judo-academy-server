@@ -153,10 +153,17 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
   // Obrisi token posle 5 minuta
   setTimeout(function() { delete pendingAuth[token]; }, 5 * 60 * 1000);
 
-  // Pokusaj deep link, sa fallback na web stranicu
+  // FIX (11.09.2026, QA/security review): ranije je ovde postojala i 'webFallback' promenljiva
+  // (link ka /auth-success?token=...&userId=...&xp=... sa sirovim poljima) koja se NIGDE nije
+  // stvarno koristila u odgovoru ispod (samo 'deepLink' se koristi) - mrtav kod. Uklonjena
+  // zajedno sa celom /auth-success rutom (videti napomenu ispod api/auth/pending) koja je bila
+  // jedini poziлac te promenljive - ta ruta je gradila deep link SA SIROVIM poljima (userId/xp/
+  // itd, bez tokena), isti obrazac koji je procesAuthUrl() na klijentu (11.09.2026) prestao da
+  // prihvata bas zbog bezbednosnog rizika (proizvoljan deep link bi mogao lazno da prijavi
+  // korisnika). Pošto ništa u aktivnom flow-u nije ni pozivalo tu rutu, uklanjanje ne menja
+  // ponašanje za nijednog korisnika - samo zatvara nepotreban, neiskorišćen javni endpoint.
   const deepLink = 'judoacademy://auth-success?token=' + token;
-  const webFallback = '/auth-success?token=' + token + '&userId=' + user.id + '&username=' + encodeURIComponent(user.username || '') + '&belt=' + (user.belt || 'white') + '&xp=' + (user.xp || 0) + '&email=' + encodeURIComponent(user.email || '');
-  
+
   res.send(`<!DOCTYPE html><html><head><meta charset="utf-8">
   <title>Judo Academy</title>
   <style>body{font-family:sans-serif;text-align:center;padding:40px;background:#0F1520;color:#fff;}
@@ -167,51 +174,6 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
   <a class="btn" href="${deepLink}">Otvori Judo Academy</a>
   <script>
     setTimeout(function(){ window.location.href = '${deepLink}'; }, 300);
-  </script>
-  </body></html>`);
-});
-
-// Fallback web stranica ako deep link ne radi
-//
-// BEZBEDNOST: userId/username/belt/xp/email dolaze direktno iz req.query (neautentifikovan,
-// javno dostupan GET endpoint) i ubacuju se u HTML/<script> koji se vraca korisniku. Ranije se
-// ovde samo escape-ovao jednostruki navodnik (.replace(/'/g, "\\'")) sto NE sprecava XSS - napadac
-// je mogao poslati npr. ?username=</script><script>...zloupotreba... i probiti se iz <script> bloka
-// jer HTML parser zatvara <script> na doslovni "</script>" bez obzira na JS string kontekst.
-// Zato sada ide kroz escapeHtml() (escape-uje <,>,&,",') pre nego sto se ubaci u markup.
-function escapeHtml(str) {
-  return String(str == null ? '' : str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
-app.get('/auth-success', (req, res) => {
-  const { userId, username, belt, xp, email } = req.query;
-  const safeUserId = escapeHtml(userId);
-  const safeUsername = escapeHtml(username || '');
-  const safeBelt = escapeHtml(belt || 'white');
-  const safeXp = escapeHtml(xp || 0);
-  const safeEmail = escapeHtml(email || '');
-  const userData = JSON.stringify({ userId: safeUserId, username: safeUsername, email: safeEmail, belt: safeBelt, xp: safeXp });
-  const deepLink = `judoacademy://auth-success?userId=${encodeURIComponent(userId)}&username=${encodeURIComponent(username||'')}&belt=${encodeURIComponent(belt||'white')}&xp=${encodeURIComponent(xp||0)}&email=${encodeURIComponent(email||'')}`;
-  res.send(`<!DOCTYPE html><html><head><meta charset="utf-8">
-  <title>Judo Academy - Login</title>
-  <style>body{font-family:sans-serif;text-align:center;padding:40px;background:#0F1520;color:#fff;}
-  .btn{display:inline-block;padding:12px 24px;background:#D4A833;color:#000;border-radius:10px;text-decoration:none;font-weight:bold;margin-top:20px;cursor:pointer;border:none;font-size:16px;}</style>
-  </head><body>
-  <h2>&#10003; Uspesno ulogovan!</h2>
-  <p>Vrati se u Judo Academy app.</p>
-  <button class="btn" onclick="openApp()">Otvori app</button>
-  <script>
-    // Sacuvaj u localStorage ovog WebView-a
-    try { localStorage.setItem('judo_auth_pending', ${JSON.stringify(userData)}); } catch(e) {}
-    function openApp() {
-      window.location.href = '${deepLink}';
-    }
-    // Automatski pokusaj
-    setTimeout(openApp, 800);
   </script>
   </body></html>`);
 });
