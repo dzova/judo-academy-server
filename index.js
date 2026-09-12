@@ -205,7 +205,7 @@ app.get('/api/user/me', _requireAuth, async (req, res) => {
   const userId = req.userId;
   try {
     const result = await db.query(
-      'SELECT id, username, email, belt, xp, club, country, subscription_tier, subscription_expires, exam_date, photo_url, unlocked_badges, birth_year, dominant_side FROM users WHERE id = $1',
+      'SELECT id, username, email, belt, xp, club, country, subscription_tier, subscription_expires, exam_date, photo_url, unlocked_badges, birth_year, dominant_side, reset_at FROM users WHERE id = $1',
       [userId]
     );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Nije pronadjen' });
@@ -447,8 +447,29 @@ const MAX_PLAUSIBLE_XP = 200000;
 // "sustizanje" umesto trenutnog cheat-a.
 const MAX_XP_DELTA_PER_CALL = 2000;
 
+// ═════════════ RESET GUARD (12.09.2026) ═════════════
+// Kad se korisniku RUCNO resetuje XP/bedzevi/randori (npr. preko SQL-a tokom testiranja, ili
+// buduci admin alat za ispravku), stara/vec pokrenuta instanca app-a na telefonu i dalje ima
+// svoj STARI lokalni keš i redovno ga sinhronizuje na server kao apsolutnu istinu - potvrdjeno
+// na testu 12.09.2026 (korisnik je resetovao nalog, ali su XP/bedzevi/randori "ozivili" nazad
+// jer je stara instanca app-a i dalje bila instalirana i pogurala svoj keš PRE deinstalacije).
+// users.reset_at pamti KADA je poslednji put neko rucno resetovao ovog korisnika; push pozivi
+// koji nose stariji (ili nikakav) sopstveni "kad je ovo stvarno izmenjeno lokalno" timestamp se
+// odbijaju DOK je reset_at "svez" (unutar RESET_GUARD_WINDOW_MS). Posle tog prozora se zastita
+// sama iskljuci - bilo koja jos ziva stara instanca app-a je do tada vec ili sinhronizovana ili
+// ugasena, tako da ne bismo TRAJNO blokirali korisnike na starijoj verziji app-a koja ne salje
+// clientUpdatedAt uopste (fail-open posle isteka prozora, ne fail-closed zauvek).
+const RESET_GUARD_WINDOW_MS = 24 * 60 * 60 * 1000; // 24h
+
+function _isResetGuardActive(resetAt) {
+  if (!resetAt) return false;
+  const t = new Date(resetAt).getTime();
+  if (!Number.isFinite(t)) return false;
+  return (Date.now() - t) < RESET_GUARD_WINDOW_MS;
+}
+
 app.post('/api/xp/update', _requireAuth, async (req, res) => {
-  const { xp, belt, unlockedBadges } = req.body;
+  const { xp, belt, unlockedBadges, clientUpdatedAt } = req.body;
   const userId = req.userId;
 
   if (typeof xp !== 'number' || !Number.isFinite(xp) || xp < 0 || xp > MAX_PLAUSIBLE_XP) {
@@ -466,8 +487,21 @@ app.post('/api/xp/update', _requireAuth, async (req, res) => {
     // vrednosti - samo da ogranicimo skok po pozivu (vidi MAX_XP_DELTA_PER_CALL). users.xp
     // skladistenje ostaje NEPROMENJENO (12.09.2026 cistka je uklonila SAMO xp_events logovanje
     // koje je hranilo vise nikad ne prikazivanu XP rang listu - vidi FIX kod /api/leaderboard).
-    const prevResult = await db.query('SELECT xp FROM users WHERE id = $1', [userId]);
-    const prevXp = prevResult.rows[0] ? Number(prevResult.rows[0].xp) || 0 : 0;
+    const prevResult = await db.query('SELECT xp, reset_at FROM users WHERE id = $1', [userId]);
+    const prevRow = prevResult.rows[0] || {};
+    const prevXp = Number(prevRow.xp) || 0;
+
+    if (_isResetGuardActive(prevRow.reset_at)) {
+      const clientTs = clientUpdatedAt ? new Date(clientUpdatedAt).getTime() : NaN;
+      const resetTs = new Date(prevRow.reset_at).getTime();
+      if (!Number.isFinite(clientTs) || clientTs < resetTs) {
+        // Ovaj push nosi podatak stariji od poslednjeg rucnog reseta (ili uopste ne salje
+        // sopstveni timestamp, sto tretiramo kao "sumnjivo staro") - odbijamo primenu i
+        // trazimo od klijenta da prvo povuce sveze (resetovano) stanje sa servera.
+        return res.json({ success: false, resetRequired: true, resetAt: prevRow.reset_at });
+      }
+    }
+
     let delta = xp - prevXp;
     let appliedXp = xp;
     if (delta > MAX_XP_DELTA_PER_CALL) {
@@ -1859,8 +1893,29 @@ app.post('/api/userdata/sync', _requireAuth, async (req, res) => {
   }
 
   try {
+    // RESET GUARD (12.09.2026) - vidi opsiran komentar uz RESET_GUARD_WINDOW_MS kod /api/xp/update.
+    // Isti problem postoji i ovde: DELETE FROM user_data (npr. rucni reset randori napretka)
+    // ostavlja PRAZAN red za taj data_type, a pullGenericSync() na klijentu, kad zatekne prazan
+    // server odgovor, ODMAH gura svoj lokalni (zastareli) keš nazad - sto trenutno ponisti reset.
+    // Ovde odbacujemo (preskacemo, ne upisujemo) svaku stavku ciji je item.updatedAt stariji od
+    // poslednjeg rucnog reseta, dok je reset "svez" (isti 24h prozor kao kod XP-a).
+    let _resetAtForSync = null;
+    try {
+      const _rr = await db.query('SELECT reset_at FROM users WHERE id = $1', [userId]);
+      _resetAtForSync = _rr.rows[0] ? _rr.rows[0].reset_at : null;
+    } catch (eResetLookup) {
+      console.warn('[userdata][reset-guard] Greska pri citanju reset_at, nastavljam bez zastite:', eResetLookup.message);
+    }
+    const _guardActive = _isResetGuardActive(_resetAtForSync);
+    let _skippedStale = 0;
+
     for (const item of items) {
       if (!item || !item.key) continue;
+      if (_guardActive) {
+        const _itemTs = item.updatedAt ? new Date(item.updatedAt).getTime() : NaN;
+        const _resetTs = new Date(_resetAtForSync).getTime();
+        if (!Number.isFinite(_itemTs) || _itemTs < _resetTs) { _skippedStale++; continue; }
+      }
       if (item.deleted) {
         await db.query(
           'DELETE FROM user_data WHERE user_id = $1 AND data_type = $2 AND data_key = $3',
@@ -1877,7 +1932,9 @@ app.post('/api/userdata/sync', _requireAuth, async (req, res) => {
         );
       }
     }
-    res.json({ success: true });
+    res.json(_skippedStale > 0
+      ? { success: true, resetRequired: true, resetAt: _resetAtForSync, skippedStale: _skippedStale }
+      : { success: true });
   } catch (err) { _sendServerError(res, err); }
 });
 
