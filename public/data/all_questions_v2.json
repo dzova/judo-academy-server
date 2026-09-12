@@ -1905,7 +1905,7 @@
     "type": "tehnika",
     "videoId": null,
     "sr": {
-      "q": "Koje bacanje uključuje bacanje protivnika kroz rame?",
+      "q": "Koja tehnika baca protivnika preko ramena?",
       "opts": [
         "Seoi-nage",
         "O-goshi",
@@ -7607,13 +7607,13 @@
     "sr": {
       "q": "Šta je Kani-basami i zašto je zabranjen na takmičenjima?",
       "opts": [
-        "Škarice nogama – zabranjen jer može slomiti koleno",
+        "Makaze nogama – zabranjen jer može slomiti koleno",
         "Vrsta hvata – zabranjena zbog grubosti",
         "Nožna poluga – dozvoljena od braon pojasa",
         "Žrtveno bacanje – zabranjena zbog pada"
       ],
       "c": 0,
-      "exp": "Kani-basami (hvat škaricama) = napadamo Uke-ove noge sa dve noge kao škaricama. Zabranjen jer lako lomi koleno! Direktan Hansoku-make."
+      "exp": "Kani-basami (hvat makazama) = napadamo Uke-ove noge sa dve noge kao makazama. Zabranjen jer lako lomi koleno! Direktan Hansoku-make."
     },
     "en": {
       "q": "What is Kani-basami and why is it banned in competition?",
@@ -20428,7 +20428,7 @@
     "level": 3,
     "type": "situacija",
     "sr": {
-      "q": "Protivnik je visok 20cm viši od tebe. Koja strategija hvata i ulaza je najpametnija?",
+      "q": "Protivnik je 20cm viši od tebe. Koja strategija hvata i ulaza je najpametnija?",
       "opts": [
         "Koristiti isti hvat kao i kod protivnika iste visine",
         "Tražiti nizak hvat ispod laktova i fokusirati se na bacanja nogama ili duboki ulaz ispod centra mase",
