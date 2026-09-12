@@ -355,26 +355,12 @@ app.get('/api/leaderboard', async (req, res) => {
     const now = new Date();
     const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)).toISOString();
 
-    if (metric === 'xp') {
-      // Mesecni XP = SUM(xp_events.amount) za taj korisnik OVOG meseca - NE trenutni users.xp
-      // (koji je kumulativan svih vremena i nikad ne "resetuje" mesecno). Koristimo INNER JOIN
-      // (ne LEFT) namerno - korisnici bez ijednog xp_events reda ovog meseca jednostavno ne
-      // uzu u mesecni leaderboard, sto je tacno zeljeno ponasanje (nisu bili aktivni).
-      const result = await db.query(`
-        SELECT u.username, u.belt, u.club, u.country,
-               SUM(xe.amount) AS xp,
-               0 AS quiz_score, 0 AS correct
-        FROM xp_events xe
-        JOIN users u ON u.id = xe.user_id
-        WHERE xe.created_at >= $1
-        GROUP BY u.id, u.username, u.belt, u.club, u.country
-        ORDER BY xp DESC LIMIT 50
-      `, [monthStart]);
-      return res.json(result.rows);
-    }
-
-    // metric === 'quiz': quiz_stats vec ima created_at po partiji (za razliku od XP-a, ovde
-    // NIJE trebala nova tabela) - najbolji rezultat i suma tacnih odgovora OVOG meseca.
+    // FIX (12.09.2026): XP metrika (mesecna i preko xp_events) uklonjena - klijent nikad nije
+    // imao UI dugme za prebacivanje na 'xp' metriku (samo Kviz metrika se prikazuje), pa je ovaj
+    // kod bio mrtav vec neko vreme. users.xp/belt update i dalje postoje normalno (vidi
+    // /api/xp/update ispod) - menja se SAMO rang lista, ne skladistenje korisnickog XP-a.
+    // metric === 'quiz' (jedina metrika koja se sad podrzava): quiz_stats vec ima created_at po
+    // partiji - najbolji rezultat i suma tacnih odgovora OVOG meseca.
     const result = await db.query(`
       SELECT u.username, u.belt, u.club, u.country,
              0 AS xp,
@@ -402,9 +388,8 @@ app.get('/api/leaderboard/me', _requireAuth, async (req, res) => {
   const userId = req.userId;
   try {
     if (period === 'all') {
-      const valueExpr = metric === 'quiz'
-        ? 'COALESCE(qs.best_score, 0)'
-        : 'u.xp';
+      // XP metrika uklonjena (vidi FIX 12.09.2026 iznad kod /api/leaderboard) - uvek Kviz.
+      const valueExpr = 'COALESCE(qs.best_score, 0)';
       const result = await db.query(`
         SELECT rank, value FROM (
           SELECT u.id, ${valueExpr} AS value,
@@ -424,21 +409,7 @@ app.get('/api/leaderboard/me', _requireAuth, async (req, res) => {
     const now = new Date();
     const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)).toISOString();
 
-    if (metric === 'xp') {
-      const result = await db.query(`
-        SELECT rank, value FROM (
-          SELECT user_id, SUM(amount) AS value,
-                 RANK() OVER (ORDER BY SUM(amount) DESC) AS rank
-          FROM xp_events
-          WHERE created_at >= $1
-          GROUP BY user_id
-        ) ranked
-        WHERE user_id = $2
-      `, [monthStart, userId]);
-      if (result.rows.length === 0) return res.json({ found: false });
-      return res.json({ found: true, rank: Number(result.rows[0].rank), value: Number(result.rows[0].value) });
-    }
-
+    // XP metrika uklonjena (vidi FIX 12.09.2026 iznad kod /api/leaderboard) - uvek Kviz.
     const result = await db.query(`
       SELECT rank, value FROM (
         SELECT user_id, MAX(score) AS value,
@@ -492,8 +463,9 @@ app.post('/api/xp/update', _requireAuth, async (req, res) => {
     // zaradjeno" - frontend ima 8+ mesta gde se totalXP uvecava (kviz, randori, DC, AI
     // feature-i, module discovery...) i menjanje svakog da salje delta+source bi bio mnogo
     // veci i rizicniji zahvat. Umesto toga, RACUNAMO deltu ovde - razlika izmedju stare i nove
-    // vrednosti - i logujemo je u xp_events za mesecni leaderboard. Ovo je jedino mesto koje
-    // treba da zna za xp_events; frontend se uopste ne menja za ovaj deo.
+    // vrednosti - samo da ogranicimo skok po pozivu (vidi MAX_XP_DELTA_PER_CALL). users.xp
+    // skladistenje ostaje NEPROMENJENO (12.09.2026 cistka je uklonila SAMO xp_events logovanje
+    // koje je hranilo vise nikad ne prikazivanu XP rang listu - vidi FIX kod /api/leaderboard).
     const prevResult = await db.query('SELECT xp FROM users WHERE id = $1', [userId]);
     const prevXp = prevResult.rows[0] ? Number(prevResult.rows[0].xp) || 0 : 0;
     let delta = xp - prevXp;
@@ -520,17 +492,9 @@ app.post('/api/xp/update', _requireAuth, async (req, res) => {
     );
 
     // Samo pozitivnu deltu logujemo (XP se u praksi ne smanjuje - ako se ikad desi da nova
-    // vrednost bude manja od stare, npr. zbog lokalnog state resetovanja na klijentu, to NIJE
-    // "negativno zaradjen XP" i ne bi trebalo da unosi negativne redove u mesecni zbir).
-    if (delta > 0) {
-      try {
-        await db.query('INSERT INTO xp_events (user_id, amount, created_at) VALUES ($1, $2, NOW())', [userId, delta]);
-      } catch (evErr) {
-        // xp_events upis ne sme da obori glavni xp/update poziv - mesecni leaderboard je
-        // sekundarna funkcija, glavni (all-time) xp update mora proci bez obzira na ovo.
-        console.warn('[JA] xp_events insert failed:', evErr.message);
-      }
-    }
+    // NAPOMENA (12.09.2026): xp_events logovanje ovde je uklonjeno - hranilo je iskljucivo XP
+    // rang listu koja se nikad nije prikazivala korisnicima (vidi FIX kod /api/leaderboard).
+    // 'delta' i dalje sluzi samo za MAX_XP_DELTA_PER_CALL ogranicenje iznad.
 
     res.json({ success: true, unlockedBadges: result.rows[0] ? result.rows[0].unlocked_badges : newBadges });
   } catch (err) { _sendServerError(res, err); }
@@ -1274,8 +1238,9 @@ app.get('/api/admin/users/list', adminLimiter, async (req, res) => {
   } catch (err) { _sendServerError(res, err); }
 });
 
-// Trajno brisanje naloga. FK ogranicenja na ai_feedback/xp_events/xp_history/analytics_events/
-// quiz_stats/user_data su ON DELETE CASCADE (vidi migraciju iznad u ovom fajlu) - brisanje reda
+// Trajno brisanje naloga. FK ogranicenja na ai_feedback/xp_history/analytics_events/
+// quiz_stats/quiz_category_stats/user_data su ON DELETE CASCADE (vidi migraciju iznad u ovom
+// fajlu; xp_events tabela je uklonjena 12.09.2026, vidi FIX kod /api/leaderboard) - brisanje reda
 // iz users automatski brise SVE povezane redove u tim tabelama u istoj DB transakciji koju
 // Postgres sam upravlja za FK CASCADE (ne treba rucno brisati iz svake tabele ovde).
 // bug_reports zadrzava ON DELETE SET NULL namerno (prijava problema ostaje u istoriji radi
@@ -1485,7 +1450,7 @@ app.get('/api/quiz/limit/me', _requireAuth, async (req, res) => {
 });
 
 app.post('/api/quiz/stats', _requireAuth, async (req, res) => {
-  const { score, correct, total, maxStreak, category } = req.body;
+  const { score, correct, total, maxStreak, category, breakdown } = req.body;
   const userId = req.userId;
 
   const s = Number(score) || 0;
@@ -1499,6 +1464,29 @@ app.post('/api/quiz/stats', _requireAuth, async (req, res) => {
   // da se server hitno menja svaki put kad JSON baza pitanja poraste.
   if (c < 0 || t < 0 || c > t || ms > t || t > 400 || s < 0 || s > 5000) {
     return res.status(400).json({ error: 'Nevalidni podaci o rezultatu' });
+  }
+
+  // FIX (11.09.2026, korisnik prijavio bag - trakice po kategoriji trajno na 0%): ranije se
+  // slala samo JEDNA "dominantna" kategorija cele partije (>=60% odgovora, inace 'mixed'), pa
+  // je server cuvao npr. 'mixed' kao category - string koji renderCatStats() na klijentu ne
+  // prepoznaje (ocekuje tacno tehnika/taktika/pravila/istorija/filozofija/japanski/situacija).
+  // Sada klijent salje ceo "breakdown" (tacni odgovori po stvarnoj kategoriji pitanja), koji
+  // ide u posebnu quiz_category_stats tabelu - nazivi kategorija su isti kljucevi koje pitanja
+  // vec nose (q.type), pa se poklapaju sa UI-jem bez ikakve heuristike/pogadjanja.
+  let cleanBreakdown = [];
+  if (Array.isArray(breakdown)) {
+    let sumCorrect = 0;
+    cleanBreakdown = breakdown
+      .map(function(row) {
+        const cat = row && typeof row.category === 'string' ? row.category.slice(0, 40) : null;
+        const cc = Number(row && row.correct) || 0;
+        return cat && cc > 0 ? { category: cat, correct: cc } : null;
+      })
+      .filter(Boolean);
+    cleanBreakdown.forEach(function(row) { sumCorrect += row.correct; });
+    // Zbir po kategorijama ne sme premasiti ukupan broj tacnih odgovora partije (ista logika
+    // anti-cheat provere kao i za c/t/ms iznad).
+    if (sumCorrect > c) cleanBreakdown = [];
   }
 
   // RACE FIX (11.09.2026): SELECT+provera+UPDATE +1 su ranije bila tri odvojena poziva bez
@@ -1541,6 +1529,12 @@ app.post('/api/quiz/stats', _requireAuth, async (req, res) => {
       'INSERT INTO quiz_stats (user_id, score, correct, total, max_streak, category) VALUES ($1, $2, $3, $4, $5, $6)',
       [userId, s, c, t, ms, category || 'mixed']
     );
+    for (const row of cleanBreakdown) {
+      await client.query(
+        'INSERT INTO quiz_category_stats (user_id, category, correct) VALUES ($1, $2, $3)',
+        [userId, row.category, row.correct]
+      );
+    }
     await client.query('UPDATE users SET updated_at = NOW() WHERE id = $1', [userId]);
     await client.query('COMMIT');
     res.json({ success: true });
@@ -1686,17 +1680,17 @@ app.get('/api/quiz/stats/me', _requireAuth, async (req, res) => {
         AND DATE_TRUNC('month', played_at) = DATE_TRUNC('month', NOW())
     `, [userId]);
 
+    // FIX (11.09.2026): ranije se citalo iz quiz_stats.category, koje sadrzi samo JEDNU
+    // "dominantnu" kategoriju po celoj partiji (cesto 'mixed') - sada quiz_category_stats
+    // cuva tacne odgovore po stvarnoj kategoriji pitanja (isti kljucevi koje UI ocekuje).
     const byCategory = await db.query(`
       SELECT
         category,
-        COUNT(*)::int AS games,
-        COALESCE(SUM(correct), 0)::int AS correct,
-        COALESCE(SUM(total), 0)::int AS total,
-        COALESCE(ROUND(SUM(correct)::numeric / NULLIF(SUM(total),0) * 100), 0)::int AS accuracy
-      FROM quiz_stats
+        COALESCE(SUM(correct), 0)::int AS correct
+      FROM quiz_category_stats
       WHERE user_id = $1
       GROUP BY category
-      ORDER BY games DESC
+      ORDER BY correct DESC
     `, [userId]);
 
     res.json({
