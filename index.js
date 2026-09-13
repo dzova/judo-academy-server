@@ -18,15 +18,22 @@ const app = express();
 app.set('trust proxy', 1);
 
 // CORS headers — MORAJU biti pre ostalih middleware-a
+// FIX (13.09.2026, konsultantski nalaz): Allow-Headers je ranije dozvoljavao SAMO 'Content-Type',
+// a klijent salje i custom 'Authorization' i 'X-Integrity-Token' headere. Za bilo koji NE-native
+// klijent (browser fetch, buduca web verzija, rucno testiranje) ovo bi izazvalo CORS preflight
+// odbijanje i tihi gubitak oba custom headera. Napomena: kod Capacitor Android klijenta ovo
+// verovatno NIJE uzrok "Token nedostaje" problema (CapacitorHttp je enabled u capacitor.config.json,
+// pa fetch() ide kroz nativni OkHttp sloj koji ne prolazi kroz browser CORS/preflight uopste) - ali
+// je i dalje ispravka koju treba primeniti nezavisno, jer je stari header spisak bio pogresan za
+// svaki drugi tip klijenta. Uklonjen je i redundantni cors() paket ispod - ovaj middleware vec sam
+// odgovara na OPTIONS pre nego sto bi cors() stigao da se izvrsi, pa je bio mrtav kod.
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') return res.sendStatus(200);
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Integrity-Token');
+  if (req.method === 'OPTIONS') return res.sendStatus(204);
   next();
 });
-
-app.use(cors({ origin: '*', credentials: false }));
 app.use(express.json());
 
 // BEZBEDNOST (11.09.2026): ranije su gotovo svi catch blokovi vracali err.message DIREKTNO
@@ -1079,7 +1086,15 @@ async function _requireIntegrity(req, res, next) {
 
   if (!token) {
     if (strict) return res.status(400).json({ error: 'Integrity token nedostaje' });
+    // PRIVREMENA DIJAGNOSTIKA (13.09.2026, korisnikov zahtev) - klijent (authFetchWithIntegrity)
+    // sad dashboard-uje i kad je token USPESNO pribavljen u JS-u (authFetchWithIntegrity_token_set),
+    // ali server i dalje vidi "nedostaje". Ovaj log ispisuje SVE header kljuceve koje Express
+    // stvarno vidi za ovaj zahtev - ako 'x-integrity-token' NIJE u toj listi, header se gubi PRE
+    // Express-a (native HTTP sloj/proxy); ako JESTE u listi ali je vrednost prazna, problem je u
+    // parsiranju/vrednosti. UKLONITI posle dijagnoze da ne zatrpava produkcione logove.
     console.warn('[integrity] Token nedostaje za ' + req.path + ' (soft mode, propusteno)');
+    console.warn('[integrity][debug] header kljucevi:', Object.keys(req.headers));
+    console.warn('[integrity][debug] x-integrity-token prisutan:', Object.prototype.hasOwnProperty.call(req.headers, 'x-integrity-token'));
     return next();
   }
 
@@ -1120,6 +1135,11 @@ async function _requireIntegrity(req, res, next) {
     }
 
     req.integrityVerdict = { appIntegrity, deviceIntegrity, accountDetails };
+    // PRIVREMENA DIJAGNOSTIKA (13.09.2026, korisnikov zahtev) - dosad je uspesan slucaj bio
+    // POTPUNO tih (samo next(), bez loga), sto je izgledalo kao "kod se ne izvrsava" kad zapravo
+    // znaci suprotno - sve je proslo. Eksplicitan log ovde uklanja tu dvosmislenost: odsustvo BILO
+    // KOG integrity loga za dati zahtev vise ne postoji kao moguce stanje. UKLONITI posle dijagnoze.
+    console.log('[integrity] OK za ' + req.path + ' - verdict: ' + appIntegrity.appRecognitionVerdict + ', device: ' + deviceVerdicts.join(','));
     next();
   } catch (err) {
     console.error('[integrity] Verifikacija neuspesna za ' + req.path + ':', err.message);
