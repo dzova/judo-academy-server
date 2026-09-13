@@ -133,7 +133,16 @@ const { google } = require('googleapis');
 const { OAuth2Client } = require('google-auth-library');
 const pendingAuth = {}; // In-memory token store
 
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+// FIX (12.09.2026, korisnik prijavio bag): bez 'prompt: select_account' Google OAuth je,
+// ako je unutrasnji WebView/browser vec imao aktivnu Google sesiju, tiho preskakao ekran za
+// biranje naloga i vracao ISTI (prethodno koriscen) Google nalog - cak i kad je korisnik na
+// SISTEMSKOM nivou (Android account switcher) prebacio na drugi Google nalog, jer to ne utice
+// nuzno na Google-ovu sopstvenu web sesiju unutar WebView-a. Posledica: klijentov fix za
+// detekciju promene naloga (saveAuthUser/clearLocalUserProgress, indeks.html) se NIKAD nije ni
+// pokretao jer je backend svaki put vracao ISTI userId, pa je novi "nalog" u stvari i dalje bio
+// stari - ceo lokalni napredak (XP, Mesecna misija, streak...) je izgledao "nasledjen". Sada se
+// eksplicitno trazi da Google UVEK prikaze biraca naloga pri svakom /auth/google pozivu.
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'], prompt: 'select_account' }));
 
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: 'judoacademy://auth-failed' }), (req, res) => {
   const user = req.user;
