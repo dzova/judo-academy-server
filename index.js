@@ -2141,6 +2141,32 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
         WHERE event_name = 'premium_modal_view' AND created_at > now() - interval '30 days'
         GROUP BY 1 ORDER BY 1
       `),
+      // DODATAK (13.09.2026, korisnikov zahtev): klik na "Upravljaj pretplatom" je rani signal da
+      // korisnik razmislja o otkazivanju - do sada se belezio (trackEvent) ali se nigde nije
+      // prikazivao. Samo za korisnike koji su TRENUTNO premium (da ne mesamo sa istorijskim
+      // klikovima nekoga ko je vec otkazao i vratio se).
+      paywall_manage_subscription_clicks: q(`
+        SELECT ae.user_id, u.username, u.email, COUNT(*) AS clicks, MAX(ae.created_at) AS last_click
+        FROM analytics_events ae
+        JOIN users u ON u.id = ae.user_id
+        WHERE ae.event_name = 'premium_manage_subscription_click'
+          AND ae.created_at > now() - interval '30 days'
+          AND u.subscription_tier = 'premium'
+        GROUP BY ae.user_id, u.username, u.email
+        ORDER BY clicks DESC, last_click DESC
+      `),
+      // DODATAK (13.09.2026): direktno iz users tabele (ne analytics_events) - premium korisnici
+      // kojima pretplata istice u narednih 14 dana. Akcionabilno za re-engagement/podsetnik pre
+      // isteka, podatak vec postoji u subscription_expires koloni ali se nigde ne prikazuje.
+      paywall_renewal_risk: q(`
+        SELECT username, email, club, subscription_expires,
+          (subscription_expires::date - CURRENT_DATE) AS days_left
+        FROM users
+        WHERE subscription_tier = 'premium'
+          AND subscription_expires IS NOT NULL
+          AND subscription_expires BETWEEN now() AND now() + interval '14 days'
+        ORDER BY subscription_expires ASC
+      `),
 
       // ---------- ONBOARDING ----------
       onboarding_funnel: q(`
@@ -2338,6 +2364,34 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
         UNION ALL
         SELECT 'randori_scenario_view', COUNT(*), COUNT(DISTINCT user_id)
         FROM analytics_events WHERE event_name = 'randori_scenario_view' AND created_at > now() - interval '30 days'
+        UNION ALL
+        -- DODATAK (13.09.2026, korisnikov zahtev): dc_complete (Dnevni izazov - glavni home-screen
+        -- CTA) i sensei_question (ceo AI Sensei modul) su se vec belezili u analytics_events, ali
+        -- se NIGDE nisu prikazivali na dashboard-u - content_overview je pokrivao samo 3 od 5
+        -- glavnih tipova sadrzaja.
+        SELECT 'dc_complete', COUNT(*), COUNT(DISTINCT user_id)
+        FROM analytics_events WHERE event_name = 'dc_complete' AND created_at > now() - interval '30 days'
+        UNION ALL
+        SELECT 'sensei_question', COUNT(*), COUNT(DISTINCT user_id)
+        FROM analytics_events WHERE event_name = 'sensei_question' AND created_at > now() - interval '30 days'
+      `),
+
+      // DODATAK (13.09.2026): kviz funnel start -> finish/timeout - content_quiz_accuracy_by_category
+      // pokriva samo tacnost ODGOVORA, ne i stopu napustanja kviza na pola.
+      content_quiz_funnel: q(`
+        SELECT event_name, COUNT(*) AS n, COUNT(DISTINCT user_id) AS unique_users
+        FROM analytics_events
+        WHERE event_name IN ('quiz_start','quiz_finish','quiz_timeout') AND created_at > now() - interval '30 days'
+        GROUP BY 1 ORDER BY 2 DESC
+      `),
+
+      // DODATAK (13.09.2026): deljenje (leaderboard izazov + progress kartica) - meri organski/
+      // virality kanal, do sada se samo belezilo bez ijednog agregata.
+      content_share_funnel: q(`
+        SELECT event_name, COUNT(*) AS n, COUNT(DISTINCT user_id) AS unique_users
+        FROM analytics_events
+        WHERE event_name IN ('lb_share_challenge','progress_share') AND created_at > now() - interval '30 days'
+        GROUP BY 1 ORDER BY 2 DESC
       `),
 
       // ---------- AI QUALITY ----------
@@ -2371,6 +2425,42 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
         FROM ai_feedback
         WHERE rating = 'down' AND created_at > now() - interval '30 days'
         ORDER BY created_at DESC LIMIT 50
+      `),
+
+      // ---------- PROMO KONVERZIJA (13.09.2026, korisnikov zahtev) ----------
+      // /api/admin/promo/list vec daje sirov spisak kodova, ali nijedan agregat - koliko je od
+      // ukupnog kapaciteta (max_uses zbirno) stvarno iskorisceno, i po kampanji (note polje, npr.
+      // "JK Trudbenik - decembar 2026") - korisno za merenje uspesnosti promo akcija sa klubovima.
+      promo_conversion_summary: q(`
+        SELECT
+          COUNT(*) AS total_codes,
+          SUM(used_count) AS total_redemptions,
+          SUM(max_uses) AS total_capacity,
+          ROUND(100.0 * SUM(used_count) / NULLIF(SUM(max_uses), 0), 1) AS overall_conversion_pct
+        FROM promo_codes
+      `),
+      promo_conversion_by_campaign: q(`
+        SELECT COALESCE(note, '(bez napomene)') AS campaign,
+          COUNT(*) AS codes, SUM(used_count) AS redemptions, SUM(max_uses) AS capacity,
+          ROUND(100.0 * SUM(used_count) / NULLIF(SUM(max_uses), 0), 1) AS conversion_pct
+        FROM promo_codes
+        GROUP BY 1 ORDER BY redemptions DESC
+      `),
+
+      // ---------- NALOZI - DEMOGRAFIJA (13.09.2026, korisnikov zahtev) ----------
+      // users tabela vec ima club/country iz profila, ali se nigde ne agregira - relevantno jer
+      // saradnja ide direktno sa klubovima/savezima (npr. JK Trudbenik, Judo savez Beograda).
+      users_by_club: q(`
+        SELECT COALESCE(NULLIF(TRIM(club), ''), '(bez kluba)') AS club,
+          COUNT(*) AS users,
+          COUNT(*) FILTER (WHERE subscription_tier = 'premium') AS premium_users
+        FROM users
+        GROUP BY 1 ORDER BY users DESC LIMIT 30
+      `),
+      users_by_country: q(`
+        SELECT COALESCE(NULLIF(TRIM(country), ''), '(bez zemlje)') AS country, COUNT(*) AS users
+        FROM users
+        GROUP BY 1 ORDER BY users DESC LIMIT 30
       `),
     };
 
