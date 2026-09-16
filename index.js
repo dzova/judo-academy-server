@@ -1980,11 +1980,13 @@ app.get('/api/userdata/:dataType', _requireAuth, async (req, res) => {
 });
 
 // Legal documents
+// NAPOMENA: servira se .html (ne .pdf) jer Google Play odbija privacy policy URL
+// ako content-type nije text/html ("does not link to a valid privacy policy page").
 app.get('/terms', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'terms.pdf'));
+  res.sendFile(path.join(__dirname, 'public', 'terms.html'));
 });
 app.get('/privacy', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'privacy.pdf'));
+  res.sendFile(path.join(__dirname, 'public', 'privacy.html'));
 });
 
 // ============================================================
