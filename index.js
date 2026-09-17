@@ -1467,6 +1467,24 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
     });
     const data = await response.json();
 
+    // FIX (17.09.2026, korisnikov nalaz - Scouting/Sensei ponekad vrate odsecen odgovor tipa
+    // "TACTICAL PLAN — Ime vs." bez ikakvog nastavka, iako data.content NIJE prazan): klijent sad
+    // odbacuje ovakve prekratke odgovore (vidi FIX istog datuma u index.html), ali do sada nismo
+    // imali NIKAKAV trag zasto Anthropic vraca odsecen sadrzaj. Anthropic API uvek vraca
+    // stop_reason:'end_turn' za normalno zavrsen odgovor - bilo sta drugo ('max_tokens',
+    // 'stop_sequence'...) je pouzdan, direktan signal da je odgovor stvarno odsecen sa NJIHOVE
+    // strane, ne nas nagadjanje po duzini teksta. Ovaj log hvata TACNO taj slucaj u Railway
+    // logovima - sledeci put kad se ponovi, trazimo "AI_TRUNCATED" umesto da nagadjamo.
+    try {
+      if (!data.error && data.stop_reason && data.stop_reason !== 'end_turn') {
+        const _contentLen = Array.isArray(data.content) ? data.content.map(b => (b && b.text) || '').join('').length : 0;
+        console.warn('[AI_TRUNCATED]', JSON.stringify({
+          userId, feature: feature || 'sensei', stop_reason: data.stop_reason,
+          contentLen: _contentLen, usage: data.usage || null
+        }));
+      }
+    } catch (logErr) { /* logovanje ne sme nikad da obori pravi odgovor korisniku */ }
+
     // Anthropic poziv nije uspeo - vrati rezervisano mesto nazad (korisnik ne gubi pokusaj)
     if (data.error && reserved) {
       await db.query(`UPDATE users SET ${counterColumn} = GREATEST(${counterColumn} - 1, 0) WHERE id = $1`, [userId]).catch(() => {});
@@ -2265,6 +2283,26 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
         FROM analytics_events
         WHERE event_name = 'silent_error' AND created_at > now() - interval '7 days'
         GROUP BY 1 ORDER BY 2 DESC
+      `),
+      // DODATO (17.09.2026, korisnikov nalaz - odsecen/nepotpun AI odgovor u Scouting/Sensei/
+      // Dnevnik): namenski, uzak filter SAMO za nove provere dodate istog datuma (prekratak/
+      // odsecen AI odgovor i prazan data.content) - bez ovoga bi ove greske bile zakopane u
+      // error_top_messages (limit 30, sortirano po ucestalosti), gde bi ih generisan saobracaj
+      // drugih, nebitnih gresaka mogao istisnuti sa liste. event_data->>'message' sadrzi i sam
+      // POCETAK odsecenog AI teksta (npr. "TACTICAL PLAN — Ime vs.") - to je upravo trag koji nam
+      // je nedostajao za dijagnozu. Poredi se sa server-side [AI_TRUNCATED] logom u Railway (isti
+      // datum, vidi /api/sensei/ask) po vremenu/userId da se potvrdi da li se poklapaju.
+      error_ai_truncated: q(`
+        SELECT created_at, user_id, event_data->>'context' AS context, event_data->>'message' AS message
+        FROM analytics_events
+        WHERE event_name = 'silent_error' AND created_at > now() - interval '30 days'
+          AND (
+            event_data->>'message' ILIKE '%prekratak%'
+            OR event_data->>'message' ILIKE '%Prazan AI odgovor%'
+            OR event_data->>'message' ILIKE '%neocekivan AI odgovor%'
+            OR event_data->>'context' ILIKE '%\\_short'
+          )
+        ORDER BY created_at DESC LIMIT 50
       `),
 
       // ---------- RETENTION ----------
