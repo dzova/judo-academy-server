@@ -1353,10 +1353,15 @@ app.get('/api/randori', (req, res) => {
 // jednog od nasih poznatih izvora - bez ovoga bilo ko sa validnim JWT tokenom moze
 // direktnim pozivom API-ja zameniti prompt proizvoljnim tekstom i koristiti server kao
 // besplatan opsti Claude proxy na nas racun.
-// Sensei chat/Dnevnik analiza i Scouting koriste RAZLICITE system promptove - oba moraju
-// biti prihvacena (ranija verzija je proveravala samo Sensei potpis i time slomila Scouting).
+// CISCENJE (17.09.2026, korisnik trazio ciscenje mrtvog koda posle nalaza sa "Nevalidan system
+// prompt" bagom): ranije je ovde postojao i SCOUTING_SYSTEM_SIGNATURE ('Ti si taktički analitičar
+// i scouting specijalista')/isScoutingPrompt, sa komentarom da Scouting koristi DRUGACIJI potpis
+// od Sensei chat/Dnevnik-a. To vise nije tacno (a mozda nikad nije ni bilo u praksi) - klijentski
+// Scouting prompt (generateScoutingPlan() u index.html) UVEK pocinje sa "Ti si Sensei Kano", isto
+// kao Sensei chat i Dnevnik, pa isScoutingPrompt nikad nije bio true - sva tri feature-a su se
+// oslanjala iskljucivo na isSenseiPrompt ispod. Uklonjeno da kod ne zavarava buduce citanje (kao
+// da postoji zastita koja realno nista ne radi) - ponasanje NEPROMENJENO za sve legitimne pozive.
 const SENSEI_SYSTEM_SIGNATURE = 'Ti si Sensei Kano';
-const SCOUTING_SYSTEM_SIGNATURE = 'Ti si taktički analitičar i scouting specijalista';
 // Stvarno izmereno: staticni deo buildSenseiSystemPrompt() u index.html je ~8200 karaktera
 // SAM PO SEBI, pre userContext/modeInstructions i pre istorije poruka - limit mora imati
 // solidnu marzu iznad toga da ne blokira legitimne pozive, uz i dalje odsecanje ociglednog abuse-a
@@ -1382,8 +1387,7 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
   // ponasanje ni za jedan postojeci legitiman poziv, ali odbija svaki zahtev gde je potpis
   // "ubacen" iza proizvoljnog teksta.
   const isSenseiPrompt = typeof system === 'string' && system.startsWith(SENSEI_SYSTEM_SIGNATURE);
-  const isScoutingPrompt = typeof system === 'string' && system.startsWith(SCOUTING_SYSTEM_SIGNATURE);
-  if (!isSenseiPrompt && !isScoutingPrompt) {
+  if (!isSenseiPrompt) {
     return res.status(400).json({ error: 'Nevalidan system prompt' });
   }
   if (!Array.isArray(messages) || messages.length === 0) {
