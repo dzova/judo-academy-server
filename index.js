@@ -1322,6 +1322,38 @@ app.delete('/api/admin/users/:id', adminLimiter, async (req, res) => {
   } catch (err) { _sendServerError(res, err); }
 });
 
+// Trajno brisanje SOPSTVENOG naloga iz aplikacije (in-app self-service, za razliku od admin
+// rute iznad). Zahteva vazeci JWT (_requireAuth) - req.userId dolazi IZ VERIFIKOVANOG tokena,
+// nikad iz body/params, tako da korisnik moze obrisati iskljucivo svoj nalog. Isti FK CASCADE
+// mehanizam kao admin brisanje (vidi komentar iznad /api/admin/users/:id).
+// Google Play zahteva da app nudi brisanje naloga I unutar same aplikacije, ne samo preko
+// web stranice (delete-account.html) - ovo je ta in-app ruta.
+// Ako korisnik ima AKTIVNU Premium pretplatu, brisanje se odbija (409) dok je prvo ne otkaze
+// direktno kroz Google Play - u suprotnom bi mu se pretplata i dalje naplacivala bez naloga
+// koji bi je mogao iskoristiti (isto pravilo kao na /delete-account.html stranici).
+app.delete('/api/account/me', strictLimiter, _requireAuth, async (req, res) => {
+  try {
+    const userResult = await db.query(
+      'SELECT id, username, email, subscription_tier, subscription_expires FROM users WHERE id = $1',
+      [req.userId]
+    );
+    if (userResult.rows.length === 0) return res.status(404).json({ error: 'Nalog nije pronađen' });
+    const user = userResult.rows[0];
+    if (_isPremiumActive(user)) {
+      return res.status(409).json({
+        error: 'ACTIVE_SUBSCRIPTION',
+        message: 'Prvo otkažite Premium pretplatu kroz Google Play, pa pokušajte ponovo.'
+      });
+    }
+    const result = await db.query(
+      'DELETE FROM users WHERE id = $1 RETURNING id, username, email',
+      [req.userId]
+    );
+    console.warn('[account][self-delete] Korisnik obrisao sopstveni nalog:', result.rows[0]);
+    res.json({ success: true });
+  } catch (err) { _sendServerError(res, err); }
+});
+
 // ════════════════════════════════════════ KVIZ I RANDORI (NEW) ════════════════════════════════════════
 
 app.get('/api/quiz', (req, res) => {
@@ -1859,129 +1891,173 @@ app.post('/api/userdata/sync', _requireAuth, async (req, res) => {
     return res.status(400).json({ error: 'Nedostaju dataType ili items' });
   }
 
+  // RESET GUARD (12.09.2026) - vidi opsiran komentar uz RESET_GUARD_WINDOW_MS kod /api/xp/update.
+  // Isti problem postoji i ovde: DELETE FROM user_data (npr. rucni reset randori napretka)
+  // ostavlja PRAZAN red za taj data_type, a pullGenericSync() na klijentu, kad zatekne prazan
+  // server odgovor, ODMAH gura svoj lokalni (zastareli) keš nazad - sto trenutno ponisti reset.
+  // Ovde odbacujemo (preskacemo, ne upisujemo) svaku stavku ciji je item.updatedAt stariji od
+  // poslednjeg rucnog reseta, dok je reset "svez" (isti 24h prozor kao kod XP-a).
+  let _resetAtForSync = null;
+  try {
+    const _rr = await db.query('SELECT reset_at FROM users WHERE id = $1', [userId]);
+    _resetAtForSync = _rr.rows[0] ? _rr.rows[0].reset_at : null;
+  } catch (eResetLookup) {
+    console.warn('[userdata][reset-guard] Greska pri citanju reset_at, nastavljam bez zastite:', eResetLookup.message);
+  }
+  const _guardActive = _isResetGuardActive(_resetAtForSync);
+  let _skippedStale = 0;
+
+  // Deljena logika upisa/brisanja jedne stavke - prima "q" (obican pool `db` ili `client" unutar
+  // transakcije) da bi journal grana ispod mogla da upisuje unutar iste transakcije/FOR UPDATE
+  // lock-a kao provera limita (vidi RACE FIX 2 ispod), dok ostali tipovi podataka i dalje idu
+  // direktno preko `db` bez transakcije (nemaju limit koji treba stititi).
+  async function _writeItem(q, item) {
+    if (!item || !item.key) return;
+    if (_guardActive) {
+      const _itemTs = item.updatedAt ? new Date(item.updatedAt).getTime() : NaN;
+      const _resetTs = new Date(_resetAtForSync).getTime();
+      if (!Number.isFinite(_itemTs) || _itemTs < _resetTs) { _skippedStale++; return; }
+    }
+    if (item.deleted) {
+      await q.query(
+        'DELETE FROM user_data WHERE user_id = $1 AND data_type = $2 AND data_key = $3',
+        [userId, dataType, item.key]
+      );
+    } else {
+      await q.query(
+        `INSERT INTO user_data (user_id, data_type, data_key, payload, updated_at)
+         VALUES ($1, $2, $3, $4, $5)
+         ON CONFLICT (user_id, data_type, data_key)
+         DO UPDATE SET payload = $4, updated_at = $5
+         WHERE user_data.updated_at < $5`,
+        [userId, dataType, item.key, JSON.stringify(item.payload), item.updatedAt || new Date().toISOString()]
+      );
+    }
+  }
+
   // Dnevnik limit (3x lifetime free / 3x dnevno premium) primenjen samo na journal tip i
   // samo na NOVE unose (ne na brisanje ili na jednokratnu migraciju postojecih lokalnih
   // podataka pri prvom loginu - migrateAndPull salje ceo postojeci spisak odjednom i taj
   // slucaj ne sme biti blokiran istim limitom kao svakodnevno kreiranje novih unosa).
   if (dataType === 'journal') {
     const newEntries = items.filter(function(it) { return it && it.key && !it.deleted; });
-    if (newEntries.length > 0) {
-      // RACE FIX (11.09.2026): SELECT + provera + UPDATE/COUNT su ranije bila odvojeni pozivi
-      // bez zakljucavanja reda - dva istovremena sync poziva (npr. dva uredjaja/tabova istog
-      // korisnika koja se sinhronizuju u isto vreme) su mogla oba proci proveru pre nego sto
-      // ijedan upise novo stanje, dozvoljavajuci limit da bude premasen za jedan unos. Sada je
-      // provera+increment (premium granu) odnosno provera (free granu) unutar transakcije sa
-      // FOR UPDATE lock-om na korisnickom redu, isti obrazac kao /api/promo/redeem.
-      //
-      // BATCH FIX (11.09.2026): provera je ranije gledala samo "koliko VEC postoji/je
-      // iskorisceno" i propustala ceo 'items' niz ako je ta brojka bila ispod limita - ali
-      // petlja ispod upisuje SVE stavke iz niza, bez obzira koliko ih ima. Klijent je mogao
-      // da posalje npr. 10 novih dnevnickih zapisa u JEDNOM sync pozivu i limit od 3 bi bio
-      // potpuno zaobidjen (za free: 3 zauvek -> proizvoljno mnogo; za premium: dnevni brojac
-      // se uvecavao za 1 po pozivu bez obzira na broj stavki). Sada se prvo utvrdi koliko je
-      // od poslatih kljuceva STVARNO novo (nije vec u bazi - re-sync/izmena postojeceg zapisa
-      // se ne racuna kao nov unos), pa se ta stvarna kolicina poredi sa preostalim limitom.
-      const client = await db.connect();
-      try {
-        await client.query('BEGIN');
-        const userResult = await client.query(
-          'SELECT journal_entries_today, journal_last_reset, subscription_tier, subscription_expires FROM users WHERE id = $1 FOR UPDATE',
-          [userId]
-        );
-        if (userResult.rows.length > 0) {
-          const user = userResult.rows[0];
-          const isPremium = _isPremiumActive(user);
-
-          const newKeys = newEntries.map(function(it) { return it.key; });
-          const existingKeysResult = await client.query(
-            "SELECT data_key FROM user_data WHERE user_id = $1 AND data_type = 'journal' AND data_key = ANY($2::text[])",
-            [userId, newKeys]
+    // RACE FIX (11.09.2026): SELECT + provera + UPDATE/COUNT su ranije bila odvojeni pozivi
+    // bez zakljucavanja reda - dva istovremena sync poziva (npr. dva uredjaja/tabova istog
+    // korisnika koja se sinhronizuju u isto vreme) su mogla oba proci proveru pre nego sto
+    // ijedan upise novo stanje, dozvoljavajuci limit da bude premasen za jedan unos. Sada je
+    // provera+increment (premium granu) odnosno provera (free granu) unutar transakcije sa
+    // FOR UPDATE lock-om na korisnickom redu, isti obrazac kao /api/promo/redeem.
+    //
+    // BATCH FIX (11.09.2026): provera je ranije gledala samo "koliko VEC postoji/je
+    // iskorisceno" i propustala ceo 'items' niz ako je ta brojka bila ispod limita - ali
+    // petlja ispod upisuje SVE stavke iz niza, bez obzira koliko ih ima. Klijent je mogao
+    // da posalje npr. 10 novih dnevnickih zapisa u JEDNOM sync pozivu i limit od 3 bi bio
+    // potpuno zaobidjen (za free: 3 zauvek -> proizvoljno mnogo; za premium: dnevni brojac
+    // se uvecavao za 1 po pozivu bez obzira na broj stavki). Sada se prvo utvrdi koliko je
+    // od poslatih kljuceva STVARNO novo (nije vec u bazi - re-sync/izmena postojeceg zapisa
+    // se ne racuna kao nov unos), pa se ta stvarna kolicina poredi sa preostalim limitom.
+    //
+    // RACE FIX 2 (18.09.2026, QA test otkrio): originalni RACE FIX iznad je zakljucavao red i
+    // proveravao limit unutar transakcije, ALI je stvarni upis novih zapisa (INSERT INTO
+    // user_data) ostajao u genericnoj petlji ISPOD, IZVAN te transakcije (preko db.query, ne
+    // client.query) - transakcija se COMMIT-ovala (pustajuci lock) pre nego sto je ijedan red
+    // stvarno upisan. Za Premium granu ovo je slucajno bilo bezopasno jer se limit tamo pamti
+    // preko brojaca (journal_entries_today) koji SE inkrementira unutar transakcije - ali za
+    // Free granu, koja limit racuna brojanjem redova u user_data, dva paralelna zahteva su oba
+    // mogla proci proveru (video COUNT=0) pre nego sto ijedan upise svoj red, i oba upisati -
+    // live test je potvrdio da 6 paralelnih zahteva sa lifetime limitom od 3 sve upise sve. Sada
+    // se stvarni upis (za SVE stavke ovog sync poziva, ne samo nove) izvrsava ovde, unutar iste
+    // transakcije/lock-a kao provera, pre COMMIT-a.
+    const client = await db.connect();
+    let writer = client;
+    let earlyResponse = null;
+    try {
+      await client.query('BEGIN');
+      if (newEntries.length > 0) {
+        try {
+          const userResult = await client.query(
+            'SELECT journal_entries_today, journal_last_reset, subscription_tier, subscription_expires FROM users WHERE id = $1 FOR UPDATE',
+            [userId]
           );
-          const existingKeySet = new Set(existingKeysResult.rows.map(function(r) { return r.data_key; }));
-          // Duplikati unutar samog batch-a se broje samo jednom - Set nad kljucevima
-          const trulyNewCount = new Set(newKeys.filter(function(k) { return !existingKeySet.has(k); })).size;
+          if (userResult.rows.length > 0) {
+            const user = userResult.rows[0];
+            const isPremium = _isPremiumActive(user);
 
-          if (isPremium) {
-            const today = new Date().toDateString();
-            const lastReset = new Date(user.journal_last_reset).toDateString();
-            let usedToday = user.journal_entries_today;
-            if (today !== lastReset) {
-              await client.query('UPDATE users SET journal_entries_today = 0, journal_last_reset = NOW() WHERE id = $1', [userId]);
-              usedToday = 0;
-            }
-            if (usedToday + trulyNewCount > 3) {
-              await client.query('ROLLBACK');
-              return res.status(429).json({ error: 'Dostignut je dnevni limit dnevnika', limit: 3, used: usedToday });
-            }
-            if (trulyNewCount > 0) {
-              await client.query('UPDATE users SET journal_entries_today = journal_entries_today + $2 WHERE id = $1', [userId, trulyNewCount]);
-            }
-          } else {
-            // Free: 3x lifetime - brojimo postojece zapise u bazi (tacnije od posebnog
-            // brojaca jer automatski iskljucuje duplikate/re-sync istog id-a). FOR UPDATE
-            // na users redu gore serijalizuje ovu proveru po korisniku.
-            const countResult = await client.query(
-              "SELECT COUNT(*)::int AS n FROM user_data WHERE user_id = $1 AND data_type = 'journal'",
-              [userId]
+            const newKeys = newEntries.map(function(it) { return it.key; });
+            const existingKeysResult = await client.query(
+              "SELECT data_key FROM user_data WHERE user_id = $1 AND data_type = 'journal' AND data_key = ANY($2::text[])",
+              [userId, newKeys]
             );
-            const existing = countResult.rows[0].n;
-            if (existing + trulyNewCount > 3) {
-              await client.query('ROLLBACK');
-              return res.status(429).json({ error: 'Dostignut je limit dnevnika', limit: 3, used: existing });
+            const existingKeySet = new Set(existingKeysResult.rows.map(function(r) { return r.data_key; }));
+            // Duplikati unutar samog batch-a se broje samo jednom - Set nad kljucevima
+            const trulyNewCount = new Set(newKeys.filter(function(k) { return !existingKeySet.has(k); })).size;
+
+            if (isPremium) {
+              const today = new Date().toDateString();
+              const lastReset = new Date(user.journal_last_reset).toDateString();
+              let usedToday = user.journal_entries_today;
+              if (today !== lastReset) {
+                await client.query('UPDATE users SET journal_entries_today = 0, journal_last_reset = NOW() WHERE id = $1', [userId]);
+                usedToday = 0;
+              }
+              if (usedToday + trulyNewCount > 3) {
+                await client.query('ROLLBACK');
+                earlyResponse = { status: 429, body: { error: 'Dostignut je dnevni limit dnevnika', limit: 3, used: usedToday } };
+              } else if (trulyNewCount > 0) {
+                await client.query('UPDATE users SET journal_entries_today = journal_entries_today + $2 WHERE id = $1', [userId, trulyNewCount]);
+              }
+            } else {
+              // Free: 3x lifetime - brojimo postojece zapise u bazi (tacnije od posebnog
+              // brojaca jer automatski iskljucuje duplikate/re-sync istog id-a). FOR UPDATE
+              // na users redu gore serijalizuje ovu proveru po korisniku.
+              const countResult = await client.query(
+                "SELECT COUNT(*)::int AS n FROM user_data WHERE user_id = $1 AND data_type = 'journal'",
+                [userId]
+              );
+              const existing = countResult.rows[0].n;
+              if (existing + trulyNewCount > 3) {
+                await client.query('ROLLBACK');
+                earlyResponse = { status: 429, body: { error: 'Dostignut je limit dnevnika', limit: 3, used: existing } };
+              }
             }
           }
+        } catch (limitErr) {
+          // Soft-fail (isti duh kao pre ovog fixa): ne blokiramo sync zbog greske u SAMOJ
+          // proveri limita - ali napustamo transakciju/lock da bi upis ispod mogao da prodje;
+          // ostatak stavki se u ovom retkom slucaju upisuje bez zakljucavanja (isti rizik kao
+          // pre fixa, samo kad SAMA provera baci gresku, ne pri normalnom upisu).
+          await client.query('ROLLBACK').catch(() => {});
+          console.error('[userdata][journal-limit] Greska pri proveri limita:', limitErr.message);
+          writer = db;
         }
-        await client.query('COMMIT');
-      } catch (limitErr) {
-        await client.query('ROLLBACK').catch(() => {});
-        // Ne blokiramo sync zbog greske u proveri limita - beleziti u log za istragu,
-        // bolje propustiti unos nego izgubiti korisnikove podatke zbog nase greske
-        console.error('[userdata][journal-limit] Greska pri proveri limita:', limitErr.message);
-      } finally {
-        client.release();
       }
+
+      if (!earlyResponse) {
+        for (const item of items) {
+          await _writeItem(writer, item);
+        }
+        if (writer === client) {
+          await client.query('COMMIT');
+        }
+      }
+    } catch (err) {
+      if (writer === client) { await client.query('ROLLBACK').catch(() => {}); }
+      client.release();
+      return _sendServerError(res, err);
     }
+    client.release();
+
+    if (earlyResponse) {
+      return res.status(earlyResponse.status).json(earlyResponse.body);
+    }
+    return res.json(_skippedStale > 0
+      ? { success: true, resetRequired: true, resetAt: _resetAtForSync, skippedStale: _skippedStale }
+      : { success: true });
   }
 
   try {
-    // RESET GUARD (12.09.2026) - vidi opsiran komentar uz RESET_GUARD_WINDOW_MS kod /api/xp/update.
-    // Isti problem postoji i ovde: DELETE FROM user_data (npr. rucni reset randori napretka)
-    // ostavlja PRAZAN red za taj data_type, a pullGenericSync() na klijentu, kad zatekne prazan
-    // server odgovor, ODMAH gura svoj lokalni (zastareli) keš nazad - sto trenutno ponisti reset.
-    // Ovde odbacujemo (preskacemo, ne upisujemo) svaku stavku ciji je item.updatedAt stariji od
-    // poslednjeg rucnog reseta, dok je reset "svez" (isti 24h prozor kao kod XP-a).
-    let _resetAtForSync = null;
-    try {
-      const _rr = await db.query('SELECT reset_at FROM users WHERE id = $1', [userId]);
-      _resetAtForSync = _rr.rows[0] ? _rr.rows[0].reset_at : null;
-    } catch (eResetLookup) {
-      console.warn('[userdata][reset-guard] Greska pri citanju reset_at, nastavljam bez zastite:', eResetLookup.message);
-    }
-    const _guardActive = _isResetGuardActive(_resetAtForSync);
-    let _skippedStale = 0;
-
     for (const item of items) {
-      if (!item || !item.key) continue;
-      if (_guardActive) {
-        const _itemTs = item.updatedAt ? new Date(item.updatedAt).getTime() : NaN;
-        const _resetTs = new Date(_resetAtForSync).getTime();
-        if (!Number.isFinite(_itemTs) || _itemTs < _resetTs) { _skippedStale++; continue; }
-      }
-      if (item.deleted) {
-        await db.query(
-          'DELETE FROM user_data WHERE user_id = $1 AND data_type = $2 AND data_key = $3',
-          [userId, dataType, item.key]
-        );
-      } else {
-        await db.query(
-          `INSERT INTO user_data (user_id, data_type, data_key, payload, updated_at)
-           VALUES ($1, $2, $3, $4, $5)
-           ON CONFLICT (user_id, data_type, data_key)
-           DO UPDATE SET payload = $4, updated_at = $5
-           WHERE user_data.updated_at < $5`,
-          [userId, dataType, item.key, JSON.stringify(item.payload), item.updatedAt || new Date().toISOString()]
-        );
-      }
+      await _writeItem(db, item);
     }
     res.json(_skippedStale > 0
       ? { success: true, resetRequired: true, resetAt: _resetAtForSync, skippedStale: _skippedStale }
