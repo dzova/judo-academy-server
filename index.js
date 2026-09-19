@@ -221,7 +221,7 @@ app.get('/api/user/me', _requireAuth, async (req, res) => {
   const userId = req.userId;
   try {
     const result = await db.query(
-      'SELECT id, username, email, belt, xp, club, country, subscription_tier, subscription_expires, exam_date, photo_url, unlocked_badges, birth_year, dominant_side, reset_at FROM users WHERE id = $1',
+      'SELECT id, username, email, belt, xp, club, country, subscription_tier, subscription_expires, exam_date, photo_url, unlocked_badges, birth_year, dominant_side, gender, reset_at FROM users WHERE id = $1',
       [userId]
     );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Nije pronadjen' });
@@ -245,6 +245,13 @@ app.get('/api/user/me', _requireAuth, async (req, res) => {
 const VALID_BELTS = ['beli', 'zuti', 'narandzasti', 'zeleni', 'plavi', 'braon', 'crni'];
 // Vrednosti odgovaraju onima koje frontend salje iz selectPfDominant() (Profil forma).
 const VALID_DOMINANT_SIDES = ['dešnjak', 'levak', 'oba'];
+// DODATAK (19.09.2026, na korisnikov zahtev): opciono polje pola (m/z) u profilu - koristi se
+// SAMO da AI feature-i (Sensei/Scouting/Dnevnik) gramaticki ispravno oslovljavaju korisnika na
+// srpskom (bio/bila); kad nije navedeno, AI koristi rodno neutralne fraze (vidi static system
+// prompt komentare u index.html). Vrednosti odgovaraju onima koje frontend salje iz
+// selectPfPol() (Profil forma) - namerno bez treceg "neutralno" stringa, jer to isto postize
+// izostavljanje polja (undefined/null).
+const VALID_GENDERS = ['m', 'z'];
 
 // PROFANITY BLOCKLIST (09.09.2026) - imena se prikazuju javno na /api/leaderboard, bez ove
 // provere korisnik moze da postavi uvredljivo ime koje vide sva deca na rang-listi. Ovo je
@@ -292,7 +299,7 @@ function containsProfanity(str) {
 }
 
 app.post('/api/user/update', _requireAuth, async (req, res) => {
-  const { username, club, country, belt, examDate, birthYear, dominantSide } = req.body;
+  const { username, club, country, belt, examDate, birthYear, dominantSide, gender } = req.body;
   const userId = req.userId;
 
   if (belt !== undefined && belt !== null && !VALID_BELTS.includes(belt)) {
@@ -300,6 +307,9 @@ app.post('/api/user/update', _requireAuth, async (req, res) => {
   }
   if (dominantSide !== undefined && dominantSide !== null && !VALID_DOMINANT_SIDES.includes(dominantSide)) {
     return res.status(400).json({ error: 'Nevalidna vrednost za dominantnu stranu' });
+  }
+  if (gender !== undefined && gender !== null && !VALID_GENDERS.includes(gender)) {
+    return res.status(400).json({ error: 'Nevalidna vrednost za pol' });
   }
   // Osnovna duzinska ogranicenja - ova polja se prikazuju na javnom /api/leaderboard bez
   // autentikacije, pa ogranicavamo duzinu da spreci ocigledan abuse (npr. ogroman string koji
@@ -333,9 +343,10 @@ app.post('/api/user/update', _requireAuth, async (req, res) => {
         belt = COALESCE($4, belt),
         exam_date = COALESCE($5, exam_date),
         birth_year = COALESCE($6, birth_year),
-        dominant_side = COALESCE($7, dominant_side)
-       WHERE id = $8`,
-      [club || null, country || null, username || null, belt || null, examDate || null, birthYear || null, dominantSide || null, userId]
+        dominant_side = COALESCE($7, dominant_side),
+        gender = COALESCE($8, gender)
+       WHERE id = $9`,
+      [club || null, country || null, username || null, belt || null, examDate || null, birthYear || null, dominantSide || null, gender || null, userId]
     );
     res.json({ success: true });
   } catch (err) { _sendServerError(res, err); }
@@ -1400,8 +1411,18 @@ const SENSEI_SYSTEM_SIGNATURE = 'Ti si Sensei Kano';
 const MAX_SENSEI_PAYLOAD_CHARS = 20000;
 
 app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (req, res) => {
-  const { messages, system, feature } = req.body;
+  const { messages, system, systemStatic, systemDynamic, feature } = req.body;
   const userId = req.userId;
+  // FIX (19.09.2026, korisnikov zahtev - Anthropic prompt caching): noviji klijent (Sensei chat,
+  // vidi buildSenseiSystemPrompt() u index.html) sad salje system prompt podeljen na dva dela -
+  // systemStatic (identican za svakog korisnika/poziv - karakter, stil, pravila, zabranjene
+  // tehnike) i systemDynamic (userContext/mod/jezik - razlikuje se po korisniku). Stariji klijent
+  // (jos neazuriran APK) i Scouting/Journal (namerno NEIZMENJENI, njihovi promptovi su previse
+  // isprepletani jezikom/korisnickim podacima da bi se bezbedno delili u ovom prolazu) i dalje
+  // salju sve u jednom 'system' stringu - to ostaje 100% podrzano, samo se tretira kao da je ceo
+  // sadrzaj "staticni" deo (systemDynamic prazan), IDENTICNO ponasanje kao pre ove izmene.
+  const staticPart = typeof systemStatic === 'string' ? systemStatic : system;
+  const dynamicPart = typeof systemDynamic === 'string' ? systemDynamic : '';
   // Scouting, Sensei chat i Dnevnik (Journal) AI analiza dele isti endpoint ali imaju
   // odvojene dnevne limite - klijent salje feature='scouting' ili feature='journal'
   // eksplicitno; sve ostalo (obican Sensei chat) tretiramo kao 'sensei' (podrazumevana
@@ -1418,14 +1439,14 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
   // scouting/journal template stringa) POCINJU potpisom na poziciji 0 - startsWith() ne menja
   // ponasanje ni za jedan postojeci legitiman poziv, ali odbija svaki zahtev gde je potpis
   // "ubacen" iza proizvoljnog teksta.
-  const isSenseiPrompt = typeof system === 'string' && system.startsWith(SENSEI_SYSTEM_SIGNATURE);
+  const isSenseiPrompt = typeof staticPart === 'string' && staticPart.startsWith(SENSEI_SYSTEM_SIGNATURE);
   if (!isSenseiPrompt) {
     return res.status(400).json({ error: 'Nevalidan system prompt' });
   }
   if (!Array.isArray(messages) || messages.length === 0) {
     return res.status(400).json({ error: 'Nedostaju messages' });
   }
-  const totalChars = system.length + messages.reduce((sum, m) => sum + (typeof m.content === 'string' ? m.content.length : JSON.stringify(m.content || '').length), 0);
+  const totalChars = staticPart.length + dynamicPart.length + messages.reduce((sum, m) => sum + (typeof m.content === 'string' ? m.content.length : JSON.stringify(m.content || '').length), 0);
   if (totalChars > MAX_SENSEI_PAYLOAD_CHARS) {
     return res.status(400).json({ error: 'Zahtev je prevelik' });
   }
@@ -1492,6 +1513,18 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
   }
 
   try {
+    // FIX (19.09.2026, korisnikov zahtev - prompt caching): 'system' se sada salje Anthropic-u kao
+    // NIZ blokova umesto jednog stringa, sa cache_control na staticPart bloku. staticPart je (za
+    // Sensei chat, najcesci poziv) identican tekst na SVAKOM pozivu od SVAKOG korisnika, pa ce
+    // Anthropic keširati taj prefiks i naplatiti ga po ceni citanja iz kesa (10x jeftinije) cim ga
+    // BILO KOJI korisnik ponovo pogodi u toku TTL prozora (podrazumevano 5min) - ne mora biti isti
+    // korisnik. dynamicPart (userContext/mod/jezik, ili prazan string za Scouting/Journal i stariji
+    // klijent) ide kao DRUGI, nekesiran blok POSLE static bloka - mora ostati IZA njega jer
+    // cache_control kesira SVE do i ukljucujuci taj blok (redosled je bitan). Ako je dynamicPart
+    // prazan (Scouting/Journal, stariji klijent), saljemo samo jedan blok - i tada i dalje dobijamo
+    // caching korist ako se isti tacan prompt ponovi (npr. isti korisnik ponovi identican zahtev).
+    const systemBlocks = [{ type: 'text', text: staticPart, cache_control: { type: 'ephemeral' } }];
+    if (dynamicPart) systemBlocks.push({ type: 'text', text: dynamicPart });
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -1499,7 +1532,7 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
         'x-api-key': process.env.ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01'
       },
-      body: JSON.stringify({ model: 'claude-sonnet-5', max_tokens: 4000, system, messages })
+      body: JSON.stringify({ model: 'claude-sonnet-5', max_tokens: 4000, system: systemBlocks, messages })
     });
     const data = await response.json();
 
@@ -1520,6 +1553,19 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
         }));
       }
     } catch (logErr) { /* logovanje ne sme nikad da obori pravi odgovor korisniku */ }
+
+    // LOG (19.09.2026, prompt caching): kratak trag u Railway logovima da se vidi da li se kes
+    // stvarno koristi posle deploy-a - cache_read_input_tokens > 0 znaci pogodak (naplaceno 10x
+    // jeftinije), cache_creation_input_tokens > 0 znaci da je OVAJ poziv upisao/osvezio kes (redovno
+    // za prvi poziv u prozoru, ocekivano). Namerno bez userId/feature detalja ovde - ovo je cisto
+    // dijagnostika troska, ne treba mu poseban nivo (console.log dovoljno, ne warn/error).
+    if (data.usage) {
+      console.log('[AI_CACHE]', JSON.stringify({
+        cacheRead: data.usage.cache_read_input_tokens || 0,
+        cacheWrite: data.usage.cache_creation_input_tokens || 0,
+        inputTokens: data.usage.input_tokens || 0
+      }));
+    }
 
     // Anthropic poziv nije uspeo - vrati rezervisano mesto nazad (korisnik ne gubi pokusaj)
     if (data.error && reserved) {
