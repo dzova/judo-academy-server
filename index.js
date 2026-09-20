@@ -2257,6 +2257,13 @@ app.get('/api/userdata/:dataType', _requireAuth, async (req, res) => {
   } catch (err) { _sendServerError(res, err); }
 });
 
+// Javna homepage stranica (zahtev Google OAuth verifikacije, 20.09.2026):
+// consent screen "Application home page" mora da vodi na javno dostupnu,
+// bez-login stranicu koja objasnjava svrhu app-a i sadrzi tacan naziv "Judo Academy".
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // Legal documents
 // NAPOMENA: servira se .html (ne .pdf) jer Google Play odbija privacy policy URL
 // ako content-type nije text/html ("does not link to a valid privacy policy page").
