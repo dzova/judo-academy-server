@@ -149,9 +149,15 @@ const pendingAuth = {}; // In-memory token store
 // pokretao jer je backend svaki put vracao ISTI userId, pa je novi "nalog" u stvari i dalje bio
 // stari - ceo lokalni napredak (XP, Mesecna misija, streak...) je izgledao "nasledjen". Sada se
 // eksplicitno trazi da Google UVEK prikaze biraca naloga pri svakom /auth/google pozivu.
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'], prompt: 'select_account' }));
+// FIX (20.09.2026, Google "Project Checkup" nalaz - "Use secure flows": Judo Academy Web klijent
+// ne koristi state parametar): state:true ukljucuje standardnu passport-oauth2 CSRF zastitu -
+// biblioteka sama generise nasumican state, cuva ga u vec postojecoj sesiji
+// (express-session/passport.session(), gore u fajlu) pre redirekta na Google, i proverava ga na
+// /auth/google/callback pre nego sto prihvati odgovor. Bez dodatnog custom koda jer je session
+// vec podesen.
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'], prompt: 'select_account', state: true }));
 
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: 'judoacademy://auth-failed' }), (req, res) => {
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: 'judoacademy://auth-failed', state: true }), (req, res) => {
   const user = req.user;
   // Generisi jednokratni token
   const token = crypto.randomBytes(16).toString('hex');
