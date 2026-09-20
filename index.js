@@ -221,7 +221,7 @@ app.get('/api/user/me', _requireAuth, async (req, res) => {
   const userId = req.userId;
   try {
     const result = await db.query(
-      'SELECT id, username, email, belt, xp, club, country, subscription_tier, subscription_expires, exam_date, photo_url, unlocked_badges, birth_year, dominant_side, gender, reset_at FROM users WHERE id = $1',
+      'SELECT id, username, email, belt, xp, club, country, subscription_tier, subscription_expires, subscription_canceled_at, exam_date, photo_url, unlocked_badges, birth_year, dominant_side, gender, reset_at FROM users WHERE id = $1',
       [userId]
     );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Nije pronadjen' });
@@ -231,6 +231,14 @@ app.get('/api/user/me', _requireAuth, async (req, res) => {
     // kad pretplata istekne, samo se runtime proverava pri svakom pristupu
     if (user.subscription_tier === 'premium' && !_isPremiumActive(user)) {
       user.subscription_tier = 'free';
+    }
+    // subscription_canceled_at je relevantan SAMO dok je korisnik jos premium (win-back banner
+    // "otkazao si, jos imas pristup do X") - posle isteka vise nema smisla (vidi initHomeScreen/
+    // showWinBackBanner na klijentu koji proverava tacno ovaj uslov). Ne brisemo ga ovde iz baze
+    // (to radi webhook na sledeci RTDN event), samo ga ne prosledjujemo klijentu kad vise nije
+    // primenljivo, da izbegnemo bilo kakvu zabunu na frontu ako se stanja privremeno raspare.
+    if (user.subscription_tier !== 'premium') {
+      user.subscription_canceled_at = null;
     }
     res.json(user);
   } catch (err) { _sendServerError(res, err); }
@@ -886,6 +894,22 @@ app.post('/api/billing/webhook', async (req, res) => {
     const result = await _verifyAndApplySubscription(userId, purchaseToken, '');
     if (!result.ok) {
       await db.query('UPDATE users SET subscription_tier = $1 WHERE id = $2', ['free', userId]);
+    }
+
+    // Win-back hook (korisnikov zahtev, 20.09.2026): notificationType SE KORISTI OVDE (samo za
+    // ovu odluku, ne za subscription_tier/expires - to i dalje iskljucivo odredjuje
+    // _verifyAndApplySubscription() iznad preko stvarnog stanja sa Google Play API-ja, kako
+    // komentar na vrhu ovog handler-a i nalaze). SUBSCRIPTION_CANCELED (3) = korisnik je iskljucio
+    // auto-renew ali JOS IMA pristup do kraja perioda - to je trenutak kad ima smisla pokazati
+    // in-app poruku "ostani uz nas" (klijent to cita preko subscription_canceled_at polja, vidi
+    // /api/user/me). Bilo koji signal da se korisnik predomislio ili da je pretplata zaista
+    // zavrsena (obnovljena, oporavljena, ponovo kupljena, istekla, povucena) brise taj flag - u
+    // suprotnom bi banner ostao "zaglavljen" ukljucen za korisnika koji se vec predomislio.
+    const notifType = subNotif.notificationType;
+    if (notifType === 3) {
+      await db.query('UPDATE users SET subscription_canceled_at = NOW() WHERE id = $1', [userId]);
+    } else if ([1, 2, 4, 7, 12, 13].includes(notifType)) {
+      await db.query('UPDATE users SET subscription_canceled_at = NULL WHERE id = $1', [userId]);
     }
 
     if (messageId) {
