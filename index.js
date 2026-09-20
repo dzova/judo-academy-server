@@ -362,10 +362,30 @@ app.post('/api/user/update', _requireAuth, async (req, res) => {
 
 // ════════════════════════════════════════ RANG LISTA ════════════════════════════════════════
 
+// FIX (20.09.2026, korisnikov zahtev - server-side kes): 30s in-memory kes po 'period' (jedina
+// stvarna varijabla ponasanja - 'metric' se ne koristi unutar funkcije, vidi komentar ispod).
+// Rang lista ne mora biti tacna do sekunde - svaki poziv ovog endpoint-a (svako otvaranje
+// Leaderboard ekrana, od BILO KOG korisnika) trenutno pokrece pun JOIN+GROUP BY upit nad citavom
+// users/quiz_stats tabelom. Bezopasno sada (mali saobracaj), ali kad app poraste bi ovo postao
+// nepotreban ponovljen trosak na bazu za identican rezultat u kratkom vremenskom razmaku - 30s kes
+// to resava bez primetnog gubitka svezine podataka. Namerno BEZ zakljucavanja/lock-a - ako dva
+// zahteva stignu tacno na granici isteka keša, oba ce (retko) izvrsiti upit i prepisati kes istim/
+// slicnim rezultatom - bezopasno za ovaj slucaj upotrebe (samo za citanje, nema pisanja).
+const _leaderboardCache = { all: { rows: null, ts: 0 }, month: { rows: null, ts: 0 } };
+const LEADERBOARD_CACHE_MS = 30000;
+
 app.get('/api/leaderboard', async (req, res) => {
   const period = req.query.period === 'month' ? 'month' : 'all';
+  // NAPOMENA: 'metric' parametar se PRIMA ali se ne koristi za grananje ispod - vidi FIX
+  // (12.09.2026) komentar dole ("XP metrika uklonjena") - ostavljeno ovde radi kompatibilnosti sa
+  // klijentom koji ga i dalje salje u query string-u, bez efekta na ponasanje.
   const metric = req.query.metric === 'quiz' ? 'quiz' : 'xp';
   try {
+    const cached = _leaderboardCache[period];
+    if (cached.rows && (Date.now() - cached.ts) < LEADERBOARD_CACHE_MS) {
+      return res.json(cached.rows);
+    }
+
     if (period === 'all') {
       // Nepromenjeno ponasanje - all-time ostaje kumulativne users.xp / MAX(quiz_stats.score)
       // kolone, isto kao pre ove izmene.
@@ -381,6 +401,7 @@ app.get('/api/leaderboard', async (req, res) => {
         ) qs ON qs.user_id = u.id
         ORDER BY u.xp DESC LIMIT 50
       `);
+      _leaderboardCache.all = { rows: result.rows, ts: Date.now() };
       return res.json(result.rows);
     }
 
@@ -407,6 +428,7 @@ app.get('/api/leaderboard', async (req, res) => {
       GROUP BY u.id, u.username, u.belt, u.club, u.country
       ORDER BY quiz_score DESC LIMIT 50
     `, [monthStart]);
+    _leaderboardCache.month = { rows: result.rows, ts: Date.now() };
     res.json(result.rows);
   } catch (err) { _sendServerError(res, err); }
 });
@@ -1391,8 +1413,41 @@ app.delete('/api/account/me', strictLimiter, _requireAuth, async (req, res) => {
 
 // ════════════════════════════════════════ KVIZ I RANDORI (NEW) ════════════════════════════════════════
 
+// FIX (20.09.2026, korisnikov zahtev - server-side kes): oba fajla su ~1.1MB, a fs.readFileSync +
+// JSON.parse su SINHRONI - blokiraju CEO Node event loop dok traju (Node je jednonitan za JS
+// izvrsavanje). Klijent zove ove endpoint-e na SVAKOM pokretanju app-a (fetchQuestions()/
+// fetchRandori() u index.html, plus ponovo u checkForUpdates() posle svakog resume-a) - bez kesa,
+// to znaci da SVAKO otvaranje app-a od BILO KOG korisnika ponovo cita+parsira 1MB+ JSON sa diska na
+// serveru, blokirajuci SVE istovremene zahteve (ukljucujuci Sensei/Scouting/Journal AI pozive) dok
+// traje. Sadrzaj fajlova se menja SAMO pri deploy-u (novi build) - ucitava se zato JEDNOM ovde, PRI
+// STARTU servera (ne lenjo pri prvom zahtevu korisnika), da nijedan stvaran korisnicki zahtev nikad
+// ne plati taj trosak. Railway restartuje proces pri svakom deploy-u, pa se kes prirodno osvezava sa
+// novim sadrzajem posle svakog push-a - nema potrebe za rucnim invalidiranjem. Korisnik potvrdio da
+// je OK da ovo (jednokratno, pri boot-u servera) potraje ako zatreba - klijent svakako prikazuje
+// splash screen pri pokretanju app-a, pa ovaj mali jednokratan trosak SERVERA pri deploy-u (ne po
+// korisniku) ne utice na percepirano vreme ucitavanja.
+function _loadStaticJsonCache(fileName, label) {
+  try {
+    const filePath = path.join(__dirname, 'public', 'data', fileName);
+    const raw = fs.readFileSync(filePath, 'utf-8');
+    const parsed = JSON.parse(raw);
+    console.log(`[STATIC_CACHE] ${label} ucitan u memoriju (${raw.length} bajtova)`);
+    return parsed;
+  } catch (err) {
+    // Ne rusimo ceo server ako fajl nedostaje/je pokvaren pri startu - endpoint ispod ima fallback
+    // na direktno citanje sa diska (isto ponasanje kao PRE ove izmene) umesto da ostane trajno mrtav.
+    console.error(`[STATIC_CACHE] GRESKA pri ucitavanju ${label} pri startu:`, err.message);
+    return null;
+  }
+}
+const _quizDataCache = _loadStaticJsonCache('all_questions_v2.json', 'quiz pitanja');
+const _randoriDataCache = _loadStaticJsonCache('randori_db_v2.json', 'randori baza');
+
 app.get('/api/quiz', (req, res) => {
   res.setHeader('Cache-Control', 'public, max-age=86400');
+  if (_quizDataCache) return res.json(_quizDataCache);
+  // Fallback - kes nije uspeo pri startu (vidi [STATIC_CACHE] log), ponasanje IDENTICNO kao pre
+  // ove izmene (direktno citanje sa diska na svaki poziv dok se server ne restartuje/redeploy-uje).
   try {
     const filePath = path.join(__dirname, 'public', 'data', 'all_questions_v2.json');
     const data = fs.readFileSync(filePath, 'utf-8');
@@ -1404,6 +1459,7 @@ app.get('/api/quiz', (req, res) => {
 
 app.get('/api/randori', (req, res) => {
   res.setHeader('Cache-Control', 'public, max-age=86400');
+  if (_randoriDataCache) return res.json(_randoriDataCache);
   try {
     const filePath = path.join(__dirname, 'public', 'data', 'randori_db_v2.json');
     const data = fs.readFileSync(filePath, 'utf-8');
@@ -1433,6 +1489,36 @@ const SENSEI_SYSTEM_SIGNATURE = 'Ti si Sensei Kano';
 // SAM PO SEBI, pre userContext/modeInstructions i pre istorije poruka - limit mora imati
 // solidnu marzu iznad toga da ne blokira legitimne pozive, uz i dalje odsecanje ociglednog abuse-a
 const MAX_SENSEI_PAYLOAD_CHARS = 20000;
+
+// FIX (20.09.2026, korisnikov zahtev - kesiranje istorije razgovora): vidi opsiran komentar na
+// mestu poziva (unutar /api/sensei/ask) za PUNO objasnjenje - ukratko, markira pretposlednju poruku
+// u nizu 'messages' cache_control blokom, da bi Anthropic keširao ceo prefiks razgovora do te
+// poruke (sve OSIM najnovijeg pitanja koje se sad prvi put salje). Vraca NOV niz (ne mutira
+// originalni req.body.messages) - originalni ostaje netaknut za slucaj da pozivalac kasnije treba
+// "cist" niz (npr. za logovanje). Bezopasno za Scouting/Journal (uvek tacno 1 poruka, if ispod ih
+// odmah propusta nepromenjene) i za bilo koji poziv sa manje od 2 poruke.
+function _addConversationCacheBreakpoint(messages) {
+  if (!Array.isArray(messages) || messages.length < 2) return messages;
+  const idx = messages.length - 2; // poslednja poruka IZ PRETHODNOG kruga, pre nove poruke na kraju
+  const target = messages[idx];
+  if (!target) return messages;
+  // Podrzava i stari oblik (content: plain string, trenutni klijent) i buduci oblik (content: niz
+  // blokova) - u oba slucaja cache_control ide na POSLEDNJI blok tog sadrzaja (Anthropic kesira sve
+  // do i ukljucujuci blok sa cache_control, redosled unutar poruke nije bitan za ovu svrhu).
+  let newContent;
+  if (typeof target.content === 'string') {
+    newContent = [{ type: 'text', text: target.content, cache_control: { type: 'ephemeral', ttl: '1h' } }];
+  } else if (Array.isArray(target.content) && target.content.length > 0) {
+    newContent = target.content.slice();
+    const lastIdx = newContent.length - 1;
+    newContent[lastIdx] = { ...newContent[lastIdx], cache_control: { type: 'ephemeral', ttl: '1h' } };
+  } else {
+    return messages; // nepoznat/prazan oblik sadrzaja - ne diramo, bezbednije nego nagadjati
+  }
+  const cloned = messages.slice();
+  cloned[idx] = { ...target, content: newContent };
+  return cloned;
+}
 
 app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (req, res) => {
   const { messages, system, systemStatic, systemDynamic, feature } = req.body;
@@ -1541,14 +1627,38 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
     // NIZ blokova umesto jednog stringa, sa cache_control na staticPart bloku. staticPart je (za
     // Sensei chat, najcesci poziv) identican tekst na SVAKOM pozivu od SVAKOG korisnika, pa ce
     // Anthropic keširati taj prefiks i naplatiti ga po ceni citanja iz kesa (10x jeftinije) cim ga
-    // BILO KOJI korisnik ponovo pogodi u toku TTL prozora (podrazumevano 5min) - ne mora biti isti
-    // korisnik. dynamicPart (userContext/mod/jezik, ili prazan string za Scouting/Journal i stariji
-    // klijent) ide kao DRUGI, nekesiran blok POSLE static bloka - mora ostati IZA njega jer
-    // cache_control kesira SVE do i ukljucujuci taj blok (redosled je bitan). Ako je dynamicPart
-    // prazan (Scouting/Journal, stariji klijent), saljemo samo jedan blok - i tada i dalje dobijamo
-    // caching korist ako se isti tacan prompt ponovi (npr. isti korisnik ponovi identican zahtev).
-    const systemBlocks = [{ type: 'text', text: staticPart, cache_control: { type: 'ephemeral' } }];
+    // BILO KOJI korisnik ponovo pogodi u toku TTL prozora - ne mora biti isti korisnik. dynamicPart
+    // (userContext/mod/jezik, ili prazan string za Scouting/Journal i stariji klijent) ide kao
+    // DRUGI, nekesiran blok POSLE static bloka - mora ostati IZA njega jer cache_control kesira SVE
+    // do i ukljucujuci taj blok (redosled je bitan). Ako je dynamicPart prazan (Scouting/Journal,
+    // stariji klijent), saljemo samo jedan blok - i tada i dalje dobijamo caching korist ako se isti
+    // tacan prompt ponovi (npr. isti korisnik ponovi identican zahtev).
+    //
+    // FIX (20.09.2026, korisnikov zahtev - produzen TTL): app JOS NIJE live (mali/nikakav
+    // konkurentni saobracaj), pa je podrazumevani 5-minutni TTL prakticno beskoristan - sansa da
+    // DRUGI poziv (bilo kog korisnika) stigne u istom 5-min prozoru je mala. ttl:'1h' cuva kes
+    // znatno duze (cena upisa 2x umesto 1.25x baznog inputa, citanje ostaje 0.1x) - za nasku
+    // situaciju (retki, razblazeni pozivi) 1h prozor realno ima sansu da pogodi kes, 5min skoro
+    // nikad. Ako app kasnije naraste (vise konkurentnih korisnika u kratkom periodu), 5min bi opet
+    // postao dovoljan i jeftiniji - ostaviti napomenu da se ovo revidira kad saobracaj poraste.
+    // Nema potrebe za beta header-om - 1h TTL je GA (Generally Available) na trenutnoj API verziji.
+    const systemBlocks = [{ type: 'text', text: staticPart, cache_control: { type: 'ephemeral', ttl: '1h' } }];
     if (dynamicPart) systemBlocks.push({ type: 'text', text: dynamicPart });
+
+    // FIX (20.09.2026, korisnikov zahtev - kesiranje ISTORIJE razgovora, ne samo system prompta):
+    // do sada je SAMO staticPart system bloka bio kesiran - cela istorija razgovora (messages, kod
+    // viseturnog Sensei chat-a moze imati i do 20 poruka) se na SVAKI sledeci upit ponovo slala i
+    // NAPLACIVALA PUNOM cenom, iako se prethodnih N-1 poruka ne menja izmedju dva uzastopna poziva
+    // istog korisnika (samo se nova poruka korisnika dodaje na kraj). _addConversationCacheBreakpoint
+    // (definisano ispod) markira PRETPOSLEDNJU poruku (poslednju iz PRETHODNOG kruga, pre nove
+    // poruke koja se sad salje) cache_control blokom - Anthropic tada kesira SVE do i ukljucujuci tu
+    // poruku. Sledeci poziv (nova poruka + odgovor dodati na kraj) pogadja TACNO taj kes za ceo
+    // prethodni deo istorije, place se puna cena SAMO za najnoviji par poruka. Za Scouting/Journal
+    // (uvek tacno 1 poruka, bez istorije) ova funkcija ne radi nista (vidi proveru unutra) - NULA
+    // promena ponasanja za njih. Radi se OVDE, na serveru, a ne na klijentu - stize svim korisnicima
+    // odmah posle deploy-a, bez potrebe za novim APK-om.
+    const cachedMessages = _addConversationCacheBreakpoint(messages);
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -1556,7 +1666,7 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
         'x-api-key': process.env.ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01'
       },
-      body: JSON.stringify({ model: 'claude-sonnet-5', max_tokens: 4000, system: systemBlocks, messages })
+      body: JSON.stringify({ model: 'claude-sonnet-5', max_tokens: 4000, system: systemBlocks, messages: cachedMessages })
     });
     const data = await response.json();
 
