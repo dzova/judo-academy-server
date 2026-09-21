@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Judo Academy</title>
+<link rel="icon" type="image/png" href="/logo-icon.png">
 <style>
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
@@ -14,17 +15,23 @@
     color: #1a1a1a;
     background: #fafafa;
   }
-  h1 { color: #b71c1c; margin-bottom: 4px; }
-  .subtitle { color: #555; margin-top: 0; font-size: 1.05em; }
+  .brand { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
+  .brand-mark { width: 52px; height: auto; flex-shrink: 0; }
+  h1 { color: #b71c1c; margin: 0; }
+  .subtitle { color: #555; margin-top: 8px; font-size: 1.05em; }
   h2 { margin-top: 32px; font-size: 1.15em; }
   ul { padding-left: 20px; }
   footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #ddd; font-size: 0.9em; color: #666; }
+  footer a { margin-right: 16px; }
   a { color: #b71c1c; }
 </style>
 </head>
 <body>
 
-<h1>Judo Academy</h1>
+<div class="brand">
+  <img class="brand-mark" src="/logo-icon.png" alt="Judo Academy logo">
+  <h1>Judo Academy</h1>
+</div>
 <p class="subtitle">An educational mobile app for learning judo techniques, terminology and rules through interactive quizzes.</p>
 
 <h2>What is Judo Academy?</h2>
@@ -43,6 +50,16 @@
   <li>Optional account sign-in (via Google) to sync progress across devices</li>
 </ul>
 
+<h2>Why does Judo Academy use Google Sign-In?</h2>
+<p>
+  Signing in with Google is optional and is used only to save a user's quiz progress, belt rank, and achievements
+  to their account, so this progress can be restored if they reinstall the app or switch to a new phone. Judo
+  Academy only requests a user's basic Google profile information (name, email address, and profile photo) to
+  create and identify their account — it does not request access to Gmail, Google Drive, contacts, or any other
+  Google data. Users who prefer not to sign in can still use the app's core features (quizzes, technique library)
+  without a Google account, though their progress will then be stored locally on the device only.
+</p>
+
 <h2>Who is behind this app?</h2>
 <p>
   Judo Academy is developed independently in cooperation with local judo clubs, as a learning tool for their
@@ -57,6 +74,7 @@
 </ul>
 
 <footer>
+  <a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a><br><br>
   &copy; 2026 Judo Academy
 </footer>
 
