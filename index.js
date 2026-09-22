@@ -2306,6 +2306,18 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
 
   const q = (sql) => db.query(sql).then(r => r.rows).catch(err => ({ error: err.message }));
 
+  // DODATAK (22.09.2026, korisnikov zahtev): opcioni ?from=&to= (ISO datumi) menja period SAMO za
+  // upite koji hrane dnevne trend-grafikone (paywall/sesije/greske/AI kvalitet/duzina sesije,
+  // preko qRange() ispod) - ostali paneli (retencija, promo, nalozi...) zadrzavaju svoje fiksne
+  // rolling prozore jer to ima smisla po definiciji (npr. "istice u narednih 14 dana" ne moze
+  // biti "prosli mart"). Bez parametara, ponasanje je isto kao pre (poslednjih 30 dana).
+  const _toParsed = req.query.to ? new Date(req.query.to) : null;
+  const _fromParsed = req.query.from ? new Date(req.query.from) : null;
+  const _validRange = _toParsed && _fromParsed && !isNaN(_toParsed) && !isNaN(_fromParsed) && _fromParsed < _toParsed;
+  const rangeTo = _validRange ? _toParsed : new Date();
+  const rangeFrom = _validRange ? _fromParsed : new Date(rangeTo.getTime() - 30 * 24 * 60 * 60 * 1000);
+  const qRange = (sql) => db.query(sql, [rangeFrom, rangeTo]).then(r => r.rows).catch(err => ({ error: err.message }));
+
   const queries = {
 
       // ---------- PAYWALL ----------
@@ -2338,10 +2350,12 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
           AND user_id NOT IN (SELECT user_id FROM analytics_events WHERE event_name = 'premium_checkout_confirmed')
         ORDER BY paywall_hits DESC
       `),
-      paywall_daily_trend: q(`
+      // IZMENJENO (22.09.2026, korisnikov zahtev): koristi qRange() umesto q() - postuje ?from/?to
+      // period selektor kad je postavljen, inace isto ponasanje kao pre (poslednjih 30 dana).
+      paywall_daily_trend: qRange(`
         SELECT date_trunc('day', created_at) AS day, COUNT(*) AS modal_views
         FROM analytics_events
-        WHERE event_name = 'premium_modal_view' AND created_at > now() - interval '30 days'
+        WHERE event_name = 'premium_modal_view' AND created_at BETWEEN $1 AND $2
         GROUP BY 1 ORDER BY 1
       `),
       // DODATAK (13.09.2026, korisnikov zahtev): klik na "Upravljaj pretplatom" je rani signal da
@@ -2377,16 +2391,16 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
       // (completion rate je uvek ~100%, "gde se odustaje" nema smisla kad nema odustajanja).
 
       // ---------- SESSION ----------
-      sessions_per_day: q(`
+      sessions_per_day: qRange(`
         SELECT date_trunc('day', created_at) AS day, COUNT(*) AS sessions, COUNT(DISTINCT user_id) AS unique_users
         FROM analytics_events
-        WHERE event_name = 'app_session_start' AND created_at > now() - interval '30 days'
+        WHERE event_name = 'app_session_start' AND created_at BETWEEN $1 AND $2
         GROUP BY 1 ORDER BY 1
       `),
-      session_length_distribution: q(`
+      session_length_distribution: qRange(`
         SELECT (event_data->>'totalMinutes')::int AS minutes_reached, COUNT(*) AS n
         FROM analytics_events
-        WHERE event_name = 'session_heartbeat' AND created_at > now() - interval '30 days'
+        WHERE event_name = 'session_heartbeat' AND created_at BETWEEN $1 AND $2
         GROUP BY 1 ORDER BY 1
       `),
 
@@ -2421,10 +2435,10 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
         WHERE event_name = 'silent_error' AND created_at > now() - interval '7 days'
         GROUP BY 1, 2 ORDER BY occurrences DESC LIMIT 30
       `),
-      error_daily_trend: q(`
+      error_daily_trend: qRange(`
         SELECT date_trunc('day', created_at) AS day, COUNT(*) AS total_errors, COUNT(DISTINCT user_id) AS affected_users
         FROM analytics_events
-        WHERE event_name = 'silent_error' AND created_at > now() - interval '30 days'
+        WHERE event_name = 'silent_error' AND created_at BETWEEN $1 AND $2
         GROUP BY 1 ORDER BY 1
       `),
       error_top_users: q(`
@@ -2646,12 +2660,12 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
         WHERE created_at > now() - interval '30 days'
         GROUP BY feature ORDER BY feature
       `),
-      ai_feedback_daily_trend: q(`
+      ai_feedback_daily_trend: qRange(`
         SELECT date_trunc('day', created_at) AS day, feature,
           COUNT(*) FILTER (WHERE rating = 'up') AS thumbs_up,
           COUNT(*) FILTER (WHERE rating = 'down') AS thumbs_down
         FROM ai_feedback
-        WHERE created_at > now() - interval '30 days'
+        WHERE created_at BETWEEN $1 AND $2
         GROUP BY 1, 2 ORDER BY 1, 2
       `),
       ai_feedback_by_lang: q(`
