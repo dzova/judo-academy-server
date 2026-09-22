@@ -4,78 +4,311 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Judo Academy</title>
+<meta name="description" content="An educational mobile app for learning judo techniques, terminology and rules through interactive quizzes.">
 <link rel="icon" type="image/png" href="/logo-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Judo Academy">
+<meta property="og:description" content="An educational mobile app for learning judo techniques, terminology and rules through interactive quizzes.">
+<meta property="og:url" content="https://www.judoacademy.app/">
+<meta property="og:image" content="https://www.judoacademy.app/logo-icon.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Judo Academy">
+<meta name="twitter:description" content="An educational mobile app for learning judo techniques, terminology and rules through interactive quizzes.">
+<meta name="twitter:image" content="https://www.judoacademy.app/logo-icon.png">
 <style>
+  :root {
+    --red: #b71c1c;
+    --ink: #1a1a1a;
+    --muted: #5b5b5b;
+    --border: #e5e5e5;
+    --bg: #fafafa;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 40px 20px;
+    margin: 0;
     line-height: 1.6;
-    color: #1a1a1a;
-    background: #fafafa;
+    color: var(--ink);
+    background: var(--bg);
   }
-  .brand { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
-  .brand-mark { width: 52px; height: auto; flex-shrink: 0; }
-  h1 { color: #b71c1c; margin: 0; }
-  .subtitle { color: #555; margin-top: 8px; font-size: 1.05em; }
-  h2 { margin-top: 32px; font-size: 1.15em; }
-  ul { padding-left: 20px; }
-  footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #ddd; font-size: 0.9em; color: #666; }
+  a { color: var(--red); }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(250,250,250,.92); backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border);
+  }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand img { width: 34px; height: auto; }
+  .brand span { font-weight: 700; color: var(--ink); font-size: 1.05em; }
+  nav { display: flex; align-items: center; gap: 22px; }
+  nav a.navlink { color: var(--ink); text-decoration: none; font-size: 0.92em; }
+  nav a.navlink:hover { color: var(--red); }
+  @media (max-width: 640px) { nav a.navlink { display: none; } }
+
+  /* Store badge */
+  .store-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #000; color: #fff; text-decoration: none;
+    padding: 10px 18px; border-radius: 10px;
+    font-family: inherit;
+  }
+  .store-badge:hover { background: #222; }
+  .store-badge svg { flex-shrink: 0; }
+  .store-badge-text { line-height: 1.2; }
+  .store-badge-text small { display: block; font-size: 0.7em; color: #ccc; }
+  .store-badge-text strong { display: block; font-size: 1.05em; }
+  .store-badge.small { padding: 7px 12px; }
+  .store-badge.small svg { width: 18px; height: 18px; }
+  .store-badge.small .store-badge-text strong { font-size: 0.85em; }
+  .store-badge.small .store-badge-text small { font-size: 0.62em; }
+
+  /* Sections */
+  section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: none; }
+  .eyebrow { color: var(--red); text-transform: uppercase; letter-spacing: .06em; font-size: .78em; font-weight: 700; margin: 0 0 8px; }
+  h1 { font-size: 2em; margin: 0 0 10px; color: var(--ink); }
+  h2.section-title { font-size: 1.5em; margin: 0 0 8px; color: var(--ink); }
+  .section-sub { color: var(--muted); margin: 0 0 28px; max-width: 640px; }
+
+  /* Hero */
+  #hero .wrap { padding-top: 48px; padding-bottom: 8px; }
+  .hero-text { max-width: 560px; }
+  .hero-text p.subtitle { color: var(--muted); font-size: 1.08em; margin: 14px 0 26px; }
+  .lang-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+  .lang-pills span {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 5px 12px; font-size: .82em; color: var(--muted);
+  }
+
+  /* Features */
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+  .feature-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px;
+  }
+  .feature-card .icon { font-size: 1.6em; margin-bottom: 10px; }
+  .feature-card h3 { margin: 0 0 6px; font-size: 1em; }
+  .feature-card p { margin: 0; color: var(--muted); font-size: .92em; }
+
+  /* Screenshots */
+  .shot-scroll {
+    display: flex; gap: 16px; overflow-x: auto; padding-bottom: 12px;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+  }
+  .shot-scroll img {
+    width: 210px; flex-shrink: 0; border-radius: 16px; scroll-snap-align: start;
+    box-shadow: 0 6px 20px rgba(0,0,0,.12);
+  }
+
+  /* Sign-in explainer */
+  .signin-box {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px;
+  }
+
+  /* FAQ */
+  .faq-item { border-bottom: 1px solid var(--border); padding: 16px 0; }
+  .faq-item:first-child { padding-top: 0; }
+  .faq-item .q { font-weight: 600; margin-bottom: 6px; }
+  .faq-item .a { color: var(--muted); margin: 0; }
+
+  /* About / contact */
+  #about p { max-width: 640px; }
+
+  footer { padding: 28px 0 40px; font-size: 0.88em; color: var(--muted); }
   footer a { margin-right: 16px; }
-  a { color: #b71c1c; }
 </style>
 </head>
 <body>
 
-<div class="brand">
-  <img class="brand-mark" src="/logo-icon.png" alt="Judo Academy logo">
-  <h1>Judo Academy</h1>
-</div>
-<p class="subtitle">An educational mobile app for learning judo techniques, terminology and rules through interactive quizzes.</p>
+<header>
+  <div class="wrap">
+    <a class="brand" href="#hero">
+      <img src="/logo-icon.png" alt="Judo Academy logo">
+      <span>Judo Academy</span>
+    </a>
+    <nav>
+      <a class="navlink" href="#features">Features</a>
+      <a class="navlink" href="#screenshots">Screenshots</a>
+      <a class="navlink" href="#faq">FAQ</a>
+      <!-- TODO: replace href="#" with the real Google Play Store listing URL once the app is published -->
+      <a class="store-badge small" href="#" target="_blank" rel="noopener">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.5 2.5c-.3.3-.5.7-.5 1.2v16.6c0 .5.2.9.5 1.2l.1.1L13 12.3v-.6L3.6 2.4l-.1.1z" fill="#00D2FF"/>
+          <path d="M16.2 15.5 13 12.3v-.6l3.2-3.2 4.4 2.5c.9.5.9 1.3 0 1.8l-4.4 2.7z" fill="#FFC800"/>
+          <path d="M16.2 15.5 13 12l-9.5 9.6c.3.4.9.5 1.6.1l11.1-6.2z" fill="#FF3A44"/>
+          <path d="M16.2 8.5 5.1 2.3c-.7-.4-1.3-.3-1.6.1L13 12l3.2-3.5z" fill="#00F076"/>
+        </svg>
+        <span class="store-badge-text">
+          <small>GET IT ON</small>
+          <strong>Google Play</strong>
+        </span>
+      </a>
+    </nav>
+  </div>
+</header>
 
-<h2>What is Judo Academy?</h2>
-<p>
-  Judo Academy is an Android application designed for judo practitioners of all ages — especially children and
-  youth training at judo clubs. The app helps users learn and review judo throws, grappling techniques,
-  Japanese terminology, and competition rules through gamified quizzes, a technique encyclopedia, and
-  progress tracking tied to belt ranks (kyu/dan system).
-</p>
+<section id="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <p class="eyebrow">Judo, gamified</p>
+      <h1>Learn judo techniques, terms and rules — one quiz at a time.</h1>
+      <p class="subtitle">Judo Academy is an educational app for judo practitioners of all ages, especially kids
+        and youth training at judo clubs. Quizzes, a technique library, an AI Sensei, and progress tracking tied
+        to real belt ranks.</p>
 
-<h2>Key features</h2>
-<ul>
-  <li>Quiz-based learning of judo techniques, terms, and rules</li>
-  <li>Technique library organized by belt level</li>
-  <li>Progress tracking and achievements</li>
-  <li>Optional account sign-in (via Google) to sync progress across devices</li>
-</ul>
+      <!-- TODO: replace href="#" with the real Google Play Store listing URL once the app is published -->
+      <a class="store-badge" href="#" target="_blank" rel="noopener">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.5 2.5c-.3.3-.5.7-.5 1.2v16.6c0 .5.2.9.5 1.2l.1.1L13 12.3v-.6L3.6 2.4l-.1.1z" fill="#00D2FF"/>
+          <path d="M16.2 15.5 13 12.3v-.6l3.2-3.2 4.4 2.5c.9.5.9 1.3 0 1.8l-4.4 2.7z" fill="#FFC800"/>
+          <path d="M16.2 15.5 13 12l-9.5 9.6c.3.4.9.5 1.6.1l11.1-6.2z" fill="#FF3A44"/>
+          <path d="M16.2 8.5 5.1 2.3c-.7-.4-1.3-.3-1.6.1L13 12l3.2-3.5z" fill="#00F076"/>
+        </svg>
+        <span class="store-badge-text">
+          <small>GET IT ON</small>
+          <strong>Google Play</strong>
+        </span>
+      </a>
 
-<h2>Why does Judo Academy use Google Sign-In?</h2>
-<p>
-  Signing in with Google is optional and is used only to save a user's quiz progress, belt rank, and achievements
-  to their account, so this progress can be restored if they reinstall the app or switch to a new phone. Judo
-  Academy only requests a user's basic Google profile information (name, email address, and profile photo) to
-  create and identify their account — it does not request access to Gmail, Google Drive, contacts, or any other
-  Google data. Users who prefer not to sign in can still use the app's core features (quizzes, technique library)
-  without a Google account, though their progress will then be stored locally on the device only.
-</p>
+      <div class="lang-pills">
+        <span>🇬🇧 English</span><span>🇷🇸 Srpski</span><span>🇩🇪 Deutsch</span><span>🇫🇷 Français</span>
+        <span>🇪🇸 Español</span><span>🇮🇹 Italiano</span><span>🇧🇷 Português</span><span>🇷🇺 Русский</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-<h2>Who is behind this app?</h2>
-<p>
-  Judo Academy is developed independently in cooperation with local judo clubs, as a learning tool for their
-  students. For questions, support, or feedback, contact us at
-  <a href="mailto:judo.academy.world@gmail.com">judo.academy.world@gmail.com</a>.
-</p>
+<section id="features">
+  <div class="wrap">
+    <p class="eyebrow">What's inside</p>
+    <h2 class="section-title">Everything a judoka needs to learn and track progress</h2>
+    <p class="section-sub">From first techniques to black belt theory, structured around the real kyu/dan
+      belt system.</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">❓</div>
+        <h3>Judo Quiz</h3>
+        <p>250+ questions across 7 categories — technique, rules, history, philosophy, Japanese terms, and more.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🥋</div>
+        <h3>Technique Library</h3>
+        <p>Step-by-step guidance for every throw and hold, organized by belt level, with common mistakes to avoid.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🧠</div>
+        <h3>Randori Simulator</h3>
+        <p>Real tactical scenarios — make a decision and see if it was the right call.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🤖</div>
+        <h3>AI Sensei</h3>
+        <p>Ask questions and get personalized guidance based on your belt, training, and progress.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📈</div>
+        <h3>Belt Progress</h3>
+        <p>Track requirements, techniques, and theory needed for your next belt, with a clear completion percentage.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔥</div>
+        <h3>Daily Training</h3>
+        <p>A short daily routine — a technique, a question, a quote, and a mini task — to build a real habit.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-<h2>Legal</h2>
-<ul>
-  <li><a href="/privacy">Privacy Policy</a></li>
-  <li><a href="/terms">Terms of Service</a></li>
-</ul>
+<section id="screenshots">
+  <div class="wrap">
+    <p class="eyebrow">See it in action</p>
+    <h2 class="section-title">Screenshots</h2>
+    <p class="section-sub">A quick look at daily training, quizzes, the technique library, and more.</p>
+    <div class="shot-scroll">
+      <img src="/screenshots/shot-01-daily-coach.jpg" alt="Daily training home screen" loading="lazy">
+      <img src="/screenshots/shot-02-quiz.jpg" alt="Judo quiz screen" loading="lazy">
+      <img src="/screenshots/shot-03-techniques.jpg" alt="Technique library screen" loading="lazy">
+      <img src="/screenshots/shot-04-randori.jpg" alt="Randori simulator screen" loading="lazy">
+      <img src="/screenshots/shot-05-sensei.jpg" alt="AI Sensei chat screen" loading="lazy">
+      <img src="/screenshots/shot-06-progress.jpg" alt="Belt progress screen" loading="lazy">
+      <img src="/screenshots/shot-07-languages.jpg" alt="Language selection screen" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section id="signin">
+  <div class="wrap">
+    <p class="eyebrow">Privacy</p>
+    <h2 class="section-title">Why does Judo Academy use Google Sign-In?</h2>
+    <div class="signin-box">
+      <p style="margin:0;">
+        Signing in with Google is optional and is used only to save a user's quiz progress, belt rank, and
+        achievements to their account, so this progress can be restored if they reinstall the app or switch to a
+        new phone. Judo Academy only requests a user's basic Google profile information (name, email address, and
+        profile photo) to create and identify their account — it does not request access to Gmail, Google Drive,
+        contacts, or any other Google data. Users who prefer not to sign in can still use the app's core features
+        (quizzes, technique library) without a Google account, though their progress will then be stored locally
+        on the device only.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <p class="eyebrow">Questions</p>
+    <h2 class="section-title">Frequently asked questions</h2>
+
+    <div class="faq-item">
+      <div class="q">Is Judo Academy free?</div>
+      <p class="a">Yes. The core app — quizzes, technique library, and Japanese dictionary — is free to use. A
+        Premium subscription unlocks unlimited daily quiz attempts, Randori Simulator scenarios, and AI Sensei
+        usage.</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">Is it safe for children?</div>
+      <p class="a">Judo Academy is designed to be usable by learners of all ages, including children (minimum
+        registration age: 8). No sensitive personal data is required to use the app — Google Sign-In is optional
+        and only used to sync progress across devices.</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">Does it work offline?</div>
+      <p class="a">The Technique Library, Japanese Dictionary, and previously loaded quiz content work without an
+        internet connection. Signing in, syncing progress, and AI Sensei features require an internet
+        connection.</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">What belt levels does it cover?</div>
+      <p class="a">Content spans the full kyu/dan system, from white belt beginner material through advanced
+        black belt technique and theory.</p>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <p class="eyebrow">Contact</p>
+    <h2 class="section-title">Who is behind this app?</h2>
+    <p>
+      Judo Academy is developed independently as a learning tool for judo practitioners. For questions, support,
+      or feedback, contact us at
+      <a href="mailto:judo.academy.world@gmail.com">judo.academy.world@gmail.com</a>.
+    </p>
+  </div>
+</section>
 
 <footer>
-  <a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a><br><br>
-  &copy; 2026 Judo Academy
+  <div class="wrap">
+    <a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a><br><br>
+    &copy; 2026 Judo Academy
+  </div>
 </footer>
 
 </body>
