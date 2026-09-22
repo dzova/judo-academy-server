@@ -657,10 +657,12 @@ app.post('/api/ai-feedback', _requireAuth, async (req, res) => {
   if (!VALID_RATINGS.includes(rating)) {
     return res.status(400).json({ error: 'Nevalidan rating' });
   }
-  // Isecak odgovora je samo za kontekst u admin dashboardu (da se vidi STA je ocenjeno kao
-  // lose bez potrebe da se pamti ceo odgovor) - ogranicen na 500 karaktera da spreci
-  // ocigledan abuse (npr. neko salje ogroman string kroz ovo polje).
-  const excerpt = typeof response_excerpt === 'string' ? response_excerpt.slice(0, 500) : null;
+  // Isecak odgovora je za kontekst u admin dashboardu (da se vidi STA je ocenjeno kao lose).
+  // PODIGNUTO (22.09.2026, korisnikov nalaz): 500 karaktera je secalo AI odgovore na pola, pa se
+  // greska cesto nije ni videla ako je bila u drugom delu teksta. 4000 karaktera pokriva prakticno
+  // svaki ceo AI odgovor (Sensei/Scouting/Dnevnik), a i dalje sprecava ocigledan abuse (neko ko bi
+  // slao ogroman proizvoljan string kroz ovo polje).
+  const excerpt = typeof response_excerpt === 'string' ? response_excerpt.slice(0, 4000) : null;
 
   try {
     await db.query(
@@ -2289,105 +2291,13 @@ app.get('/privacy', (req, res) => {
 //
 // Na Railway -> Variables (vec si dodao) treba: ADMIN_DASHBOARD_KEY
 // Posle nalepljivanja ovog koda, commit + deploy na Railway kao i obicno.
+//
+// NAPOMENA (22.09.2026, korisnikov zahtev - dashboard cleanup):
+// TECHNIQUE_IDS niz i buildTechniqueIdsCTE() su UKLONJENI - koristili su se
+// samo za "Tehnike koje niko ne gleda" panel, koji je uklonjen (nisko-akcionabilan
+// podatak - sa 90 tehnika i rolling 30-dana prozorom, neka grupa ce uvek ispasti
+// "neviđena" cisto statisticki, bez obzira da li je sadrzaj problematican).
 // ============================================================
-
-const TECHNIQUE_IDS = [
-  'o-goshi',
-  'o-soto-gari',
-  'seoi-nage',
-  'uchi-mata',
-  'harai-goshi',
-  'tai-otoshi',
-  'ko-uchi-gari',
-  'tomoe-nage',
-  'kesa-gatame',
-  'yoko-shiho-gatame',
-  'juji-gatame',
-  'okuri-eri-jime',
-  'hadaka-jime',
-  'yoko-ukemi',
-  'ushiro-ukemi',
-  'zenpo-kaiten',
-  'ippon-seoi-nage',
-  'hane-goshi',
-  'sumi-gaeshi',
-  'sukui-nage',
-  'tate-shiho-gatame',
-  'kami-shiho-gatame',
-  'morote-seoi-nage',
-  'ura-nage',
-  'kata-guruma',
-  'sode-tsurikomi-goshi',
-  'o-soto-guruma',
-  'gyaku-juji-jime',
-  'de-ashi-barai',
-  'hiza-guruma',
-  'o-uchi-gari',
-  'ko-soto-gari',
-  'tsuri-goshi',
-  'sasae-tsurikomi-ashi',
-  'ko-soto-gake',
-  'o-soto-otoshi',
-  'uchi-mata-sukashi',
-  'o-guruma',
-  'harai-tsurikomi-ashi',
-  'ko-uchi-makikomi',
-  'tani-otoshi',
-  'ura-otoshi',
-  'yoko-otoshi',
-  'koshi-guruma',
-  'ashi-guruma',
-  'okuri-ashi-barai',
-  'uki-goshi',
-  'seoi-otoshi',
-  'uchi-mata-makikomi',
-  'o-uchi-makikomi',
-  'harai-makikomi',
-  'o-soto-makikomi',
-  'yoko-gake',
-  'sumi-otoshi',
-  'daki-wakare',
-  'yoko-wakare',
-  'kuzure-kesa-gatame',
-  'mune-gatame',
-  'ushiro-kesa-gatame',
-  'kuzure-kami-shiho',
-  'sangaku-gatame',
-  'ude-gatame',
-  'waki-gatame',
-  'sankaku-jime',
-  'tobi-ukemi',
-  'uki-otoshi',
-  'tsurikomi-goshi',
-  'uki-waza',
-  'eri-seoi-nage',
-  'ko-soto-otoshi',
-  'hane-makikomi',
-  'utsuri-goshi',
-  'nami-juji-jime',
-  'kata-juji-jime',
-  'kata-ha-jime',
-  'o-soto-gaeshi',
-  'o-uchi-gaeshi',
-  'uchi-mata-gaeshi',
-  'harai-goshi-gaeshi',
-  'hane-goshi-gaeshi',
-  'kuzure-tate-shiho-gatame',
-  'hikkomi-gaeshi',
-  'soto-makikomi',
-  'seoi-makikomi',
-  'ushiro-goshi',
-  'yoko-guruma',
-  'eri-tsurikomi-goshi',
-  'ko-uchi-gake',
-  'tomoe-gaeshi',
-  'yoko-tomoe-nage'
-];
-
-function buildTechniqueIdsCTE() {
-  const rows = TECHNIQUE_IDS.map(id => `('${id}')`).join(',\n    ');
-  return `(VALUES\n    ${rows}\n  ) AS a(id)`;
-}
 
 // ════════════════════════════════════════ ADMIN DASHBOARD ════════════════════════════════════════
 
@@ -2462,30 +2372,9 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
       `),
 
       // ---------- ONBOARDING ----------
-      onboarding_funnel: q(`
-        SELECT event_data->>'step' AS step, COUNT(DISTINCT user_id) AS unique_users, COUNT(*) AS total_views
-        FROM analytics_events
-        WHERE event_name = 'onboarding_step' AND created_at > now() - interval '30 days'
-        GROUP BY 1
-        ORDER BY CASE event_data->>'step'
-          WHEN '0' THEN 0 WHEN '1' THEN 1 WHEN '1b' THEN 2 WHEN 'reg' THEN 3
-          WHEN 'con' THEN 4 WHEN '2' THEN 5 WHEN '3' THEN 6 WHEN 'tut' THEN 7
-          WHEN '4' THEN 8 ELSE 99 END
-      `),
-      onboarding_abandon_points: q(`
-        SELECT event_data->>'step' AS abandoned_at_step, COUNT(*) AS abandons
-        FROM analytics_events
-        WHERE event_name = 'onboarding_closed' AND (event_data->>'completed')::boolean = false
-          AND created_at > now() - interval '30 days'
-        GROUP BY 1 ORDER BY abandons DESC
-      `),
-      onboarding_completion_rate: q(`
-        SELECT event_data->>'completed' AS completed, COUNT(*) AS n,
-          ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (), 1) AS percent
-        FROM analytics_events
-        WHERE event_name = 'onboarding_closed' AND created_at > now() - interval '30 days'
-        GROUP BY 1
-      `),
+      // UKLONJENO (22.09.2026, korisnikov zahtev): onboarding je obavezan korak bez mogucnosti
+      // odustajanja, pa su funnel/abandon/completion-rate upiti bili mrtvi podaci po definiciji
+      // (completion rate je uvek ~100%, "gde se odustaje" nema smisla kad nema odustajanja).
 
       // ---------- SESSION ----------
       sessions_per_day: q(`
@@ -2644,29 +2533,69 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
         WHERE event_name = 'technique_view' AND created_at > now() - interval '30 days'
         GROUP BY 1, 2 ORDER BY views DESC LIMIT 30
       `),
-      content_never_viewed_techniques: q(`
-        WITH viewed AS (
-          SELECT DISTINCT event_data->>'id' AS id FROM analytics_events
-          WHERE event_name = 'technique_view' AND created_at > now() - interval '30 days'
-        )
-        SELECT a.id AS never_viewed_technique
-        FROM ${buildTechniqueIdsCTE()}
-        LEFT JOIN viewed v ON a.id = v.id
-        WHERE v.id IS NULL ORDER BY a.id
-      `),
+      // UKLONJENO (22.09.2026, korisnikov zahtev): content_never_viewed_techniques - nisko-akcionabilan
+      // podatak, vidi napomenu iznad TECHNIQUE_IDS bloka.
       content_quiz_accuracy_by_category: q(`
         SELECT event_data->>'type' AS category, COUNT(*) AS total_answers,
+          COUNT(DISTINCT user_id) AS unique_users,
           COUNT(*) FILTER (WHERE (event_data->>'correct')::boolean = true) AS correct_answers,
           ROUND(100.0 * COUNT(*) FILTER (WHERE (event_data->>'correct')::boolean = true) / COUNT(*), 1) AS accuracy_pct
         FROM analytics_events
         WHERE event_name = 'quiz_answer' AND created_at > now() - interval '30 days'
         GROUP BY 1 ORDER BY accuracy_pct ASC
       `),
-      content_randori_by_category: q(`
-        SELECT event_data->>'cat' AS category, COUNT(*) AS views, COUNT(DISTINCT user_id) AS unique_users
+      // DODATAK (22.09.2026, korisnikov zahtev): tacnost kviza po jeziku - da li su pitanja na
+      // pojedinim jezicima sistematski teza/losije prevedena. Zahteva da 'quiz_answer' event nosi
+      // 'lang' polje (dodato u index.html uz ovu izmenu) - dok se ne izgradi i objavi nova verzija
+      // app-a, ovaj panel ce pokazivati "nema podataka".
+      content_quiz_accuracy_by_lang: q(`
+        SELECT event_data->>'lang' AS lang, COUNT(*) AS total_answers,
+          COUNT(*) FILTER (WHERE (event_data->>'correct')::boolean = true) AS correct_answers,
+          ROUND(100.0 * COUNT(*) FILTER (WHERE (event_data->>'correct')::boolean = true) / COUNT(*), 1) AS accuracy_pct
         FROM analytics_events
-        WHERE event_name = 'randori_scenario_view' AND created_at > now() - interval '30 days'
-        GROUP BY 1 ORDER BY views DESC
+        WHERE event_name = 'quiz_answer' AND created_at > now() - interval '30 days'
+          AND event_data->>'lang' IS NOT NULL
+        GROUP BY 1 ORDER BY accuracy_pct ASC
+      `),
+      // DODATAK (22.09.2026, korisnikov zahtev): najteza pojedinacna pitanja (ne samo po kategoriji) -
+      // pomaze sadrzajnom timu da nadje konkretno lose formulisano pitanje. Zahteva 'qtext' polje u
+      // 'quiz_answer' eventu (dodato uz ovu izmenu) - prazno dok se ne objavi nova verzija app-a.
+      // HAVING >= 5 da izbaci sum od pitanja odgovorenih samo jednom-dvaput.
+      content_quiz_hardest_questions: q(`
+        SELECT event_data->>'type' AS category, event_data->>'qtext' AS question_excerpt,
+          COUNT(*) AS total_answers,
+          ROUND(100.0 * COUNT(*) FILTER (WHERE (event_data->>'correct')::boolean = true) / COUNT(*), 1) AS accuracy_pct
+        FROM analytics_events
+        WHERE event_name = 'quiz_answer' AND created_at > now() - interval '30 days'
+          AND event_data->>'qtext' IS NOT NULL
+        GROUP BY 1, 2 HAVING COUNT(*) >= 5 ORDER BY accuracy_pct ASC LIMIT 20
+      `),
+      // IZMENJENO (22.09.2026, korisnikov zahtev): spojeno sa tacnoscu odgovora (ranije samo views).
+      // Zahteva 'randori_answer' event (dodato u index.html uz ovu izmenu, ranije se tacnost
+      // pratila SAMO lokalno na uredjaju, nikad nije slata na server) - dok se ne objavi nova verzija
+      // app-a, total_answers/correct_answers/accuracy_pct kolone ce biti 0/prazne, views i dalje rade
+      // (taj event vec postoji).
+      content_randori_by_category: q(`
+        WITH views AS (
+          SELECT event_data->>'cat' AS category, COUNT(*) AS views, COUNT(DISTINCT user_id) AS unique_users
+          FROM analytics_events
+          WHERE event_name = 'randori_scenario_view' AND created_at > now() - interval '30 days'
+          GROUP BY 1
+        ),
+        answers AS (
+          SELECT event_data->>'cat' AS category, COUNT(*) AS total_answers,
+            COUNT(*) FILTER (WHERE (event_data->>'correct')::boolean = true) AS correct_answers,
+            ROUND(100.0 * COUNT(*) FILTER (WHERE (event_data->>'correct')::boolean = true) / COUNT(*), 1) AS accuracy_pct
+          FROM analytics_events
+          WHERE event_name = 'randori_answer' AND created_at > now() - interval '30 days'
+          GROUP BY 1
+        )
+        SELECT COALESCE(v.category, a.category) AS category,
+          COALESCE(v.views, 0) AS views, COALESCE(v.unique_users, 0) AS unique_users,
+          COALESCE(a.total_answers, 0) AS total_answers, COALESCE(a.correct_answers, 0) AS correct_answers,
+          a.accuracy_pct
+        FROM views v FULL OUTER JOIN answers a ON a.category = v.category
+        ORDER BY views DESC NULLS LAST
       `),
       content_overview: q(`
         SELECT 'technique_view' AS content_type, COUNT(*) AS total_views, COUNT(DISTINCT user_id) AS unique_users
@@ -2774,6 +2703,138 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
         SELECT COALESCE(NULLIF(TRIM(country), ''), '(bez zemlje)') AS country, COUNT(*) AS users
         FROM users
         GROUP BY 1 ORDER BY users DESC LIMIT 30
+      `),
+
+      // ---------- RAST / GROWTH (22.09.2026, korisnikov zahtev - dodatni predlozi) ----------
+      // Distribucija Dnevnog izazova streak-a (poslednja poznata vrednost po korisniku) - grupisano
+      // u bucket-e umesto sirovog broja, da bude citljivo. Koristi 'dc_complete' event koji vec
+      // postoji (event_data->>'streak').
+      growth_streak_distribution: q(`
+        WITH latest_streak AS (
+          SELECT DISTINCT ON (user_id) user_id, (event_data->>'streak')::int AS streak
+          FROM analytics_events
+          WHERE event_name = 'dc_complete' AND user_id IS NOT NULL AND event_data->>'streak' IS NOT NULL
+          ORDER BY user_id, created_at DESC
+        ),
+        bucketed AS (
+          SELECT
+            CASE
+              WHEN streak <= 1 THEN '1 dan'
+              WHEN streak BETWEEN 2 AND 3 THEN '2-3 dana'
+              WHEN streak BETWEEN 4 AND 6 THEN '4-6 dana'
+              WHEN streak BETWEEN 7 AND 13 THEN '7-13 dana'
+              WHEN streak BETWEEN 14 AND 29 THEN '14-29 dana'
+              ELSE '30+ dana'
+            END AS streak_bucket,
+            CASE
+              WHEN streak <= 1 THEN 0 WHEN streak BETWEEN 2 AND 3 THEN 1
+              WHEN streak BETWEEN 4 AND 6 THEN 2 WHEN streak BETWEEN 7 AND 13 THEN 3
+              WHEN streak BETWEEN 14 AND 29 THEN 4 ELSE 5
+            END AS sort_order
+          FROM latest_streak
+        )
+        SELECT streak_bucket, COUNT(*) AS users
+        FROM bucketed GROUP BY streak_bucket, sort_order ORDER BY sort_order
+      `),
+      // Adopcija ključnih feature-a UNUTAR D7-retained kohorte (ne globalno) - pokazuje da li
+      // korisnici koji ostaju zaista koriste "core loop" feature-e, ne samo da li su uopste aktivni.
+      retention_feature_adoption_d7: q(`
+        WITH first_seen AS (
+          SELECT user_id, date_trunc('day', MIN(created_at)) AS cohort_day
+          FROM analytics_events WHERE user_id IS NOT NULL GROUP BY user_id
+        ),
+        activity AS (
+          SELECT DISTINCT user_id, date_trunc('day', created_at) AS activity_day
+          FROM analytics_events WHERE event_name = 'app_session_start' AND user_id IS NOT NULL
+        ),
+        d7_retained AS (
+          SELECT DISTINCT f.user_id
+          FROM first_seen f JOIN activity a ON a.user_id = f.user_id AND a.activity_day = f.cohort_day + interval '7 day'
+        )
+        SELECT f.feature,
+          (SELECT COUNT(*) FROM d7_retained) AS d7_retained_total,
+          COUNT(DISTINCT ae.user_id) AS used_feature,
+          ROUND(100.0 * COUNT(DISTINCT ae.user_id) / NULLIF((SELECT COUNT(*) FROM d7_retained), 0), 1) AS adoption_pct
+        FROM (
+          SELECT 'AI Sensei' AS feature, 'sensei_question' AS ev UNION ALL
+          SELECT 'Randori', 'randori_scenario_view' UNION ALL
+          SELECT 'Baza tehnika', 'technique_view' UNION ALL
+          SELECT 'Kviz', 'quiz_answer'
+        ) f
+        JOIN analytics_events ae ON ae.event_name = f.ev AND ae.user_id IN (SELECT user_id FROM d7_retained)
+        GROUP BY f.feature ORDER BY adoption_pct DESC
+      `),
+      // Time-to-first-value: koliko brzo posle prve pojave korisnik uradi prvu "vrednu" akciju
+      // (kviz/tehnika/randori/DC/sensei), i da li ta brzina korelise sa D7 retencijom - klasicna
+      // growth metrika, rana aktivacija obicno najbolje predvidja retenciju.
+      growth_time_to_first_value: q(`
+        WITH first_seen AS (
+          SELECT user_id, MIN(created_at) AS first_ts
+          FROM analytics_events WHERE user_id IS NOT NULL GROUP BY user_id
+        ),
+        first_value AS (
+          SELECT user_id, MIN(created_at) AS value_ts
+          FROM analytics_events
+          WHERE user_id IS NOT NULL
+            AND event_name IN ('quiz_answer','technique_view','randori_scenario_view','dc_complete','sensei_question')
+          GROUP BY user_id
+        ),
+        joined AS (
+          SELECT f.user_id, EXTRACT(EPOCH FROM (v.value_ts - f.first_ts)) / 3600.0 AS hours_to_value
+          FROM first_seen f JOIN first_value v ON v.user_id = f.user_id
+          WHERE v.value_ts >= f.first_ts
+        ),
+        cohort AS (
+          SELECT user_id, date_trunc('day', first_ts) AS cohort_day FROM first_seen
+        ),
+        activity AS (
+          SELECT DISTINCT user_id, date_trunc('day', created_at) AS activity_day
+          FROM analytics_events WHERE event_name = 'app_session_start' AND user_id IS NOT NULL
+        ),
+        bucketed AS (
+          SELECT j.user_id, CASE WHEN j.hours_to_value <= 24 THEN 'Prva vredna akcija u prvih 24h' ELSE 'Kasnije od 24h' END AS bucket
+          FROM joined j
+        )
+        SELECT b.bucket, COUNT(*) AS users,
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = c.cohort_day + interval '7 day' THEN a.user_id END) / NULLIF(COUNT(*), 0), 1) AS d7_retention_pct
+        FROM bucketed b
+        JOIN cohort c ON c.user_id = b.user_id
+        LEFT JOIN activity a ON a.user_id = b.user_id
+        GROUP BY b.bucket ORDER BY b.bucket
+      `),
+      // Konverzija po kanalu: placena kupovina (postoji premium_checkout_confirmed event) vs.
+      // dodeljeno (promo kod/klub/admin - trenutno se ne razlikuju medjusobno jer promo_codes i
+      // club-grant ne beleze KOJI konkretan korisnik je kod iskoristio; za tu finiju podelu treba
+      // mala izmena seme (nova kolona na users, npr. premium_source) - nije radjena sada.
+      premium_conversion_by_channel: q(`
+        SELECT
+          CASE WHEN EXISTS (
+            SELECT 1 FROM analytics_events ae
+            WHERE ae.event_name = 'premium_checkout_confirmed' AND ae.user_id = u.id
+          ) THEN 'Plaćena kupovina' ELSE 'Dodeljeno (promo/klub/admin)' END AS channel,
+          COUNT(*) AS premium_users
+        FROM users u
+        WHERE u.subscription_tier = 'premium'
+        GROUP BY 1 ORDER BY premium_users DESC
+      `),
+      // Greske po verziji app-a (14 dana) - da se odmah uoci regresija posle release-a, ne samo
+      // ukupan broj greske vec i po kom app_version-u.
+      error_by_app_version: q(`
+        SELECT COALESCE(event_data->>'appVersion', '(nepoznato)') AS app_version,
+          COUNT(*) AS errors, COUNT(DISTINCT user_id) AS affected_users
+        FROM analytics_events
+        WHERE event_name = 'silent_error' AND created_at > now() - interval '14 days'
+        GROUP BY 1 ORDER BY errors DESC
+      `),
+      // Prijave problema grupisane po kategoriji - trenutno se liste jedna po jedna (Prijave
+      // problema tab), ovaj summary pomaze prioritizaciji (gde se najvise gomila).
+      bug_reports_by_category: q(`
+        SELECT COALESCE(category, '(bez kategorije)') AS category,
+          COUNT(*) AS reports,
+          COUNT(*) FILTER (WHERE status = 'new') AS new_reports,
+          COUNT(*) FILTER (WHERE status = 'resolved') AS resolved_reports
+        FROM bug_reports
+        GROUP BY 1 ORDER BY reports DESC
       `),
     };
 
