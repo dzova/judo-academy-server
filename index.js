@@ -2950,16 +2950,33 @@ app.post('/api/admin/archive-old-events', adminLimiter, async (req, res) => {
 
   const months = parseInt(req.query.months, 10);
   const cutoffMonths = (Number.isFinite(months) && months > 0) ? months : 18;
+  // DODATAK (23.09.2026, korisnikov zahtev - dugme u admin dashboard-u): ?dryRun=true samo prebroji
+  // koliko bi redova bilo arhivirano/obrisano, bez ikakve stvarne izmene - koristi se za "Pregledaj"
+  // korak pre "Potvrdi i arhiviraj" u dashboard-u (isti obrazac kao dodela premiuma po klubu).
+  const dryRun = req.query.dryRun === 'true';
 
   const client = await db.connect();
   try {
-    await client.query('BEGIN');
+    if (!dryRun) await client.query('BEGIN');
 
     const cutoffResult = await client.query(
       `SELECT (now() - ($1 || ' months')::interval) AS cutoff`,
       [String(cutoffMonths)]
     );
     const cutoff = cutoffResult.rows[0].cutoff;
+
+    if (dryRun) {
+      const preview = await client.query(
+        `SELECT COUNT(*) AS n FROM analytics_events WHERE created_at < $1`,
+        [cutoff]
+      );
+      return res.json({
+        dry_run: true,
+        cutoff_months: cutoffMonths,
+        cutoff_date: cutoff,
+        would_archive_rows: parseInt(preview.rows[0].n, 10),
+      });
+    }
 
     const archived = await client.query(
       `INSERT INTO analytics_events_archive (id, user_id, event_name, event_data, created_at)
