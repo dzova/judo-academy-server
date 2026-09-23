@@ -2077,6 +2077,22 @@ app.post('/api/analytics/event', analyticsLimiter, async (req, res) => {
       'INSERT INTO analytics_events (user_id, event_name, event_data) VALUES ($1, $2, $3)',
       [userId || null, eventName, eventData ? JSON.stringify(eventData) : null]
     );
+    // FIX (23.09.2026, server optimizacija): usput upisujemo prvi put vidjen korisnika u malu
+    // pomocnu user_first_seen tabelu (jedan red po korisniku, ON CONFLICT DO NOTHING - jeftin
+    // upsert na PK). Ranije su retention/growth upiti na admin dashboard-u racunali
+    // "MIN(created_at) GROUP BY user_id" nad CELOM analytics_events istorijom SVAKI put kad se
+    // dashboard otvori - sto raste linearno sa ukupnim brojem event-a ikad zabelezenih, ne sa
+    // izabranim periodom. Sa ovom tabelom, ti upiti umesto toga rade JOIN na vec gotovu, malu
+    // (jedan red po korisniku) tabelu. NAPOMENA: user_first_seen se NE pravi automatski - vidi
+    // user_first_seen_schema.sql, napravi tabelu i uradi jednokratni backfill rucno u Railway
+    // Query editoru pre nego sto ovo pocne da upisuje redove (do tada ce ON CONFLICT jednostavno
+    // tiho failovati/preskociti ako tabela ne postoji - err se hvata ispod da ne obori event track).
+    if (userId) {
+      db.query(
+        'INSERT INTO user_first_seen (user_id, first_seen_at) VALUES ($1, now()) ON CONFLICT (user_id) DO NOTHING',
+        [userId]
+      ).catch(() => {}); // ne blokiramo/ne rusimo glavni analytics insert ako ova tabela jos ne postoji
+    }
     res.json({ success: true });
   } catch (err) { _sendServerError(res, err); }
 });
@@ -2315,8 +2331,22 @@ app.get('/privacy', (req, res) => {
 
 // ════════════════════════════════════════ ADMIN DASHBOARD ════════════════════════════════════════
 
+// FIX (23.09.2026, server optimizacija): jednostavan in-memory keš za dashboard odgovor, po
+// izabranom periodu (from/to), TTL 3 minuta. Dashboard se otvara povremeno i rucno (ti), pa nema
+// razloga da se svih ~43 (sad u talasima) upita ponovo izvrsavaju ako se stranica osvezi ili
+// ponovo otvori u kratkom razmaku. Kes je namerno in-memory (ne Redis/spoljni) - jednostavno,
+// dovoljno za jednog admina, i nestaje pri svakom redeploy-u sto je ok jer se odmah ponovo puni.
+const _dashboardCache = new Map(); // key: "from|to" -> { data, expiresAt }
+const _DASHBOARD_CACHE_TTL_MS = 3 * 60 * 1000;
+
 app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
   if (!_checkAdminKey(req, res)) return;
+
+  const _cacheKey = `${req.query.from || ''}|${req.query.to || ''}`;
+  const _cached = _dashboardCache.get(_cacheKey);
+  if (_cached && _cached.expiresAt > Date.now()) {
+    return res.json(_cached.data);
+  }
 
   // FIX (23.09.2026, server optimizacija): q()/qRange() sada vracaju FUNKCIJU (lenji poziv) umesto
   // da odmah pokrenu upit. Ranije je db.query(...) pucao ODMAH kad se queries objekat gradi (linija
@@ -2502,10 +2532,13 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
       `),
 
       // ---------- RETENTION ----------
+      // IZMENJENO (23.09.2026, server optimizacija): first_seen sad dolazi iz user_first_seen
+      // pomocne tabele umesto MIN(created_at) full-scan-a nad celom analytics_events istorijom -
+      // vidi napomenu uz user_first_seen upsert u /api/analytics/event rutu.
       retention_aggregate: q(`
         WITH first_seen AS (
-          SELECT user_id, date_trunc('day', MIN(created_at)) AS cohort_day
-          FROM analytics_events WHERE user_id IS NOT NULL GROUP BY user_id
+          SELECT user_id, date_trunc('day', first_seen_at) AS cohort_day
+          FROM user_first_seen
         ),
         activity AS (
           SELECT DISTINCT user_id, date_trunc('day', created_at) AS activity_day
@@ -2523,8 +2556,8 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
       `),
       retention_by_cohort_day: q(`
         WITH first_seen AS (
-          SELECT user_id, date_trunc('day', MIN(created_at)) AS cohort_day
-          FROM analytics_events WHERE user_id IS NOT NULL GROUP BY user_id
+          SELECT user_id, date_trunc('day', first_seen_at) AS cohort_day
+          FROM user_first_seen
         ),
         activity AS (
           SELECT DISTINCT user_id, date_trunc('day', created_at) AS activity_day
@@ -2774,8 +2807,8 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
       // korisnici koji ostaju zaista koriste "core loop" feature-e, ne samo da li su uopste aktivni.
       retention_feature_adoption_d7: q(`
         WITH first_seen AS (
-          SELECT user_id, date_trunc('day', MIN(created_at)) AS cohort_day
-          FROM analytics_events WHERE user_id IS NOT NULL GROUP BY user_id
+          SELECT user_id, date_trunc('day', first_seen_at) AS cohort_day
+          FROM user_first_seen
         ),
         activity AS (
           SELECT DISTINCT user_id, date_trunc('day', created_at) AS activity_day
@@ -2803,8 +2836,8 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
       // growth metrika, rana aktivacija obicno najbolje predvidja retenciju.
       growth_time_to_first_value: q(`
         WITH first_seen AS (
-          SELECT user_id, MIN(created_at) AS first_ts
-          FROM analytics_events WHERE user_id IS NOT NULL GROUP BY user_id
+          SELECT user_id, first_seen_at AS first_ts
+          FROM user_first_seen
         ),
         first_value AS (
           SELECT user_id, MIN(created_at) AS value_ts
@@ -2888,6 +2921,7 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
   const out = {};
   keys.forEach((k, i) => { out[k] = results[i]; });
 
+  _dashboardCache.set(_cacheKey, { data: out, expiresAt: Date.now() + _DASHBOARD_CACHE_TTL_MS });
   res.json(out);
 });
 
