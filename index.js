@@ -2318,7 +2318,13 @@ app.get('/privacy', (req, res) => {
 app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
   if (!_checkAdminKey(req, res)) return;
 
-  const q = (sql) => db.query(sql).then(r => r.rows).catch(err => ({ error: err.message }));
+  // FIX (23.09.2026, server optimizacija): q()/qRange() sada vracaju FUNKCIJU (lenji poziv) umesto
+  // da odmah pokrenu upit. Ranije je db.query(...) pucao ODMAH kad se queries objekat gradi (linija
+  // po liniju, sinhrono) - do trenutka Promise.all() na kraju, svih ~43 upita vec je bilo poslato
+  // ka Postgres-u istovremeno. Sad se upit pokrece tek kad se pozove kao funkcija - omogucava
+  // izvrsavanje u talasima (ispod, pre res.json) umesto svih odjednom. Ni jedan od 43 poziva
+  // q(...)/qRange(...) ispod NIJE menjan - i dalje se pisu identicno, samo se sad lenjo izvrsavaju.
+  const q = (sql) => () => db.query(sql).then(r => r.rows).catch(err => ({ error: err.message }));
 
   // DODATAK (22.09.2026, korisnikov zahtev): opcioni ?from=&to= (ISO datumi) menja period SAMO za
   // upite koji hrane dnevne trend-grafikone (paywall/sesije/greske/AI kvalitet/duzina sesije,
@@ -2330,7 +2336,7 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
   const _validRange = _toParsed && _fromParsed && !isNaN(_toParsed) && !isNaN(_fromParsed) && _fromParsed < _toParsed;
   const rangeTo = _validRange ? _toParsed : new Date();
   const rangeFrom = _validRange ? _fromParsed : new Date(rangeTo.getTime() - 30 * 24 * 60 * 60 * 1000);
-  const qRange = (sql) => db.query(sql, [rangeFrom, rangeTo]).then(r => r.rows).catch(err => ({ error: err.message }));
+  const qRange = (sql) => () => db.query(sql, [rangeFrom, rangeTo]).then(r => r.rows).catch(err => ({ error: err.message }));
 
   const queries = {
 
@@ -2866,8 +2872,19 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
       `),
     };
 
+  // FIX (23.09.2026, server optimizacija): izvrsavanje u talasima od po BATCH_SIZE upita umesto
+  // svih ~43 odjednom preko Promise.all(). Cilj: dashboard nikad ne drzi vise od BATCH_SIZE
+  // konekcija iz poola istovremeno, ostavljajuci prostor za live app saobracaj koji deli isti pool
+  // (vidi Pool podesavanje iznad, max: 20). Upiti UNUTAR jednog talasa i dalje idu paralelno
+  // (Promise.all), pa dashboard ne postaje drasticno sporiji - samo se ogranicava vrh potraznje.
   const keys = Object.keys(queries);
-  const results = await Promise.all(Object.values(queries));
+  const fns = Object.values(queries);
+  const BATCH_SIZE = 12;
+  const results = [];
+  for (let i = 0; i < fns.length; i += BATCH_SIZE) {
+    const batch = fns.slice(i, i + BATCH_SIZE).map(fn => fn());
+    results.push(...await Promise.all(batch));
+  }
   const out = {};
   keys.forEach((k, i) => { out[k] = results[i]; });
 
