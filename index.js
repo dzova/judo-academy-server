@@ -105,7 +105,21 @@ const adminLimiter = rateLimit({
   message: { error: 'Previse pokusaja, pokusaj ponovo kasnije' }
 });
 
-const db = new Pool({ connectionString: process.env.DATABASE_URL });
+// FIX (23.09.2026, server optimizacija): eksplicitno pool podesavanje umesto pg default-a (max=10,
+// bez timeout-a). Admin dashboard ruta pali 43 paralelna upita preko Promise.all nad ISTIM poolom
+// koji koristi i live app saobracaj - bez explicitnog max-a i timeout-a, dashboard poziv moze
+// privremeno da potrosi vecinu/sve konekcije i izazove cekanje ili timeout za obicne korisnike.
+// max: 20 daje dashboard-u prostora a da ne zauzme sve konekcije trajno.
+// idleTimeoutMillis: oslobadja neiskoriscene konekcije nazad Postgres-u (Railway free/hobby planovi
+// imaju ogranicen max_connections na bazi).
+// connectionTimeoutMillis: ako su sve konekcije zauzete, klijent dobija jasnu gresku posle 5s umesto
+// da visi neograniceno.
+const db = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  max: 20,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 5000,
+});
 
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
