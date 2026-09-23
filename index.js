@@ -17,6 +17,20 @@ const app = express();
 // korisnike zajedno kao da su jedan klijent, ili ucinilo rate limiting potpuno neefektivnim.
 app.set('trust proxy', 1);
 
+// FIX (23.09.2026, Search Console nalaz - "Duplicate without user-selected canonical"): sajt je bio
+// dostupan i pod judoacademy.app (bez www) i pod www.judoacademy.app, oba serviraju IDENTICAN
+// sadrzaj bez canonical taga - Google vidi dva URL-a za istu stranicu i ne zna koji da indeksira.
+// Ovo trajno resava problem (301 na kanonski www domen), canonical tagovi u HTML-u (index/terms/
+// privacy/delete-account) su dodatna potvrda istog signala. BEZBEDNO za app API pozive - Android
+// klijent gadja judo-academy-server-production.up.railway.app direktno (vidi SERVER_URL u
+// index.html), nikad judoacademy.app, pa ovaj redirect nikad ne dodiruje API saobracaj.
+app.use((req, res, next) => {
+  if (req.hostname === 'judoacademy.app') {
+    return res.redirect(301, 'https://www.judoacademy.app' + req.originalUrl);
+  }
+  next();
+});
+
 // CORS headers — MORAJU biti pre ostalih middleware-a
 // FIX (13.09.2026, konsultantski nalaz): Allow-Headers je ranije dozvoljavao SAMO 'Content-Type',
 // a klijent salje i custom 'Authorization' i 'X-Integrity-Token' headere. Za bilo koji NE-native
