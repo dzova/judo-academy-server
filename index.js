@@ -2925,6 +2925,73 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
   res.json(out);
 });
 
+// ════════════════════════════════════════ ARHIVIRANJE STARIH ANALYTICS EVENTA ════════════════════════════════════════
+// DODATAK (23.09.2026, korisnikov zahtev - server optimizacija/rast): rucno okidana (NE automatska)
+// ruta koja stare redove iz analytics_events prebacuje u analytics_events_archive, pa tek posle
+// uspesnog arhiviranja brise iz glavne tabele. Transakciono - ili prodje oboje ili nista (ROLLBACK
+// pri gresci), pa nema rizika od "arhivirano ali ne obrisano" ili obrnuto.
+//
+// NAMERNO RUCNO (ne cron/setInterval): pri trenutnoj velicini baze (par desetina korisnika) ovo
+// uopste nije hitno - svrha je da logika POSTOJI I RADI kad zatreba, ne da se sama pokrece bez
+// nadzora nad brisanjem podataka. Pozivi se rade preko istog ADMIN_DASHBOARD_KEY kao i dashboard.
+//
+// VAZNA NAPOMENA: retention/growth paneli za STARE kohorte (korisnici cije je "prvo pojavljivanje"
+// vise od "months" parametra unazad) ce posle arhiviranja izgubiti deo D1/D7/D30 aktivnosti ako je
+// ta aktivnost takodje starija od cutoff-a - jer ti redovi vise nisu u analytics_events (samo u
+// arhivi). user_first_seen tabela ostaje netaknuta (cohort_day ostaje tacan), ali sama aktivnost
+// (app_session_start eventi) za jako stare kohorte moze nestati iz dashboard-a. Ovo je ocekivano i
+// namerno ponasanje bilo koje retencione politike arhiviranja - ne slucajna greska.
+//
+// Podrazumevano cuva poslednjih 18 meseci u "vrucoj" tabeli. Promeni broj preko ?months=N (npr.
+// ?months=12) ako zelis drugaciji prag. Nista se ne brise dok arhiviranje tog istog batch-a ne
+// prodje uspesno (INSERT pre DELETE, u istoj transakciji).
+app.post('/api/admin/archive-old-events', adminLimiter, async (req, res) => {
+  if (!_checkAdminKey(req, res)) return;
+
+  const months = parseInt(req.query.months, 10);
+  const cutoffMonths = (Number.isFinite(months) && months > 0) ? months : 18;
+
+  const client = await db.connect();
+  try {
+    await client.query('BEGIN');
+
+    const cutoffResult = await client.query(
+      `SELECT (now() - ($1 || ' months')::interval) AS cutoff`,
+      [String(cutoffMonths)]
+    );
+    const cutoff = cutoffResult.rows[0].cutoff;
+
+    const archived = await client.query(
+      `INSERT INTO analytics_events_archive (id, user_id, event_name, event_data, created_at)
+       SELECT id, user_id, event_name, event_data, created_at
+       FROM analytics_events
+       WHERE created_at < $1
+       ON CONFLICT (id) DO NOTHING`,
+      [cutoff]
+    );
+
+    const deleted = await client.query(
+      `DELETE FROM analytics_events WHERE created_at < $1`,
+      [cutoff]
+    );
+
+    await client.query('COMMIT');
+
+    res.json({
+      success: true,
+      cutoff_months: cutoffMonths,
+      cutoff_date: cutoff,
+      archived_rows: archived.rowCount,
+      deleted_rows: deleted.rowCount,
+    });
+  } catch (err) {
+    await client.query('ROLLBACK').catch(() => {});
+    _sendServerError(res, err);
+  } finally {
+    client.release();
+  }
+});
+
 // Static files — MORA biti posle ruta
 app.use(express.static('public'));
 
