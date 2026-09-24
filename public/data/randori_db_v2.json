@@ -1150,7 +1150,7 @@
       "Svi odgovori su tačni"
     ],
     "c": 1,
-    "e": "Uchi-mata zahteva da noga prođe IZMEĐU Uke-ovih nogu. Ako su preširoko – fizički ne može ući. Kuzushi napred-bočno je i teži. Širi stav je odlična odbrana od Uchi-mate.",
+    "e": "Uchi-mata zahteva da noga prođe IZMEĐU Uke-ovih nogu. Ako su preširoko – fizički ne može ući. Kuzushi napred-bočno je i teži. Širi stav je odlična odbrana od Uchi-mate. Napomena: opcija 1 tvrdi suprotno od tačnog odgovora, pa 'svi odgovori tačni' ne može biti ispravno — samo opcije 2 i 3 opisuju stvarni problem.",
     "en_s": "Tori enters Uchi-mata but you stand with your feet very wide apart.",
     "en_q": "Why is this a problem for performing Uchi-mata?",
     "en_opts": [
@@ -1159,7 +1159,7 @@
       "Kuzushi cannot be achieved",
       "All answers are correct"
     ],
-    "en_e": "Uchi-mata needs the leg to pass BETWEEN Uke's legs. If they're too far apart – it physically can't enter. The forward-sideways kuzushi is harder too. A wide stance is excellent defence against Uchi-mata.",
+    "en_e": "Uchi-mata needs the leg to pass BETWEEN Uke's legs. If they're too far apart – it physically can't enter. The forward-sideways kuzushi is harder too. A wide stance is excellent defence against Uchi-mata. Note: option 1 states the opposite of the correct answer, so 'all answers are correct' cannot be right — only options 2 and 3 describe the actual problem.",
     "de_s": "Tori steigt in Uchi-mata ein, aber du stehst mit zu weit gespreizten Beinen.",
     "de_q": "Warum ist das ein Problem für die Ausführung von Uchi-mata?",
     "de_opts": [
@@ -1168,7 +1168,7 @@
       "Kuzushi kann nicht erreicht werden",
       "Alle Antworten sind richtig"
     ],
-    "de_e": "Uchi-mata erfordert, dass das Bein ZWISCHEN Ukes Beinen hindurchgeht. Wenn sie zu weit gespreizt sind – kann es physisch nicht hinein. Auch das Kuzushi nach vorne-seitlich ist schwerer. Ein breiterer Stand ist eine ausgezeichnete Verteidigung gegen Uchi-mata.",
+    "de_e": "Uchi-mata erfordert, dass das Bein ZWISCHEN Ukes Beinen hindurchgeht. Wenn sie zu weit gespreizt sind – kann es physisch nicht hinein. Auch das Kuzushi nach vorne-seitlich ist schwerer. Ein breiterer Stand ist eine ausgezeichnete Verteidigung gegen Uchi-mata. Hinweis: Option 1 sagt das Gegenteil der richtigen Antwort, daher kann 'alle Antworten sind richtig' nicht stimmen – nur die Optionen 2 und 3 beschreiben das tatsächliche Problem.",
     "fr_s": "Tori entre en Uchi-mata mais tu te tiens avec les jambes trop écartées.",
     "fr_q": "Pourquoi est-ce un problème pour l'exécution d'Uchi-mata ?",
     "fr_opts": [
@@ -1177,7 +1177,7 @@
       "Le kuzushi ne peut pas être obtenu",
       "Toutes les réponses sont correctes"
     ],
-    "fr_e": "Uchi-mata exige que la jambe passe ENTRE les jambes d'Uke. Si elles sont trop écartées – elle ne peut physiquement pas entrer. Le kuzushi avant-latéral est aussi plus difficile. Une position plus large est une excellente défense contre Uchi-mata.",
+    "fr_e": "Uchi-mata exige que la jambe passe ENTRE les jambes d'Uke. Si elles sont trop écartées – elle ne peut physiquement pas entrer. Le kuzushi avant-latéral est aussi plus difficile. Une position plus large est une excellente défense contre Uchi-mata. Remarque : l'option 1 dit le contraire de la bonne réponse, donc 'toutes les réponses sont correctes' ne peut pas être vrai — seules les options 2 et 3 décrivent le vrai problème.",
     "es_s": "Tori entra en Uchi-mata pero estás de pie con las piernas demasiado separadas.",
     "es_q": "¿Por qué es esto un problema para ejecutar Uchi-mata?",
     "es_opts": [
@@ -1186,7 +1186,7 @@
       "No se puede lograr el kuzushi",
       "Todas las respuestas son correctas"
     ],
-    "es_e": "¡Uchi-mata requiere que la pierna pase ENTRE las piernas de Uke! Si están demasiado separadas – no puede entrar físicamente. El kuzushi hacia delante-lateral también es más difícil. Una postura más ancha es una excelente defensa contra Uchi-mata.",
+    "es_e": "¡Uchi-mata requiere que la pierna pase ENTRE las piernas de Uke! Si están demasiado separadas – no puede entrar físicamente. El kuzushi hacia delante-lateral también es más difícil. Una postura más ancha es una excelente defensa contra Uchi-mata. Nota: la opción 1 dice lo contrario de la respuesta correcta, así que 'todas las respuestas son correctas' no puede ser cierto — solo las opciones 2 y 3 describen el problema real.",
     "it_s": "Tori entra in Uchi-mata ma tu sei in piedi con le gambe troppo divaricate.",
     "it_q": "Perché questo è un problema per l'esecuzione dell'Uchi-mata?",
     "it_opts": [
@@ -1195,7 +1195,7 @@
       "Il kuzushi non può essere ottenuto",
       "Tutte le risposte sono corrette"
     ],
-    "it_e": "Uchi-mata richiede che la gamba passi TRA le gambe di Uke. Se sono troppo divaricate – non può entrare fisicamente. Anche il kuzushi in avanti-laterale è più difficile. Una posizione più larga è un'ottima difesa contro l'Uchi-mata.",
+    "it_e": "Uchi-mata richiede che la gamba passi TRA le gambe di Uke. Se sono troppo divaricate – non può entrare fisicamente. Anche il kuzushi in avanti-laterale è più difficile. Una posizione più larga è un'ottima difesa contro l'Uchi-mata. Nota: l'opzione 1 dice il contrario della risposta corretta, quindi 'tutte le risposte sono corrette' non può essere vero — solo le opzioni 2 e 3 descrivono il problema reale.",
     "pt_s": "Tori entra em Uchi-mata mas estás de pé com as pernas muito afastadas.",
     "pt_q": "Porque é que isto é um problema para executar Uchi-mata?",
     "pt_opts": [
@@ -1204,7 +1204,7 @@
       "O kuzushi não pode ser alcançado",
       "Todas as respostas estão certas"
     ],
-    "pt_e": "Uchi-mata exige que a perna passe ENTRE as pernas de Uke. Se estiverem muito afastadas – não consegue entrar fisicamente. O kuzushi para a frente-lateral também é mais difícil. Uma postura mais larga é uma excelente defesa contra o Uchi-mata.",
+    "pt_e": "Uchi-mata exige que a perna passe ENTRE as pernas de Uke. Se estiverem muito afastadas – não consegue entrar fisicamente. O kuzushi para a frente-lateral também é mais difícil. Uma postura mais larga é uma excelente defesa contra o Uchi-mata. Nota: a opção 1 diz o oposto da resposta correta, por isso 'todas as respostas estão certas' não pode ser verdade — só as opções 2 e 3 descrevem o problema real.",
     "ru_s": "Tori входит в Учи-мату, но ты стоишь со слишком широко расставленными ногами.",
     "ru_q": "Почему это проблема для выполнения Учи-маты?",
     "ru_opts": [
@@ -1213,7 +1213,7 @@
       "Кузуши не может быть достигнуто",
       "Все ответы верны"
     ],
-    "ru_e": "Учи-мата требует, чтобы нога прошла МЕЖДУ ног Uke. Если они слишком широко расставлены – она физически не может войти. Кузуши вперёд-вбок тоже труднее. Более широкая стойка – отличная защита от Учи-маты."
+    "ru_e": "Учи-мата требует, чтобы нога прошла МЕЖДУ ног Uke. Если они слишком широко расставлены – она физически не может войти. Кузуши вперёд-вбок тоже труднее. Более широкая стойка – отличная защита от Учи-маты. Примечание: вариант 1 утверждает противоположное правильному ответу, поэтому «все ответы верны» не может быть правильным — только варианты 2 и 3 описывают реальную проблему."
   },
   {
     "cat": "tehnika",
@@ -2433,79 +2433,79 @@
   },
   {
     "cat": "odbrana",
-    "s": "Protivnik direktno hvata tvoju nogu u stojećoj borbi.",
-    "q": "Kakva je pravilna sudijska odluka prema važećim pravilima?",
+    "s": "Braniš se od napada, a protivnik ti direktno hvata nogu rukom da te obori.",
+    "q": "Kako treba da reaguješ u ovoj situaciji?",
     "opts": [
-      "Akcija je potpuno dozvoljena",
-      "Shido za nedozvoljeno hvatanje ili dodirivanje noge",
-      "Direktan Hansoku-make u svakoj situaciji",
-      "Samo usmeno upozorenje"
+      "Nastavljaš borbu i ignorišeš hvat",
+      "Zaustavljaš pokušaj, nastavljaš da se braniš dozvoljenim tehnikama i signaliziraš sudiji",
+      "Uzvraćaš istom merom i hvataš njegovu nogu",
+      "Odmah predaješ poen jer je hvat jači od tvoje odbrane"
     ],
     "c": 1,
-    "e": "Direktno hvatanje, kačenje ili dodirivanje noge u tachi-wazi kažnjava se Shidom. Važeća pravila dozvoljavaju određene hvatove ispod pojasa samo do vrha unutrašnje strane butine, ali ne i hvatanje noge.",
-    "en_s": "The opponent directly grabs your leg during standing judo.",
-    "en_q": "What is the correct refereeing decision under the current rules?",
+    "e": "Hvatanje noge rukom je zabranjeno u tachi-wazi (dozvoljeni su samo određeni hvatovi ispod pojasa do vrha unutrašnje strane butine) i sudija bi trebalo da dosudi Shido protivniku. Nastavi da se braniš regularnim tehnikama — uzvraćanje istom nedozvoljenom akcijom donosi kaznu i tebi.",
+    "en_s": "You're defending against an attack when the opponent directly grabs your leg with his hand to take you down.",
+    "en_q": "How should you react in this situation?",
     "en_opts": [
-      "The action is fully legal",
-      "Shido for illegally grabbing or touching the leg",
-      "Direct Hansoku-make in every case",
-      "Only a verbal warning"
+      "Keep fighting and ignore the grip",
+      "Stop the attempt, keep defending with legal techniques, and signal the referee",
+      "Retaliate in kind and grab his leg back",
+      "Concede the point immediately since the grip is stronger than your defence"
     ],
-    "en_e": "Directly grabbing, hooking or touching the leg in tachi-waza is penalised with Shido. Current rules allow some grips below the belt only as far as the top of the inner thigh, but not gripping the leg.",
-    "de_s": "Der Gegner greift direkt dein Bein im Stand.",
-    "de_q": "Was ist die richtige Schiedsrichterentscheidung nach den geltenden Regeln?",
+    "en_e": "Grabbing the leg with the hand is illegal in tachi-waza (only certain grips below the belt, up to the top of the inner thigh, are allowed), and the referee should penalise the opponent with Shido. Keep defending with legal techniques — retaliating with the same illegal action would earn you a penalty too.",
+    "de_s": "Du verteidigst dich gegen einen Angriff, als der Gegner direkt mit der Hand dein Bein greift, um dich zu Fall zu bringen.",
+    "de_q": "Wie solltest du in dieser Situation reagieren?",
     "de_opts": [
-      "Die Aktion ist vollständig erlaubt",
-      "Shido für unerlaubtes Greifen oder Berühren des Beins",
-      "Direkter Hansoku-make in jedem Fall",
-      "Nur eine mündliche Verwarnung"
+      "Weiterkämpfen und den Griff ignorieren",
+      "Den Versuch stoppen, mit erlaubten Techniken weiter verteidigen und den Schiedsrichter darauf hinweisen",
+      "Mit gleicher Münze zurückzahlen und selbst sein Bein greifen",
+      "Sofort den Punkt abgeben, weil der Griff stärker ist als deine Verteidigung"
     ],
-    "de_e": "Direktes Greifen, Haken oder Berühren des Beins in Tachi-waza wird mit Shido bestraft. Die geltenden Regeln erlauben bestimmte Griffe unterhalb des Gürtels nur bis zur Oberseite des inneren Oberschenkels, aber nicht das Greifen des Beins.",
-    "fr_s": "L'adversaire saisit directement ta jambe en position debout.",
-    "fr_q": "Quelle est la bonne décision de l'arbitre selon les règles en vigueur ?",
+    "de_e": "Das Greifen des Beins mit der Hand ist in Tachi-waza verboten (erlaubt sind nur bestimmte Griffe unterhalb des Gürtels bis zur Oberseite des inneren Oberschenkels), und der Schiedsrichter sollte den Gegner mit Shido bestrafen. Verteidige dich weiter mit erlaubten Techniken – mit der gleichen verbotenen Aktion zurückzuschlagen würde auch dir eine Strafe einbringen.",
+    "fr_s": "Tu te défends contre une attaque quand l'adversaire saisit directement ta jambe avec la main pour te faire tomber.",
+    "fr_q": "Comment devrais-tu réagir dans cette situation ?",
     "fr_opts": [
-      "L'action est totalement autorisée",
-      "Shido pour saisie ou contact illégal de la jambe",
-      "Hansoku-make direct dans tous les cas",
-      "Seulement un avertissement verbal"
+      "Continuer à combattre et ignorer la prise",
+      "Arrêter la tentative, continuer à te défendre avec des techniques autorisées et signaler à l'arbitre",
+      "Riposter de la même façon et saisir sa jambe à ton tour",
+      "Concéder immédiatement le point car la prise est plus forte que ta défense"
     ],
-    "fr_e": "Saisir, accrocher ou toucher directement la jambe en tachi-waza est sanctionné par Shido. Les règles actuelles autorisent certaines prises sous la ceinture seulement jusqu'au haut de la face interne de la cuisse, mais pas la saisie de la jambe.",
-    "es_s": "El adversario agarra directamente tu pierna de pie.",
-    "es_q": "¿Cuál es la decisión correcta del árbitro según las reglas vigentes?",
+    "fr_e": "Saisir la jambe avec la main est interdit en tachi-waza (seules certaines prises sous la ceinture, jusqu'au haut de la face interne de la cuisse, sont autorisées), et l'arbitre devrait sanctionner l'adversaire d'un Shido. Continue à te défendre avec des techniques autorisées — riposter avec la même action illégale t'exposerait aussi à une pénalité.",
+    "es_s": "Te estás defendiendo de un ataque cuando el adversario agarra directamente tu pierna con la mano para derribarte.",
+    "es_q": "¿Cómo deberías reaccionar en esta situación?",
     "es_opts": [
-      "La acción está totalmente permitida",
-      "Shido por agarrar o tocar ilegalmente la pierna",
-      "Hansoku-make directo en todos los casos",
-      "Solo una advertencia verbal"
+      "Seguir combatiendo e ignorar el agarre",
+      "Detener el intento, seguir defendiéndote con técnicas permitidas y señalárselo al árbitro",
+      "Responder de la misma manera y agarrar su pierna",
+      "Ceder el punto de inmediato porque el agarre es más fuerte que tu defensa"
     ],
-    "es_e": "Agarrar, enganchar o tocar directamente la pierna en tachi-waza se sanciona con Shido. Las reglas vigentes permiten ciertos agarres por debajo del cinturón solo hasta la parte superior del interior del muslo, pero no agarrar la pierna.",
-    "it_s": "L'avversario afferra direttamente la tua gamba in piedi.",
-    "it_q": "Qual è la decisione corretta dell'arbitro secondo le regole vigenti?",
+    "es_e": "Agarrar la pierna con la mano está prohibido en tachi-waza (solo se permiten ciertos agarres por debajo del cinturón hasta la parte superior del interior del muslo), y el árbitro debería sancionar al adversario con Shido. Sigue defendiéndote con técnicas permitidas — responder con la misma acción ilegal también te costaría una sanción.",
+    "it_s": "Ti stai difendendo da un attacco quando l'avversario afferra direttamente la tua gamba con la mano per farti cadere.",
+    "it_q": "Come dovresti reagire in questa situazione?",
     "it_opts": [
-      "L'azione è completamente consentita",
-      "Shido per aver afferrato o toccato illegalmente la gamba",
-      "Hansoku-make diretto in ogni caso",
-      "Solo un avvertimento verbale"
+      "Continuare a combattere e ignorare la presa",
+      "Fermare il tentativo, continuare a difenderti con tecniche consentite e segnalarlo all'arbitro",
+      "Rispondere allo stesso modo afferrando a tua volta la sua gamba",
+      "Concedere subito il punto perché la presa è più forte della tua difesa"
     ],
-    "it_e": "Afferrare, agganciare o toccare direttamente la gamba in tachi-waza viene punito con Shido. Le regole vigenti permettono alcune prese sotto la cintura solo fino alla parte superiore della coscia interna, ma non afferrare la gamba.",
-    "pt_s": "O adversário agarra diretamente a tua perna de pé.",
-    "pt_q": "Qual é a decisão correta do árbitro segundo as regras vigentes?",
+    "it_e": "Afferrare la gamba con la mano è vietato in tachi-waza (sono consentite solo alcune prese sotto la cintura fino alla parte superiore della coscia interna), e l'arbitro dovrebbe punire l'avversario con Shido. Continua a difenderti con tecniche consentite — rispondere con la stessa azione illegale porterebbe una punizione anche a te.",
+    "pt_s": "Estás a defender-te de um ataque quando o adversário agarra diretamente a tua perna com a mão para te derrubar.",
+    "pt_q": "Como deves reagir nesta situação?",
     "pt_opts": [
-      "A ação é totalmente permitida",
-      "Shido por agarrar ou tocar ilegalmente a perna",
-      "Hansoku-make direto em todos os casos",
-      "Apenas um aviso verbal"
+      "Continuar a lutar e ignorar a pegada",
+      "Parar a tentativa, continuar a defender-te com técnicas permitidas e assinalar ao árbitro",
+      "Retaliar da mesma forma e agarrar a perna dele",
+      "Ceder o ponto de imediato porque a pegada é mais forte do que a tua defesa"
     ],
-    "pt_e": "Agarrar, enganchar ou tocar diretamente a perna em tachi-waza é punido com Shido. As regras vigentes permitem certas pegadas abaixo da cintura apenas até ao topo da parte interna da coxa, mas não agarrar a perna.",
-    "ru_s": "Соперник напрямую хватает твою ногу в стойке.",
-    "ru_q": "Какое правильное судейское решение по действующим правилам?",
+    "pt_e": "Agarrar a perna com a mão é proibido em tachi-waza (só são permitidas certas pegadas abaixo da cintura até ao topo da parte interna da coxa), e o árbitro deve punir o adversário com Shido. Continua a defender-te com técnicas permitidas — retaliar com a mesma ação ilegal também te traria uma penalização.",
+    "ru_s": "Ты защищаешься от атаки, когда соперник напрямую хватает твою ногу рукой, чтобы свалить тебя.",
+    "ru_q": "Как тебе следует реагировать в этой ситуации?",
     "ru_opts": [
-      "Действие полностью разрешено",
-      "Shido за незаконный захват или касание ноги",
-      "Прямой Hansoku-make в любом случае",
-      "Только устное предупреждение"
+      "Продолжать бой и игнорировать захват",
+      "Остановить попытку, продолжать защищаться разрешёнными техниками и сигнализировать судье",
+      "Ответить тем же и самому схватить его ногу",
+      "Сразу уступить очко, потому что захват сильнее твоей защиты"
     ],
-    "ru_e": "Прямой захват, зацеп или касание ноги в тачи-вадза наказывается Shido. Действующие правила разрешают некоторые захваты ниже пояса только до верхней части внутренней стороны бедра, но не захват ноги."
+    "ru_e": "Захват ноги рукой запрещён в тачи-вадза (разрешены только некоторые захваты ниже пояса, до верхней части внутренней стороны бедра), и судья должен наказать соперника Shido. Продолжай защищаться разрешёнными техниками — ответ тем же запрещённым действием принесёт наказание и тебе."
   },
   {
     "cat": "odbrana",
@@ -3193,7 +3193,7 @@
   },
   {
     "cat": "tehnika",
-    "s": "Tai-otoshi – blokiram Uke-ovu nogu ali on samo koračne oko nje.",
+    "s": "Tai-otoshi – blokiram Uke-ovu nogu ali on samo zakorači oko nje.",
     "q": "Šta si propustio?",
     "opts": [
       "Noga je bila previsoka",
@@ -3354,7 +3354,7 @@
       "Hvat je bio greška"
     ],
     "c": 1,
-    "e": "Pad mora biti IZA Uke-a, ne pored! Tani-otoshi = dolinska tehnika. Padaš duboko iza, ne bočno. Ako si pored – on se samo koračne. Dalji pad = veće povlačenje.",
+    "e": "Pad mora biti IZA Uke-a, ne pored! Tani-otoshi = dolinska tehnika. Padaš duboko iza, ne bočno. Ako si pored – on se samo zakorači. Dalji pad = veće povlačenje.",
     "en_s": "Tani-otoshi – you fall but Uke doesn't go with you.",
     "en_q": "What is the cause?",
     "en_opts": [
@@ -3421,79 +3421,79 @@
   },
   {
     "cat": "tehnika",
-    "s": "Protivnik direktno hvata tvoju nogu u stojećoj borbi.",
-    "q": "Kakva je pravilna sudijska odluka prema važećim pravilima?",
+    "s": "Analiziraš snimak borbe: protivnik pokušava napad tako što prvo direktno hvata tvoju nogu rukom.",
+    "q": "Zašto se ova akcija smatra tehnički nedozvoljenom u modernom džudou?",
     "opts": [
-      "Akcija je potpuno dozvoljena",
-      "Shido za nedozvoljeno hvatanje ili dodirivanje noge",
-      "Direktan Hansoku-make u svakoj situaciji",
-      "Samo usmeno upozorenje"
+      "Nije nedozvoljena — sve varijante hvatanja noge rukom su legalne",
+      "Direktno hvatanje noge rukom je zabranjeno da bi se očuvao karakter bacanja iz stojećeg stava, a ne rvačkih tehnika",
+      "Zabranjena je samo kada se koristi za bacanje, ne i za blokiranje",
+      "Zabrana važi samo za takmičare mlađe od 18 godina"
     ],
     "c": 1,
-    "e": "Direktno hvatanje, kačenje ili dodirivanje noge u tachi-wazi kažnjava se Shidom. Važeća pravila dozvoljavaju određene hvatove ispod pojasa samo do vrha unutrašnje strane butine, ali ne i hvatanje noge.",
-    "en_s": "The opponent directly grabs your leg during standing judo.",
-    "en_q": "What is the correct refereeing decision under the current rules?",
+    "e": "IJF je zabranio direktno hvatanje ili dodirivanje noge rukom (osim ograničenih hvatova do vrha butine) da bi džudo zadržao svoju tehničku suštinu bacanja iz stojećeg položaja, umesto da se pretvori u rvačke tehnike hvatanja nogu. Pravilo postoji od 2010. godine i važi u svim situacijama, bez obzira na nameru.",
+    "en_s": "You're analysing match footage: the opponent attempts an attack by first directly grabbing your leg with his hand.",
+    "en_q": "Why is this action considered technically illegal in modern judo?",
     "en_opts": [
-      "The action is fully legal",
-      "Shido for illegally grabbing or touching the leg",
-      "Direct Hansoku-make in every case",
-      "Only a verbal warning"
+      "It isn't illegal — every variant of hand leg-grabbing is legal",
+      "Directly grabbing the leg with the hand is banned to preserve judo's throwing character from a standing position, rather than wrestling-style leg grabs",
+      "It's banned only when used to throw, not to block",
+      "The ban only applies to competitors under 18"
     ],
-    "en_e": "Directly grabbing, hooking or touching the leg in tachi-waza is penalised with Shido. Current rules allow some grips below the belt only as far as the top of the inner thigh, but not gripping the leg.",
-    "de_s": "Der Gegner greift direkt dein Bein im Stand.",
-    "de_q": "Was ist die richtige Schiedsrichterentscheidung nach den geltenden Regeln?",
+    "en_e": "The IJF banned directly grabbing or touching the leg with the hand (except for limited grips up to the top of the inner thigh) to keep judo's technical identity rooted in throws from a standing position, rather than wrestling-style leg attacks. The rule has been in place since 2010 and applies in every situation, regardless of intent.",
+    "de_s": "Du analysierst eine Kampfaufnahme: Der Gegner versucht einen Angriff, indem er zuerst direkt mit der Hand dein Bein greift.",
+    "de_q": "Warum gilt diese Aktion im modernen Judo als technisch verboten?",
     "de_opts": [
-      "Die Aktion ist vollständig erlaubt",
-      "Shido für unerlaubtes Greifen oder Berühren des Beins",
-      "Direkter Hansoku-make in jedem Fall",
-      "Nur eine mündliche Verwarnung"
+      "Sie ist nicht verboten – jede Art des Beingreifens mit der Hand ist erlaubt",
+      "Direktes Greifen des Beins mit der Hand ist verboten, um den Wurfcharakter des Judos aus dem Stand zu bewahren, anstatt ringerähnliche Beinangriffe zuzulassen",
+      "Es ist nur verboten, wenn es zum Werfen benutzt wird, nicht zum Blocken",
+      "Das Verbot gilt nur für Wettkämpfer unter 18 Jahren"
     ],
-    "de_e": "Direktes Greifen, Haken oder Berühren des Beins in Tachi-waza wird mit Shido bestraft. Die geltenden Regeln erlauben bestimmte Griffe unterhalb des Gürtels nur bis zur Oberseite des inneren Oberschenkels, aber nicht das Greifen des Beins.",
-    "fr_s": "L'adversaire saisit directement ta jambe en position debout.",
-    "fr_q": "Quelle est la bonne décision de l'arbitre selon les règles en vigueur ?",
+    "de_e": "Der IJF hat das direkte Greifen oder Berühren des Beins mit der Hand verboten (außer begrenzten Griffen bis zur Oberseite des inneren Oberschenkels), um die technische Identität des Judos als Wurfsport aus dem Stand zu bewahren, statt ringerähnliche Beinangriffe zuzulassen. Die Regel gilt seit 2010 und in jeder Situation, unabhängig von der Absicht.",
+    "fr_s": "Tu analyses une vidéo de combat : l'adversaire tente une attaque en saisissant d'abord directement ta jambe avec la main.",
+    "fr_q": "Pourquoi cette action est-elle considérée comme techniquement interdite dans le judo moderne ?",
     "fr_opts": [
-      "L'action est totalement autorisée",
-      "Shido pour saisie ou contact illégal de la jambe",
-      "Hansoku-make direct dans tous les cas",
-      "Seulement un avertissement verbal"
+      "Elle n'est pas interdite — toutes les variantes de saisie de jambe à la main sont légales",
+      "Saisir directement la jambe avec la main est interdit pour préserver le caractère de projection du judo depuis la position debout, plutôt que des saisies de jambe façon lutte",
+      "C'est interdit seulement quand c'est utilisé pour projeter, pas pour bloquer",
+      "L'interdiction ne s'applique qu'aux compétiteurs de moins de 18 ans"
     ],
-    "fr_e": "Saisir, accrocher ou toucher directement la jambe en tachi-waza est sanctionné par Shido. Les règles actuelles autorisent certaines prises sous la ceinture seulement jusqu'au haut de la face interne de la cuisse, mais pas la saisie de la jambe.",
-    "es_s": "El adversario agarra directamente tu pierna de pie.",
-    "es_q": "¿Cuál es la decisión correcta del árbitro según las reglas vigentes?",
+    "fr_e": "La FIJ a interdit de saisir ou toucher directement la jambe avec la main (sauf certaines prises limitées jusqu'au haut de la face interne de la cuisse) pour préserver l'identité technique du judo, basée sur les projections depuis la position debout, plutôt que des attaques de jambe façon lutte. La règle est en vigueur depuis 2010 et s'applique dans toutes les situations, quelle que soit l'intention.",
+    "es_s": "Estás analizando un vídeo de combate: el adversario intenta un ataque agarrando primero directamente tu pierna con la mano.",
+    "es_q": "¿Por qué se considera esta acción técnicamente ilegal en el judo moderno?",
     "es_opts": [
-      "La acción está totalmente permitida",
-      "Shido por agarrar o tocar ilegalmente la pierna",
-      "Hansoku-make directo en todos los casos",
-      "Solo una advertencia verbal"
+      "No es ilegal — todas las variantes de agarrar la pierna con la mano son legales",
+      "Agarrar directamente la pierna con la mano está prohibido para preservar el carácter de proyección del judo desde la posición de pie, en lugar de agarres de pierna al estilo lucha",
+      "Está prohibido solo cuando se usa para proyectar, no para bloquear",
+      "La prohibición solo se aplica a competidores menores de 18 años"
     ],
-    "es_e": "Agarrar, enganchar o tocar directamente la pierna en tachi-waza se sanciona con Shido. Las reglas vigentes permiten ciertos agarres por debajo del cinturón solo hasta la parte superior del interior del muslo, pero no agarrar la pierna.",
-    "it_s": "L'avversario afferra direttamente la tua gamba in piedi.",
-    "it_q": "Qual è la decisione corretta dell'arbitro secondo le regole vigenti?",
+    "es_e": "La FIJ prohibió agarrar o tocar directamente la pierna con la mano (excepto agarres limitados hasta la parte superior del interior del muslo) para mantener la identidad técnica del judo basada en proyecciones desde la posición de pie, en lugar de ataques de pierna al estilo lucha. La regla está vigente desde 2010 y se aplica en toda situación, sin importar la intención.",
+    "it_s": "Stai analizzando un video dell'incontro: l'avversario tenta un attacco afferrando prima direttamente la tua gamba con la mano.",
+    "it_q": "Perché questa azione è considerata tecnicamente vietata nel judo moderno?",
     "it_opts": [
-      "L'azione è completamente consentita",
-      "Shido per aver afferrato o toccato illegalmente la gamba",
-      "Hansoku-make diretto in ogni caso",
-      "Solo un avvertimento verbale"
+      "Non è vietata — ogni variante di presa alla gamba con la mano è legale",
+      "Afferrare direttamente la gamba con la mano è vietato per preservare il carattere di proiezione del judo dalla posizione eretta, invece di prese alla gamba in stile lotta",
+      "È vietato solo quando viene usato per proiettare, non per bloccare",
+      "Il divieto vale solo per gli atleti minori di 18 anni"
     ],
-    "it_e": "Afferrare, agganciare o toccare direttamente la gamba in tachi-waza viene punito con Shido. Le regole vigenti permettono alcune prese sotto la cintura solo fino alla parte superiore della coscia interna, ma non afferrare la gamba.",
-    "pt_s": "O adversário agarra diretamente a tua perna de pé.",
-    "pt_q": "Qual é a decisão correta do árbitro segundo as regras vigentes?",
+    "it_e": "La IJF ha vietato di afferrare o toccare direttamente la gamba con la mano (tranne prese limitate fino alla parte superiore della coscia interna) per preservare l'identità tecnica del judo basata sulle proiezioni dalla posizione eretta, invece di attacchi alla gamba in stile lotta. La regola è in vigore dal 2010 e si applica in ogni situazione, indipendentemente dall'intenzione.",
+    "pt_s": "Estás a analisar um vídeo do combate: o adversário tenta um ataque agarrando primeiro diretamente a tua perna com a mão.",
+    "pt_q": "Por que é que esta ação é considerada tecnicamente proibida no judo moderno?",
     "pt_opts": [
-      "A ação é totalmente permitida",
-      "Shido por agarrar ou tocar ilegalmente a perna",
-      "Hansoku-make direto em todos os casos",
-      "Apenas um aviso verbal"
+      "Não é proibida — todas as variantes de agarrar a perna com a mão são legais",
+      "Agarrar diretamente a perna com a mão é proibido para preservar o caráter de projeção do judo a partir da posição de pé, em vez de ataques à perna ao estilo luta",
+      "É proibido apenas quando usado para projetar, não para bloquear",
+      "A proibição aplica-se apenas a competidores com menos de 18 anos"
     ],
-    "pt_e": "Agarrar, enganchar ou tocar diretamente a perna em tachi-waza é punido com Shido. As regras vigentes permitem certas pegadas abaixo da cintura apenas até ao topo da parte interna da coxa, mas não agarrar a perna.",
-    "ru_s": "Соперник напрямую хватает твою ногу в стойке.",
-    "ru_q": "Какое правильное судейское решение по действующим правилам?",
+    "pt_e": "A IJF proibiu agarrar ou tocar diretamente a perna com a mão (exceto pegadas limitadas até ao topo da parte interna da coxa) para preservar a identidade técnica do judo assente em projeções a partir da posição de pé, em vez de ataques à perna ao estilo luta. A regra está em vigor desde 2010 e aplica-se em qualquer situação, independentemente da intenção.",
+    "ru_s": "Ты анализируешь видео схватки: соперник пытается провести атаку, сначала напрямую хватая твою ногу рукой.",
+    "ru_q": "Почему это действие считается технически запрещённым в современном дзюдо?",
     "ru_opts": [
-      "Действие полностью разрешено",
-      "Shido за незаконный захват или касание ноги",
-      "Прямой Hansoku-make в любом случае",
-      "Только устное предупреждение"
+      "Это не запрещено — любой вариант захвата ноги рукой легален",
+      "Прямой захват ноги рукой запрещён, чтобы сохранить бросковый характер дзюдо из стойки, а не борцовские захваты ног",
+      "Это запрещено только при использовании для броска, но не для блока",
+      "Запрет действует только для спортсменов младше 18 лет"
     ],
-    "ru_e": "Прямой захват, зацеп или касание ноги в тачи-вадза наказывается Shido. Действующие правила разрешают некоторые захваты ниже пояса только до верхней части внутренней стороны бедра, но не захват ноги."
+    "ru_e": "Международная федерация дзюдо (IJF) запретила прямой захват или касание ноги рукой (кроме ограниченных захватов до верхней части внутренней стороны бедра), чтобы сохранить техническую суть дзюдо как броскового вида из стойки, а не борцовские атаки на ноги. Правило действует с 2010 года и применяется в любой ситуации, независимо от намерения."
   },
   {
     "cat": "situacija",
@@ -3880,7 +3880,7 @@
     "s": "Borite se sa protivnikom koji uvek traži prizemnu borbu odmah.",
     "q": "Kako to iskoristiti u svoju korist?",
     "opts": [
-      "Izbogjavaš prizemnu borbu uvek",
+      "Izbegavaš prizemnu borbu uvek",
       "Napadaš stojeći tehnike dok ne stane ili ga baciš",
       "Prihvataš prizemnu borbu ako si dobar u njoj",
       "Tražiš Shido za trčanje dole"
@@ -3953,7 +3953,7 @@
   },
   {
     "cat": "taktika",
-    "s": "Protivnik koristi Gripping Rule kao taktiku – stalno menja hvat pa ne možeš uhvatiti.",
+    "s": "Protivnik neprestano menja hvat kao taktiku, izbegavajući da mu uhvatiš kimono.",
     "q": "Šta radi sudija posle 5 sekundi bez hvata?",
     "opts": [
       "Ništa – menjanje hvata je legalno neograničeno",
@@ -8817,7 +8817,7 @@
   },
   {
     "cat": "taktika",
-    "s": "Dobijaš Shido za hvatanje pojasa noge. Ostalo je 1 minut.",
+    "s": "Dobijaš Shido za hvatanje nogavice. Ostalo je 1 minut.",
     "q": "Kako menjate plan posle kazne?",
     "opts": [
       "Nastavljam sa rizičnim napadima jer imam Shido",
@@ -12088,7 +12088,7 @@
     "s": "Tvoj tim je izgubio na ekipnom takmičenju, a svi gledaju u tebe jer si iskusni borac koji nije pobedio svoju borbu.",
     "q": "Kako se nosiš sa pritiskom i krivicom?",
     "opts": [
-      "Izvinjavamo se timu beskonačno",
+      "Izvinjavam se timu beskonačno",
       "Preuzimam odgovornost ali podsetim da je sport timski uspeh i timski neuspeh",
       "Krijem se i izbegavam kontakt sa saigračima",
       "Okrivljujem sudije ili protivnike"
@@ -12392,7 +12392,7 @@
     "s": "Waza-ari je dodeljen tvom protivniku, ali si siguran da si ti bacio njega. Sudija se nije konzultovao sa stolom.",
     "q": "Šta radiš u toj situaciji?",
     "opts": [
-      "Odmah protivrekujem sudiji na tatamiju",
+      "Odmah prigovaram sudiji na tatamiju",
       "Nastavljam borbu, sudijski žiri može pokrenuti video pregled",
       "Prestajem da se borim dok se ne ispravi greška",
       "Vikam na sudiju da je greška"
@@ -13150,7 +13150,7 @@
   {
     "cat": "odbrana",
     "s": "Protivnik ulazi u o-uchi-gari. Osetiš kako ti vuče levu nogu unazad.",
-    "q": "Koji je najefikasniji odbrandbeni pokret?",
+    "q": "Koji je najefikasniji odbrambeni pokret?",
     "opts": [
       "Skačem unazad sa obe noge",
       "Prenosim težinu na levu nogu i odmičem desnu",
@@ -13381,7 +13381,7 @@
     "q": "Kako se braniš od koshi-waza sa hvatom za pojas?",
     "opts": [
       "Idem unazad što brže mogu",
-      "Blokiram njegovim kukom sa sopstvenim kukom i udaljavamo kuk od njega",
+      "Blokiram njegovim kukom sa sopstvenim kukom i udaljavam kuk od njega",
       "Savijam kolena i spuštam se što niže",
       "Idem u ne-waza odmah"
     ],
@@ -13456,7 +13456,7 @@
     "s": "U ne-waza si u kesa-gatame, ali se ne možeš izvući. Protivnik dobija vreme.",
     "q": "Koja je najefikasnija tehnika izlaska iz kesa-gatame?",
     "opts": [
-      "Pokušavam da ga podignemo direktno nagore",
+      "Pokušavam da ga podignem direktno nagore",
       "Rotira u smeru glave, podizanja kuka i prebacivanjem noge kao most",
       "Čekam da se umori",
       "Napadam mu slobodnu ruku"
@@ -14216,8 +14216,8 @@
     "s": "Protivnik grabi za tvoj pojas sa obe ruke i kreće u sumi-otoshi (ugaono bacanje).",
     "q": "Koji je princip odbrane od sumi-otoshi?",
     "opts": [
-      "Skaćem unapred da izadjem iz linije napada",
-      "Koračam dijagonalno napred u smeru bacanja da uklonimo liniju pada",
+      "Skačem unapred da izađem iz linije napada",
+      "Koračam dijagonalno napred u smeru bacanja da uklonim liniju pada",
       "Savijam noge i spuštam težiste što niže",
       "Hvatam protivnika za gornji deo kimonoa da bih zaustavio rotaciju"
     ],
@@ -14292,7 +14292,7 @@
     "s": "Protivnik pokušava da te obori sa ko-soto-gake (spoljnja kuka noge). Osetiš blokadu kolena spolja.",
     "q": "Kako se oslobađaš od ko-soto-gake?",
     "opts": [
-      "Skaćem unapred sa obe noge",
+      "Skačem unapred sa obe noge",
       "Rotacijom ka unutra i podizanjem kolena oslobađam zahvaćenu nogu",
       "Čekam da dovrši i kontratiram",
       "Idem u suprotnom smeru bacanja"
@@ -14597,8 +14597,8 @@
     "q": "Koji je najefikasniji pristup gripfajtu?",
     "opts": [
       "Prihvatam njegov hvat i borim se iz te pozicije",
-      "Kontinuirano remetirem njegovo hvatanje, ne dozvoljavajući mu da stabilizuje hvat",
-      "Idem unazad da izadjem iz dometa",
+      "Kontinuirano remetim njegovo hvatanje, ne dozvoljavajući mu da stabilizuje hvat",
+      "Idem unazad da izađem iz dometa",
       "Čekam da napadne pa onda skinem hvat"
     ],
     "c": 1,

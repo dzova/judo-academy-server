@@ -6199,7 +6199,7 @@
         "The entrance to the dojo through which judoka enter and exit"
       ],
       "c": 0,
-      "exp": "Joseki = 'place of honour' – the side of the hall facing the entrance, where Sensei, guests and certificates are placed. Always bow toward it. Note: in competition judo, 'Joseki judges' is a separate term for the video review panel – not to be confused!"
+      "exp": "Joseki = 'place of honour' – the side of the hall facing the entrance, where Sensei, guests and certificates are placed. Always bow toward it."
     },
     "de": {
       "q": "Was ist 'Joseki' in einer Judohalle?",
@@ -6210,7 +6210,7 @@
         "Der Eingang zum Dojo, durch den Judoka ein- und ausgehen"
       ],
       "c": 0,
-      "exp": "Joseki = 'Ehrenplatz' – die Seite der Halle gegenüber dem Eingang, wo Sensei, Gäste und Urkunden platziert sind. Verbeuge dich immer dorthin. Hinweis: Im Wettkampfjudo ist 'Joseki-Richter' ein eigener Begriff für das Videoreview-Gremium – nicht verwechseln!"
+      "exp": "Joseki = 'Ehrenplatz' – die Seite der Halle gegenüber dem Eingang, wo Sensei, Gäste und Urkunden platziert sind. Verbeuge dich immer dorthin."
     },
     "fr": {
       "q": "Qu'est-ce que le 'Joseki' dans un Dojo ?",
@@ -6221,7 +6221,7 @@
         "L'entrée du Dojo par laquelle les judokas entrent et sortent"
       ],
       "c": 0,
-      "exp": "Joseki = 'place d'honneur' – le côté de la salle face à l'entrée, où se trouvent Sensei, les invités et les diplômes. Salue toujours dans cette direction. Remarque : en compétition, 'juges Joseki' désigne le panel de vidéo-arbitrage – à ne pas confondre !"
+      "exp": "Joseki = 'place d'honneur' – le côté de la salle face à l'entrée, où se trouvent Sensei, les invités et les diplômes. Salue toujours dans cette direction."
     },
     "es": {
       "q": "¿Qué es el 'Joseki' en un Dojo de judo?",
@@ -6232,7 +6232,7 @@
         "La entrada al Dojo por la que entran y salen los judokas"
       ],
       "c": 0,
-      "exp": "Joseki = 'lugar de honor' – el lado de la sala que da a la entrada, donde se colocan el Sensei, los invitados y los diplomas. Inclínate siempre hacia él. Nota: en el judo de competición, 'jueces de Joseki' es un término aparte para el panel de revisión de vídeo; ¡no los confundas!"
+      "exp": "Joseki = 'lugar de honor' – el lado de la sala que da a la entrada, donde se colocan el Sensei, los invitados y los diplomas. Inclínate siempre hacia él."
     },
     "it": {
       "q": "Cos'è il 'Joseki' in una sala di judo?",
@@ -6243,7 +6243,7 @@
         "L'ingresso del Dojo attraverso cui i judoka entrano ed escono"
       ],
       "c": 0,
-      "exp": "Joseki = 'posto d'onore' – il lato della sala di fronte all'ingresso, dove si trovano Sensei, gli ospiti e i diplomi. Fai sempre un inchino nella sua direzione. Nota: nel judo agonistico, 'giudici Joseki' è un termine separato per il pannello di revisione video – non confondere!"
+      "exp": "Joseki = 'posto d'onore' – il lato della sala di fronte all'ingresso, dove si trovano Sensei, gli ospiti e i diplomi. Fai sempre un inchino nella sua direzione."
     },
     "pt": {
       "q": "O que é o 'Joseki' num dojo de judo?",
@@ -6254,7 +6254,7 @@
         "A entrada do dojo por onde os judocas entram e saem"
       ],
       "c": 0,
-      "exp": "Joseki = 'lugar de honra' – o lado da sala virado para a entrada, onde se encontram o Sensei, os convidados e os diplomas. Inclina-te sempre na sua direção. Nota: no judo de competição, 'juízes do Joseki' é um termo separado para o painel de revisão de vídeo – não confundir!"
+      "exp": "Joseki = 'lugar de honra' – o lado da sala virado para a entrada, onde se encontram o Sensei, os convidados e os diplomas. Inclina-te sempre na sua direção."
     },
     "ru": {
       "q": "Что такое «Дзёсэки» в зале дзюдо?",
@@ -6265,7 +6265,7 @@
         "Вход в додзё, через который входят и выходят дзюдоисты"
       ],
       "c": 0,
-      "exp": "Дзёсэки = «почётное место» – сторона зала напротив входа, где располагаются Сэнсэй, гости и сертификаты. Всегда кланяйся в эту сторону. Важно: в соревновательном дзюдо «судьи Дзёсэки» – отдельный термин для группы видеопросмотра, не путай их!"
+      "exp": "Дзёсэки = «почётное место» – сторона зала напротив входа, где располагаются Сэнсэй, гости и сертификаты. Всегда кланяйся в эту сторону."
     },
     "c": 0
   },
@@ -8663,10 +8663,10 @@
     "en": {
       "q": "What is 'Sasae-tsurikomi-ashi'?",
       "opts": [
-        "Supporting lifting foot block",
-        "Attacking with the foot",
-        "Stopping with the foot",
-        "Foot block"
+        "A supporting foot block placed as the opponent is pulled forward",
+        "A direct foot attack without blocking",
+        "An attempt to stop an attack with the foot in a defensive situation",
+        "Blocking the advancing leg with the foot, without body rotation"
       ],
       "c": 0,
       "exp": "Sasae-tsurikomi-ashi – 'propping drawing ankle throw'. Tori places the foot as a block and lifts Uke while pulling them forward. A technique of delicate timing."
@@ -9703,7 +9703,7 @@
         "Naoya Ogawa"
       ],
       "c": 0,
-      "exp": "Yamashita Yasuhiro – 203 pobede, 4× svetski prvak, OI 1984 zlato (sa povređenim gležnjem!). Smatra se jednim od najvećih džudoka."
+      "exp": "Yamashita Yasuhiro – 203 pobede, 4× svetski prvak, OI 1984 zlato (sa povređenim listom noge!). Smatra se jednim od najvećih džudoka."
     },
     "en": {
       "q": "Which judoka had 203 consecutive victories and 4 World Championship titles?",
@@ -9714,7 +9714,7 @@
         "Naoya Ogawa"
       ],
       "c": 0,
-      "exp": "Yamashita Yasuhiro – 203 victories, 4× World Champion, 1984 Olympic gold (with an injured ankle!). Considered one of the greatest judoka ever."
+      "exp": "Yamashita Yasuhiro – 203 victories, 4× World Champion, 1984 Olympic gold (with a torn calf muscle!). Considered one of the greatest judoka ever."
     },
     "de": {
       "q": "Welcher Judoka erzielte 203 Siege in Folge und gewann 4 Weltmeistertitel?",
@@ -9725,7 +9725,7 @@
         "Naoya Ogawa"
       ],
       "c": 0,
-      "exp": "Yamashita Yasuhiro – 203 Siege, 4× Weltmeister, Olympiagold 1984 (mit verletztem Knöchel!). Er gilt als einer der größten Judoka aller Zeiten."
+      "exp": "Yamashita Yasuhiro – 203 Siege, 4× Weltmeister, Olympiagold 1984 (mit gerissenem Wadenmuskel!). Er gilt als einer der größten Judoka aller Zeiten."
     },
     "fr": {
       "q": "Quel judoka a enchaîné 203 victoires consécutives et remporté 4 titres de champion du monde ?",
@@ -9736,7 +9736,7 @@
         "Naoya Ogawa"
       ],
       "c": 0,
-      "exp": "Yamashita Yasuhiro – 203 victoires, 4 fois champion du monde, médaille d'or olympique en 1984 (avec une cheville blessée !). Il est considéré comme l'un des plus grands judokas de tous les temps."
+      "exp": "Yamashita Yasuhiro – 203 victoires, 4 fois champion du monde, médaille d'or olympique en 1984 (avec un mollet déchiré !). Il est considéré comme l'un des plus grands judokas de tous les temps."
     },
     "es": {
       "q": "¿Qué judoka tuvo 203 victorias consecutivas y 4 títulos mundiales?",
@@ -9747,7 +9747,7 @@
         "Naoya Ogawa"
       ],
       "c": 0,
-      "exp": "Yamashita Yasuhiro – 203 victorias, 4 veces Campeón del Mundo, oro olímpico en 1984 (¡con un tobillo lesionado!). Considerado uno de los mejores judokas de todos los tiempos."
+      "exp": "Yamashita Yasuhiro – 203 victorias, 4 veces Campeón del Mundo, oro olímpico en 1984 (¡con la pantorrilla desgarrada!). Considerado uno de los mejores judokas de todos los tiempos."
     },
     "it": {
       "q": "Quale judoka ha ottenuto 203 vittorie consecutive e 4 titoli mondiali?",
@@ -9758,7 +9758,7 @@
         "Naoya Ogawa"
       ],
       "c": 0,
-      "exp": "Yamashita Yasuhiro – 203 vittorie, 4 volte campione del mondo, oro olimpico nel 1984 (con una caviglia infortunata!). È considerato uno dei più grandi judoka di sempre."
+      "exp": "Yamashita Yasuhiro – 203 vittorie, 4 volte campione del mondo, oro olimpico nel 1984 (con un polpaccio strappato!). È considerato uno dei più grandi judoka di sempre."
     },
     "pt": {
       "q": "Que judoca teve 203 vitórias consecutivas e 4 títulos mundiais?",
@@ -9769,7 +9769,7 @@
         "Naoya Ogawa"
       ],
       "c": 0,
-      "exp": "Yamashita Yasuhiro – 203 vitórias, 4× Campeão do Mundo, ouro olímpico em 1984 (com o tornozelo lesionado!). É considerado um dos maiores judocas de sempre."
+      "exp": "Yamashita Yasuhiro – 203 vitórias, 4× Campeão do Mundo, ouro olímpico em 1984 (com a panturrilha rasgada!). É considerado um dos maiores judocas de sempre."
     },
     "ru": {
       "q": "Какой дзюдоист одержал 203 победы подряд и завоевал 4 титула чемпиона мира?",
@@ -9780,7 +9780,7 @@
         "Наоя Огава"
       ],
       "c": 0,
-      "exp": "Ямасита Ясухиро – 203 победы, 4-кратный чемпион мира, олимпийское золото 1984 года (с травмой лодыжки!). Считается одним из величайших дзюдоистов в истории."
+      "exp": "Ямасита Ясухиро – 203 победы, 4-кратный чемпион мира, олимпийское золото 1984 года (с разрывом мышцы голени!). Считается одним из величайших дзюдоистов в истории."
     },
     "c": 0
   },
@@ -16252,7 +16252,7 @@
       "opts": [
         "Vojnik i generalni oficir japanske armije",
         "Učitelj i pedagog, direktor obrazovnih institucija",
-        "Lekarski doktor i kirurg",
+        "Doktor medicine i hirurg",
         "Vladinski ministar i diplomat"
       ],
       "c": 1,
@@ -17202,7 +17202,7 @@
       "opts": [
         "Tehnika disanja koja se koristi u pripremi za borbu",
         "Stanje 'praznog uma' — delovanje bez svesnog razmišljanja",
-        "Meditativna priprema koja se radi sat vremena przed trening",
+        "Meditativna priprema koja se radi sat vremena pred trening",
         "Sistem vizualizacije koji pomaže pamćenju tehnika"
       ],
       "c": 1,
@@ -21481,7 +21481,7 @@
         "Klečanje je greška samo kod naprednih tehnika"
       ],
       "c": 1,
-      "exp": "Klečanje kao odgovor na Seoi-nage je česta navika koja dolazi iz straha od pada. Problem: klečanje sprečava bekstvo, kontra i smanjuje mobility za pateternike. Ispravna odbrana od Seoi-nage je kretanje u stranu ili unazad — ne nemom klečanju koje predaje kontrolu."
+      "exp": "Klečanje kao odgovor na Seoi-nage je česta navika koja dolazi iz straha od pada. Problem: klečanje sprečava bekstvo, kontra i smanjuje pokretljivost. Ispravna odbrana od Seoi-nage je kretanje u stranu ili unazad — ne nemom klečanju koje predaje kontrolu."
     },
     "en": {
       "q": "Your partner asks: 'Why do you always kneel when I enter Seoi-nage?' What is the reason for this habit?",
@@ -21582,12 +21582,12 @@
       "q": "You hear from a senior club member: 'In judo one never stops learning.' What does this actually mean?",
       "opts": [
         "Judo is so complex that no one can ever master it",
-        "Every opponent every match and every training reveals something new — growth in judo is a continuous process without end",
+        "Every opponent, every match and every training reveals something new — growth in judo is a continuous process without end",
         "It is a motivational speech with no real meaning",
         "It means judoka should never retire"
       ],
       "c": 1,
-      "exp": "Judo is a deep art whose principles have unlimited depth. Every opponent is a new challenge every level opens new levels of understanding. Even a 10th dan continues discovering new aspects of throws practised their entire life. Learning in judo has no end."
+      "exp": "Judo is a deep art whose principles have unlimited depth. Every opponent is a new challenge every level opens new levels of understanding. Even a 10th dan continues discovering new aspects of throws they have practised their entire life. Learning in judo has no end."
     },
     "de": {
       "q": "Du hörst von einem erfahrenen Clubmitglied: 'Im Judo hört man nie auf zu lernen.' Was bedeutet das eigentlich?",
@@ -21668,7 +21668,7 @@
         "Protivnik je napravio grešku, to je bila sreća",
         "Pronašao sam tačan trenutak kad je njegov centar ravnoteže bio na minimalnoj bazi i iskoristio to",
         "Fizička snaga je ipak presudna u pravo vreme",
-        "Moja tehnika je bila bolja od njegove zaustavljajući ga od napada"
+        "Moja tehnika je bila bolja od njegove, što ga je sprečilo da napadne"
       ],
       "c": 1,
       "exp": "Lagano bacanje snažnog protivnika nije sreća niti slučajnost. To je rezultat tačnog timitinga — napad u momentu kad je Uke u najranjivijoj poziciji. Seiryoku-zenyo: maksimalna efikasnost minimiziranjem neravnoteže Ukea. Takvo bacanje je vrhunac džudo razumevanja."
@@ -21679,7 +21679,7 @@
         "The opponent made a mistake it was luck",
         "I found the exact moment when their centre of balance was at minimum base and used it",
         "Physical strength is still decisive at the right moment",
-        "My technique was better than his stopping him from attacking"
+        "My technique was better than his, which stopped him from attacking"
       ],
       "c": 1,
       "exp": "Throwing a powerful opponent effortlessly is not luck or coincidence. It is the result of precise timing — attacking when Uke is in their most vulnerable position. Seiryoku-zenyo: maximum efficiency by minimising Uke's balance. Such a throw is the pinnacle of judo understanding."
