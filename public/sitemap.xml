@@ -11,6 +11,31 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.judoacademy.app/judo-commands-guide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.judoacademy.app/judo-belt-ranks-explained.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.judoacademy.app/judo-beginner-mistakes.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.judoacademy.app/judo-scoring-explained.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.judoacademy.app/judo-dojo-etiquette.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://www.judoacademy.app/terms</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
