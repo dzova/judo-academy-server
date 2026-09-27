@@ -2325,6 +2325,12 @@ app.get('/terms', (req, res) => {
 app.get('/privacy', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'privacy.html'));
 });
+// Google Play Data Safety "account deletion" link — ista logika kao /terms i /privacy:
+// bez ove eksplicitne rute, express.static je servirao stranicu samo na /delete-account.html,
+// ne na /delete-account (koji Play Console i marketing linkovi koriste).
+app.get('/delete-account', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'delete-account.html'));
+});
 
 // ============================================================
 // Judo Academy — Admin Dashboard Endpoint
