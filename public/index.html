@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- JA-SITE v1.0 — judo-academy-server/public/index.html — marketing landing page (www.judoacademy.app). NE MENJATI kao app SPA. -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -137,6 +138,20 @@
   .faq-item:first-child { padding-top: 0; }
   .faq-item .q { font-weight: 600; margin-bottom: 6px; }
   .faq-item .a { color: var(--muted); margin: 0; }
+
+  /* Friends of the app */
+  .friends-list { display: flex; flex-direction: column; gap: 4px; max-width: 420px; }
+  .friends-list a {
+    display: flex; align-items: center; gap: 12px; padding: 8px 4px;
+    text-decoration: none; color: var(--ink);
+  }
+  .friends-list a:hover .friend-name { color: var(--red); }
+  .friend-icon {
+    width: 40px; height: 40px; flex: 0 0 auto; border-radius: 50%; overflow: hidden;
+    border: 1.5px solid var(--border); background: var(--card);
+  }
+  .friend-icon img { width: 100%; height: 100%; object-fit: cover; }
+  .friend-name { font-size: .95em; font-weight: 600; }
 
   /* About / contact */
   #about p { max-width: 640px; }
@@ -348,6 +363,28 @@
         <h3><a href="/judo-beginner-mistakes.html">10 Beginner Mistakes</a></h3>
         <p>The most common first-year habits, and how to fix them.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sekcija "Prijatelji aplikacije" - dodato 29.09.2026, trenutno sakriveno (display:none) na korisnikov zahtev. Ista lista kao u app Settings-u (JA-APP index.html). -->
+<section id="friends" style="display:none;">
+  <div class="wrap">
+    <p class="eyebrow">Friends of the app</p>
+    <h2 class="section-title">Friends of Judo Academy</h2>
+    <div class="friends-list">
+      <a href="https://www.kokakids.co.uk/" target="_blank" rel="noopener">
+        <div class="friend-icon"><img src="/images/KokaKids.png" alt="Koka Kids"></div>
+        <span class="friend-name">Koka Kids</span>
+      </a>
+      <a href="https://www.dzktrudbenikkortega.rs/" target="_blank" rel="noopener">
+        <div class="friend-icon"><img src="/images/Trudbenik.jpg" alt="JK Trudbenik Kortega"></div>
+        <span class="friend-name">JK Trudbenik Kortega</span>
+      </a>
+      <a href="https://judoradnicki.rs/" target="_blank" rel="noopener">
+        <div class="friend-icon"><img src="/images/Radnicki.png" alt="JK Radnički Beograd"></div>
+        <span class="friend-name">JK Radnički Beograd</span>
+      </a>
     </div>
   </div>
 </section>
