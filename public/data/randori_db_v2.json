@@ -8060,13 +8060,13 @@
     "s": "Protivnik je pasivan i samo brani. Sudija ti daje Shido upozorenje za pasivnost.",
     "q": "Kako prisiljavaš protivnika da se pomera?",
     "opts": [
-      "Napadam ga da moram reaguje",
+      "Napadam ga da mora da reaguje",
       "Stojim mirno i čekam",
       "Tražim hvat koji ga iznervira",
       "Žalim se sudiji"
     ],
     "c": 0,
-    "e": "Pasivnom protivniku treba nametnuti ritam. Napadaj kontinuirano — ashi-waza naterava protivnika da menja stopu i otvara prostor za tachi-waza. Aktivan pritisak dovodi do protivnikovog Shido.",
+    "e": "Pasivnom protivniku treba nametnuti ritam. Napadaj kontinuirano — ashi-waza naterava protivnika da menja poziciju stopala i otvara prostor za tachi-waza. Aktivan pritisak dovodi do protivnikovog Shido.",
     "en_s": "Opponent is passive and only defends. Referee gives you a Shido warning for passivity.",
     "en_q": "How do you force the opponent to move?",
     "en_opts": [
@@ -13158,7 +13158,7 @@
       "Idem direktno u ne-waza"
     ],
     "c": 1,
-    "e": "Protiv o-uchi-gari, prenos težine na zahvaćenu nogu (levu) i odmicanje slobodne (desne) unapred otvara prostor i oduzima silu napada. Spuštanje težišta pojačava stabilnost. Odmicanje noge je brže i efikasnije od pokušaja blokiranja.",
+    "e": "Protiv o-uchi-gari, prenos težine na zahvaćenu nogu (levu) i odmicanje slobodne (desne) unazad otvara prostor i oduzima silu napada. Spuštanje težišta pojačava stabilnost. Odmicanje noge je brže i efikasnije od pokušaja blokiranja.",
     "en_s": "Opponent enters o-uchi-gari. You feel him pulling your left leg backward.",
     "en_q": "What is the most effective defensive movement?",
     "en_opts": [
