@@ -740,8 +740,8 @@ app.post('/api/promo/redeem', strictLimiter, _requireAuth, _requireIntegrity, as
     // Oba UPDATE-a u istoj transakciji - ili oba prodju ili nijedan (sprecava
     // da korisnik dobije premium a kod ostane "neiskoriscen" ako server padne
     // izmedju ove dve linije).
-    await client.query('UPDATE users SET subscription_tier = $1, subscription_expires = $2 WHERE id = $3',
-      ['premium', expiresAt, userId]);
+    await client.query('UPDATE users SET subscription_tier = $1, subscription_expires = $2, subscription_source = $3 WHERE id = $4',
+      ['premium', expiresAt, 'promo_code', userId]);
     await client.query('UPDATE promo_codes SET used_count = used_count + 1 WHERE code = $1', [code.toUpperCase()]);
 
     await client.query('COMMIT');
@@ -792,9 +792,14 @@ async function _verifyAndApplySubscription(userId, purchaseToken, productId) {
     return { ok: false, status: 409, error: 'Ova kupovina je vec povezana sa drugim nalogom' };
   }
 
+  // Izvor pretplate za admin dashboard (Nalozi tab) - razlikuje mesecni od godisnjeg
+  // Play Billing plana na osnovu stvarnog productId-a iz Google odgovora (vidi
+  // PLAY_BILLING_PRODUCT_IDS definiciju iznad).
+  const subscriptionSource = resolvedProductId === 'premium_annual_plan' ? 'annually' : 'monthly';
+
   await db.query(
-    'UPDATE users SET subscription_tier = $1, subscription_expires = $2, play_purchase_token = $3 WHERE id = $4',
-    ['premium', expiresAt, purchaseToken, userId]
+    'UPDATE users SET subscription_tier = $1, subscription_expires = $2, play_purchase_token = $3, subscription_source = $4 WHERE id = $5',
+    ['premium', expiresAt, purchaseToken, subscriptionSource, userId]
   );
 
   if (subscription.acknowledgementState === 'ACKNOWLEDGEMENT_STATE_PENDING') {
@@ -1333,7 +1338,7 @@ app.post('/api/admin/premium/club-grant', adminLimiter, async (req, res) => {
 
     const result = await db.query(
       `UPDATE users
-       SET subscription_tier = 'premium', subscription_expires = $1
+       SET subscription_tier = 'premium', subscription_expires = $1, subscription_source = 'promo_code'
        WHERE club ILIKE $2
        RETURNING id, username, club`,
       [expiresAt, `%${clubQuery}%`]
@@ -1383,7 +1388,7 @@ app.get('/api/admin/users/list', adminLimiter, async (req, res) => {
 
     const countResult = await db.query(`SELECT COUNT(*)::int AS n FROM users ${whereClause}`, params);
     const result = await db.query(
-      `SELECT id, username, email, belt, xp, club, country, subscription_tier, subscription_expires, updated_at
+      `SELECT id, username, email, belt, xp, club, country, subscription_tier, subscription_expires, subscription_source, updated_at
        FROM users
        ${whereClause}
        ORDER BY updated_at DESC NULLS LAST
