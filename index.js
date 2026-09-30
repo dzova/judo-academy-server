@@ -31,6 +31,27 @@ app.use((req, res, next) => {
   next();
 });
 
+// FIX (30.09.2026, Search Console nalaz - "sajt se pojavljuje na pretrazi pod Railway domenom
+// umesto pod judoacademy.app"): sirovi Railway URL (judo-academy-server-production.up.railway.app)
+// servira IDENTICAN marketing/landing sadrzaj kao www.judoacademy.app (pocetna, terms, privacy,
+// delete-account, robots.txt, sitemap.xml, guide stranice iz public/) - Google Search Console je
+// 28.09.2026 poceo da indeksira taj Railway URL kao odvojenu stranicu, duplirajuci sadrzaj i
+// deleci SEO signal od kanonskog domena. Redirect vazi SAMO za ne-API/ne-auth/ne-health rute -
+// Android klijent i dalje gadja /api/* i /auth/* direktno na Railway domenu (vidi komentar iznad,
+// SERVER_URL u index.html) i taj saobracaj NIKAD ne prolazi kroz ovaj middleware. /health je
+// izuzet jer ga Railway sam koristi za healthcheck.
+app.use((req, res, next) => {
+  if (
+    req.hostname === 'judo-academy-server-production.up.railway.app' &&
+    !req.path.startsWith('/api') &&
+    !req.path.startsWith('/auth') &&
+    req.path !== '/health'
+  ) {
+    return res.redirect(301, 'https://www.judoacademy.app' + req.originalUrl);
+  }
+  next();
+});
+
 // CORS headers — MORAJU biti pre ostalih middleware-a
 // FIX (13.09.2026, konsultantski nalaz): Allow-Headers je ranije dozvoljavao SAMO 'Content-Type',
 // a klijent salje i custom 'Authorization' i 'X-Integrity-Token' headere. Za bilo koji NE-native
