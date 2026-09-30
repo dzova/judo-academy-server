@@ -1,68 +1,430 @@
-warning: in the working copy of 'public/index.html', LF will be replaced by CRLF the next time Git touches it
-[1mdiff --git a/index.js b/index.js[m
-[1mindex 76a0736..3befacf 100644[m
-[1m--- a/index.js[m
-[1m+++ b/index.js[m
-[36m@@ -31,6 +31,27 @@[m [mapp.use((req, res, next) => {[m
-   next();[m
- });[m
- [m
-[32m+[m[32m// FIX (30.09.2026, Search Console nalaz - "sajt se pojavljuje na pretrazi pod Railway domenom[m
-[32m+[m[32m// umesto pod judoacademy.app"): sirovi Railway URL (judo-academy-server-production.up.railway.app)[m
-[32m+[m[32m// servira IDENTICAN marketing/landing sadrzaj kao www.judoacademy.app (pocetna, terms, privacy,[m
-[32m+[m[32m// delete-account, robots.txt, sitemap.xml, guide stranice iz public/) - Google Search Console je[m
-[32m+[m[32m// 28.09.2026 poceo da indeksira taj Railway URL kao odvojenu stranicu, duplirajuci sadrzaj i[m
-[32m+[m[32m// deleci SEO signal od kanonskog domena. Redirect vazi SAMO za ne-API/ne-auth/ne-health rute -[m
-[32m+[m[32m// Android klijent i dalje gadja /api/* i /auth/* direktno na Railway domenu (vidi komentar iznad,[m
-[32m+[m[32m// SERVER_URL u index.html) i taj saobracaj NIKAD ne prolazi kroz ovaj middleware. /health je[m
-[32m+[m[32m// izuzet jer ga Railway sam koristi za healthcheck.[m
-[32m+[m[32mapp.use((req, res, next) => {[m
-[32m+[m[32m  if ([m
-[32m+[m[32m    req.hostname === 'judo-academy-server-production.up.railway.app' &&[m
-[32m+[m[32m    !req.path.startsWith('/api') &&[m
-[32m+[m[32m    !req.path.startsWith('/auth') &&[m
-[32m+[m[32m    req.path !== '/health'[m
-[32m+[m[32m  ) {[m
-[32m+[m[32m    return res.redirect(301, 'https://www.judoacademy.app' + req.originalUrl);[m
-[32m+[m[32m  }[m
-[32m+[m[32m  next();[m
-[32m+[m[32m});[m
-[32m+[m
- // CORS headers — MORAJU biti pre ostalih middleware-a[m
- // FIX (13.09.2026, konsultantski nalaz): Allow-Headers je ranije dozvoljavao SAMO 'Content-Type',[m
- // a klijent salje i custom 'Authorization' i 'X-Integrity-Token' headere. Za bilo koji NE-native[m
-[1mdiff --git a/public/index.html b/public/index.html[m
-[1mindex f54323f..931bf50 100644[m
-[1m--- a/public/index.html[m
-[1m+++ b/public/index.html[m
-[36m@@ -13,6 +13,7 @@[m
- <meta property="og:description" content="An educational mobile app for learning judo techniques, terminology and rules through interactive quizzes.">[m
- <meta property="og:url" content="https://www.judoacademy.app/">[m
- <meta property="og:image" content="https://www.judoacademy.app/logo-icon.png">[m
-[32m+[m[32m<meta property="og:site_name" content="Judo Academy">[m
- <meta name="twitter:card" content="summary">[m
- <meta name="twitter:title" content="Judo Academy">[m
- <meta name="twitter:description" content="An educational mobile app for learning judo techniques, terminology and rules through interactive quizzes.">[m
-[36m@@ -40,6 +41,22 @@[m
-   }[m
- }[m
- </script>[m
-[32m+[m[32m<!-- FIX (30.09.2026, Google nalaz - SERP prikazuje "Railway" umesto "Judo Academy" kao ime sajta):[m
-[32m+[m[32m     og:site_name iznad + ovaj WebSite schema su signali koje Google eksplicitno trazi za "site name"[m
-[32m+[m[32m     u rezultatima pretrage (title tag, H1, og:site_name, WebSite structured data). Bez njih, kad Google[m
-[32m+[m[32m     ne moze pouzdano da odredi ime sajta, moze da padne na fallback izveden iz domena/hostinga -[m
-[32m+[m[32m     sto objasnjava zasto se za judo-academy-server-production.up.railway.app (podomen u vlasnistvu[m
-[32m+[m[32m     Railway-a) i za neindeksiranu judoacademy.app (bez www) varijantu prikazivalo "Railway" umesto[m
-[32m+[m[32m     "Judo Academy". Postojeci MobileApplication blok iznad ne pokriva ovaj signal (Google trazi[m
-[32m+[m[32m     konkretno WebSite tip za site name, ne nested publisher/Organization unutar drugog @type-a). -->[m
-[32m+[m[32m<script type="application/ld+json">[m
-[32m+[m[32m{[m
-[32m+[m[32m  "@context": "https://schema.org",[m
-[32m+[m[32m  "@type": "WebSite",[m
-[32m+[m[32m  "name": "Judo Academy",[m
-[32m+[m[32m  "url": "https://www.judoacademy.app/"[m
-[32m+[m[32m}[m
-[32m+[m[32m</script>[m
- <style>[m
-   :root {[m
-     --red: #b71c1c;[m
+<!DOCTYPE html>
+<!-- JA-SITE v1.0 — judo-academy-server/public/index.html — marketing landing page (www.judoacademy.app). NE MENJATI kao app SPA. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://www.judoacademy.app/">
+<title>Judo Academy</title>
+<meta name="description" content="An educational mobile app for learning judo techniques, terminology and rules through interactive quizzes.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Judo Academy">
+<meta property="og:description" content="An educational mobile app for learning judo techniques, terminology and rules through interactive quizzes.">
+<meta property="og:url" content="https://www.judoacademy.app/">
+<meta property="og:image" content="https://www.judoacademy.app/logo-icon.png">
+<meta property="og:site_name" content="Judo Academy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Judo Academy">
+<meta name="twitter:description" content="An educational mobile app for learning judo techniques, terminology and rules through interactive quizzes.">
+<meta name="twitter:image" content="https://www.judoacademy.app/logo-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  "name": "Judo Academy",
+  "description": "An educational mobile app for learning judo techniques, terminology and rules through interactive quizzes, a technique library, an AI Sensei and belt progress tracking.",
+  "url": "https://www.judoacademy.app/",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Android",
+  "inLanguage": ["en","sr","de","fr","es","it","pt","ru"],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR",
+    "category": "Freemium"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Judo Academy",
+    "email": "judo.academy.world@gmail.com"
+  }
+}
+</script>
+<!-- FIX (30.09.2026, Google nalaz - SERP prikazuje "Railway" umesto "Judo Academy" kao ime sajta):
+     og:site_name iznad + ovaj WebSite schema su signali koje Google eksplicitno trazi za "site name"
+     u rezultatima pretrage (title tag, H1, og:site_name, WebSite structured data). Bez njih, kad Google
+     ne moze pouzdano da odredi ime sajta, moze da padne na fallback izveden iz domena/hostinga -
+     sto objasnjava zasto se za judo-academy-server-production.up.railway.app (podomen u vlasnistvu
+     Railway-a) i za neindeksiranu judoacademy.app (bez www) varijantu prikazivalo "Railway" umesto
+     "Judo Academy". Postojeci MobileApplication blok iznad ne pokriva ovaj signal (Google trazi
+     konkretno WebSite tip za site name, ne nested publisher/Organization unutar drugog @type-a). -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Judo Academy",
+  "url": "https://www.judoacademy.app/"
+}
+</script>
+<style>
+  :root {
+    --red: #b71c1c;
+    --ink: #1a1a1a;
+    --muted: #5b5b5b;
+    --border: #e5e5e5;
+    --bg: #fafafa;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    margin: 0;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--bg);
+  }
+  a { color: var(--red); }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(250,250,250,.92); backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border);
+  }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; padding: 8px 20px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand img { height: 64px; width: auto; }
+  nav { display: flex; align-items: center; gap: 22px; }
+  nav a.navlink { color: var(--ink); text-decoration: none; font-size: 0.92em; }
+  nav a.navlink:hover { color: var(--red); }
+  @media (max-width: 640px) { nav a.navlink { display: none; } }
+
+  /* Store badge */
+  .store-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #000; color: #fff; text-decoration: none;
+    padding: 10px 18px; border-radius: 10px;
+    font-family: inherit;
+  }
+  .store-badge:hover { background: #222; }
+  .store-badge svg { flex-shrink: 0; }
+  .store-badge-text { line-height: 1.2; }
+  .store-badge-text small { display: block; font-size: 0.7em; color: #ccc; }
+  .store-badge-text strong { display: block; font-size: 1.05em; }
+  .store-badge.small { padding: 7px 12px; }
+  .store-badge.small svg { width: 18px; height: 18px; }
+  .store-badge.small .store-badge-text strong { font-size: 0.85em; }
+  .store-badge.small .store-badge-text small { font-size: 0.62em; }
+
+  /* Sections */
+  section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: none; }
+  .eyebrow { color: var(--red); text-transform: uppercase; letter-spacing: .06em; font-size: .78em; font-weight: 700; margin: 0 0 8px; }
+  h1 { font-size: 2em; margin: 0 0 10px; color: var(--ink); }
+  h2.section-title { font-size: 1.5em; margin: 0 0 8px; color: var(--ink); }
+  .section-sub { color: var(--muted); margin: 0 0 28px; max-width: 640px; }
+
+  /* Hero */
+  #hero .wrap { padding-top: 48px; padding-bottom: 8px; }
+  .hero-text { max-width: 560px; }
+  .hero-text p.subtitle { color: var(--muted); font-size: 1.08em; margin: 14px 0 26px; }
+  .lang-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+  .lang-pills span {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 5px 12px; font-size: .82em; color: var(--muted);
+  }
+
+  /* Features */
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+  .feature-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px;
+  }
+  .feature-card .icon { font-size: 1.6em; margin-bottom: 10px; }
+  .feature-card h3 { margin: 0 0 6px; font-size: 1em; }
+  .feature-card p { margin: 0; color: var(--muted); font-size: .92em; }
+
+  /* Screenshots */
+  .shot-scroll {
+    display: flex; gap: 16px; overflow-x: auto; padding-bottom: 12px;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+  }
+  .shot-scroll img {
+    width: 210px; flex-shrink: 0; border-radius: 16px; scroll-snap-align: start;
+    box-shadow: 0 6px 20px rgba(0,0,0,.12);
+  }
+
+  /* Sign-in explainer */
+  .signin-box {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px;
+  }
+
+  /* FAQ */
+  .faq-item { border-bottom: 1px solid var(--border); padding: 16px 0; }
+  .faq-item:first-child { padding-top: 0; }
+  .faq-item .q { font-weight: 600; margin-bottom: 6px; }
+  .faq-item .a { color: var(--muted); margin: 0; }
+
+  /* Friends of the app */
+  .friends-list { display: flex; flex-direction: column; gap: 4px; max-width: 420px; }
+  .friends-list a {
+    display: flex; align-items: center; gap: 12px; padding: 8px 4px;
+    text-decoration: none; color: var(--ink);
+  }
+  .friends-list a:hover .friend-name { color: var(--red); }
+  .friend-icon {
+    width: 40px; height: 40px; flex: 0 0 auto; border-radius: 50%; overflow: hidden;
+    border: 1.5px solid var(--border); background: var(--card);
+  }
+  .friend-icon img { width: 100%; height: 100%; object-fit: cover; }
+  .friend-name { font-size: .95em; font-weight: 600; }
+
+  /* About / contact */
+  #about p { max-width: 640px; }
+
+  footer { padding: 28px 0 40px; font-size: 0.88em; color: var(--muted); }
+  footer a { margin-right: 16px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#hero">
+      <img src="/logo-icon.png" alt="Judo Academy logo">
+    </a>
+    <nav>
+      <a class="navlink" href="#features">Features</a>
+      <a class="navlink" href="#screenshots">Screenshots</a>
+      <a class="navlink" href="#friends">Friends</a>
+      <a class="navlink" href="#faq">FAQ</a>
+      <a class="navlink" href="/judo-glossary.html">Glossary</a>
+      <a class="store-badge small" href="https://play.google.com/store/apps/details?id=com.judoacademy.app" target="_blank" rel="noopener">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.5 2.5c-.3.3-.5.7-.5 1.2v16.6c0 .5.2.9.5 1.2l.1.1L13 12.3v-.6L3.6 2.4l-.1.1z" fill="#00D2FF"/>
+          <path d="M16.2 15.5 13 12.3v-.6l3.2-3.2 4.4 2.5c.9.5.9 1.3 0 1.8l-4.4 2.7z" fill="#FFC800"/>
+          <path d="M16.2 15.5 13 12l-9.5 9.6c.3.4.9.5 1.6.1l11.1-6.2z" fill="#FF3A44"/>
+          <path d="M16.2 8.5 5.1 2.3c-.7-.4-1.3-.3-1.6.1L13 12l3.2-3.5z" fill="#00F076"/>
+        </svg>
+        <span class="store-badge-text">
+          <small>GET IT ON</small>
+          <strong>Google Play</strong>
+        </span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<section id="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <p class="eyebrow">Judo, gamified</p>
+      <h1>Learn judo techniques, terms and rules — one quiz at a time.</h1>
+      <p class="subtitle">Judo Academy is an educational app for judo practitioners of all ages, especially kids
+        and youth training at judo clubs. Quizzes, a technique library, an AI Sensei, and progress tracking tied
+        to real belt ranks.</p>
+
+      <a class="store-badge" href="https://play.google.com/store/apps/details?id=com.judoacademy.app" target="_blank" rel="noopener">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.5 2.5c-.3.3-.5.7-.5 1.2v16.6c0 .5.2.9.5 1.2l.1.1L13 12.3v-.6L3.6 2.4l-.1.1z" fill="#00D2FF"/>
+          <path d="M16.2 15.5 13 12.3v-.6l3.2-3.2 4.4 2.5c.9.5.9 1.3 0 1.8l-4.4 2.7z" fill="#FFC800"/>
+          <path d="M16.2 15.5 13 12l-9.5 9.6c.3.4.9.5 1.6.1l11.1-6.2z" fill="#FF3A44"/>
+          <path d="M16.2 8.5 5.1 2.3c-.7-.4-1.3-.3-1.6.1L13 12l3.2-3.5z" fill="#00F076"/>
+        </svg>
+        <span class="store-badge-text">
+          <small>GET IT ON</small>
+          <strong>Google Play</strong>
+        </span>
+      </a>
+
+      <div class="lang-pills">
+        <span>🇬🇧 English</span><span>🇷🇸 Srpski</span><span>🇩🇪 Deutsch</span><span>🇫🇷 Français</span>
+        <span>🇪🇸 Español</span><span>🇮🇹 Italiano</span><span>🇧🇷 Português</span><span>🇷🇺 Русский</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <p class="eyebrow">What's inside</p>
+    <h2 class="section-title">Everything a judoka needs to learn and track progress</h2>
+    <p class="section-sub">From first techniques to black belt theory, structured around the real kyu/dan
+      belt system.</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">❓</div>
+        <h3>Judo Quiz</h3>
+        <p>250+ questions across 7 categories — technique, rules, history, philosophy, Japanese terms, and more.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🥋</div>
+        <h3>Technique Library</h3>
+        <p>Step-by-step guidance for every throw and hold, organized by belt level, with common mistakes to avoid.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🧠</div>
+        <h3>Randori Simulator</h3>
+        <p>Real tactical scenarios — make a decision and see if it was the right call.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🤖</div>
+        <h3>AI Sensei</h3>
+        <p>Ask questions and get personalized guidance based on your belt, training, and progress.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📈</div>
+        <h3>Belt Progress</h3>
+        <p>Track requirements, techniques, and theory needed for your next belt, with a clear completion percentage.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔥</div>
+        <h3>Daily Training</h3>
+        <p>A short daily routine — a technique, a question, a quote, and a mini task — to build a real habit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="screenshots">
+  <div class="wrap">
+    <p class="eyebrow">See it in action</p>
+    <h2 class="section-title">Screenshots</h2>
+    <p class="section-sub">A quick look at daily training, quizzes, the technique library, and more.</p>
+    <div class="shot-scroll">
+      <img src="/screenshots/shot-01-daily-coach.jpg" alt="Daily training home screen" loading="lazy">
+      <img src="/screenshots/shot-02-quiz.jpg" alt="Judo quiz screen" loading="lazy">
+      <img src="/screenshots/shot-03-techniques.jpg" alt="Technique library screen" loading="lazy">
+      <img src="/screenshots/shot-04-randori.jpg" alt="Randori simulator screen" loading="lazy">
+      <img src="/screenshots/shot-05-sensei.jpg" alt="AI Sensei chat screen" loading="lazy">
+      <img src="/screenshots/shot-06-progress.jpg" alt="Belt progress screen" loading="lazy">
+      <img src="/screenshots/shot-07-languages.jpg" alt="Language selection screen" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section id="signin">
+  <div class="wrap">
+    <p class="eyebrow">Privacy</p>
+    <h2 class="section-title">Why does Judo Academy use Google Sign-In?</h2>
+    <div class="signin-box">
+      <p style="margin:0;">
+        Signing in with Google is optional and is used only to save a user's quiz progress, belt rank, and
+        achievements to their account, so this progress can be restored if they reinstall the app or switch to a
+        new phone. Judo Academy only requests a user's basic Google profile information (name, email address, and
+        profile photo) to create and identify their account — it does not request access to Gmail, Google Drive,
+        contacts, or any other Google data. Users who prefer not to sign in can still use the app's core features
+        (quizzes, technique library) without a Google account, though their progress will then be stored locally
+        on the device only.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <p class="eyebrow">Questions</p>
+    <h2 class="section-title">Frequently asked questions</h2>
+
+    <div class="faq-item">
+      <div class="q">Is Judo Academy free?</div>
+      <p class="a">Yes. The core app — quizzes, technique library, and Japanese dictionary — is free to use. A
+        Premium subscription unlocks unlimited daily quiz attempts, Randori Simulator scenarios, and AI Sensei
+        usage.</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">Is it safe for children?</div>
+      <p class="a">Judo Academy is designed to be usable by learners of all ages, including children (minimum
+        registration age: 8). No sensitive personal data is required to use the app — Google Sign-In is optional
+        and only used to sync progress across devices.</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">Does it work offline?</div>
+      <p class="a">The Technique Library, Japanese Dictionary, and previously loaded quiz content work without an
+        internet connection. Signing in, syncing progress, and AI Sensei features require an internet
+        connection.</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">What belt levels does it cover?</div>
+      <p class="a">Content spans the full kyu/dan system, from white belt beginner material through advanced
+        black belt technique and theory.</p>
+    </div>
+  </div>
+</section>
+
+<section id="guides">
+  <div class="wrap">
+    <p class="eyebrow">Free guides</p>
+    <h2 class="section-title">Learn judo, even before you open the app</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">🥋</div>
+        <h3><a href="/judo-glossary.html">Judo Glossary</a></h3>
+        <p>Every Japanese judo term explained in plain English.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🗣️</div>
+        <h3><a href="/judo-commands-guide.html">Judo Commands Guide</a></h3>
+        <p>All the dojo commands you'll hear in class, decoded.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🎖️</div>
+        <h3><a href="/judo-belt-ranks-explained.html">Belt Ranks Explained</a></h3>
+        <p>How kyu and dan grades work, from white to black belt.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📊</div>
+        <h3><a href="/judo-scoring-explained.html">Scoring Explained</a></h3>
+        <p>Ippon, Waza-ari and Yuko — how judo is actually scored.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🙇</div>
+        <h3><a href="/judo-dojo-etiquette.html">Dojo Etiquette</a></h3>
+        <p>Why judoka bow so much, and the manners every beginner should know.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">⚠️</div>
+        <h3><a href="/judo-beginner-mistakes.html">10 Beginner Mistakes</a></h3>
+        <p>The most common first-year habits, and how to fix them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sekcija "Prijatelji aplikacije" - dodato 29.09.2026, aktivirano 30.09.2026 na korisnikov zahtev (uklonjen display:none, dodat nav link). JK Radnicki Beograd sakriven (display:none) 30.09.2026 na korisnikov zahtev - ostaje u kodu. Ista lista kao u app Settings-u (JA-APP index.html). -->
+<section id="friends">
+  <div class="wrap">
+    <p class="eyebrow">Friends of the app</p>
+    <h2 class="section-title">Friends of Judo Academy</h2>
+    <div class="friends-list">
+      <a href="https://www.kokakids.co.uk/" target="_blank" rel="noopener">
+        <div class="friend-icon"><img src="/images/KokaKids.png" alt="Koka Kids"></div>
+        <span class="friend-name">Koka Kids</span>
+      </a>
+      <a href="https://www.dzktrudbenikkortega.rs/" target="_blank" rel="noopener">
+        <div class="friend-icon"><img src="/images/Trudbenik.jpg" alt="JK Trudbenik Kortega"></div>
+        <span class="friend-name">JK Trudbenik Kortega</span>
+      </a>
+      <a href="https://judoradnicki.rs/" target="_blank" rel="noopener" style="display:none;">
+        <div class="friend-icon"><img src="/images/Radnicki.png" alt="JK Radnički Beograd"></div>
+        <span class="friend-name">JK Radnički Beograd</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <p class="eyebrow">Contact</p>
+    <h2 class="section-title">Who is behind this app?</h2>
+    <p>
+      Judo Academy is developed independently as a learning tool for judo practitioners. For questions, support,
+      or feedback, contact us at
+      <a href="mailto:judo.academy.world@gmail.com">judo.academy.world@gmail.com</a>.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="/judo-glossary.html">Judo Glossary</a><a href="/judo-commands-guide.html">Commands</a><a href="/judo-belt-ranks-explained.html">Belt Ranks</a><a href="/judo-scoring-explained.html">Scoring</a><a href="/judo-dojo-etiquette.html">Etiquette</a><a href="/judo-beginner-mistakes.html">Beginner Mistakes</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a><br><br>
+    &copy; 2026 Judo Academy
+  </div>
+</footer>
+
+</body>
+</html>
