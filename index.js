@@ -1728,7 +1728,7 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
         'x-api-key': process.env.ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01'
       },
-      body: JSON.stringify({ model: 'claude-sonnet-5', max_tokens: 4000, system: systemBlocks, messages: cachedMessages })
+      body: JSON.stringify({ model: 'claude-sonnet-5-5', max_tokens: 4000, system: systemBlocks, messages: cachedMessages })
     });
     const data = await response.json();
 
