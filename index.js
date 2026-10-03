@@ -156,6 +156,18 @@ const db = new Pool({
   connectionTimeoutMillis: 5000,
 });
 
+// PRIVATNOST (03.10.2026): username se javno prikazuje na rang listi. Google displayName je puno
+// ime i prezime (npr. 'Jovana Cika Novakovic') koje korisnik nije izabrao da javno objavi - zato
+// se pri PRVOM kreiranju naloga skracuje na 'Ime P.' (isti oblik kao u app profilu: ime + prvo
+// slovo poslednjeg dela imena). Korisnik moze da ga promeni u Profilu (/api/profile).
+function _shortPublicName(full) {
+  const parts = String(full || '').trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return 'Korisnik';
+  if (parts.length === 1) return Array.from(parts[0]).slice(0, 40).join('');
+  const initial = Array.from(parts[parts.length - 1])[0].toUpperCase();
+  return Array.from(parts[0]).slice(0, 36).join('') + ' ' + initial + '.';
+}
+
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -168,7 +180,7 @@ passport.use(new GoogleStrategy({
     const photoUrl = (profile.photos && profile.photos[0] && profile.photos[0].value) || '';
     let result = await db.query('SELECT * FROM users WHERE google_id = $1', [googleId]);
     if (result.rows.length === 0) {
-      result = await db.query('INSERT INTO users (username, email, google_id, photo_url) VALUES ($1, $2, $3, $4) RETURNING *', [name, email, googleId, photoUrl]);
+      result = await db.query('INSERT INTO users (username, email, google_id, photo_url) VALUES ($1, $2, $3, $4) RETURNING *', [_shortPublicName(name), email, googleId, photoUrl]);
     } else if (photoUrl && photoUrl !== result.rows[0].photo_url) {
       // Google slika se mogla promeniti od poslednjeg login-a - osvezi je
       result = await db.query('UPDATE users SET photo_url = $1 WHERE google_id = $2 RETURNING *', [photoUrl, googleId]);
