@@ -871,6 +871,23 @@ app.post('/api/billing/verify', _requireAuth, _requireIntegrity, async (req, res
 // throttle ispod sprecava da to postane cest poziv ka Google Play API-ju, jer RTDN webhook
 // (linija ~432) vec hvata stvarne promene pretplate u realnom vremenu; ovaj poziv je samo
 // dodatni safety-net za slucaj da webhook zakasni/promasi, pa ne mora da bude trenutan.
+// FIX (04.10.2026): Google Play provera (refresh + RTDN webhook) je bezuslovno upisivala 'free' kad
+// Play pretplata nije aktivna - cak i kad korisnik IMA vazeci promo premium (subscription_source =
+// 'promo_code', subscription_expires u buducnosti ili NULL = trajni). Nalog sa starom probnom Play
+// kupovinom (play_purchase_token) bi tako izgubio promo premium cim otvori Profil. Ova funkcija
+// vraca na 'free' SAMO ako promo premium ne vazi; vraca red (tier/expires) ako je premium ZADRZAN,
+// ili null ako je korisnik stvarno spusten na 'free'.
+async function _downgradeUnlessPromo(userId) {
+  const kept = await db.query(
+    `SELECT subscription_expires FROM users
+     WHERE id = $1 AND subscription_source = 'promo_code'
+       AND (subscription_expires IS NULL OR subscription_expires > NOW())`,
+    [userId]
+  );
+  if (kept.rows.length > 0) return kept.rows[0];
+  await db.query('UPDATE users SET subscription_tier = $1 WHERE id = $2', ['free', userId]);
+  return null;
+}
 const _billingRefreshThrottle = new Map(); // userId -> timestamp poslednjeg stvarnog Google Play poziva
 const BILLING_REFRESH_THROTTLE_MS = 30 * 60 * 1000; // 30 min
 
@@ -902,7 +919,11 @@ app.post('/api/billing/refresh', _requireAuth, async (req, res) => {
     if (!result.ok) {
       // Pretplata vise nije aktivna (otkazana/istekla) - eksplicitno postavi na free
       // umesto da ostavimo zastareo 'premium' status u bazi
-      await db.query('UPDATE users SET subscription_tier = $1 WHERE id = $2', ['free', userId]);
+      const keptPromo = await _downgradeUnlessPromo(userId);
+      if (keptPromo) {
+        // Promo premium i dalje vazi - Play pretplata nije aktivna ali to ne ukida promo pristup
+        return res.json({ success: true, active: true, expires_at: keptPromo.subscription_expires, state: result.state || null, promo: true });
+      }
       return res.json({ success: true, active: false, state: result.state || null });
     }
     res.json({ success: true, active: true, expires_at: result.expiresAt, state: result.state });
@@ -989,7 +1010,7 @@ app.post('/api/billing/webhook', async (req, res) => {
     const userId = userResult.rows[0].id;
     const result = await _verifyAndApplySubscription(userId, purchaseToken, '');
     if (!result.ok) {
-      await db.query('UPDATE users SET subscription_tier = $1 WHERE id = $2', ['free', userId]);
+      await _downgradeUnlessPromo(userId);
     }
 
     // Win-back hook (korisnikov zahtev, 20.09.2026): notificationType SE KORISTI OVDE (samo za
