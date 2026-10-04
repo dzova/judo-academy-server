@@ -288,7 +288,7 @@ app.get('/api/user/me', _requireAuth, async (req, res) => {
   const userId = req.userId;
   try {
     const result = await db.query(
-      'SELECT id, username, email, belt, xp, club, country, subscription_tier, subscription_expires, subscription_canceled_at, exam_date, photo_url, unlocked_badges, birth_year, dominant_side, gender, reset_at FROM users WHERE id = $1',
+      'SELECT id, username, email, belt, xp, club, country, subscription_tier, subscription_expires, subscription_canceled_at, exam_date, photo_url, unlocked_badges, birth_year, dominant_side, gender, reset_at, promo_premium_until FROM users WHERE id = $1',
       [userId]
     );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Nije pronadjen' });
@@ -296,15 +296,21 @@ app.get('/api/user/me', _requireAuth, async (req, res) => {
     // Ako je subscription_tier 'premium' u bazi ali je datum isteka prosao, javi klijentu
     // stvarno stanje ('free') umesto zastarelog baza flaga - baza se ne azurira automatski
     // kad pretplata istekne, samo se runtime proverava pri svakom pristupu
-    if (user.subscription_tier === 'premium' && !_isPremiumActive(user)) {
+    const _playActiveMe = _isPlayActive(user);
+    const _effMe = _effectivePremium(user);
+    if (_effMe.active) {
+      user.subscription_tier = 'premium';
+      user.subscription_expires = _effMe.expires;
+    } else if (user.subscription_tier === 'premium') {
       user.subscription_tier = 'free';
     }
+    delete user.promo_premium_until;
     // subscription_canceled_at je relevantan SAMO dok je korisnik jos premium (win-back banner
     // "otkazao si, jos imas pristup do X") - posle isteka vise nema smisla (vidi initHomeScreen/
     // showWinBackBanner na klijentu koji proverava tacno ovaj uslov). Ne brisemo ga ovde iz baze
     // (to radi webhook na sledeci RTDN event), samo ga ne prosledjujemo klijentu kad vise nije
     // primenljivo, da izbegnemo bilo kakvu zabunu na frontu ako se stanja privremeno raspare.
-    if (user.subscription_tier !== 'premium') {
+    if (!_playActiveMe) {
       user.subscription_canceled_at = null;
     }
     res.json(user);
@@ -682,7 +688,7 @@ app.get('/api/sensei/limit/me', _requireAuth, async (req, res) => {
   const freeLifetimeLimit = isScouting ? 3 : (isJournal ? 3 : 5);   // Sensei 5x, Scouting 3x, Journal 3x - doživotno
   try {
     const result = await db.query(
-      `SELECT ${counterColumn}, ${resetColumn}, subscription_tier, subscription_expires FROM users WHERE id = $1`,
+      `SELECT ${counterColumn}, ${resetColumn}, subscription_tier, subscription_expires, promo_premium_until FROM users WHERE id = $1`,
       [userId]
     );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronadjen' });
@@ -764,21 +770,32 @@ app.post('/api/promo/redeem', strictLimiter, _requireAuth, _requireIntegrity, as
       return res.status(400).json({ error: 'Kod je iskoristen' });
     }
 
-    let expiresAt = null;
+    // IZMENA (04.10.2026): promo grant ide u SOPSTVENU kolonu promo_premium_until (ne dira Play
+    // pretplatu) i NIKAD ne skracuje vec postojeci grant: novi istek = veci od (danas + trajanje)
+    // i postojeceg isteka. Trajni kod = 2099-12-31.
+    const curRow = await client.query('SELECT promo_premium_until FROM users WHERE id = $1 FOR UPDATE', [userId]);
+    const curUntil = curRow.rows[0] && curRow.rows[0].promo_premium_until ? new Date(curRow.rows[0].promo_premium_until) : null;
+    let expiresAt;
     if (p.duration_days) {
       expiresAt = new Date();
       expiresAt.setDate(expiresAt.getDate() + p.duration_days);
+    } else {
+      expiresAt = new Date('2099-12-31T23:59:59.000Z');
+    }
+    let respDays = p.duration_days;
+    if (curUntil && curUntil > expiresAt) {
+      expiresAt = curUntil;
+      if (p.duration_days) respDays = Math.ceil((expiresAt.getTime() - Date.now()) / 86400000);
     }
 
     // Oba UPDATE-a u istoj transakciji - ili oba prodju ili nijedan (sprecava
     // da korisnik dobije premium a kod ostane "neiskoriscen" ako server padne
     // izmedju ove dve linije).
-    await client.query('UPDATE users SET subscription_tier = $1, subscription_expires = $2, subscription_source = $3 WHERE id = $4',
-      ['premium', expiresAt, 'promo_code', userId]);
+    await client.query('UPDATE users SET promo_premium_until = $1 WHERE id = $2', [expiresAt, userId]);
     await client.query('UPDATE promo_codes SET used_count = used_count + 1 WHERE code = $1', [code.toUpperCase()]);
 
     await client.query('COMMIT');
-    res.json({ success: true, duration_days: p.duration_days, expires_at: expiresAt });
+    res.json({ success: true, duration_days: respDays, expires_at: expiresAt });
   } catch (err) {
     await client.query('ROLLBACK').catch(() => {});
     _sendServerError(res, err);
@@ -871,22 +888,25 @@ app.post('/api/billing/verify', _requireAuth, _requireIntegrity, async (req, res
 // throttle ispod sprecava da to postane cest poziv ka Google Play API-ju, jer RTDN webhook
 // (linija ~432) vec hvata stvarne promene pretplate u realnom vremenu; ovaj poziv je samo
 // dodatni safety-net za slucaj da webhook zakasni/promasi, pa ne mora da bude trenutan.
-// FIX (04.10.2026): Google Play provera (refresh + RTDN webhook) je bezuslovno upisivala 'free' kad
-// Play pretplata nije aktivna - cak i kad korisnik IMA vazeci promo premium (subscription_source =
-// 'promo_code', subscription_expires u buducnosti ili NULL = trajni). Nalog sa starom probnom Play
-// kupovinom (play_purchase_token) bi tako izgubio promo premium cim otvori Profil. Ova funkcija
-// vraca na 'free' SAMO ako promo premium ne vazi; vraca red (tier/expires) ako je premium ZADRZAN,
-// ili null ako je korisnik stvarno spusten na 'free'.
-async function _downgradeUnlessPromo(userId) {
-  const kept = await db.query(
-    `SELECT subscription_expires FROM users
-     WHERE id = $1 AND subscription_source = 'promo_code'
-       AND (subscription_expires IS NULL OR subscription_expires > NOW())`,
+// Google Play provera (refresh + RTDN webhook) javlja da Play pretplata NIJE aktivna: spusti SAMO
+// Play izvor (subscription_tier) na 'free' - promo_premium_until se ne dira, pa promo premium i
+// dalje vazi. Loguje svako stvarno spustanje (ko/kada/zasto) da se sledeci slucaj lako prati.
+// Vraca promo_premium_until ako je promo grant jos aktivan, inace null.
+async function _markPlayInactive(userId, reason, playState) {
+  const r = await db.query(
+    'SELECT subscription_tier, subscription_expires, subscription_source, promo_premium_until FROM users WHERE id = $1',
     [userId]
   );
-  if (kept.rows.length > 0) return kept.rows[0];
-  await db.query('UPDATE users SET subscription_tier = $1 WHERE id = $2', ['free', userId]);
-  return null;
+  const row = r.rows[0];
+  if (!row) return null;
+  if (row.subscription_tier === 'premium') {
+    await db.query('UPDATE users SET subscription_tier = $1 WHERE id = $2', ['free', userId]);
+    console.warn('[billing][downgrade] user=' + userId + ' reason=' + reason + ' playState=' + (playState || 'n/a') +
+      ' prevExpires=' + (row.subscription_expires ? new Date(row.subscription_expires).toISOString() : 'null') +
+      ' prevSource=' + (row.subscription_source || 'null') +
+      ' promoUntil=' + (row.promo_premium_until ? new Date(row.promo_premium_until).toISOString() : 'null'));
+  }
+  return _isPromoActive(row) ? row.promo_premium_until : null;
 }
 const _billingRefreshThrottle = new Map(); // userId -> timestamp poslednjeg stvarnog Google Play poziva
 const BILLING_REFRESH_THROTTLE_MS = 30 * 60 * 1000; // 30 min
@@ -897,10 +917,11 @@ app.post('/api/billing/refresh', _requireAuth, async (req, res) => {
     const lastCall = _billingRefreshThrottle.get(userId);
     if (lastCall && (Date.now() - lastCall) < BILLING_REFRESH_THROTTLE_MS) {
       // Prescoceno - vrati trenutno stanje iz baze bez novog Google Play poziva
-      const cached = await db.query('SELECT subscription_tier, subscription_expires FROM users WHERE id = $1', [userId]);
+      const cached = await db.query('SELECT subscription_tier, subscription_expires, promo_premium_until FROM users WHERE id = $1', [userId]);
       if (cached.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronadjen' });
       const u = cached.rows[0];
-      return res.json({ success: true, active: _isPremiumActive(u), expires_at: u.subscription_expires, throttled: true });
+      const _effTh = _effectivePremium(u);
+      return res.json({ success: true, active: _effTh.active, expires_at: _effTh.expires, throttled: true });
     }
 
     const userResult = await db.query('SELECT play_purchase_token FROM users WHERE id = $1', [userId]);
@@ -919,10 +940,10 @@ app.post('/api/billing/refresh', _requireAuth, async (req, res) => {
     if (!result.ok) {
       // Pretplata vise nije aktivna (otkazana/istekla) - eksplicitno postavi na free
       // umesto da ostavimo zastareo 'premium' status u bazi
-      const keptPromo = await _downgradeUnlessPromo(userId);
-      if (keptPromo) {
+      const promoUntil = await _markPlayInactive(userId, 'refresh', result.state);
+      if (promoUntil) {
         // Promo premium i dalje vazi - Play pretplata nije aktivna ali to ne ukida promo pristup
-        return res.json({ success: true, active: true, expires_at: keptPromo.subscription_expires, state: result.state || null, promo: true });
+        return res.json({ success: true, active: true, expires_at: promoUntil, state: result.state || null, promo: true });
       }
       return res.json({ success: true, active: false, state: result.state || null });
     }
@@ -1010,7 +1031,7 @@ app.post('/api/billing/webhook', async (req, res) => {
     const userId = userResult.rows[0].id;
     const result = await _verifyAndApplySubscription(userId, purchaseToken, '');
     if (!result.ok) {
-      await _downgradeUnlessPromo(userId);
+      await _markPlayInactive(userId, 'rtdn', result.state);
     }
 
     // Win-back hook (korisnikov zahtev, 20.09.2026): notificationType SE KORISTI OVDE (samo za
@@ -1304,10 +1325,69 @@ async function _requireIntegrity(req, res, next) {
 // i (subscription_expires je null (lifetime/bez isteka) ili je u buducnosti).
 // Koristiti umesto direktne provere `subscription_tier === 'premium'` svuda u kodu,
 // jer sam tier flag ne govori nista o tome da li je pretplata i dalje vazeca.
-function _isPremiumActive(user) {
-  if (user.subscription_tier !== 'premium') return false;
-  if (!user.subscription_expires) return true; // lifetime/promo bez isteka
+//
+// IZMENA (04.10.2026): premium ima DVA NEZAVISNA izvora, da jedan ne moze da prepise drugi:
+//   1) Google Play pretplata  -> subscription_tier / subscription_expires / play_purchase_token
+//      (jedino _verifyAndApplySubscription i Play provera ih menjaju)
+//   2) promo/klub/admin grant -> promo_premium_until (jedino promo redeem i club-grant ga menjaju;
+//      NULL = nema grant-a, '2099-12-31' = trajni)
+// Korisnik je premium ako je BILO KOJI izvor aktivan. Play provera koja javi "neaktivno" vise
+// nikad ne moze da ukine promo premium (to je bio bug od 04.10.2026).
+function _isPlayActive(user) {
+  if (!user || user.subscription_tier !== 'premium') return false;
+  if (!user.subscription_expires) return true; // Play pretplata bez isteka
   return new Date(user.subscription_expires) > new Date();
+}
+function _isPromoActive(user) {
+  return !!(user && user.promo_premium_until && new Date(user.promo_premium_until) > new Date());
+}
+function _isPremiumActive(user) {
+  return _isPlayActive(user) || _isPromoActive(user);
+}
+// Efektivno stanje za klijenta/admina: { active, expires } - expires je najkasniji istek aktivnih
+// izvora, ili null ako je Play pretplata bez isteka.
+function _effectivePremium(user) {
+  const play = _isPlayActive(user);
+  const promo = _isPromoActive(user);
+  if (!play && !promo) return { active: false, expires: user ? (user.subscription_expires || null) : null };
+  if (play && !user.subscription_expires) return { active: true, expires: null };
+  let best = null;
+  if (play) best = new Date(user.subscription_expires);
+  if (promo) {
+    const pu = new Date(user.promo_premium_until);
+    if (!best || pu > best) best = pu;
+  }
+  return { active: true, expires: best };
+}
+// Isto u SQL-u (admin dashboard liste/statistika) - kolone bez alias-a, koristiti nad tabelom users.
+const _SQL_PLAY_ACTIVE = `(subscription_tier = 'premium' AND (subscription_expires IS NULL OR subscription_expires > NOW()))`;
+const _SQL_PROMO_ACTIVE = `(promo_premium_until IS NOT NULL AND promo_premium_until > NOW())`;
+const _SQL_PREMIUM_ACTIVE = `(${_SQL_PLAY_ACTIVE} OR ${_SQL_PROMO_ACTIVE})`;
+const _SQL_EFFECTIVE_TIER = `(CASE WHEN ${_SQL_PREMIUM_ACTIVE} THEN 'premium' ELSE 'free' END)`;
+const _SQL_EFFECTIVE_EXPIRES = `(CASE
+    WHEN ${_SQL_PLAY_ACTIVE} AND subscription_expires IS NULL THEN NULL
+    WHEN ${_SQL_PLAY_ACTIVE} AND ${_SQL_PROMO_ACTIVE} THEN GREATEST(subscription_expires, promo_premium_until)
+    WHEN ${_SQL_PLAY_ACTIVE} THEN subscription_expires
+    WHEN ${_SQL_PROMO_ACTIVE} THEN promo_premium_until
+    ELSE subscription_expires END)`;
+const _SQL_EFFECTIVE_SOURCE = `(CASE WHEN ${_SQL_PLAY_ACTIVE} THEN subscription_source WHEN ${_SQL_PROMO_ACTIVE} THEN 'promo_code' ELSE subscription_source END)`;
+
+// Idempotentna sema + jednokratni backfill pri startu servera (bezbedno ponavljati). Backfill
+// prebacuje postojece promo grant-ove (subscription_source='promo_code') u promo_premium_until.
+async function _ensurePromoSchema() {
+  try {
+    await db.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS promo_premium_until TIMESTAMP');
+    const bf = await db.query(
+      `UPDATE users
+       SET promo_premium_until = COALESCE(subscription_expires, TIMESTAMP '2099-12-31 23:59:59')
+       WHERE subscription_source = 'promo_code'
+         AND promo_premium_until IS NULL
+         AND (subscription_expires IS NULL OR subscription_expires > NOW())`
+    );
+    if (bf.rowCount > 0) console.log('[billing][schema] backfill promo_premium_until za ' + bf.rowCount + ' naloga');
+  } catch (e) {
+    console.error('[billing][schema] _ensurePromoSchema greska:', e.message);
+  }
 }
 
 function _generatePromoCode() {
@@ -1366,7 +1446,7 @@ app.get('/api/admin/premium/club-preview', adminLimiter, async (req, res) => {
   if (!clubQuery) return res.status(400).json({ error: 'Nedostaje club parametar' });
   try {
     const result = await db.query(
-      `SELECT id, username, club, subscription_tier, subscription_expires
+      `SELECT id, username, club, ${_SQL_EFFECTIVE_TIER} AS subscription_tier, ${_SQL_EFFECTIVE_EXPIRES} AS subscription_expires
        FROM users
        WHERE club ILIKE $1
        ORDER BY username`,
@@ -1392,7 +1472,7 @@ app.post('/api/admin/premium/club-grant', adminLimiter, async (req, res) => {
 
     const result = await db.query(
       `UPDATE users
-       SET subscription_tier = 'premium', subscription_expires = $1, subscription_source = 'promo_code'
+       SET promo_premium_until = GREATEST(COALESCE(promo_premium_until, $1), $1)
        WHERE club ILIKE $2
        RETURNING id, username, club`,
       [expiresAt, `%${clubQuery}%`]
@@ -1442,7 +1522,9 @@ app.get('/api/admin/users/list', adminLimiter, async (req, res) => {
 
     const countResult = await db.query(`SELECT COUNT(*)::int AS n FROM users ${whereClause}`, params);
     const result = await db.query(
-      `SELECT id, username, email, belt, xp, club, country, subscription_tier, subscription_expires, subscription_source, updated_at
+      `SELECT id, username, email, belt, xp, club, country,
+              ${_SQL_EFFECTIVE_TIER} AS subscription_tier, ${_SQL_EFFECTIVE_EXPIRES} AS subscription_expires,
+              ${_SQL_EFFECTIVE_SOURCE} AS subscription_source, updated_at
        FROM users
        ${whereClause}
        ORDER BY updated_at DESC NULLS LAST
@@ -1486,12 +1568,12 @@ app.delete('/api/admin/users/:id', adminLimiter, async (req, res) => {
 app.delete('/api/account/me', strictLimiter, _requireAuth, async (req, res) => {
   try {
     const userResult = await db.query(
-      'SELECT id, username, email, subscription_tier, subscription_expires FROM users WHERE id = $1',
+      'SELECT id, username, email, subscription_tier, subscription_expires, promo_premium_until FROM users WHERE id = $1',
       [req.userId]
     );
     if (userResult.rows.length === 0) return res.status(404).json({ error: 'Nalog nije pronađen' });
     const user = userResult.rows[0];
-    if (_isPremiumActive(user)) {
+    if (_isPlayActive(user)) {
       return res.status(409).json({
         error: 'ACTIVE_SUBSCRIPTION',
         message: 'Prvo otkažite Premium pretplatu kroz Google Play, pa pokušajte ponovo.'
@@ -1672,7 +1754,7 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
   try {
     await client.query('BEGIN');
     const userResult = await client.query(
-      `SELECT ${counterColumn}, ${resetColumn}, subscription_tier, subscription_expires FROM users WHERE id = $1 FOR UPDATE`,
+      `SELECT ${counterColumn}, ${resetColumn}, subscription_tier, subscription_expires, promo_premium_until FROM users WHERE id = $1 FOR UPDATE`,
       [userId]
     );
     if (userResult.rows.length === 0) {
@@ -1821,7 +1903,7 @@ app.get('/api/quiz/limit/me', _requireAuth, async (req, res) => {
   const userId = req.userId;
   try {
     const result = await db.query(
-      'SELECT quiz_plays_today, quiz_last_reset, subscription_tier, subscription_expires FROM users WHERE id = $1',
+      'SELECT quiz_plays_today, quiz_last_reset, subscription_tier, subscription_expires, promo_premium_until FROM users WHERE id = $1',
       [userId]
     );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronadjen' });
@@ -1890,7 +1972,7 @@ app.post('/api/quiz/stats', _requireAuth, async (req, res) => {
   try {
     await client.query('BEGIN');
     const userResult = await client.query(
-      'SELECT quiz_plays_today, quiz_last_reset, subscription_tier, subscription_expires FROM users WHERE id = $1 FOR UPDATE',
+      'SELECT quiz_plays_today, quiz_last_reset, subscription_tier, subscription_expires, promo_premium_until FROM users WHERE id = $1 FOR UPDATE',
       [userId]
     );
     if (userResult.rows.length === 0) {
@@ -2267,7 +2349,7 @@ app.post('/api/userdata/sync', _requireAuth, async (req, res) => {
       if (newEntries.length > 0) {
         try {
           const userResult = await client.query(
-            'SELECT journal_entries_today, journal_last_reset, subscription_tier, subscription_expires FROM users WHERE id = $1 FOR UPDATE',
+            'SELECT journal_entries_today, journal_last_reset, subscription_tier, subscription_expires, promo_premium_until FROM users WHERE id = $1 FOR UPDATE',
             [userId]
           );
           if (userResult.rows.length > 0) {
@@ -2497,7 +2579,7 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
         JOIN users u ON u.id = ae.user_id
         WHERE ae.event_name = 'premium_manage_subscription_click'
           AND ae.created_at > now() - interval '30 days'
-          AND u.subscription_tier = 'premium'
+          AND (u.subscription_tier = 'premium' OR u.promo_premium_until > NOW())
         GROUP BY ae.user_id, u.username, u.email
         ORDER BY clicks DESC, last_click DESC
       `),
@@ -2505,13 +2587,13 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
       // kojima pretplata istice u narednih 14 dana. Akcionabilno za re-engagement/podsetnik pre
       // isteka, podatak vec postoji u subscription_expires koloni ali se nigde ne prikazuje.
       paywall_renewal_risk: q(`
-        SELECT username, email, club, subscription_expires,
-          (subscription_expires::date - CURRENT_DATE) AS days_left
+        SELECT username, email, club, ${_SQL_EFFECTIVE_EXPIRES} AS subscription_expires,
+          ((${_SQL_EFFECTIVE_EXPIRES})::date - CURRENT_DATE) AS days_left
         FROM users
-        WHERE subscription_tier = 'premium'
-          AND subscription_expires IS NOT NULL
-          AND subscription_expires BETWEEN now() AND now() + interval '14 days'
-        ORDER BY subscription_expires ASC
+        WHERE ${_SQL_PREMIUM_ACTIVE}
+          AND ${_SQL_EFFECTIVE_EXPIRES} IS NOT NULL
+          AND ${_SQL_EFFECTIVE_EXPIRES} BETWEEN now() AND now() + interval '14 days'
+        ORDER BY 4 ASC
       `),
 
       // ---------- ONBOARDING ----------
@@ -2841,7 +2923,7 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
       users_by_club: q(`
         SELECT COALESCE(NULLIF(TRIM(club), ''), '(bez kluba)') AS club,
           COUNT(*) AS users,
-          COUNT(*) FILTER (WHERE subscription_tier = 'premium') AS premium_users
+          COUNT(*) FILTER (WHERE subscription_tier = 'premium' OR promo_premium_until > NOW()) AS premium_users
         FROM users
         GROUP BY 1 ORDER BY users DESC LIMIT 30
       `),
@@ -2960,7 +3042,7 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
           ) THEN 'Plaćena kupovina' ELSE 'Dodeljeno (promo/klub/admin)' END AS channel,
           COUNT(*) AS premium_users
         FROM users u
-        WHERE u.subscription_tier = 'premium'
+        WHERE (u.subscription_tier = 'premium' OR u.promo_premium_until > NOW())
         GROUP BY 1 ORDER BY premium_users DESC
       `),
       // Greske po verziji app-a (14 dana) - da se odmah uoci regresija posle release-a, ne samo
@@ -3092,4 +3174,7 @@ app.post('/api/admin/archive-old-events', adminLimiter, async (req, res) => {
 app.use(express.static('public'));
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, '0.0.0.0', () => console.log('Server radi na portu ' + PORT));
+// Sema/backfill za promo_premium_until se izvrsava PRE nego sto server primi zahteve.
+_ensurePromoSchema().finally(() => {
+  app.listen(PORT, '0.0.0.0', () => console.log('Server radi na portu ' + PORT));
+});
