@@ -1939,6 +1939,15 @@ app.post('/api/quiz/stats', _requireAuth, async (req, res) => {
   if (c < 0 || t < 0 || c > t || ms > t || t > 400 || s < 0 || s > 5000) {
     return res.status(400).json({ error: 'Nevalidni podaci o rezultatu' });
   }
+  // DODATAK (05.10.2026, sumnjiv rezultat 1690 na rang listi): klijent dodaje poene ISKLJUCIVO uz tacan
+  // odgovor i to 5/10/20 (po nivou pitanja), pa za svaku legitimnu partiju vazi 5*correct <= score <=
+  // 20*correct, a maxStreak ne moze biti veci od correct. Pre ove provere score nije bio vezan za
+  // correct (samo plafon 5000), pa je direktan API poziv mogao upisati proizvoljan rezultat.
+  // Ovo zaustavlja naivno falsifikovanje; usaglasene vrednosti (npr. 100 tacnih / 1000 poena) i dalje prolaze.
+  if (s < 5 * c || s > 20 * c || ms > c) {
+    console.warn('[quiz][rejected] user=' + userId + ' score=' + s + ' correct=' + c + ' maxStreak=' + ms);
+    return res.status(400).json({ error: 'Nevalidni podaci o rezultatu' });
+  }
 
   // FIX (11.09.2026, korisnik prijavio bag - trakice po kategoriji trajno na 0%): ranije se
   // slala samo JEDNA "dominantna" kategorija cele partije (>=60% odgovora, inace 'mixed'), pa
