@@ -644,7 +644,7 @@ app.post('/api/xp/update', _requireAuth, async (req, res) => {
     const result = await db.query(
       `UPDATE users SET
         xp = $1,
-        belt = $2,
+        belt = COALESCE($2, belt),
         updated_at = NOW(),
         unlocked_badges = (
           SELECT COALESCE(jsonb_agg(DISTINCT badge), '[]'::jsonb)
