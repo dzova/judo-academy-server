@@ -2550,7 +2550,7 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
       paywall_checkout_funnel: q(`
         SELECT event_name, COUNT(*) AS n
         FROM analytics_events
-        WHERE event_name IN ('premium_checkout_intent','premium_checkout_cancelled','premium_checkout_confirmed')
+        WHERE event_name IN ('premium_checkout_intent','premium_checkout_cancelled','premium_checkout_incomplete','premium_checkout_error','premium_checkout_confirmed')
           AND created_at > now() - interval '30 days'
         GROUP BY 1 ORDER BY 2 DESC
       `),
@@ -2642,9 +2642,10 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
       error_top_contexts: q(`
         SELECT event_data->>'context' AS context, COUNT(*) AS occurrences,
           COUNT(DISTINCT user_id) AS affected_users, MAX(created_at) AS last_seen,
-          MAX(event_data->>'appVersion') AS last_app_version
+          (array_agg(event_data->>'appVersion' ORDER BY created_at DESC))[1] AS last_app_version
         FROM analytics_events
         WHERE event_name = 'silent_error' AND created_at > now() - interval '7 days'
+          AND COALESCE(event_data->>'context','') <> 'authFetchWithIntegrity_token_set'
         GROUP BY 1 ORDER BY occurrences DESC
       `),
       error_top_messages: q(`
@@ -2653,19 +2654,23 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
           array_agg(DISTINCT event_data->>'appVersion') FILTER (WHERE event_data->>'appVersion' IS NOT NULL) AS app_versions
         FROM analytics_events
         WHERE event_name = 'silent_error' AND created_at > now() - interval '7 days'
+          AND COALESCE(event_data->>'context','') <> 'authFetchWithIntegrity_token_set'
         GROUP BY 1, 2 ORDER BY occurrences DESC LIMIT 30
       `),
       error_daily_trend: qRange(`
         SELECT date_trunc('day', created_at) AS day, COUNT(*) AS total_errors, COUNT(DISTINCT user_id) AS affected_users
         FROM analytics_events
         WHERE event_name = 'silent_error' AND created_at BETWEEN $1 AND $2
+          AND COALESCE(event_data->>'context','') <> 'authFetchWithIntegrity_token_set'
         GROUP BY 1 ORDER BY 1
       `),
       error_top_users: q(`
         SELECT user_id, COUNT(*) AS error_count, COUNT(DISTINCT event_data->>'context') AS distinct_contexts,
-          MAX(created_at) AS last_error
+          MAX(created_at) AS last_error,
+          (array_agg(event_data->>'appVersion' ORDER BY created_at DESC))[1] AS app_version
         FROM analytics_events
         WHERE event_name = 'silent_error' AND created_at > now() - interval '14 days'
+          AND COALESCE(event_data->>'context','') <> 'authFetchWithIntegrity_token_set'
           AND user_id IS NOT NULL
         GROUP BY user_id HAVING COUNT(*) >= 3 ORDER BY error_count DESC
       `),
@@ -2673,11 +2678,13 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
         SELECT COUNT(*) AS anonymous_errors
         FROM analytics_events
         WHERE event_name = 'silent_error' AND user_id IS NULL AND created_at > now() - interval '14 days'
+          AND COALESCE(event_data->>'context','') <> 'authFetchWithIntegrity_token_set'
       `),
       error_by_screen: q(`
         SELECT event_data->>'screen' AS screen, COUNT(*) AS errors_on_screen
         FROM analytics_events
         WHERE event_name = 'silent_error' AND created_at > now() - interval '7 days'
+          AND COALESCE(event_data->>'context','') <> 'authFetchWithIntegrity_token_set'
         GROUP BY 1 ORDER BY 2 DESC
       `),
       // DODATO (17.09.2026, korisnikov nalaz - odsecen/nepotpun AI odgovor u Scouting/Sensei/
@@ -2716,12 +2723,13 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
         )
         SELECT
           COUNT(DISTINCT f.user_id) AS total_new_users,
+          COUNT(DISTINCT CASE WHEN f.cohort_day + interval '7 day' <= date_trunc('day', now()) THEN f.user_id END) AS d7_eligible_users,
           COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '1 day' THEN a.user_id END) AS d1_users,
           COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '7 day' THEN a.user_id END) AS d7_users,
           COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '30 day' THEN a.user_id END) AS d30_users,
-          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '1 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT f.user_id),0), 1) AS d1_pct,
-          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '7 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT f.user_id),0), 1) AS d7_pct,
-          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '30 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT f.user_id),0), 1) AS d30_pct
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '1 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT CASE WHEN f.cohort_day + interval '1 day' <= date_trunc('day', now()) THEN f.user_id END),0), 1) AS d1_pct,
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '7 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT CASE WHEN f.cohort_day + interval '7 day' <= date_trunc('day', now()) THEN f.user_id END),0), 1) AS d7_pct,
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '30 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT CASE WHEN f.cohort_day + interval '30 day' <= date_trunc('day', now()) THEN f.user_id END),0), 1) AS d30_pct
         FROM first_seen f LEFT JOIN activity a ON a.user_id = f.user_id
       `),
       retention_by_cohort_day: q(`
@@ -2736,9 +2744,9 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
         SELECT
           f.cohort_day::date AS cohort_day,
           COUNT(DISTINCT f.user_id) AS cohort_size,
-          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '1 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT f.user_id),0), 1) AS d1_pct,
-          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '7 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT f.user_id),0), 1) AS d7_pct,
-          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '30 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT f.user_id),0), 1) AS d30_pct
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '1 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT CASE WHEN f.cohort_day + interval '1 day' <= date_trunc('day', now()) THEN f.user_id END),0), 1) AS d1_pct,
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '7 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT CASE WHEN f.cohort_day + interval '7 day' <= date_trunc('day', now()) THEN f.user_id END),0), 1) AS d7_pct,
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '30 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT CASE WHEN f.cohort_day + interval '30 day' <= date_trunc('day', now()) THEN f.user_id END),0), 1) AS d30_pct
         FROM first_seen f LEFT JOIN activity a ON a.user_id = f.user_id
         GROUP BY f.cohort_day ORDER BY f.cohort_day
       `),
@@ -2756,8 +2764,8 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
         SELECT
           f.first_lang,
           COUNT(DISTINCT f.user_id) AS cohort_size,
-          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '7 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT f.user_id),0), 1) AS d7_retention_pct,
-          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '30 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT f.user_id),0), 1) AS d30_retention_pct
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '7 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT CASE WHEN f.cohort_day + interval '7 day' <= date_trunc('day', now()) THEN f.user_id END),0), 1) AS d7_retention_pct,
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = f.cohort_day + interval '30 day' THEN a.user_id END) / NULLIF(COUNT(DISTINCT CASE WHEN f.cohort_day + interval '30 day' <= date_trunc('day', now()) THEN f.user_id END),0), 1) AS d30_retention_pct
         FROM first_session f LEFT JOIN activity a ON a.user_id = f.user_id
         GROUP BY f.first_lang ORDER BY d7_retention_pct DESC NULLS LAST
       `),
@@ -2786,7 +2794,7 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
       // 'lang' polje (dodato u index.html uz ovu izmenu) - dok se ne izgradi i objavi nova verzija
       // app-a, ovaj panel ce pokazivati "nema podataka".
       content_quiz_accuracy_by_lang: q(`
-        SELECT event_data->>'lang' AS lang, COUNT(*) AS total_answers,
+        SELECT event_data->>'lang' AS lang, COUNT(*) AS total_answers, COUNT(DISTINCT user_id) AS unique_users,
           COUNT(*) FILTER (WHERE (event_data->>'correct')::boolean = true) AS correct_answers,
           ROUND(100.0 * COUNT(*) FILTER (WHERE (event_data->>'correct')::boolean = true) / COUNT(*), 1) AS accuracy_pct
         FROM analytics_events
@@ -2930,11 +2938,11 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
       // users tabela vec ima club/country iz profila, ali se nigde ne agregira - relevantno jer
       // saradnja ide direktno sa klubovima/savezima (npr. JK Trudbenik, Judo savez Beograda).
       users_by_club: q(`
-        SELECT COALESCE(NULLIF(TRIM(club), ''), '(bez kluba)') AS club,
+        SELECT COALESCE((array_agg(TRIM(club) ORDER BY (TRIM(club) = INITCAP(TRIM(club))) DESC, TRIM(club)))[1], '(bez kluba)') AS club,
           COUNT(*) AS users,
           COUNT(*) FILTER (WHERE subscription_tier = 'premium' OR promo_premium_until > NOW()) AS premium_users
         FROM users
-        GROUP BY 1 ORDER BY users DESC LIMIT 30
+        GROUP BY LOWER(NULLIF(TRIM(club), '')) ORDER BY users DESC LIMIT 30
       `),
       users_by_country: q(`
         SELECT COALESCE(NULLIF(TRIM(country), ''), '(bez zemlje)') AS country, COUNT(*) AS users
@@ -3032,8 +3040,10 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
           SELECT j.user_id, CASE WHEN j.hours_to_value <= 24 THEN 'Prva vredna akcija u prvih 24h' ELSE 'Kasnije od 24h' END AS bucket
           FROM joined j
         )
-        SELECT b.bucket, COUNT(*) AS users,
-          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = c.cohort_day + interval '7 day' THEN a.user_id END) / NULLIF(COUNT(*), 0), 1) AS d7_retention_pct
+        SELECT b.bucket, COUNT(DISTINCT b.user_id) AS users,
+          COUNT(DISTINCT CASE WHEN c.cohort_day + interval '7 day' <= date_trunc('day', now()) THEN b.user_id END) AS d7_eligible_users,
+          ROUND(100.0 * COUNT(DISTINCT CASE WHEN a.activity_day = c.cohort_day + interval '7 day' THEN a.user_id END)
+            / NULLIF(COUNT(DISTINCT CASE WHEN c.cohort_day + interval '7 day' <= date_trunc('day', now()) THEN b.user_id END), 0), 1) AS d7_retention_pct
         FROM bucketed b
         JOIN cohort c ON c.user_id = b.user_id
         LEFT JOIN activity a ON a.user_id = b.user_id
@@ -3057,11 +3067,67 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
       // Greske po verziji app-a (14 dana) - da se odmah uoci regresija posle release-a, ne samo
       // ukupan broj greske vec i po kom app_version-u.
       error_by_app_version: q(`
-        SELECT COALESCE(event_data->>'appVersion', '(nepoznato)') AS app_version,
-          COUNT(*) AS errors, COUNT(DISTINCT user_id) AS affected_users
-        FROM analytics_events
-        WHERE event_name = 'silent_error' AND created_at > now() - interval '14 days'
-        GROUP BY 1 ORDER BY errors DESC
+        WITH errs AS (
+          SELECT COALESCE(event_data->>'appVersion', '(nepoznato)') AS app_version,
+            COUNT(*) AS errors, COUNT(DISTINCT user_id) AS affected_users
+          FROM analytics_events
+          WHERE event_name = 'silent_error' AND created_at > now() - interval '14 days'
+            AND COALESCE(event_data->>'context','') <> 'authFetchWithIntegrity_token_set'
+          GROUP BY 1
+        ),
+        act AS (
+          SELECT COALESCE(event_data->>'appVersion', '(nepoznato)') AS app_version,
+            COUNT(DISTINCT user_id) AS active_users
+          FROM analytics_events
+          WHERE created_at > now() - interval '14 days' AND user_id IS NOT NULL
+          GROUP BY 1
+        )
+        SELECT COALESCE(e.app_version, a.app_version) AS app_version,
+          COALESCE(e.errors, 0) AS errors, COALESCE(e.affected_users, 0) AS affected_users,
+          COALESCE(a.active_users, 0) AS active_users,
+          ROUND(1.0 * COALESCE(e.errors, 0) / NULLIF(a.active_users, 0), 2) AS errors_per_active_user
+        FROM errs e FULL JOIN act a ON a.app_version = e.app_version
+        ORDER BY lpad(split_part(COALESCE(e.app_version, a.app_version), '.', 1), 4, '0')
+              || lpad(split_part(COALESCE(e.app_version, a.app_version), '.', 2), 4, '0') DESC
+      `),
+      // DODATAK (09.10.2026, korisnikov nalaz - dashboard prikazuje v1.12, a ne bi trebalo da ima
+      // korisnika sa tom verzijom): RASPODELA KORISNIKA PO VERZIJI (poslednja prijavljena verzija
+      // svakog korisnika u 30 dana, ne samo ko ima greske) - tako se vidi koliko ljudi STVARNO koristi
+      // koju verziju. Verzija stize iz appVersion polja svakog analytics event-a.
+      app_version_distribution: q(`
+        WITH latest AS (
+          SELECT DISTINCT ON (user_id) user_id, event_data->>'appVersion' AS app_version,
+            event_data->>'appBuild' AS app_build, created_at
+          FROM analytics_events
+          WHERE user_id IS NOT NULL AND event_data->>'appVersion' IS NOT NULL
+            AND created_at > now() - interval '30 days'
+          ORDER BY user_id, created_at DESC
+        )
+        SELECT app_version, COUNT(*) AS users,
+          COUNT(*) FILTER (WHERE created_at > now() - interval '7 days') AS active_7d,
+          MAX(created_at) AS last_seen,
+          string_agg(DISTINCT app_build, ', ') FILTER (WHERE app_build IS NOT NULL) AS builds_reported
+        FROM latest
+        GROUP BY app_version
+        ORDER BY lpad(split_part(app_version, '.', 1), 4, '0') || lpad(split_part(app_version, '.', 2), 4, '0') DESC
+      `),
+      // Ko je konkretno na kojoj verziji (naloga ima samo Google prijava - svaki event sa user_id
+      // pripada nalogu). Sortirano od NAJSTARIJE verzije - da se odmah vide zaostali/test nalozi.
+      app_version_users: q(`
+        WITH latest AS (
+          SELECT DISTINCT ON (user_id) user_id, event_data->>'appVersion' AS app_version,
+            event_data->>'appBuild' AS app_build, created_at AS last_seen
+          FROM analytics_events
+          WHERE user_id IS NOT NULL AND event_data->>'appVersion' IS NOT NULL
+            AND created_at > now() - interval '30 days'
+          ORDER BY user_id, created_at DESC
+        )
+        SELECT l.app_version, l.app_build, l.user_id, u.username, u.email, u.country, u.club,
+          (SELECT f.first_seen_at FROM user_first_seen f WHERE f.user_id = l.user_id) AS first_seen, l.last_seen,
+          (SELECT COUNT(*) FROM analytics_events e WHERE e.user_id = l.user_id AND e.created_at > now() - interval '30 days') AS events_30d
+        FROM latest l LEFT JOIN users u ON u.id = l.user_id
+        ORDER BY lpad(split_part(l.app_version, '.', 1), 4, '0') || lpad(split_part(l.app_version, '.', 2), 4, '0') ASC, l.last_seen DESC
+        LIMIT 100
       `),
       // Prijave problema grupisane po kategoriji - trenutno se liste jedna po jedna (Prijave
       // problema tab), ovaj summary pomaze prioritizaciji (gde se najvise gomila).
