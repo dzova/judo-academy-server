@@ -1524,7 +1524,9 @@ app.get('/api/admin/users/list', adminLimiter, async (req, res) => {
     const result = await db.query(
       `SELECT id, username, email, belt, xp, club, country,
               ${_SQL_EFFECTIVE_TIER} AS subscription_tier, ${_SQL_EFFECTIVE_EXPIRES} AS subscription_expires,
-              ${_SQL_EFFECTIVE_SOURCE} AS subscription_source, updated_at
+              ${_SQL_EFFECTIVE_SOURCE} AS subscription_source, updated_at,
+              (SELECT e.event_data->>'appVersion' FROM analytics_events e WHERE e.user_id = users.id AND e.event_data->>'appVersion' IS NOT NULL ORDER BY e.created_at DESC LIMIT 1) AS app_version,
+              (SELECT e.event_data->>'appBuild' FROM analytics_events e WHERE e.user_id = users.id AND e.event_data->>'appVersion' IS NOT NULL ORDER BY e.created_at DESC LIMIT 1) AS app_build
        FROM users
        ${whereClause}
        ORDER BY updated_at DESC NULLS LAST
@@ -3110,24 +3112,6 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
         FROM latest
         GROUP BY app_version
         ORDER BY lpad(split_part(app_version, '.', 1), 4, '0') || lpad(split_part(app_version, '.', 2), 4, '0') DESC
-      `),
-      // Ko je konkretno na kojoj verziji (naloga ima samo Google prijava - svaki event sa user_id
-      // pripada nalogu). Sortirano od NAJSTARIJE verzije - da se odmah vide zaostali/test nalozi.
-      app_version_users: q(`
-        WITH latest AS (
-          SELECT DISTINCT ON (user_id) user_id, event_data->>'appVersion' AS app_version,
-            event_data->>'appBuild' AS app_build, created_at AS last_seen
-          FROM analytics_events
-          WHERE user_id IS NOT NULL AND event_data->>'appVersion' IS NOT NULL
-            AND created_at > now() - interval '30 days'
-          ORDER BY user_id, created_at DESC
-        )
-        SELECT l.app_version, l.app_build, l.user_id, u.username, u.email, u.country, u.club,
-          (SELECT f.first_seen_at FROM user_first_seen f WHERE f.user_id = l.user_id) AS first_seen, l.last_seen,
-          (SELECT COUNT(*) FROM analytics_events e WHERE e.user_id = l.user_id AND e.created_at > now() - interval '30 days') AS events_30d
-        FROM latest l LEFT JOIN users u ON u.id = l.user_id
-        ORDER BY lpad(split_part(l.app_version, '.', 1), 4, '0') || lpad(split_part(l.app_version, '.', 2), 4, '0') ASC, l.last_seen DESC
-        LIMIT 100
       `),
       // Prijave problema grupisane po kategoriji - trenutno se liste jedna po jedna (Prijave
       // problema tab), ovaj summary pomaze prioritizaciji (gde se najvise gomila).
