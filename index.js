@@ -1525,6 +1525,7 @@ app.get('/api/admin/users/list', adminLimiter, async (req, res) => {
       `SELECT id, username, email, belt, xp, club, country,
               ${_SQL_EFFECTIVE_TIER} AS subscription_tier, ${_SQL_EFFECTIVE_EXPIRES} AS subscription_expires,
               ${_SQL_EFFECTIVE_SOURCE} AS subscription_source, updated_at,
+              (SELECT f.first_seen_at FROM user_first_seen f WHERE f.user_id = users.id) AS registered_at,
               (SELECT e.event_data->>'appVersion' FROM analytics_events e WHERE e.user_id = users.id AND e.event_data->>'appVersion' IS NOT NULL ORDER BY e.created_at DESC LIMIT 1) AS app_version,
               (SELECT e.event_data->>'appBuild' FROM analytics_events e WHERE e.user_id = users.id AND e.event_data->>'appVersion' IS NOT NULL ORDER BY e.created_at DESC LIMIT 1) AS app_build
        FROM users
