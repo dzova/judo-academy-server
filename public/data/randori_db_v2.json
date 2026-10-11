@@ -1986,7 +1986,7 @@
       "Zaustavim trening, pomognem mu i zovem senseija"
     ],
     "c": 3,
-    "e": "Bezbednost je prva! Odmah zaustavi trening, pomozi, zovi senseija ili medicinsku pomoć. Jita-yuwa – briga o partneru je osnova džudo kulture.",
+    "e": "Bezbednost je prva! Odmah zaustavi trening, pomozi, zovi senseija ili medicinsku pomoć. Jita-kyoei – briga o partneru je osnova džudo kulture.",
     "en_s": "In randori you accidentally fall on your partner's leg and he gets injured.",
     "en_q": "What do you do immediately?",
     "en_opts": [
@@ -1995,7 +1995,7 @@
       "I lift him up and make him walk off the leg",
       "I stop training, help him and call the sensei"
     ],
-    "en_e": "Safety first! Stop the training immediately, help him, call the sensei or medical help. Jita-yuwa – caring for your partner is a foundation of judo culture.",
+    "en_e": "Safety first! Stop the training immediately, help him, call the sensei or medical help. Jita-kyoei – caring for your partner is a foundation of judo culture.",
     "de_s": "Im Randori fällst du versehentlich auf das Bein deines Partners und er verletzt sich.",
     "de_q": "Was tust du sofort?",
     "de_opts": [
@@ -2004,7 +2004,7 @@
       "Ich ziehe ihn hoch und lasse ihn das Bein ablaufen",
       "Ich höre auf, helfe ihm und rufe den Sensei"
     ],
-    "de_e": "Sicherheit zuerst! Stoppe sofort das Training, hilf, rufe den Sensei oder medizinische Hilfe. Jita-yuwa – die Fürsorge für den Partner ist die Grundlage der Judo-Kultur.",
+    "de_e": "Sicherheit zuerst! Stoppe sofort das Training, hilf, rufe den Sensei oder medizinische Hilfe. Jita-kyoei – die Fürsorge für den Partner ist die Grundlage der Judo-Kultur.",
     "fr_s": "En randori tu tombes accidentellement sur la jambe de ton partenaire et il se blesse.",
     "fr_q": "Que fais-tu immédiatement ?",
     "fr_opts": [
@@ -2013,7 +2013,7 @@
       "Je le relève et je le fais marcher pour oublier la douleur",
       "J'arrête l'entraînement, je l'aide et j'appelle le sensei"
     ],
-    "fr_e": "La sécurité d'abord ! Arrête immédiatement l'entraînement, aide-le, appelle le sensei ou une aide médicale. Jita-yuwa – prendre soin du partenaire est la base de la culture du judo.",
+    "fr_e": "La sécurité d'abord ! Arrête immédiatement l'entraînement, aide-le, appelle le sensei ou une aide médicale. Jita-kyoei – prendre soin du partenaire est la base de la culture du judo.",
     "es_s": "En randori caes accidentalmente sobre la pierna de tu compañero y se lesiona.",
     "es_q": "¿Qué haces inmediatamente?",
     "es_opts": [
@@ -2022,7 +2022,7 @@
       "Lo levanto y hago que camine para aliviar la pierna",
       "Dejo de entrenar, lo ayudo y llamo al sensei"
     ],
-    "es_e": "¡La seguridad primero! Detén de inmediato el entrenamiento, ayúdalo, llama al sensei o a asistencia médica. Jita-yuwa – cuidar del compañero es la base de la cultura del judo.",
+    "es_e": "¡La seguridad primero! Detén de inmediato el entrenamiento, ayúdalo, llama al sensei o a asistencia médica. Jita-kyoei – cuidar del compañero es la base de la cultura del judo.",
     "it_s": "Nel randori cadi accidentalmente sulla gamba del tuo partner e lui si infortuna.",
     "it_q": "Cosa fai immediatamente?",
     "it_opts": [
@@ -2031,7 +2031,7 @@
       "Lo faccio alzare e lo costringo a camminare sulla gamba",
       "Smetto di allenarmi, lo aiuto e chiamo il sensei"
     ],
-    "it_e": "Sicurezza prima di tutto! Ferma subito l'allenamento, aiutalo, chiama il sensei o il soccorso medico. Jita-yuwa – la cura del partner è la base della cultura del judo.",
+    "it_e": "Sicurezza prima di tutto! Ferma subito l'allenamento, aiutalo, chiama il sensei o il soccorso medico. Jita-kyoei – la cura del partner è la base della cultura del judo.",
     "pt_s": "No randori cais acidentalmente na perna do teu parceiro e ele magoa-se.",
     "pt_q": "O que fazes imediatamente?",
     "pt_opts": [
@@ -2040,7 +2040,7 @@
       "Levanto ele e faço ele andar para a dor passar",
       "Paro de treinar, ajudo ele e chamo o sensei"
     ],
-    "pt_e": "Segurança primeiro! Para imediatamente o treino, ajuda-o, chama o sensei ou assistência médica. Jita-yuwa – cuidar do parceiro é a base da cultura do judo.",
+    "pt_e": "Segurança primeiro! Para imediatamente o treino, ajuda-o, chama o sensei ou assistência médica. Jita-kyoei – cuidar do parceiro é a base da cultura do judo.",
     "ru_s": "В рандори ты случайно падаешь на ногу партнёра, и он травмируется.",
     "ru_q": "Что делаешь немедленно?",
     "ru_opts": [
@@ -2049,7 +2049,7 @@
       "Поднимаю его и заставляю расходить ногу",
       "Прекращаю тренировку, помогаю ему и зову sensei"
     ],
-    "ru_e": "Безопасность прежде всего! Немедленно останови тренировку, помоги, позови сенсея или медицинскую помощь. Дзита-юва – забота о партнёре – основа культуры дзюдо."
+    "ru_e": "Безопасность прежде всего! Немедленно останови тренировку, помоги, позови сенсея или медицинскую помощь. Дзита-кёэй – забота о партнёре – основа культуры дзюдо."
   },
   {
     "cat": "situacija",

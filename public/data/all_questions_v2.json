@@ -6848,7 +6848,7 @@
       "q": "Šta je 'Uchi-komi'?",
       "opts": [
         "Ponavljajući ulazak u bacanje bez finalnog izvođenja pada",
-        "Bacanje sa maksimalnom snagom do kraja u nagekomi",
+        "Bacanje sa maksimalnom snagom do kraja u nage-komi",
         "Prizemna vežba za poboljšanje ne-waza položaja",
         "Forma kata sa precizno propisanim redosledom pokreta"
       ],
@@ -6940,7 +6940,7 @@
     "type": "tehnika",
     "videoId": null,
     "sr": {
-      "q": "Šta je 'Nagekomi'?",
+      "q": "Šta je 'Nage-komi'?",
       "opts": [
         "Ponavljajuće bacanje sa punim izvođenjem – partner aktivno pada",
         "Blago, meko bacanje bez punog pada partnera",
@@ -6948,10 +6948,10 @@
         "Propisana forma sa tačnim redosledom džudo pokreta"
       ],
       "c": 0,
-      "exp": "Nagekomi = ponavljano bacanje sa punim izvođenjem, stotinama puta. Uke mora biti spreman za ukemi! Teže od uchi-komi ali kompletnije."
+      "exp": "Nage-komi = ponavljano bacanje sa punim izvođenjem, stotinama puta. Uke mora biti spreman za ukemi! Teže od uchi-komi ali kompletnije."
     },
     "en": {
-      "q": "What is 'Nagekomi'?",
+      "q": "What is 'Nage-komi'?",
       "opts": [
         "Repetitive full throwing with complete execution and a proper fall each time",
         "A gentle soft throw practised without the partner fully falling",
@@ -6959,10 +6959,10 @@
         "A prescribed kata form with a fixed sequence of judo techniques"
       ],
       "c": 0,
-      "exp": "Nagekomi = repeated full throws with complete execution. Uke must be ready for Ukemi! More demanding than Uchi-komi but more complete."
+      "exp": "Nage-komi = repeated full throws with complete execution. Uke must be ready for Ukemi! More demanding than Uchi-komi but more complete."
     },
     "de": {
-      "q": "Was ist 'Nagekomi'?",
+      "q": "Was ist 'Nage-komi'?",
       "opts": [
         "Wiederholtes vollständiges Werfen mit kompletter Ausführung und richtigem Fall jedes Mal",
         "Ein sanfter, weicher Wurf, der geübt wird, ohne dass der Partner vollständig fällt",
@@ -6970,10 +6970,10 @@
         "Eine vorgeschriebene Kata-Form mit einer festen Abfolge von Judo-Techniken"
       ],
       "c": 0,
-      "exp": "Nagekomi = wiederholtes vollständiges Werfen mit kompletter Ausführung. Uke muss bereit für Ukemi sein! Anspruchsvoller als Uchi-komi, aber vollständiger."
+      "exp": "Nage-komi = wiederholtes vollständiges Werfen mit kompletter Ausführung. Uke muss bereit für Ukemi sein! Anspruchsvoller als Uchi-komi, aber vollständiger."
     },
     "fr": {
-      "q": "Qu'est-ce que le 'Nagekomi' ?",
+      "q": "Qu'est-ce que le 'Nage-komi' ?",
       "opts": [
         "Projections complètes répétées avec une exécution totale et une chute correcte à chaque fois",
         "Une projection douce pratiquée sans que le partenaire tombe vraiment",
@@ -6981,10 +6981,10 @@
         "Une forme de Kata avec une séquence fixe de techniques de judo"
       ],
       "c": 0,
-      "exp": "Nagekomi = projections complètes répétées avec une exécution totale. Uke doit être prêt pour les Ukemi ! C'est plus exigeant que l'Uchi-komi, mais plus complet."
+      "exp": "Nage-komi = projections complètes répétées avec une exécution totale. Uke doit être prêt pour les Ukemi ! C'est plus exigeant que l'Uchi-komi, mais plus complet."
     },
     "es": {
-      "q": "¿Qué es el 'Nagekomi'?",
+      "q": "¿Qué es el 'Nage-komi'?",
       "opts": [
         "Proyecciones completas repetidas con ejecución total y caída correcta cada vez",
         "Una proyección suave practicada sin que el compañero caiga del todo",
@@ -6992,10 +6992,10 @@
         "Una forma de Kata prescrita con una secuencia fija de técnicas de judo"
       ],
       "c": 0,
-      "exp": "Nagekomi = proyecciones completas repetidas con ejecución total. ¡Uke debe estar preparado para el Ukemi! Es más exigente que el Uchi-komi, pero más completo."
+      "exp": "Nage-komi = proyecciones completas repetidas con ejecución total. ¡Uke debe estar preparado para el Ukemi! Es más exigente que el Uchi-komi, pero más completo."
     },
     "it": {
-      "q": "Cos'è il 'Nagekomi'?",
+      "q": "Cos'è il 'Nage-komi'?",
       "opts": [
         "Proiezioni complete ripetute con esecuzione totale e caduta corretta ogni volta",
         "Una proiezione dolce e leggera praticata senza che il partner cada completamente",
@@ -7003,10 +7003,10 @@
         "Una forma di Kata prestabilita con una sequenza fissa di tecniche di judo"
       ],
       "c": 0,
-      "exp": "Nagekomi = proiezioni complete ripetute con esecuzione totale. Uke deve essere pronto per l'Ukemi! È più impegnativo di Uchi-komi, ma più completo."
+      "exp": "Nage-komi = proiezioni complete ripetute con esecuzione totale. Uke deve essere pronto per l'Ukemi! È più impegnativo di Uchi-komi, ma più completo."
     },
     "pt": {
-      "q": "O que é 'Nagekomi'?",
+      "q": "O que é 'Nage-komi'?",
       "opts": [
         "Projeções completas e repetidas com execução total e queda correta de cada vez",
         "Uma projeção suave praticada sem o parceiro cair completamente",
@@ -7014,7 +7014,7 @@
         "Uma forma de Kata prescrita com uma sequência fixa de técnicas de judô"
       ],
       "c": 0,
-      "exp": "Nagekomi = projeções completas repetidas com execução total. O Uke tem de estar pronto para o Ukemi! É mais exigente do que o Uchi-komi, mas mais completo."
+      "exp": "Nage-komi = projeções completas repetidas com execução total. O Uke tem de estar pronto para o Ukemi! É mais exigente do que o Uchi-komi, mas mais completo."
     },
     "ru": {
       "q": "Что такое «Нагэкоми»?",
@@ -9228,7 +9228,7 @@
         "Zavisi od sudije"
       ],
       "c": 0,
-      "exp": "Da! Dva Waza-ari = Ippon. Pravilo 'Waza-ari awasete Ippon' važi u IJF pravilniku. Svaki Waza-ari vredi!"
+      "exp": "Da! Dva Waza-ari = Ippon. Pravilo 'Waza-ari awasete Ippon' važi u IJF pravilniku. Svaki Waza-ari vredi! Yuko se, nasuprot tome, nikad ne sabira u Waza-ari."
     },
     "en": {
       "q": "Do two Waza-ari add up to Ippon?",
@@ -9239,7 +9239,7 @@
         "Depends on the referee"
       ],
       "c": 0,
-      "exp": "Yes! Two Waza-ari = Ippon. The old rule 'Waza-ari awasete Ippon' has been restored in the IJF rulebook. Every Waza-ari counts!"
+      "exp": "Yes! Two Waza-ari = Ippon. The old rule 'Waza-ari awasete Ippon' has been restored in the IJF rulebook. Every Waza-ari counts! Yuko, by contrast, never adds up to Waza-ari."
     },
     "de": {
       "q": "Ergeben zwei Waza-ari zusammen ein Ippon?",
@@ -9250,7 +9250,7 @@
         "Hängt vom Kampfrichter ab"
       ],
       "c": 0,
-      "exp": "Ja! Zwei Waza-ari = Ippon. Die alte Regel 'Waza-ari awasete Ippon' wurde im IJF-Regelwerk wieder eingeführt. Jedes Waza-ari zählt!"
+      "exp": "Ja! Zwei Waza-ari = Ippon. Die alte Regel 'Waza-ari awasete Ippon' wurde im IJF-Regelwerk wieder eingeführt. Jedes Waza-ari zählt! Yuko addiert sich dagegen nie zu Waza-ari."
     },
     "fr": {
       "q": "Deux Waza-ari valent-ils Ippon ?",
@@ -9261,7 +9261,7 @@
         "Ça dépend de l'arbitre"
       ],
       "c": 0,
-      "exp": "Oui ! Deux Waza-ari = Ippon. L'ancienne règle 'Waza-ari awasete Ippon' a été rétablie dans le règlement IJF. Chaque Waza-ari compte !"
+      "exp": "Oui ! Deux Waza-ari = Ippon. L'ancienne règle 'Waza-ari awasete Ippon' a été rétablie dans le règlement IJF. Chaque Waza-ari compte ! Le Yuko, lui, ne s'additionne jamais au Waza-ari."
     },
     "es": {
       "q": "¿Dos Waza-ari equivalen a un Ippon?",
@@ -9272,7 +9272,7 @@
         "Depende del árbitro"
       ],
       "c": 0,
-      "exp": "¡Sí! Dos Waza-ari = Ippon. La antigua regla 'Waza-ari awasete Ippon' ha sido recuperada en el reglamento IJF. ¡Cada Waza-ari cuenta!"
+      "exp": "¡Sí! Dos Waza-ari = Ippon. La antigua regla 'Waza-ari awasete Ippon' ha sido recuperada en el reglamento IJF. ¡Cada Waza-ari cuenta! El Yuko, en cambio, nunca se suma al Waza-ari."
     },
     "it": {
       "q": "Due Waza-ari equivalgono a un Ippon?",
@@ -9283,7 +9283,7 @@
         "Dipende dall'arbitro"
       ],
       "c": 0,
-      "exp": "Sì! Due Waza-ari = Ippon. La vecchia regola 'Waza-ari awasete Ippon' è stata ripristinata nel regolamento IJF. Ogni Waza-ari conta!"
+      "exp": "Sì! Due Waza-ari = Ippon. La vecchia regola 'Waza-ari awasete Ippon' è stata ripristinata nel regolamento IJF. Ogni Waza-ari conta! Lo Yuko, invece, non si somma mai al Waza-ari."
     },
     "pt": {
       "q": "Dois Waza-ari equivalem a Ippon?",
@@ -9294,7 +9294,7 @@
         "Depende do árbitro"
       ],
       "c": 0,
-      "exp": "Sim! Dois Waza-ari = Ippon. A antiga regra 'Waza-ari awasete Ippon' foi restabelecida no regulamento da IJF. Cada Waza-ari conta!"
+      "exp": "Sim! Dois Waza-ari = Ippon. A antiga regra 'Waza-ari awasete Ippon' foi restabelecida no regulamento da IJF. Cada Waza-ari conta! O Yuko, ao contrário, nunca se soma ao Waza-ari."
     },
     "ru": {
       "q": "Дают ли два Вадза-ари Иппон?",
@@ -9305,7 +9305,7 @@
         "Зависит от судьи"
       ],
       "c": 0,
-      "exp": "Да! Два Вадза-ари = Иппон. Старое правило «Вадза-ари авасэтэ Иппон» было возвращено в правила МФД. Каждое Вадза-ари на счету!"
+      "exp": "Да! Два Вадза-ари = Иппон. Старое правило «Вадза-ари авасэтэ Иппон» было возвращено в правила МФД. Каждое Вадза-ари на счету! Юко же никогда не складывается в Вадза-ари."
     },
     "c": 0
   },
@@ -11128,7 +11128,7 @@
         "Pasti"
       ],
       "c": 0,
-      "exp": "Nage = baciti. Nage-waza = bacačke tehnike. Nagekomi = ponavljajuće bacanje. Tachi-waza = tehnike u stojećem stavu."
+      "exp": "Nage = baciti. Nage-waza = bacačke tehnike. Nage-komi = ponavljajuće bacanje. Tachi-waza = tehnike u stojećem stavu."
     },
     "en": {
       "q": "What does 'Nage' mean in Japanese?",
@@ -11139,7 +11139,7 @@
         "To fall"
       ],
       "c": 0,
-      "exp": "Nage = to throw. Nage-waza = throwing techniques. Nagekomi = repeated throwing. Tachi-waza = standing techniques."
+      "exp": "Nage = to throw. Nage-waza = throwing techniques. Nage-komi = repeated throwing. Tachi-waza = standing techniques."
     },
     "de": {
       "q": "Was bedeutet 'Nage' auf Japanisch?",
@@ -11150,7 +11150,7 @@
         "Fallen"
       ],
       "c": 0,
-      "exp": "Nage = werfen. Nage-waza = Wurftechniken. Nagekomi = wiederholtes Werfen. Tachi-waza = Standtechniken."
+      "exp": "Nage = werfen. Nage-waza = Wurftechniken. Nage-komi = wiederholtes Werfen. Tachi-waza = Standtechniken."
     },
     "fr": {
       "q": "Que signifie 'Nage' en japonais ?",
@@ -11161,7 +11161,7 @@
         "Tomber"
       ],
       "c": 0,
-      "exp": "Nage = projeter. Nage-waza = techniques de projection. Nagekomi = projections répétées. Tachi-waza = techniques debout."
+      "exp": "Nage = projeter. Nage-waza = techniques de projection. Nage-komi = projections répétées. Tachi-waza = techniques debout."
     },
     "es": {
       "q": "¿Qué significa 'Nage' en japonés?",
@@ -11172,7 +11172,7 @@
         "Caer"
       ],
       "c": 0,
-      "exp": "Nage = proyectar. Nage-waza = técnicas de proyección. Nagekomi = proyecciones repetidas. Tachi-waza = técnicas de pie."
+      "exp": "Nage = proyectar. Nage-waza = técnicas de proyección. Nage-komi = proyecciones repetidas. Tachi-waza = técnicas de pie."
     },
     "it": {
       "q": "Cosa significa 'Nage' in giapponese?",
@@ -11183,7 +11183,7 @@
         "Cadere"
       ],
       "c": 0,
-      "exp": "Nage = lanciare, proiettare. Nage-waza = tecniche di proiezione. Nagekomi = proiezioni ripetute. Tachi-waza = tecniche in piedi."
+      "exp": "Nage = lanciare, proiettare. Nage-waza = tecniche di proiezione. Nage-komi = proiezioni ripetute. Tachi-waza = tecniche in piedi."
     },
     "pt": {
       "q": "O que significa 'Nage' em japonês?",
@@ -11194,7 +11194,7 @@
         "Cair"
       ],
       "c": 0,
-      "exp": "Nage = projetar. Nage-waza = técnicas de projeção. Nagekomi = projeção repetida. Tachi-waza = técnicas de pé."
+      "exp": "Nage = projetar. Nage-waza = técnicas de projeção. Nage-komi = projeção repetida. Tachi-waza = técnicas de pé."
     },
     "ru": {
       "q": "Что означает «Нагэ» по-японски?",
@@ -12167,90 +12167,90 @@
     "sr": {
       "q": "Šta je 'Koka' u starim IJF pravilima i zašto je ukinuto?",
       "opts": [
-        "Treći stepen ispod Waza-ari – ukinut jer je komplikovao suđenje",
+        "Najniži nivo bodovanja, ispod Yuko – ukinut jer je komplikovao suđenje",
         "Kazna za pasivnu igru i negativno ponašanje na tatamiju",
         "Alternativni naziv za manje efikasan Ippon u borbi",
         "Stari džudo izraz za dobru kontrolu hvata protivnika"
       ],
       "c": 0,
-      "exp": "Koka (i Yuko) su bili manji poeni ispod Waza-ari. IJF je ukinuo Koka, a Yuko je ukinut 2017, ali je od tada ponovo vraćen kao redovan bod: Yuko vredi 1 poen, Waza-ari 10, a Ippon 100."
+      "exp": "Koka je bila najniža ocena starih pravila, ispod Yuko. IJF ju je ukinula 2013. jer je komplikovala suđenje. Yuko je ukinut 2017, ali se vratio u važeća pravila: broji se posebno i nikad se ne sabira u Waza-ari."
     },
     "en": {
       "q": "What was 'Koka' in the old IJF rules and why was it abolished?",
       "opts": [
-        "A third scoring level below Waza-ari – removed for overcomplicating judging",
+        "The lowest scoring level, below Yuko – removed for overcomplicating judging",
         "A penalty awarded for passive or negative behaviour",
         "An alternative name for a small or partial Ippon",
         "An old expression referring to effective grip control"
       ],
       "c": 0,
-      "exp": "Koka (and Yuko) were minor scores below Waza-ari. IJF abolished Koka, and Yuko was removed in 2017, but Yuko has since been reinstated as a regular score: Yuko is worth 1 point, Waza-ari 10 and Ippon 100."
+      "exp": "Koka was the lowest score of the old rules, below Yuko. The IJF abolished it in 2013 because it overcomplicated judging. Yuko was dropped in 2017 but is back in the current rules: it is counted separately and never adds up to Waza-ari."
     },
     "de": {
       "q": "Was war 'Koka' in den alten IJF-Regeln, und warum wurde es abgeschafft?",
       "opts": [
-        "Eine dritte Wertungsstufe unterhalb von Waza-ari – abgeschafft, weil es die Kampfrichterarbeit zu kompliziert machte",
+        "Die niedrigste Wertungsstufe unterhalb von Yuko – abgeschafft, weil es die Kampfrichterarbeit zu kompliziert machte",
         "Eine Strafe für passives oder negatives Verhalten",
         "Ein anderer Name für einen kleinen oder teilweisen Ippon",
         "Ein alter Ausdruck für effektive Griffkontrolle"
       ],
       "c": 0,
-      "exp": "Koka (und Yuko) waren kleine Wertungen unterhalb von Waza-ari. Die IJF schaffte Koka ab und Yuko wurde 2017 gestrichen, doch Yuko ist inzwischen wieder eine reguläre Wertung: Yuko zählt 1 Punkt, Waza-ari 10 und Ippon 100."
+      "exp": "Koka war die niedrigste Wertung der alten Regeln, unterhalb von Yuko. Die IJF schaffte sie 2013 ab, weil sie die Kampfrichterarbeit zu kompliziert machte. Yuko wurde 2017 gestrichen, ist aber in den aktuellen Regeln zurück: Es wird separat gezählt und addiert sich nie zu Waza-ari."
     },
     "fr": {
       "q": "Qu'était le 'Koka' dans les anciennes règles de l'IJF et pourquoi a-t-il été supprimé ?",
       "opts": [
-        "Un troisième niveau de score en dessous de Waza-ari – supprimé car il compliquait trop le jugement",
+        "Le niveau de score le plus bas, en dessous du Yuko – supprimé car il compliquait trop le jugement",
         "Une pénalité attribuée pour un comportement passif ou négatif",
         "Un autre nom pour un Ippon partiel ou incomplet",
         "Une ancienne expression désignant un contrôle efficace de la prise"
       ],
       "c": 0,
-      "exp": "Le Koka (et le Yuko) étaient des scores mineurs en dessous de Waza-ari. L'IJF a supprimé le Koka, et le Yuko a été supprimé en 2017, mais il a depuis été réintroduit comme score régulier : le Yuko vaut 1 point, le Waza-ari 10 et l'Ippon 100."
+      "exp": "Le Koka était le score le plus bas des anciennes règles, en dessous du Yuko. L'IJF l'a supprimé en 2013 parce qu'il compliquait trop le jugement. Le Yuko a été retiré en 2017, mais il est de retour dans les règles actuelles : il est compté séparément et ne s'additionne jamais au Waza-ari."
     },
     "es": {
       "q": "¿Qué era 'Koka' en las antiguas reglas de la IJF y por qué se abolió?",
       "opts": [
-        "Un tercer nivel de puntuación por debajo del Waza-ari – eliminado por complicar demasiado el arbitraje",
+        "El nivel de puntuación más bajo, por debajo del Yuko – eliminado por complicar demasiado el arbitraje",
         "Una penalización concedida por comportamiento pasivo o negativo",
         "Un nombre alternativo para un Ippon pequeño o parcial",
         "Una expresión antigua referida al control efectivo del agarre"
       ],
       "c": 0,
-      "exp": "Koka (y Yuko) eran puntuaciones menores por debajo del Waza-ari. La IJF abolió el Koka y el Yuko fue eliminado en 2017, pero desde entonces ha sido reintroducido como puntuación regular: el Yuko vale 1 punto, el Waza-ari 10 y el Ippon 100."
+      "exp": "El Koka era la puntuación más baja de las antiguas reglas, por debajo del Yuko. La IJF lo abolió en 2013 porque complicaba demasiado el arbitraje. El Yuko se eliminó en 2017, pero ha vuelto a las reglas actuales: se cuenta por separado y nunca se suma al Waza-ari."
     },
     "it": {
       "q": "Cos'era 'Koka' nel vecchio regolamento IJF e perché è stato abolito?",
       "opts": [
-        "Un terzo livello di punteggio inferiore al Waza-ari – eliminato perché complicava troppo il giudizio",
+        "Il livello di punteggio più basso, inferiore allo Yuko – eliminato perché complicava troppo il giudizio",
         "Una penalità assegnata per comportamento passivo o negativo",
         "Un nome alternativo per un Ippon piccolo o parziale",
         "Un'antica espressione che indicava il controllo efficace della presa"
       ],
       "c": 0,
-      "exp": "Koka (e Yuko) erano punteggi minori inferiori al Waza-ari. La IJF ha abolito il Koka e lo Yuko è stato eliminato nel 2017, ma da allora è stato reintrodotto come punteggio regolare: lo Yuko vale 1 punto, il Waza-ari 10 e l'Ippon 100."
+      "exp": "Il Koka era il punteggio più basso del vecchio regolamento, inferiore allo Yuko. La IJF lo ha abolito nel 2013 perché complicava troppo il giudizio. Lo Yuko è stato tolto nel 2017, ma è tornato nel regolamento attuale: si conta a parte e non si somma mai al Waza-ari."
     },
     "pt": {
       "q": "O que era o 'Koka' nas antigas regras da IJF e por que foi abolido?",
       "opts": [
-        "Um terceiro nível de pontuação abaixo do Waza-ari – eliminado por complicar demais a arbitragem",
+        "O nível de pontuação mais baixo, abaixo do Yuko – eliminado por complicar demais a arbitragem",
         "Uma penalização atribuída por comportamento passivo ou negativo",
         "Um nome alternativo para um Ippon pequeno ou parcial",
         "Uma expressão antiga referente ao controle eficaz da pegada"
       ],
       "c": 0,
-      "exp": "Koka (e Yuko) eram pontuações menores abaixo do Waza-ari. A IJF aboliu o Koka e o Yuko foi removido em 2017, mas desde então o Yuko foi reintroduzido como pontuação regular: o Yuko vale 1 ponto, o Waza-ari 10 e o Ippon 100."
+      "exp": "O Koka era a pontuação mais baixa das antigas regras, abaixo do Yuko. A IJF aboliu-o em 2013 porque complicava demais a arbitragem. O Yuko foi retirado em 2017, mas voltou às regras atuais: é contado separadamente e nunca se soma ao Waza-ari."
     },
     "ru": {
       "q": "Что такое «Кока» в старых правилах МФД и почему её отменили?",
       "opts": [
-        "Третий уровень оценки ниже Вадза-ари — убрана за чрезмерное усложнение судейства",
+        "Самый низкий уровень оценки, ниже Юко — убрана за чрезмерное усложнение судейства",
         "Штрафное очко за пассивное или негативное поведение",
         "Другое название небольшого или частичного Иппона",
         "Старое выражение, обозначающее эффективный контроль захвата"
       ],
       "c": 0,
-      "exp": "Кока (и Юко) были малыми оценками ниже Вадза-ари. МФД отменила Коку, а Юко была убрана в 2017 году, но затем возвращена как обычная оценка: Юко стоит 1 очко, Вадза-ари — 10, Иппон — 100."
+      "exp": "Кока была самой низкой оценкой старых правил, ниже Юко. МФД отменила её в 2013 году, потому что она слишком усложняла судейство. Юко убрали в 2017 году, но в действующих правилах он вернулся: он считается отдельно и никогда не складывается в Вадза-ари."
     },
     "c": 0
   },
@@ -13873,7 +13873,7 @@
     "level": 3,
     "type": "situacija",
     "sr": {
-      "q": "Tvoj Uke u nagekomi je znatno lakši od tebe. Kako to utiče na trening?",
+      "q": "Tvoj Uke u nage-komi je znatno lakši od tebe. Kako to utiče na trening?",
       "opts": [
         "Lakši Uke je uvek loša praksa jer ne pruža realan otpor",
         "Lakši Uke je odličan za rad na ulazu i brzini, ali loš za trening snage bacanja",
@@ -13884,7 +13884,7 @@
       "exp": "Lakši Uke omogućava brži, čišći rad na ulasku i tehnici. Ali ne daje pravi osećaj mase i otpora koji dobijaš kod jednakog ili težeg partnera. Oba su korisna za različite aspekte."
     },
     "en": {
-      "q": "Your Uke in nagekomi is significantly lighter than you. How does this affect training?",
+      "q": "Your Uke in nage-komi is significantly lighter than you. How does this affect training?",
       "opts": [
         "A lighter Uke is always bad practice as they provide no realistic resistance",
         "A lighter Uke is great for entry and speed work, but poor for training throwing power",
@@ -13895,7 +13895,7 @@
       "exp": "A lighter Uke allows faster, cleaner work on entry and technique. But they do not give the true feeling of mass and resistance that comes with an equal or heavier partner. Both are useful for different aspects."
     },
     "de": {
-      "q": "Dein Uke beim Nagekomi ist deutlich leichter als du. Wie beeinflusst das das Training?",
+      "q": "Dein Uke beim Nage-komi ist deutlich leichter als du. Wie beeinflusst das das Training?",
       "opts": [
         "Ein leichterer Uke ist immer schlechte Übung, weil er keinen realistischen Widerstand bietet",
         "Ein leichterer Uke ist gut für Eindreh- und Schnelligkeitsarbeit, aber schlecht für das Training der Wurfkraft",
@@ -13906,7 +13906,7 @@
       "exp": "Ein leichterer Uke ermöglicht schnelleres und saubereres Arbeiten am Eindrehen und an der Technik. Aber er gibt nicht das echte Gefühl von Masse und Widerstand, das ein gleichschwerer oder schwererer Partner bietet. Beide sind für verschiedene Aspekte nützlich."
     },
     "fr": {
-      "q": "Ton Uke en Nagekomi est nettement plus léger que toi. Comment cela influence-t-il l'entraînement ?",
+      "q": "Ton Uke en Nage-komi est nettement plus léger que toi. Comment cela influence-t-il l'entraînement ?",
       "opts": [
         "Un Uke plus léger est toujours mauvais, car il n'offre aucune résistance réaliste",
         "Un Uke plus léger est idéal pour travailler l'entrée et la vitesse, mais mauvais pour entraîner la puissance de projection",
@@ -13917,7 +13917,7 @@
       "exp": "Un Uke plus léger permet de travailler l'entrée et la technique plus vite et plus proprement. Mais il ne donne pas la vraie sensation de masse et de résistance qu'offre un partenaire de poids égal ou supérieur. Les deux sont utiles pour des aspects différents."
     },
     "es": {
-      "q": "Tu Uke en Nagekomi es bastante más ligero que tú. ¿Cómo afecta eso al entrenamiento?",
+      "q": "Tu Uke en Nage-komi es bastante más ligero que tú. ¿Cómo afecta eso al entrenamiento?",
       "opts": [
         "Un Uke más ligero siempre es mala práctica porque no ofrece resistencia real",
         "Un Uke más ligero es genial para trabajar la entrada y la velocidad, pero poco útil para entrenar la potencia de proyección",
@@ -13928,7 +13928,7 @@
       "exp": "Un Uke más ligero permite trabajar la entrada y la técnica de forma más rápida y limpia. Pero no da la verdadera sensación de masa y resistencia que ofrece un compañero de peso similar o mayor. Ambos son útiles para aspectos diferentes."
     },
     "it": {
-      "q": "Il tuo Uke nel Nagekomi è molto più leggero di te. Come influisce questo sull'allenamento?",
+      "q": "Il tuo Uke nel Nage-komi è molto più leggero di te. Come influisce questo sull'allenamento?",
       "opts": [
         "Un Uke più leggero è sempre controproducente perché non offre resistenza realistica",
         "Un Uke più leggero è ottimo per lavorare sull'entrata e sulla velocità, ma non allena la potenza della proiezione",
@@ -13939,7 +13939,7 @@
       "exp": "Un Uke più leggero ti permette di lavorare più velocemente e con più precisione sull'entrata e sulla tecnica. Ma non ti dà la vera sensazione di massa e resistenza che ti dà un partner di pari peso o più pesante. Entrambi sono utili per aspetti diversi."
     },
     "pt": {
-      "q": "O seu Uke no Nagekomi é significativamente mais leve do que você. Como isso afeta o treino?",
+      "q": "O seu Uke no Nage-komi é significativamente mais leve do que você. Como isso afeta o treino?",
       "opts": [
         "Um Uke mais leve é sempre mau porque não oferece resistência realista",
         "Um Uke mais leve é ótimo para trabalhar a entrada e a velocidade, mas fraco para treinar a potência da projeção",
@@ -17958,7 +17958,7 @@
     "level": 2,
     "type": "japanski",
     "sr": {
-      "q": "Šta znači 'Uchikomi'?",
+      "q": "Šta znači 'Uchi-komi'?",
       "opts": [
         "Slobodna borba",
         "Ponavljano vežbanje ulaza u tehniku bez bacanja",
@@ -17966,10 +17966,10 @@
         "Trening na gumenoj lutki"
       ],
       "c": 1,
-      "exp": "Uchikomi (打ち込み) je metoda treninga gde se ulaz u tehniku ponavlja bez završetka bacanja. Gradi memoriju mišića i automatizam ulaza."
+      "exp": "Uchi-komi (打ち込み) je metoda treninga gde se ulaz u tehniku ponavlja bez završetka bacanja. Gradi memoriju mišića i automatizam ulaza."
     },
     "en": {
-      "q": "What does 'Uchikomi' mean?",
+      "q": "What does 'Uchi-komi' mean?",
       "opts": [
         "Free fighting",
         "Repeated practice of the entry into a technique without throwing",
@@ -17977,7 +17977,7 @@
         "Training with a rubber dummy"
       ],
       "c": 1,
-      "exp": "Uchikomi (打ち込み) is a training method where the entry into a technique is repeated without completing the throw. It builds muscle memory and automatic entry."
+      "exp": "Uchi-komi (打ち込み) is a training method where the entry into a technique is repeated without completing the throw. It builds muscle memory and automatic entry."
     },
     "de": {
       "q": "Was bedeutet 'Uchi-komi'?",
@@ -26503,5 +26503,195 @@
       "exp": "В дзюдо победу принимают с достоинством: вернуться на место, поклониться и проявить уважение к сопернику. Чрезмерное ликование и неспортивные жесты противоречат духу дзюдо и могут быть наказаны."
     },
     "c": 1
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "pravila",
+    "videoId": null,
+    "c": 2,
+    "sr": {
+      "q": "Šta je Yuko u važećim IJF pravilima?",
+      "opts": [
+        "Kazna za pasivnost",
+        "Ocena veća od Ippona",
+        "Ocena ispod Waza-ari – npr. bacanje na bok ili zadržavanje od 5 do 9 sekundi",
+        "Drugi naziv za Waza-ari"
+      ],
+      "c": 2,
+      "exp": "Yuko je ocena ispod Waza-ari. Dobija se za bacanje koje završi na boku, na zadnjici ili na gornjem delu leđa, i za zadržavanje od 5 do 9 sekundi. Ukinut je 2017, a u važećim pravilima se vratio."
+    },
+    "en": {
+      "q": "What is Yuko in the current IJF rules?",
+      "opts": [
+        "A penalty for passivity",
+        "A score higher than Ippon",
+        "A score below Waza-ari – for example a throw landing on the side, or a 5–9 second hold",
+        "Another name for Waza-ari"
+      ],
+      "c": 2,
+      "exp": "Yuko is a score below Waza-ari. It is given for a throw that lands on the side, on the buttocks or on the upper back, and for a hold of 5–9 seconds. It was removed in 2017 and is back in the current rules."
+    },
+    "de": {
+      "q": "Was ist Yuko in den aktuellen IJF-Regeln?",
+      "opts": [
+        "Eine Strafe für Passivität",
+        "Eine Wertung höher als Ippon",
+        "Eine Wertung unterhalb von Waza-ari – z. B. ein Wurf mit Landung auf der Seite oder ein Haltegriff von 5 bis 9 Sekunden",
+        "Ein anderer Name für Waza-ari"
+      ],
+      "c": 2,
+      "exp": "Yuko ist eine Wertung unterhalb von Waza-ari. Es gibt sie für einen Wurf, der auf der Seite, auf dem Gesäß oder auf dem oberen Rücken landet, und für einen Haltegriff von 5 bis 9 Sekunden. 2017 wurde es gestrichen, in den aktuellen Regeln ist es zurück."
+    },
+    "fr": {
+      "q": "Qu'est-ce que le Yuko dans les règles actuelles de l'IJF ?",
+      "opts": [
+        "Une pénalité pour passivité",
+        "Un score supérieur à l'Ippon",
+        "Un score inférieur au Waza-ari – par exemple une projection avec réception sur le côté, ou une immobilisation de 5 à 9 secondes",
+        "Un autre nom pour le Waza-ari"
+      ],
+      "c": 2,
+      "exp": "Le Yuko est un score inférieur au Waza-ari. Il est donné pour une projection qui retombe sur le côté, sur les fesses ou sur le haut du dos, et pour une immobilisation de 5 à 9 secondes. Il a été retiré en 2017 et est de retour dans les règles actuelles."
+    },
+    "es": {
+      "q": "¿Qué es el Yuko en las reglas actuales de la IJF?",
+      "opts": [
+        "Una penalización por pasividad",
+        "Una puntuación superior al Ippon",
+        "Una puntuación inferior al Waza-ari – por ejemplo una proyección con caída de lado o una inmovilización de 5 a 9 segundos",
+        "Otro nombre para el Waza-ari"
+      ],
+      "c": 2,
+      "exp": "El Yuko es una puntuación inferior al Waza-ari. Se concede por una proyección que cae de lado, sobre los glúteos o sobre la parte alta de la espalda, y por una inmovilización de 5 a 9 segundos. Se eliminó en 2017 y ha vuelto a las reglas actuales."
+    },
+    "it": {
+      "q": "Che cos'è lo Yuko nel regolamento IJF attuale?",
+      "opts": [
+        "Una penalità per passività",
+        "Un punteggio superiore all'Ippon",
+        "Un punteggio inferiore al Waza-ari – ad esempio una proiezione con caduta sul fianco o un'immobilizzazione da 5 a 9 secondi",
+        "Un altro nome per il Waza-ari"
+      ],
+      "c": 2,
+      "exp": "Lo Yuko è un punteggio inferiore al Waza-ari. Si assegna per una proiezione che cade sul fianco, sui glutei o sulla parte alta della schiena, e per un'immobilizzazione da 5 a 9 secondi. È stato tolto nel 2017 ed è tornato nel regolamento attuale."
+    },
+    "pt": {
+      "q": "O que é o Yuko nas regras atuais da IJF?",
+      "opts": [
+        "Uma penalidade por passividade",
+        "Uma pontuação superior ao Ippon",
+        "Uma pontuação abaixo do Waza-ari – por exemplo uma projeção com queda de lado ou uma imobilização de 5 a 9 segundos",
+        "Outro nome para o Waza-ari"
+      ],
+      "c": 2,
+      "exp": "O Yuko é uma pontuação abaixo do Waza-ari. É dado por uma projeção que cai de lado, nas nádegas ou na parte superior das costas, e por uma imobilização de 5 a 9 segundos. Foi retirado em 2017 e voltou às regras atuais."
+    },
+    "ru": {
+      "q": "Что такое Юко в действующих правилах МФД?",
+      "opts": [
+        "Штраф за пассивность",
+        "Оценка выше Иппона",
+        "Оценка ниже Вадза-ари — например, бросок с приземлением на бок или удержание 5–9 секунд",
+        "Другое название Вадза-ари"
+      ],
+      "c": 2,
+      "exp": "Юко — это оценка ниже Вадза-ари. Её дают за бросок с приземлением на бок, на ягодицы или на верхнюю часть спины, а также за удержание 5–9 секунд. В 2017 году её убрали, в действующих правилах она вернулась."
+    }
+  },
+  {
+    "level": 3,
+    "levelLabel": "advanced",
+    "type": "pravila",
+    "videoId": null,
+    "c": 3,
+    "sr": {
+      "q": "Da li se dva Yuko sabiraju u Waza-ari?",
+      "opts": [
+        "Da – dva Yuko daju jedan Waza-ari",
+        "Da – ali samo u Golden Score-u",
+        "Da – četiri Yuko daju Ippon",
+        "Ne – Yuko se broji posebno i nikad se ne sabira u Waza-ari"
+      ],
+      "c": 3,
+      "exp": "Yuko se beleži posebno (1, 2, 3...) i nikad se ne pretvara u Waza-ari. Samo dva Waza-ari daju Ippon."
+    },
+    "en": {
+      "q": "Do two Yuko add up to a Waza-ari?",
+      "opts": [
+        "Yes – two Yuko make one Waza-ari",
+        "Yes – but only in Golden Score",
+        "Yes – four Yuko make an Ippon",
+        "No – Yuko is counted separately and never adds up to Waza-ari"
+      ],
+      "c": 3,
+      "exp": "Yuko scores are recorded separately (1, 2, 3...) and never convert into Waza-ari. Only two Waza-ari make Ippon."
+    },
+    "de": {
+      "q": "Addieren sich zwei Yuko zu einem Waza-ari?",
+      "opts": [
+        "Ja – zwei Yuko ergeben ein Waza-ari",
+        "Ja – aber nur im Golden Score",
+        "Ja – vier Yuko ergeben ein Ippon",
+        "Nein – Yuko wird separat gezählt und addiert sich nie zu Waza-ari"
+      ],
+      "c": 3,
+      "exp": "Yuko-Wertungen werden separat erfasst (1, 2, 3 ...) und werden nie zu Waza-ari. Erst zwei Waza-ari ergeben Ippon."
+    },
+    "fr": {
+      "q": "Deux Yuko s'additionnent-ils en un Waza-ari ?",
+      "opts": [
+        "Oui – deux Yuko font un Waza-ari",
+        "Oui – mais seulement en Golden Score",
+        "Oui – quatre Yuko font un Ippon",
+        "Non – le Yuko est compté séparément et ne s'additionne jamais au Waza-ari"
+      ],
+      "c": 3,
+      "exp": "Les Yuko sont enregistrés séparément (1, 2, 3...) et ne se transforment jamais en Waza-ari. Seuls deux Waza-ari font un Ippon."
+    },
+    "es": {
+      "q": "¿Se suman dos Yuko para formar un Waza-ari?",
+      "opts": [
+        "Sí – dos Yuko hacen un Waza-ari",
+        "Sí – pero solo en Golden Score",
+        "Sí – cuatro Yuko hacen un Ippon",
+        "No – el Yuko se cuenta por separado y nunca se suma al Waza-ari"
+      ],
+      "c": 3,
+      "exp": "Los Yuko se registran por separado (1, 2, 3...) y nunca se convierten en Waza-ari. Solo dos Waza-ari hacen Ippon."
+    },
+    "it": {
+      "q": "Due Yuko si sommano in un Waza-ari?",
+      "opts": [
+        "Sì – due Yuko fanno un Waza-ari",
+        "Sì – ma solo in Golden Score",
+        "Sì – quattro Yuko fanno un Ippon",
+        "No – lo Yuko si conta a parte e non si somma mai al Waza-ari"
+      ],
+      "c": 3,
+      "exp": "Gli Yuko si registrano separatamente (1, 2, 3...) e non diventano mai un Waza-ari. Solo due Waza-ari fanno Ippon."
+    },
+    "pt": {
+      "q": "Dois Yuko somam-se num Waza-ari?",
+      "opts": [
+        "Sim – dois Yuko fazem um Waza-ari",
+        "Sim – mas apenas no Golden Score",
+        "Sim – quatro Yuko fazem um Ippon",
+        "Não – o Yuko é contado separadamente e nunca se soma ao Waza-ari"
+      ],
+      "c": 3,
+      "exp": "Os Yuko são registados separadamente (1, 2, 3...) e nunca se convertem em Waza-ari. Só dois Waza-ari fazem Ippon."
+    },
+    "ru": {
+      "q": "Складываются ли два Юко в одно Вадза-ари?",
+      "opts": [
+        "Да — два Юко дают одно Вадза-ари",
+        "Да — но только в Golden Score",
+        "Да — четыре Юко дают Иппон",
+        "Нет — Юко считается отдельно и никогда не складывается в Вадза-ари"
+      ],
+      "c": 3,
+      "exp": "Юко записываются отдельно (1, 2, 3...) и никогда не превращаются в Вадза-ари. Только два Вадза-ари дают Иппон."
+    }
   }
 ]
