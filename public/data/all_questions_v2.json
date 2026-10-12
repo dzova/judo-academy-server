@@ -26693,5 +26693,4660 @@
       "c": 3,
       "exp": "Юко записываются отдельно (1, 2, 3...) и никогда не превращаются в Вадза-ари. Только два Вадза-ари дают Иппон."
     }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "tehnika",
+    "videoId": null,
+    "c": 0,
+    "sr": {
+      "q": "Koja tehnika pada se vežba ležeći na leđima, sa bradom uvučenom i obema rukama koje udaraju o tatami?",
+      "opts": [
+        "Ushiro-ukemi",
+        "Mae-ukemi",
+        "Yoko-ukemi",
+        "Zenpo-kaiten-ukemi"
+      ],
+      "c": 0,
+      "exp": "Ushiro-ukemi je pad unazad. Brada ostaje uvučena da zaštiti glavu, a ruke udaraju o tatami da ublaže udarac."
+    },
+    "en": {
+      "q": "Which breakfall is practised lying on your back with your chin tucked in and both arms slapping the mat?",
+      "opts": [
+        "Ushiro-ukemi",
+        "Mae-ukemi",
+        "Yoko-ukemi",
+        "Zenpo-kaiten-ukemi"
+      ],
+      "c": 0,
+      "exp": "Ushiro-ukemi is the backward breakfall. The chin stays tucked to protect the head, and the arms slap the mat to absorb the impact."
+    },
+    "de": {
+      "q": "Welche Fallschule wird auf dem Rücken liegend geübt, mit angezogenem Kinn und beiden Armen, die auf die Matte schlagen?",
+      "opts": [
+        "Ushiro-ukemi",
+        "Mae-ukemi",
+        "Yoko-ukemi",
+        "Zenpo-kaiten-ukemi"
+      ],
+      "c": 0,
+      "exp": "Ushiro-ukemi ist die Rückwärtsfalltechnik. Das Kinn bleibt angezogen, um den Kopf zu schützen, und die Arme schlagen auf die Matte, um den Aufprall abzufangen."
+    },
+    "fr": {
+      "q": "Quelle chute arrière se pratique allongé sur le dos, le menton rentré et les deux bras qui frappent le tapis ?",
+      "opts": [
+        "Ushiro-ukemi",
+        "Mae-ukemi",
+        "Yoko-ukemi",
+        "Zenpo-kaiten-ukemi"
+      ],
+      "c": 0,
+      "exp": "L'Ushiro-ukemi est la chute arrière. Le menton reste rentré pour protéger la tête, et les bras frappent le tapis pour amortir le choc."
+    },
+    "es": {
+      "q": "¿Qué caída se practica tumbado de espaldas, con la barbilla pegada al pecho y golpeando el Tatami con ambos brazos?",
+      "opts": [
+        "Ushiro-ukemi",
+        "Mae-ukemi",
+        "Yoko-ukemi",
+        "Zenpo-kaiten-ukemi"
+      ],
+      "c": 0,
+      "exp": "Ushiro-ukemi es la caída hacia atrás. La barbilla se mantiene pegada al pecho para proteger la cabeza, y los brazos golpean el Tatami para amortiguar el impacto."
+    },
+    "it": {
+      "q": "Quale tecnica di caduta si esegue sdraiati sulla schiena, con il mento raccolto e battendo il tatami con entrambe le braccia?",
+      "opts": [
+        "Ushiro-ukemi",
+        "Mae-ukemi",
+        "Yoko-ukemi",
+        "Zenpo-kaiten-ukemi"
+      ],
+      "c": 0,
+      "exp": "Ushiro-ukemi è la caduta all'indietro. Il mento resta raccolto per proteggere la testa e le braccia battono sul tatami per assorbire l'impatto."
+    },
+    "pt": {
+      "q": "Qual queda é praticada deitado de costas, com o queixo encolhido e os dois braços batendo no tatame?",
+      "opts": [
+        "Ushiro-ukemi",
+        "Mae-ukemi",
+        "Yoko-ukemi",
+        "Zenpo-kaiten-ukemi"
+      ],
+      "c": 0,
+      "exp": "O Ushiro-ukemi é a queda para trás. O queixo fica encolhido para proteger a cabeça, e os braços batem no tatame para amortecer o impacto."
+    },
+    "ru": {
+      "q": "Какая страховка выполняется лёжа на спине, с прижатым подбородком, при этом обе руки хлопают по татами?",
+      "opts": [
+        "Усиро-укэми",
+        "Маэ-укэми",
+        "Ёко-укэми",
+        "Дзэмпо-кайтэн-укэми"
+      ],
+      "c": 0,
+      "exp": "Усиро-укэми – это страховка при падении назад. Подбородок прижат, чтобы защитить голову, а руки хлопают по татами и гасят удар."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "tehnika",
+    "videoId": null,
+    "c": 3,
+    "sr": {
+      "q": "Koje bacanje ima ime koje znači 'plutajući kuk'?",
+      "opts": [
+        "Tsuri-goshi",
+        "O-goshi",
+        "Harai-goshi",
+        "Uki-goshi"
+      ],
+      "c": 3,
+      "exp": "'Uki' znači plutajući, a 'goshi' znači kuk. U Uki-goshi, Tori se okreće i lako podiže Ukea preko kuka."
+    },
+    "en": {
+      "q": "Which throw has a name that means 'floating hip'?",
+      "opts": [
+        "Tsuri-goshi",
+        "O-goshi",
+        "Harai-goshi",
+        "Uki-goshi"
+      ],
+      "c": 3,
+      "exp": "'Uki' means floating and 'goshi' means hip. In Uki-goshi, Tori turns in and lifts Uke lightly over the hip."
+    },
+    "de": {
+      "q": "Welcher Wurf hat einen Namen, der 'schwebende Hüfte' bedeutet?",
+      "opts": [
+        "Tsuri-goshi",
+        "O-goshi",
+        "Harai-goshi",
+        "Uki-goshi"
+      ],
+      "c": 3,
+      "exp": "'Uki' bedeutet schwebend und 'goshi' bedeutet Hüfte. Bei Uki-goshi dreht sich Tori ein und hebt Uke leicht über die Hüfte."
+    },
+    "fr": {
+      "q": "Quelle projection a un nom qui signifie 'hanche flottante' ?",
+      "opts": [
+        "Tsuri-goshi",
+        "O-goshi",
+        "Harai-goshi",
+        "Uki-goshi"
+      ],
+      "c": 3,
+      "exp": "'Uki' signifie flottant et 'goshi' signifie hanche. Dans Uki-goshi, Tori pivote et soulève Uke légèrement par-dessus sa hanche."
+    },
+    "es": {
+      "q": "¿Qué proyección tiene un nombre que significa 'cadera flotante'?",
+      "opts": [
+        "Tsuri-goshi",
+        "O-goshi",
+        "Harai-goshi",
+        "Uki-goshi"
+      ],
+      "c": 3,
+      "exp": "'Uki' significa flotante y 'goshi' significa cadera. En Uki-goshi, Tori gira y levanta a Uke con suavidad sobre la cadera."
+    },
+    "it": {
+      "q": "Quale proiezione ha un nome che significa 'anca fluttuante'?",
+      "opts": [
+        "Tsuri-goshi",
+        "O-goshi",
+        "Harai-goshi",
+        "Uki-goshi"
+      ],
+      "c": 3,
+      "exp": "'Uki' significa fluttuante e 'goshi' significa anca. Nell'Uki-goshi, Tori ruota su sé stesso e solleva Uke con leggerezza sopra l'anca."
+    },
+    "pt": {
+      "q": "Qual projeção tem um nome que significa 'quadril flutuante'?",
+      "opts": [
+        "Tsuri-goshi",
+        "O-goshi",
+        "Harai-goshi",
+        "Uki-goshi"
+      ],
+      "c": 3,
+      "exp": "'Uki' significa flutuante e 'goshi' significa quadril. No Uki-goshi, o Tori gira para dentro e levanta o Uke de leve sobre o quadril."
+    },
+    "ru": {
+      "q": "Название какого броска означает «плавающее бедро»?",
+      "opts": [
+        "Цури-госи",
+        "О-госи",
+        "Харай-госи",
+        "Уки-госи"
+      ],
+      "c": 3,
+      "exp": "«Уки» значит «плавающий», а «госи» – «бедро». В Уки-госи Тори разворачивается и легко поднимает Укэ на бедре."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "tehnika",
+    "videoId": null,
+    "c": 2,
+    "sr": {
+      "q": "Koja od ovih tehnika je davljenje (Shime-waza)?",
+      "opts": [
+        "Kesa-gatame",
+        "Ko-uchi-gari",
+        "Hadaka-jime",
+        "Harai-goshi"
+      ],
+      "c": 2,
+      "exp": "Hadaka-jime je davljenje s leđa, sa rukom oko vrata. Kesa-gatame je zadržavanje, a druga dva su bacanja."
+    },
+    "en": {
+      "q": "Which of these is a choking technique (Shime-waza)?",
+      "opts": [
+        "Kesa-gatame",
+        "Ko-uchi-gari",
+        "Hadaka-jime",
+        "Harai-goshi"
+      ],
+      "c": 2,
+      "exp": "Hadaka-jime is a choke applied from behind with the arm around the neck. Kesa-gatame is a hold and the other two are throws."
+    },
+    "de": {
+      "q": "Welche dieser Techniken ist eine Würgetechnik (Shime-waza)?",
+      "opts": [
+        "Kesa-gatame",
+        "Ko-uchi-gari",
+        "Hadaka-jime",
+        "Harai-goshi"
+      ],
+      "c": 2,
+      "exp": "Hadaka-jime ist ein Würgegriff von hinten mit dem Arm um den Hals. Kesa-gatame ist ein Haltegriff, und die beiden anderen sind Würfe."
+    },
+    "fr": {
+      "q": "Laquelle de ces techniques est un étranglement (Shime-waza) ?",
+      "opts": [
+        "Kesa-gatame",
+        "Ko-uchi-gari",
+        "Hadaka-jime",
+        "Harai-goshi"
+      ],
+      "c": 2,
+      "exp": "Le Hadaka-jime est un étranglement réalisé par derrière, avec le bras autour du cou. Le Kesa-gatame est une immobilisation et les deux autres sont des projections."
+    },
+    "es": {
+      "q": "¿Cuál de estas es una técnica de estrangulación (Shime-waza)?",
+      "opts": [
+        "Kesa-gatame",
+        "Ko-uchi-gari",
+        "Hadaka-jime",
+        "Harai-goshi"
+      ],
+      "c": 2,
+      "exp": "Hadaka-jime es una estrangulación aplicada por la espalda, con el brazo alrededor del cuello. Kesa-gatame es una inmovilización y las otras dos son proyecciones."
+    },
+    "it": {
+      "q": "Quale di queste è una tecnica di strangolamento (Shime-waza)?",
+      "opts": [
+        "Kesa-gatame",
+        "Ko-uchi-gari",
+        "Hadaka-jime",
+        "Harai-goshi"
+      ],
+      "c": 2,
+      "exp": "Hadaka-jime è uno strangolamento eseguito da dietro con il braccio attorno al collo. Kesa-gatame è un'immobilizzazione e le altre due sono proiezioni."
+    },
+    "pt": {
+      "q": "Qual destas é uma técnica de estrangulamento (Shime-waza)?",
+      "opts": [
+        "Kesa-gatame",
+        "Ko-uchi-gari",
+        "Hadaka-jime",
+        "Harai-goshi"
+      ],
+      "c": 2,
+      "exp": "O Hadaka-jime é um estrangulamento aplicado por trás, com o braço em volta do pescoço. O Kesa-gatame é uma imobilização e as outras duas são projeções."
+    },
+    "ru": {
+      "q": "Какой из этих приёмов – удушающий (Симэ-вадза)?",
+      "opts": [
+        "Кэса-гатамэ",
+        "Ко-ути-гари",
+        "Хадака-дзимэ",
+        "Харай-госи"
+      ],
+      "c": 2,
+      "exp": "Хадака-дзимэ – удушение сзади, при котором рука обхватывает шею. Кэса-гатамэ – удержание, а два других – броски."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "tehnika",
+    "videoId": null,
+    "c": 3,
+    "sr": {
+      "q": "Koje zadržavanje se često zove 'zadržavanje šalom'?",
+      "opts": [
+        "Kami-shiho-gatame",
+        "Yoko-shiho-gatame",
+        "Tate-shiho-gatame",
+        "Kesa-gatame"
+      ],
+      "c": 3,
+      "exp": "Kesa-gatame kontroliše Ukeovu glavu i rame kao šal prebačen preko tela. To je jedno od prvih zadržavanja koje džudoke uče."
+    },
+    "en": {
+      "q": "Which hold is often called the 'scarf hold'?",
+      "opts": [
+        "Kami-shiho-gatame",
+        "Yoko-shiho-gatame",
+        "Tate-shiho-gatame",
+        "Kesa-gatame"
+      ],
+      "c": 3,
+      "exp": "Kesa-gatame controls Uke's head and shoulder like a scarf worn across the body. It is one of the first holds judoka learn."
+    },
+    "de": {
+      "q": "Welcher Haltegriff wird oft 'Schärpengriff' genannt?",
+      "opts": [
+        "Kami-shiho-gatame",
+        "Yoko-shiho-gatame",
+        "Tate-shiho-gatame",
+        "Kesa-gatame"
+      ],
+      "c": 3,
+      "exp": "Kesa-gatame kontrolliert Kopf und Schulter von Uke wie eine Schärpe, die quer über den Körper getragen wird. Er ist einer der ersten Haltegriffe, die Judoka lernen."
+    },
+    "fr": {
+      "q": "Quelle immobilisation est souvent appelée 'en écharpe' ?",
+      "opts": [
+        "Kami-shiho-gatame",
+        "Yoko-shiho-gatame",
+        "Tate-shiho-gatame",
+        "Kesa-gatame"
+      ],
+      "c": 3,
+      "exp": "Le Kesa-gatame contrôle la tête et l'épaule d'Uke, comme une écharpe portée en travers du corps. C'est l'une des premières immobilisations que les judokas apprennent."
+    },
+    "es": {
+      "q": "¿Qué inmovilización se llama a menudo 'la bufanda'?",
+      "opts": [
+        "Kami-shiho-gatame",
+        "Yoko-shiho-gatame",
+        "Tate-shiho-gatame",
+        "Kesa-gatame"
+      ],
+      "c": 3,
+      "exp": "Kesa-gatame controla la cabeza y el hombro de Uke como una bufanda cruzada sobre el cuerpo. Es una de las primeras inmovilizaciones que aprenden los judokas."
+    },
+    "it": {
+      "q": "Quale immobilizzazione viene spesso chiamata 'a sciarpa'?",
+      "opts": [
+        "Kami-shiho-gatame",
+        "Yoko-shiho-gatame",
+        "Tate-shiho-gatame",
+        "Kesa-gatame"
+      ],
+      "c": 3,
+      "exp": "Kesa-gatame controlla la testa e la spalla di Uke come una sciarpa portata di traverso sul corpo. È una delle prime immobilizzazioni che i judoka imparano."
+    },
+    "pt": {
+      "q": "Qual imobilização é muitas vezes chamada de 'em forma de echarpe'?",
+      "opts": [
+        "Kami-shiho-gatame",
+        "Yoko-shiho-gatame",
+        "Tate-shiho-gatame",
+        "Kesa-gatame"
+      ],
+      "c": 3,
+      "exp": "O Kesa-gatame controla a cabeça e o ombro do Uke como um echarpe usado atravessado no corpo. É uma das primeiras imobilizações que os judocas aprendem."
+    },
+    "ru": {
+      "q": "Какое удержание часто называют «удержанием шарфом»?",
+      "opts": [
+        "Ками-сихо-гатамэ",
+        "Ёко-сихо-гатамэ",
+        "Татэ-сихо-гатамэ",
+        "Кэса-гатамэ"
+      ],
+      "c": 3,
+      "exp": "Кэса-гатамэ контролирует голову и плечо Укэ, как шарф, надетый через тело. Это одно из первых удержаний, которые учат дзюдоисты."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "tehnika",
+    "videoId": null,
+    "c": 2,
+    "sr": {
+      "q": "Šta je Kata-guruma?",
+      "opts": [
+        "Pometanje stopalom protiv noge koja korača napred",
+        "Žrtveno bacanje u kom Tori pada unazad",
+        "Bacanje 'rameni točak': Uke se podiže preko Torijevih ramena i baca",
+        "Davljenje s leđa"
+      ],
+      "c": 2,
+      "exp": "Kata znači rame, a guruma točak. Tori podiže Ukea preko ramena i baca ga napred, kao u vatrogasnom nošenju."
+    },
+    "en": {
+      "q": "What is Kata-guruma?",
+      "opts": [
+        "A foot sweep against the advancing leg",
+        "A sacrifice throw where Tori falls backward",
+        "A 'shoulder wheel' throw: Uke is lifted across Tori's shoulders and thrown",
+        "A choke applied from behind"
+      ],
+      "c": 2,
+      "exp": "Kata means shoulder and guruma means wheel. Tori lifts Uke across the shoulders and throws forward, like a fireman's carry."
+    },
+    "de": {
+      "q": "Was ist Kata-guruma?",
+      "opts": [
+        "Ein Fußfeger gegen das vorrückende Bein",
+        "Ein Opferwurf, bei dem Tori nach hinten fällt",
+        "Ein 'Schulterrad'-Wurf: Uke wird quer über Toris Schultern gehoben und geworfen",
+        "Ein Würgegriff von hinten"
+      ],
+      "c": 2,
+      "exp": "Kata bedeutet Schulter und guruma bedeutet Rad. Tori hebt Uke quer über die Schultern und wirft ihn nach vorn, ähnlich wie beim Feuerwehrgriff."
+    },
+    "fr": {
+      "q": "Qu'est-ce que le Kata-guruma ?",
+      "opts": [
+        "Un balayage de pied contre la jambe qui avance",
+        "Une projection en sacrifice où Tori tombe en arrière",
+        "Une projection en 'roue d'épaule' : Uke est soulevé sur les épaules de Tori puis projeté",
+        "Un étranglement réalisé par derrière"
+      ],
+      "c": 2,
+      "exp": "Kata signifie épaule et guruma signifie roue. Tori soulève Uke sur ses épaules et le projette vers l'avant, comme un portage de pompier."
+    },
+    "es": {
+      "q": "¿Qué es Kata-guruma?",
+      "opts": [
+        "Un barrido de pie contra la pierna que avanza",
+        "Una proyección de sacrificio en la que Tori cae hacia atrás",
+        "Una proyección de 'rueda de hombro': Uke es levantado sobre los hombros de Tori y proyectado",
+        "Una estrangulación aplicada por la espalda"
+      ],
+      "c": 2,
+      "exp": "Kata significa hombro y guruma significa rueda. Tori levanta a Uke sobre los hombros y lo proyecta hacia delante, como en el transporte de bombero."
+    },
+    "it": {
+      "q": "Cos'è il Kata-guruma?",
+      "opts": [
+        "Una spazzata al piede contro la gamba che avanza",
+        "Una proiezione di sacrificio in cui Tori cade all'indietro",
+        "Una proiezione a 'ruota di spalla': Uke viene sollevato sulle spalle di Tori e proiettato",
+        "Uno strangolamento eseguito da dietro"
+      ],
+      "c": 2,
+      "exp": "Kata significa spalla e guruma significa ruota. Tori solleva Uke sulle spalle e lo proietta in avanti, come nel trasporto di un pompiere."
+    },
+    "pt": {
+      "q": "O que é Kata-guruma?",
+      "opts": [
+        "Uma rasteira no pé da perna que avança",
+        "Uma projeção de sacrifício em que o Tori cai para trás",
+        "Uma projeção de 'roda de ombro': o Uke é levantado sobre os ombros do Tori e projetado",
+        "Um estrangulamento aplicado por trás"
+      ],
+      "c": 2,
+      "exp": "Kata significa ombro e guruma significa roda. O Tori levanta o Uke sobre os ombros e o projeta para a frente, como no carregamento de bombeiro."
+    },
+    "ru": {
+      "q": "Что такое Ката-гурума?",
+      "opts": [
+        "Подсечка по ноге, выходящей вперёд",
+        "Бросок с падением, при котором Тори падает назад",
+        "Бросок «колесо через плечо»: Укэ поднимают на плечи Тори и бросают",
+        "Удушение сзади"
+      ],
+      "c": 2,
+      "exp": "«Ката» значит «плечо», а «гурума» – «колесо». Тори поднимает Укэ на плечи и бросает вперёд, как при переноске пожарным."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "tehnika",
+    "videoId": null,
+    "c": 0,
+    "sr": {
+      "q": "Šta je Harai-tsurikomi-ashi?",
+      "opts": [
+        "Bacanje u kom Tori podiže i vuče Ukea dok mu pometa oslonu nogu",
+        "Bacanje kukom uz hvat za pojas",
+        "Žrtveno bacanje na Torijeva leđa",
+        "Zadržavanje sa strane na tlu"
+      ],
+      "c": 0,
+      "exp": "Ruke koje vuku i podižu izbacuju Ukea iz ravnoteže, dok Torijevo stopalo odmiče oslonu nogu. Tajming je važniji od snage."
+    },
+    "en": {
+      "q": "What is Harai-tsurikomi-ashi?",
+      "opts": [
+        "A throw where Tori lifts and pulls Uke while sweeping Uke's supporting foot",
+        "A hip throw using the belt grip",
+        "A sacrifice throw onto Tori's back",
+        "A ground hold from the side"
+      ],
+      "c": 0,
+      "exp": "The pulling and lifting hands unbalance Uke while Tori's foot sweeps the supporting foot away. Timing matters more than strength."
+    },
+    "de": {
+      "q": "Was ist Harai-tsurikomi-ashi?",
+      "opts": [
+        "Ein Wurf, bei dem Tori Uke hebt und zieht und dabei Ukes Standbein wegfegt",
+        "Ein Hüftwurf mit Gürtelgriff",
+        "Ein Opferwurf auf Toris Rücken",
+        "Ein Haltegriff am Boden von der Seite"
+      ],
+      "c": 0,
+      "exp": "Die ziehenden und hebenden Hände bringen Uke aus dem Gleichgewicht, während Toris Fuß das Standbein wegfegt. Das richtige Timing ist wichtiger als Kraft."
+    },
+    "fr": {
+      "q": "Qu'est-ce que le Harai-tsurikomi-ashi ?",
+      "opts": [
+        "Une projection où Tori soulève et tire Uke tout en balayant son pied d'appui",
+        "Une projection de hanche avec la saisie de la ceinture",
+        "Une projection en sacrifice sur le dos de Tori",
+        "Une immobilisation au sol par le côté"
+      ],
+      "c": 0,
+      "exp": "Les mains qui tirent et soulèvent déséquilibrent Uke pendant que le pied de Tori balaie son pied d'appui. Le timing compte plus que la force."
+    },
+    "es": {
+      "q": "¿Qué es Harai-tsurikomi-ashi?",
+      "opts": [
+        "Una proyección en la que Tori levanta y tira de Uke mientras barre su pie de apoyo",
+        "Una proyección de cadera usando el agarre del cinturón",
+        "Una proyección de sacrificio sobre la espalda de Tori",
+        "Una inmovilización en el suelo desde el costado"
+      ],
+      "c": 0,
+      "exp": "Las manos que tiran y levantan desequilibran a Uke mientras el pie de Tori le barre el pie de apoyo. El momento justo importa más que la fuerza."
+    },
+    "it": {
+      "q": "Cos'è l'Harai-tsurikomi-ashi?",
+      "opts": [
+        "Una proiezione in cui Tori solleva e tira Uke mentre spazza il suo piede d'appoggio",
+        "Una proiezione d'anca con la presa sulla cintura",
+        "Una proiezione di sacrificio sulla schiena di Tori",
+        "Un'immobilizzazione a terra di lato"
+      ],
+      "c": 0,
+      "exp": "Le mani che tirano e sollevano fanno perdere l'equilibrio a Uke, mentre il piede di Tori spazza via il suo piede d'appoggio. Il tempismo conta più della forza."
+    },
+    "pt": {
+      "q": "O que é Harai-tsurikomi-ashi?",
+      "opts": [
+        "Uma projeção em que o Tori levanta e puxa o Uke enquanto varre o pé de apoio do Uke",
+        "Uma projeção de quadril usando a pegada na faixa",
+        "Uma projeção de sacrifício nas costas do Tori",
+        "Uma imobilização no solo pelo lado"
+      ],
+      "c": 0,
+      "exp": "As mãos que puxam e levantam desequilibram o Uke, enquanto o pé do Tori varre o pé de apoio. O tempo certo importa mais do que a força."
+    },
+    "ru": {
+      "q": "Что такое Харай-цурикоми-аси?",
+      "opts": [
+        "Бросок, при котором Тори поднимает и тянет Укэ, подсекая его опорную ногу",
+        "Бросок через бедро с захватом за пояс",
+        "Бросок с падением на спину Тори",
+        "Удержание на земле сбоку"
+      ],
+      "c": 0,
+      "exp": "Тянущие и поднимающие руки выводят Укэ из равновесия, а нога Тори выбивает его опорную ногу. Тайминг важнее силы."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "tehnika",
+    "videoId": null,
+    "c": 3,
+    "sr": {
+      "q": "Iz kog položaja Tori drži Ukea u Kami-shiho-gatame?",
+      "opts": [
+        "Sa Ukeove strane, kontrolišući ruku",
+        "Sedeći jašući na Ukeovom stomaku",
+        "Iza Ukea, sa zakačenim nogama",
+        "Iznad Ukeove glave, grudi uz grudi"
+      ],
+      "c": 3,
+      "exp": "Kami-shiho-gatame je 'gornje zadržavanje u četiri tačke'. Tori leži preko Ukeovih grudi sa strane glave i kontroliše rukama i težinom."
+    },
+    "en": {
+      "q": "In Kami-shiho-gatame, where does Tori hold Uke from?",
+      "opts": [
+        "From Uke's side, controlling the arm",
+        "Sitting astride Uke's stomach",
+        "From behind Uke, with hooks in",
+        "From above Uke's head, chest to chest"
+      ],
+      "c": 3,
+      "exp": "Kami-shiho-gatame is the 'upper four-corner hold'. Tori lies across Uke's chest from the head side and controls with the arms and weight."
+    },
+    "de": {
+      "q": "Von wo aus hält Tori Uke bei Kami-shiho-gatame?",
+      "opts": [
+        "Von der Seite von Uke, den Arm kontrollierend",
+        "Rittlings auf Ukes Bauch sitzend",
+        "Von hinten, mit eingehakten Beinen",
+        "Von oberhalb von Ukes Kopf, Brust an Brust"
+      ],
+      "c": 3,
+      "exp": "Kami-shiho-gatame ist der 'obere Vierpunkt-Haltegriff'. Tori liegt von der Kopfseite quer über Ukes Brust und kontrolliert mit Armen und Gewicht."
+    },
+    "fr": {
+      "q": "Dans le Kami-shiho-gatame, d'où Tori tient-il Uke ?",
+      "opts": [
+        "Du côté d'Uke, en contrôlant le bras",
+        "Assis à califourchon sur le ventre d'Uke",
+        "Derrière Uke, avec les crochets en place",
+        "Au-dessus de la tête d'Uke, poitrine contre poitrine"
+      ],
+      "c": 3,
+      "exp": "Le Kami-shiho-gatame est l'immobilisation 'des quatre coins par le haut'. Tori s'allonge en travers de la poitrine d'Uke, côté tête, et contrôle avec les bras et son poids."
+    },
+    "es": {
+      "q": "En Kami-shiho-gatame, ¿desde dónde inmoviliza Tori a Uke?",
+      "opts": [
+        "Desde el costado de Uke, controlando el brazo",
+        "Sentado a horcajadas sobre el estómago de Uke",
+        "Desde detrás de Uke, con los ganchos puestos",
+        "Desde encima de la cabeza de Uke, pecho contra pecho"
+      ],
+      "c": 3,
+      "exp": "Kami-shiho-gatame es la 'inmovilización superior de cuatro esquinas'. Tori se tumba sobre el pecho de Uke desde el lado de la cabeza y controla con los brazos y el peso."
+    },
+    "it": {
+      "q": "Nel Kami-shiho-gatame, da dove tiene Uke Tori?",
+      "opts": [
+        "Dal lato di Uke, controllando il braccio",
+        "Seduto a cavalcioni sullo stomaco di Uke",
+        "Da dietro Uke, con i talloni agganciati",
+        "Da sopra la testa di Uke, petto contro petto"
+      ],
+      "c": 3,
+      "exp": "Kami-shiho-gatame è l'immobilizzazione 'dei quattro angoli superiori'. Tori sta disteso sul petto di Uke dal lato della testa e controlla con le braccia e il peso."
+    },
+    "pt": {
+      "q": "No Kami-shiho-gatame, de onde o Tori imobiliza o Uke?",
+      "opts": [
+        "Pelo lado do Uke, controlando o braço",
+        "Sentado sobre a barriga do Uke",
+        "Por trás do Uke, com os ganchos colocados",
+        "Por cima da cabeça do Uke, peito com peito"
+      ],
+      "c": 3,
+      "exp": "O Kami-shiho-gatame é a 'imobilização dos quatro cantos por cima'. O Tori fica deitado sobre o peito do Uke, pelo lado da cabeça, e controla com os braços e o peso."
+    },
+    "ru": {
+      "q": "Откуда в Ками-сихо-гатамэ Тори удерживает Укэ?",
+      "opts": [
+        "Сбоку от Укэ, контролируя руку",
+        "Сидя верхом на животе Укэ",
+        "Сзади Укэ, зацепившись ногами",
+        "Сверху, со стороны головы Укэ, грудью к груди"
+      ],
+      "c": 3,
+      "exp": "Ками-сихо-гатамэ – «верхнее удержание с четырёх сторон». Тори лежит поперёк груди Укэ со стороны головы и контролирует его руками и весом."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "tehnika",
+    "videoId": null,
+    "c": 0,
+    "sr": {
+      "q": "Šta je Tani-otoshi?",
+      "opts": [
+        "Žrtveno bacanje u kom Tori pada unazad i zakači Ukeovu nogu",
+        "Brzo pometanje stopalom ka spolja",
+        "Bacanje preko ramena jednom rukom",
+        "Zadržavanje sa strane"
+      ],
+      "c": 0,
+      "exp": "Tani znači dolina, a otoshi pad. Tori pada unazad pored Ukea i obara ga preko zakačene noge."
+    },
+    "en": {
+      "q": "What is Tani-otoshi?",
+      "opts": [
+        "A sacrifice throw where Tori falls backward and hooks Uke's leg",
+        "A fast foot sweep to the outside",
+        "A throw over the shoulder with one arm",
+        "A hold from the side"
+      ],
+      "c": 0,
+      "exp": "Tani means valley and otoshi means drop. Tori falls backward beside Uke and drops them over the hooked leg."
+    },
+    "de": {
+      "q": "Was ist Tani-otoshi?",
+      "opts": [
+        "Ein Opferwurf, bei dem Tori nach hinten fällt und Ukes Bein einhakt",
+        "Ein schneller Fußfeger nach außen",
+        "Ein Schulterwurf mit einem Arm",
+        "Ein Haltegriff von der Seite"
+      ],
+      "c": 0,
+      "exp": "Tani bedeutet Tal und otoshi bedeutet fallen lassen. Tori fällt neben Uke nach hinten und lässt ihn über das eingehakte Bein fallen."
+    },
+    "fr": {
+      "q": "Qu'est-ce que le Tani-otoshi ?",
+      "opts": [
+        "Une projection en sacrifice où Tori tombe en arrière et accroche la jambe d'Uke",
+        "Un balayage de pied rapide vers l'extérieur",
+        "Une projection par-dessus l'épaule avec un seul bras",
+        "Une immobilisation par le côté"
+      ],
+      "c": 0,
+      "exp": "Tani signifie vallée et otoshi signifie chute. Tori tombe en arrière à côté d'Uke et le fait chuter par-dessus la jambe accrochée."
+    },
+    "es": {
+      "q": "¿Qué es Tani-otoshi?",
+      "opts": [
+        "Una proyección de sacrificio en la que Tori cae hacia atrás y engancha la pierna de Uke",
+        "Un barrido de pie rápido hacia el exterior",
+        "Una proyección por encima del hombro con un solo brazo",
+        "Una inmovilización desde el costado"
+      ],
+      "c": 0,
+      "exp": "Tani significa valle y otoshi significa caída. Tori cae hacia atrás junto a Uke y lo hace caer sobre la pierna enganchada."
+    },
+    "it": {
+      "q": "Cos'è il Tani-otoshi?",
+      "opts": [
+        "Una proiezione di sacrificio in cui Tori cade all'indietro e aggancia la gamba di Uke",
+        "Una spazzata rapida verso l'esterno",
+        "Una proiezione sopra la spalla con un solo braccio",
+        "Un'immobilizzazione di lato"
+      ],
+      "c": 0,
+      "exp": "Tani significa valle e otoshi significa caduta. Tori cade all'indietro accanto a Uke e lo fa cadere sopra la gamba agganciata."
+    },
+    "pt": {
+      "q": "O que é Tani-otoshi?",
+      "opts": [
+        "Uma projeção de sacrifício em que o Tori cai para trás e prende a perna do Uke",
+        "Uma rasteira rápida para fora",
+        "Uma projeção por cima do ombro com um braço",
+        "Uma imobilização pelo lado"
+      ],
+      "c": 0,
+      "exp": "Tani significa vale e otoshi significa queda. O Tori cai para trás ao lado do Uke e o derruba sobre a perna presa."
+    },
+    "ru": {
+      "q": "Что такое Тани-отоси?",
+      "opts": [
+        "Бросок с падением, при котором Тори падает назад и зацепляет ногу Укэ",
+        "Быстрая подсечка наружу",
+        "Бросок через плечо одной рукой",
+        "Удержание сбоку"
+      ],
+      "c": 0,
+      "exp": "«Тани» значит «долина», а «отоси» – «сбрасывание». Тори падает назад рядом с Укэ и роняет его через зацепленную ногу."
+    }
+  },
+  {
+    "level": 3,
+    "levelLabel": "advanced",
+    "type": "tehnika",
+    "videoId": null,
+    "c": 0,
+    "sr": {
+      "q": "Šta je O-guruma?",
+      "opts": [
+        "'Veliki točak': Torijeva ispružena noga blokira Ukeova bedra dok ga vuče preko nje",
+        "Bacanje kukom uz hvat za pojas",
+        "Žrtveno bacanje pomoću obe noge",
+        "Bacanje košenjem unutrašnje noge"
+      ],
+      "c": 0,
+      "exp": "Tori ispruži jednu nogu preko Ukeovih bedara i okreće ga preko nje kao točak. Za to je potrebno precizno vučenje."
+    },
+    "en": {
+      "q": "What is O-guruma?",
+      "opts": [
+        "A 'large wheel' throw: Tori's straight leg blocks Uke's thighs while pulling Uke over it",
+        "A hip throw with the belt grip",
+        "A sacrifice throw using both feet",
+        "A reaping throw to the inner leg"
+      ],
+      "c": 0,
+      "exp": "Tori extends one leg across Uke's thighs and rotates them over it like a wheel. It needs a precise pull to work."
+    },
+    "de": {
+      "q": "Was ist O-guruma?",
+      "opts": [
+        "Ein 'großes Rad'-Wurf: Toris gestrecktes Bein blockiert Ukes Oberschenkel, während Uke darüber gezogen wird",
+        "Ein Hüftwurf mit Gürtelgriff",
+        "Ein Opferwurf mit beiden Füßen",
+        "Ein Mähwurf gegen das Innenbein"
+      ],
+      "c": 0,
+      "exp": "Tori streckt ein Bein quer vor Ukes Oberschenkel und dreht ihn wie ein Rad darüber. Es braucht einen genauen Zug, damit der Wurf gelingt."
+    },
+    "fr": {
+      "q": "Qu'est-ce que l'O-guruma ?",
+      "opts": [
+        "Une projection en 'grande roue' : la jambe tendue de Tori bloque les cuisses d'Uke pendant qu'il le fait basculer par-dessus",
+        "Une projection de hanche avec la saisie de la ceinture",
+        "Une projection en sacrifice avec les deux pieds",
+        "Un fauchage de la jambe intérieure"
+      ],
+      "c": 0,
+      "exp": "Tori tend une jambe en travers des cuisses d'Uke et le fait tourner par-dessus comme une roue. Il faut une traction précise pour que ça marche."
+    },
+    "es": {
+      "q": "¿Qué es O-guruma?",
+      "opts": [
+        "Una proyección de 'rueda grande': la pierna estirada de Tori bloquea los muslos de Uke mientras tira de él por encima",
+        "Una proyección de cadera con el agarre del cinturón",
+        "Una proyección de sacrificio usando ambos pies",
+        "Una siega a la pierna interior"
+      ],
+      "c": 0,
+      "exp": "Tori extiende una pierna sobre los muslos de Uke y lo hace girar por encima como una rueda. Necesita un tirón preciso para funcionar."
+    },
+    "it": {
+      "q": "Cos'è l'O-guruma?",
+      "opts": [
+        "Una proiezione a 'grande ruota': la gamba tesa di Tori blocca le cosce di Uke mentre lo tira sopra di essa",
+        "Una proiezione d'anca con la presa sulla cintura",
+        "Una proiezione di sacrificio che usa entrambi i piedi",
+        "Una falciata alla gamba interna"
+      ],
+      "c": 0,
+      "exp": "Tori stende una gamba davanti alle cosce di Uke e lo fa ruotare sopra di essa come una ruota. Serve una trazione precisa perché funzioni."
+    },
+    "pt": {
+      "q": "O que é O-guruma?",
+      "opts": [
+        "Uma projeção de 'roda grande': a perna esticada do Tori bloqueia as coxas do Uke enquanto o puxa por cima dela",
+        "Uma projeção de quadril com a pegada na faixa",
+        "Uma projeção de sacrifício usando os dois pés",
+        "Uma projeção de ceifada na perna por dentro"
+      ],
+      "c": 0,
+      "exp": "O Tori estica uma perna atravessada nas coxas do Uke e o gira por cima dela como uma roda. É preciso uma puxada precisa para funcionar."
+    },
+    "ru": {
+      "q": "Что такое О-гурума?",
+      "opts": [
+        "Бросок «большое колесо»: прямая нога Тори блокирует бёдра Укэ, а сам Укэ переваливается через неё",
+        "Бросок через бедро с захватом за пояс",
+        "Бросок с падением с помощью обеих ног",
+        "Подхват по внутренней стороне ноги"
+      ],
+      "c": 0,
+      "exp": "Тори вытягивает ногу поперёк бёдер Укэ и вращает его через неё, как колесо. Для этого нужно точное движение на себя."
+    }
+  },
+  {
+    "level": 3,
+    "levelLabel": "advanced",
+    "type": "tehnika",
+    "videoId": null,
+    "c": 1,
+    "sr": {
+      "q": "Šta je Sankaku-jime?",
+      "opts": [
+        "Davljenje s leđa podlakticom",
+        "Davljenje trouglom u kom Torijeve noge stežu Ukeov vrat i jednu ruku",
+        "Poluga na savijenu ruku u ramenu",
+        "Unakrsno davljenje obema rukama"
+      ],
+      "c": 1,
+      "exp": "Sankaku znači trougao. Torijeve noge prave trougao oko Ukeovog vrata i jedne ruke, a stezanje izaziva davljenje."
+    },
+    "en": {
+      "q": "What is Sankaku-jime?",
+      "opts": [
+        "A choke from behind with the forearm",
+        "A triangle choke where Tori's legs trap Uke's neck and one arm",
+        "A bent-arm lock on the shoulder",
+        "A cross choke with both hands"
+      ],
+      "c": 1,
+      "exp": "Sankaku means triangle. Tori's legs form a triangle around Uke's neck and one arm, and squeezing causes the choke."
+    },
+    "de": {
+      "q": "Was ist Sankaku-jime?",
+      "opts": [
+        "Ein Würgegriff von hinten mit dem Unterarm",
+        "Ein Dreieckswürgegriff, bei dem Toris Beine Ukes Hals und einen Arm einklemmen",
+        "Ein Armhebel am Schultergelenk",
+        "Ein Kreuzwürgegriff mit beiden Händen"
+      ],
+      "c": 1,
+      "exp": "Sankaku bedeutet Dreieck. Toris Beine bilden ein Dreieck um Ukes Hals und einen Arm, und das Zudrücken bewirkt den Würgegriff."
+    },
+    "fr": {
+      "q": "Qu'est-ce que le Sankaku-jime ?",
+      "opts": [
+        "Un étranglement par derrière avec l'avant-bras",
+        "Un étranglement en triangle où les jambes de Tori emprisonnent le cou et un bras d'Uke",
+        "Une clé de bras pliée sur l'épaule",
+        "Un étranglement croisé avec les deux mains"
+      ],
+      "c": 1,
+      "exp": "Sankaku signifie triangle. Les jambes de Tori forment un triangle autour du cou et d'un bras d'Uke, et en serrant, on provoque l'étranglement."
+    },
+    "es": {
+      "q": "¿Qué es Sankaku-jime?",
+      "opts": [
+        "Una estrangulación por la espalda con el antebrazo",
+        "Una estrangulación en triángulo en la que las piernas de Tori atrapan el cuello y un brazo de Uke",
+        "Una luxación del hombro con el brazo doblado",
+        "Una estrangulación cruzada con ambas manos"
+      ],
+      "c": 1,
+      "exp": "Sankaku significa triángulo. Las piernas de Tori forman un triángulo alrededor del cuello y de un brazo de Uke, y al apretar se produce la estrangulación."
+    },
+    "it": {
+      "q": "Cos'è il Sankaku-jime?",
+      "opts": [
+        "Uno strangolamento da dietro con l'avambraccio",
+        "Uno strangolamento a triangolo in cui le gambe di Tori intrappolano il collo e un braccio di Uke",
+        "Una leva al braccio piegato sulla spalla",
+        "Uno strangolamento incrociato con entrambe le mani"
+      ],
+      "c": 1,
+      "exp": "Sankaku significa triangolo. Le gambe di Tori formano un triangolo attorno al collo e a un braccio di Uke, e la stretta provoca lo strangolamento."
+    },
+    "pt": {
+      "q": "O que é Sankaku-jime?",
+      "opts": [
+        "Um estrangulamento por trás com o antebraço",
+        "Um estrangulamento em triângulo em que as pernas do Tori prendem o pescoço e um braço do Uke",
+        "Uma chave no braço dobrado, no ombro",
+        "Um estrangulamento cruzado com as duas mãos"
+      ],
+      "c": 1,
+      "exp": "Sankaku significa triângulo. As pernas do Tori formam um triângulo em volta do pescoço e de um braço do Uke, e ao apertar causam o estrangulamento."
+    },
+    "ru": {
+      "q": "Что такое Санкаку-дзимэ?",
+      "opts": [
+        "Удушение сзади предплечьем",
+        "Удушение «треугольником», когда ноги Тори зажимают шею и одну руку Укэ",
+        "Болевой на плечо с согнутой рукой",
+        "Удушение крест-накрест двумя руками"
+      ],
+      "c": 1,
+      "exp": "«Санкаку» значит «треугольник». Ноги Тори образуют треугольник вокруг шеи и одной руки Укэ, а сжатие вызывает удушение."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "situacija",
+    "videoId": null,
+    "c": 2,
+    "sr": {
+      "q": "Stižeš na čas sa zakašnjenjem. Šta treba da uradiš pre nego što staneš na tatami?",
+      "opts": [
+        "Utrčiš na tatami da stigneš ostale",
+        "Odeš pravo svojim drugovima",
+        "Naklonis se na ivici i sačekaš senseijevu dozvolu da se pridružiš",
+        "Staneš na sredinu dok te neko ne primeti"
+      ],
+      "c": 2,
+      "exp": "Poštovanje je na prvom mestu. Naklon na ivici i čekanje senseijevog klimanja glavom je standardni bonton u dojou."
+    },
+    "en": {
+      "q": "You arrive late to class. What should you do before stepping onto the tatami?",
+      "opts": [
+        "Run onto the mat to catch up",
+        "Go straight to your friends",
+        "Bow at the edge and wait for the Sensei's permission to join",
+        "Stand in the middle until someone notices you"
+      ],
+      "c": 2,
+      "exp": "Showing respect comes first. Bowing at the edge and waiting for the Sensei's nod is the standard dojo etiquette."
+    },
+    "de": {
+      "q": "Du kommst zu spät zum Training. Was solltest du tun, bevor du die Tatami betrittst?",
+      "opts": [
+        "Auf die Matte rennen, um aufzuholen",
+        "Direkt zu deinen Freunden gehen",
+        "Dich am Rand verbeugen und auf die Erlaubnis des Sensei warten, mitzumachen",
+        "Mitten auf der Matte stehen, bis dich jemand bemerkt"
+      ],
+      "c": 2,
+      "exp": "Respekt zeigen kommt zuerst. Sich am Rand zu verbeugen und auf das Nicken des Sensei zu warten, ist die übliche Dojo-Etikette."
+    },
+    "fr": {
+      "q": "Tu arrives en retard au cours. Que dois-tu faire avant de monter sur le tatami ?",
+      "opts": [
+        "Courir sur le tapis pour rattraper les autres",
+        "Aller directement retrouver tes amis",
+        "Saluer au bord et attendre la permission du Sensei pour te joindre au cours",
+        "Rester au milieu jusqu'à ce que quelqu'un te remarque"
+      ],
+      "c": 2,
+      "exp": "Le respect passe en premier. Saluer au bord et attendre l'accord du Sensei, c'est l'étiquette habituelle du dojo."
+    },
+    "es": {
+      "q": "Llegas tarde a clase. ¿Qué debes hacer antes de subir al Tatami?",
+      "opts": [
+        "Correr hacia el Tatami para ponerte al día",
+        "Ir directamente con tus amigos",
+        "Hacer una reverencia en el borde y esperar el permiso del Sensei para unirte",
+        "Quedarte en medio hasta que alguien te vea"
+      ],
+      "c": 2,
+      "exp": "Mostrar respeto es lo primero. Saludar en el borde y esperar la señal del Sensei es la etiqueta habitual del dojo."
+    },
+    "it": {
+      "q": "Arrivi in ritardo a lezione. Cosa devi fare prima di salire sul tatami?",
+      "opts": [
+        "Correre sul tappeto per recuperare",
+        "Andare subito dai tuoi amici",
+        "Fare un inchino a bordo tatami e aspettare il permesso del Sensei per unirti",
+        "Restare in mezzo al tatami finché qualcuno non ti nota"
+      ],
+      "c": 2,
+      "exp": "Il rispetto viene prima di tutto. Inchinarsi a bordo tatami e aspettare il cenno del Sensei è la normale etichetta del dojo."
+    },
+    "pt": {
+      "q": "Você chega atrasado à aula. O que deve fazer antes de pisar no tatame?",
+      "opts": [
+        "Correr para o tatame para alcançar a turma",
+        "Ir direto para os seus amigos",
+        "Fazer uma reverência na borda e esperar a permissão do Sensei para entrar",
+        "Ficar parado no meio até alguém notar você"
+      ],
+      "c": 2,
+      "exp": "O respeito vem primeiro. Fazer a reverência na borda e esperar o sinal do Sensei é a etiqueta normal do dojo."
+    },
+    "ru": {
+      "q": "Ты опоздал на тренировку. Что нужно сделать, прежде чем выходить на татами?",
+      "opts": [
+        "Выбежать на татами, чтобы всех догнать",
+        "Сразу пойти к друзьям",
+        "Поклониться у края и дождаться разрешения Сэнсэя, чтобы присоединиться",
+        "Встать посередине и ждать, пока тебя заметят"
+      ],
+      "c": 2,
+      "exp": "Сначала – уважение. Поклон у края и ожидание кивка Сэнсэя – обычный этикет в додзё."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "situacija",
+    "videoId": null,
+    "c": 2,
+    "sr": {
+      "q": "Tvoj partner nespretno pada i kaže 'au'. Šta radiš?",
+      "opts": [
+        "Nastaviš da bi naučio da bude jak",
+        "Tražiš od njega da ustane i odmah pokuša ponovo",
+        "Odmah staneš i proveriš da li je dobro",
+        "Nasmeješ se i nastaviš dalje"
+      ],
+      "c": 2,
+      "exp": "Bezbednost je uvek na prvom mestu. Džudo je partnerstvo, pa staneš i uveriš se da je partner dobro pre nego što nastaviš."
+    },
+    "en": {
+      "q": "Your partner falls awkwardly and says 'ouch'. What do you do?",
+      "opts": [
+        "Keep going so they learn to be tough",
+        "Ask them to stand up and try again at once",
+        "Stop immediately and check that they are OK",
+        "Laugh and move on"
+      ],
+      "c": 2,
+      "exp": "Safety always comes first. Judo is a partnership, so you stop and make sure your partner is fine before continuing."
+    },
+    "de": {
+      "q": "Dein Partner fällt unglücklich und sagt 'aua'. Was tust du?",
+      "opts": [
+        "Weitermachen, damit er lernt, hart zu sein",
+        "Ihn bitten, sofort aufzustehen und es noch einmal zu versuchen",
+        "Sofort aufhören und nachsehen, ob es ihm gut geht",
+        "Lachen und weitermachen"
+      ],
+      "c": 2,
+      "exp": "Sicherheit kommt immer zuerst. Judo ist eine Partnerschaft, deshalb hörst du auf und stellst sicher, dass es deinem Partner gut geht, bevor ihr weitermacht."
+    },
+    "fr": {
+      "q": "Ton partenaire tombe mal et dit 'aïe'. Que fais-tu ?",
+      "opts": [
+        "Continuer pour qu'il apprenne à être solide",
+        "Lui demander de se relever et de réessayer tout de suite",
+        "T'arrêter immédiatement et vérifier qu'il va bien",
+        "Rire et passer à autre chose"
+      ],
+      "c": 2,
+      "exp": "La sécurité passe toujours en premier. Le judo est un travail à deux : on s'arrête et on s'assure que son partenaire va bien avant de continuer."
+    },
+    "es": {
+      "q": "Tu compañero cae mal y dice '¡ay!'. ¿Qué haces?",
+      "opts": [
+        "Seguir para que aprenda a ser fuerte",
+        "Pedirle que se levante y lo intente de nuevo enseguida",
+        "Parar de inmediato y comprobar que está bien",
+        "Reírte y seguir"
+      ],
+      "c": 2,
+      "exp": "La seguridad es siempre lo primero. El judo es un trabajo en pareja, así que te detienes y te aseguras de que tu compañero está bien antes de continuar."
+    },
+    "it": {
+      "q": "Il tuo compagno cade male e dice 'ahi'. Cosa fai?",
+      "opts": [
+        "Continui così impara a essere forte",
+        "Gli chiedi di rialzarsi e riprovare subito",
+        "Ti fermi subito e controlli che stia bene",
+        "Ridi e vai avanti"
+      ],
+      "c": 2,
+      "exp": "La sicurezza viene sempre prima. Il judo è un lavoro di coppia, quindi ti fermi e ti assicuri che il tuo compagno stia bene prima di continuare."
+    },
+    "pt": {
+      "q": "O seu parceiro cai de mau jeito e diz 'ai'. O que você faz?",
+      "opts": [
+        "Continuar, para ele aprender a ser forte",
+        "Pedir que ele se levante e tente de novo logo",
+        "Parar imediatamente e ver se ele está bem",
+        "Rir e seguir em frente"
+      ],
+      "c": 2,
+      "exp": "A segurança vem sempre em primeiro lugar. O judô é uma parceria, então você para e confirma que o seu parceiro está bem antes de continuar."
+    },
+    "ru": {
+      "q": "Твой партнёр неудачно упал и сказал «ой». Что ты делаешь?",
+      "opts": [
+        "Продолжаешь, чтобы он научился быть выносливым",
+        "Просишь его сразу встать и попробовать ещё раз",
+        "Сразу останавливаешься и проверяешь, всё ли с ним в порядке",
+        "Смеёшься и идёшь дальше"
+      ],
+      "c": 2,
+      "exp": "Безопасность всегда на первом месте. Дзюдо – это партнёрство, поэтому ты останавливаешься и убеждаешься, что с партнёром всё хорошо, прежде чем продолжить."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "situacija",
+    "videoId": null,
+    "c": 2,
+    "sr": {
+      "q": "Ne razumeš senseijevo objašnjenje. Šta je najbolje da uradiš?",
+      "opts": [
+        "Praviš se da razumeš",
+        "Radiš nešto drugo",
+        "Ljubazno postaviš pitanje ili zamoliš da ti pokaže ponovo",
+        "Sačekaš kraj časa i ne kažeš ništa"
+      ],
+      "c": 2,
+      "exp": "Postavljanje pitanja je deo učenja. Dobar džudoka se nikada ne plaši da zamoli senseija da ponovi ili pokaže ponovo."
+    },
+    "en": {
+      "q": "You do not understand the Sensei's explanation. What is the best thing to do?",
+      "opts": [
+        "Pretend you understand",
+        "Do something different",
+        "Politely ask a question or ask to see it again",
+        "Wait until the class ends and say nothing"
+      ],
+      "c": 2,
+      "exp": "Asking questions is part of learning. A good judoka is never afraid to ask the Sensei to repeat or show again."
+    },
+    "de": {
+      "q": "Du verstehst die Erklärung des Sensei nicht. Was ist das Beste, was du tun kannst?",
+      "opts": [
+        "So tun, als würdest du es verstehen",
+        "Etwas anderes machen",
+        "Höflich eine Frage stellen oder darum bitten, es noch einmal zu sehen",
+        "Bis zum Ende des Trainings warten und nichts sagen"
+      ],
+      "c": 2,
+      "exp": "Fragen zu stellen gehört zum Lernen. Ein guter Judoka hat nie Angst, den Sensei zu bitten, etwas zu wiederholen oder noch einmal zu zeigen."
+    },
+    "fr": {
+      "q": "Tu ne comprends pas l'explication du Sensei. Que vaut-il mieux faire ?",
+      "opts": [
+        "Faire semblant de comprendre",
+        "Faire autre chose",
+        "Poser poliment une question ou demander à revoir la démonstration",
+        "Attendre la fin du cours sans rien dire"
+      ],
+      "c": 2,
+      "exp": "Poser des questions fait partie de l'apprentissage. Un bon judoka n'a jamais peur de demander au Sensei de répéter ou de montrer à nouveau."
+    },
+    "es": {
+      "q": "No entiendes la explicación del Sensei. ¿Qué es lo mejor que puedes hacer?",
+      "opts": [
+        "Fingir que lo entiendes",
+        "Hacer algo diferente",
+        "Preguntar con educación o pedir que te lo muestre otra vez",
+        "Esperar a que termine la clase y no decir nada"
+      ],
+      "c": 2,
+      "exp": "Hacer preguntas es parte de aprender. Un buen judoka nunca tiene miedo de pedirle al Sensei que repita o que lo muestre de nuevo."
+    },
+    "it": {
+      "q": "Non capisci la spiegazione del Sensei. Qual è la cosa migliore da fare?",
+      "opts": [
+        "Fingere di aver capito",
+        "Fare qualcosa di diverso",
+        "Fare educatamente una domanda o chiedere di vederlo di nuovo",
+        "Aspettare la fine della lezione senza dire niente"
+      ],
+      "c": 2,
+      "exp": "Fare domande fa parte dell'imparare. Un bravo judoka non ha mai paura di chiedere al Sensei di ripetere o di mostrare di nuovo."
+    },
+    "pt": {
+      "q": "Você não entendeu a explicação do Sensei. O que é melhor fazer?",
+      "opts": [
+        "Fingir que entendeu",
+        "Fazer algo diferente",
+        "Perguntar com educação ou pedir para ver de novo",
+        "Esperar a aula acabar e não dizer nada"
+      ],
+      "c": 2,
+      "exp": "Fazer perguntas faz parte de aprender. Um bom judoca nunca tem medo de pedir ao Sensei que repita ou mostre de novo."
+    },
+    "ru": {
+      "q": "Ты не понял объяснение Сэнсэя. Что лучше всего сделать?",
+      "opts": [
+        "Сделать вид, что понял",
+        "Сделать что-то другое",
+        "Вежливо задать вопрос или попросить показать ещё раз",
+        "Подождать конца тренировки и ничего не говорить"
+      ],
+      "c": 2,
+      "exp": "Задавать вопросы – часть обучения. Хороший дзюдоист не боится попросить Сэнсэя повторить или показать ещё раз."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "situacija",
+    "videoId": null,
+    "c": 0,
+    "sr": {
+      "q": "Izgubiš svoj prvi randori od druga iz grupe. Koja je najbolja reakcija?",
+      "opts": [
+        "Naklonis se, zahvališ mu i razmisliš šta možeš da naučiš",
+        "Odbiješ da ponovo vežbaš s njim",
+        "Okriviš tatami ili džudogi",
+        "Prestaneš da dolaziš na trening"
+      ],
+      "c": 0,
+      "exp": "Svaki poraz je lekcija. Zahvalnost partneru pokazuje poštovanje i pomaže ti da napreduješ."
+    },
+    "en": {
+      "q": "You lose your first randori against a classmate. What is the best reaction?",
+      "opts": [
+        "Bow, thank them and think about what you can learn",
+        "Refuse to practise with them again",
+        "Blame the mat or the judogi",
+        "Stop coming to class"
+      ],
+      "c": 0,
+      "exp": "Every loss is a lesson. Thanking your partner shows respect and helps you improve."
+    },
+    "de": {
+      "q": "Du verlierst dein erstes Randori gegen einen Mitschüler. Was ist die beste Reaktion?",
+      "opts": [
+        "Dich verbeugen, dich bedanken und überlegen, was du daraus lernen kannst",
+        "Dich weigern, noch einmal mit ihm zu üben",
+        "Der Matte oder dem Judogi die Schuld geben",
+        "Nicht mehr zum Training kommen"
+      ],
+      "c": 0,
+      "exp": "Jede Niederlage ist eine Lektion. Wenn du dich bei deinem Partner bedankst, zeigst du Respekt, und es hilft dir, besser zu werden."
+    },
+    "fr": {
+      "q": "Tu perds ton premier Randori contre un camarade. Quelle est la meilleure réaction ?",
+      "opts": [
+        "Saluer, le remercier et réfléchir à ce que tu peux apprendre",
+        "Refuser de t'entraîner à nouveau avec lui",
+        "Accuser le tapis ou le judogi",
+        "Arrêter de venir au cours"
+      ],
+      "c": 0,
+      "exp": "Chaque défaite est une leçon. Remercier ton partenaire montre du respect et t'aide à progresser."
+    },
+    "es": {
+      "q": "Pierdes tu primer Randori contra un compañero de clase. ¿Cuál es la mejor reacción?",
+      "opts": [
+        "Hacer una reverencia, darle las gracias y pensar en lo que puedes aprender",
+        "Negarte a volver a practicar con él",
+        "Echarle la culpa al Tatami o al judogi",
+        "Dejar de ir a clase"
+      ],
+      "c": 0,
+      "exp": "Cada derrota es una lección. Dar las gracias a tu compañero muestra respeto y te ayuda a mejorar."
+    },
+    "it": {
+      "q": "Perdi il tuo primo Randori contro un compagno. Qual è la migliore reazione?",
+      "opts": [
+        "Fare un inchino, ringraziarlo e pensare a cosa puoi imparare",
+        "Rifiutarti di allenarti ancora con lui",
+        "Dare la colpa al tatami o al judogi",
+        "Smettere di venire a lezione"
+      ],
+      "c": 0,
+      "exp": "Ogni sconfitta è una lezione. Ringraziare il tuo compagno mostra rispetto e ti aiuta a migliorare."
+    },
+    "pt": {
+      "q": "Você perde o seu primeiro Randori contra um colega. Qual é a melhor reação?",
+      "opts": [
+        "Fazer a reverência, agradecer e pensar no que pode aprender",
+        "Recusar-se a treinar com ele de novo",
+        "Culpar o tatame ou o judogi",
+        "Parar de ir às aulas"
+      ],
+      "c": 0,
+      "exp": "Toda derrota é uma lição. Agradecer ao seu parceiro mostra respeito e ajuda você a melhorar."
+    },
+    "ru": {
+      "q": "Ты проиграл свой первый рандори однокласснику. Какая реакция лучшая?",
+      "opts": [
+        "Поклониться, поблагодарить и подумать, чему можно научиться",
+        "Отказаться снова заниматься с ним",
+        "Винить татами или дзюдоги",
+        "Перестать ходить на тренировки"
+      ],
+      "c": 0,
+      "exp": "Каждое поражение – это урок. Благодарность партнёру показывает уважение и помогает становиться лучше."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "situacija",
+    "videoId": null,
+    "c": 0,
+    "sr": {
+      "q": "Partneru se tokom vežbe odvezao pojas. Šta radiš?",
+      "opts": [
+        "Zastaneš i pustiš ga da ga pravilno veže",
+        "Ignorišeš to i nastaviš da vežbaš",
+        "Kažeš mu da drži pojas jednom rukom",
+        "Sam mu zategneš pojas"
+      ],
+      "c": 0,
+      "exp": "Olabavljen pojas je pitanje bezbednosti i bontona. U džudou stanemo, pravilno ga vežemo i tek onda nastavimo."
+    },
+    "en": {
+      "q": "Your partner's belt has come undone during practice. What do you do?",
+      "opts": [
+        "Pause and let them retie it properly",
+        "Ignore it and keep practising",
+        "Tell them to hold the belt with one hand",
+        "Pull the belt tight yourself"
+      ],
+      "c": 0,
+      "exp": "A loose belt is a safety and etiquette issue. In judo we stop, tie it properly, and then continue."
+    },
+    "de": {
+      "q": "Der Gürtel deines Partners hat sich beim Üben gelöst. Was tust du?",
+      "opts": [
+        "Eine Pause machen und ihn den Gürtel richtig neu binden lassen",
+        "Es ignorieren und weiter üben",
+        "Ihm sagen, er soll den Gürtel mit einer Hand festhalten",
+        "Den Gürtel selbst fest ziehen"
+      ],
+      "c": 0,
+      "exp": "Ein loser Gürtel ist eine Frage der Sicherheit und der Etikette. Im Judo hören wir auf, binden ihn richtig und machen dann weiter."
+    },
+    "fr": {
+      "q": "La ceinture de ton partenaire s'est défaite pendant l'entraînement. Que fais-tu ?",
+      "opts": [
+        "Faire une pause et le laisser la renouer correctement",
+        "L'ignorer et continuer à t'entraîner",
+        "Lui dire de tenir la ceinture d'une main",
+        "Serrer la ceinture toi-même"
+      ],
+      "c": 0,
+      "exp": "Une ceinture défaite pose un problème de sécurité et d'étiquette. En judo, on s'arrête, on la renoue correctement, puis on continue."
+    },
+    "es": {
+      "q": "Al cinturón de tu compañero se le ha desatado durante el entrenamiento. ¿Qué haces?",
+      "opts": [
+        "Hacer una pausa y dejar que se lo ate bien",
+        "Ignorarlo y seguir practicando",
+        "Decirle que sujete el cinturón con una mano",
+        "Apretarle tú el cinturón"
+      ],
+      "c": 0,
+      "exp": "Un cinturón suelto es una cuestión de seguridad y de etiqueta. En judo nos detenemos, lo atamos bien y luego continuamos."
+    },
+    "it": {
+      "q": "Durante l'allenamento si slaccia la cintura del tuo compagno. Cosa fai?",
+      "opts": [
+        "Ti fermi e lo lasci riannodarla bene",
+        "La ignori e continui ad allenarti",
+        "Gli dici di tenere la cintura con una mano",
+        "Stringi tu la cintura al suo posto"
+      ],
+      "c": 0,
+      "exp": "Una cintura slacciata è una questione di sicurezza e di etichetta. Nel judo ci si ferma, la si annoda bene e poi si continua."
+    },
+    "pt": {
+      "q": "A faixa do seu parceiro se soltou durante o treino. O que você faz?",
+      "opts": [
+        "Fazer uma pausa e deixar que ele amarre de novo direito",
+        "Ignorar e continuar treinando",
+        "Dizer para ele segurar a faixa com uma mão",
+        "Apertar a faixa você mesmo"
+      ],
+      "c": 0,
+      "exp": "Uma faixa solta é uma questão de segurança e de etiqueta. No judô paramos, amarramos direito e só então continuamos."
+    },
+    "ru": {
+      "q": "Во время тренировки у твоего партнёра развязался пояс. Что ты делаешь?",
+      "opts": [
+        "Останавливаешься и даёшь ему аккуратно завязать пояс",
+        "Не обращаешь внимания и продолжаешь тренироваться",
+        "Говоришь ему придерживать пояс одной рукой",
+        "Сам крепко затягиваешь ему пояс"
+      ],
+      "c": 0,
+      "exp": "Развязавшийся пояс – вопрос безопасности и этикета. В дзюдо мы останавливаемся, правильно завязываем пояс и только потом продолжаем."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "situacija",
+    "videoId": null,
+    "c": 2,
+    "sr": {
+      "q": "Na randoriju se ljutiš jer te partner stalno kontrira. Koji je najbolji odgovor?",
+      "opts": [
+        "Pokušaš da baciš jače i brže",
+        "Upotrebiš više snage da ga uplašiš",
+        "Udahneš, usporiš i kontre doživiš kao lekcije",
+        "Prestaneš da se boriš i odeš"
+      ],
+      "c": 2,
+      "exp": "Ljutnja kvari tehniku. Ako ostaneš miran, vidiš zašto je kontra uspela i učiš iz toga."
+    },
+    "en": {
+      "q": "In randori you are getting angry because your partner keeps countering you. What is the best response?",
+      "opts": [
+        "Try to throw harder and faster",
+        "Use more strength to scare them",
+        "Breathe, slow down and treat the counters as lessons",
+        "Stop fighting and walk away"
+      ],
+      "c": 2,
+      "exp": "Anger makes techniques sloppy. Staying calm lets you see why the counter worked, and learn from it."
+    },
+    "de": {
+      "q": "Beim Randori wirst du wütend, weil dein Partner dich ständig kontert. Was ist die beste Reaktion?",
+      "opts": [
+        "Härter und schneller werfen",
+        "Mehr Kraft einsetzen, um ihn einzuschüchtern",
+        "Atmen, langsamer werden und die Konter als Lektionen sehen",
+        "Aufhören zu kämpfen und weggehen"
+      ],
+      "c": 2,
+      "exp": "Wut macht Techniken schlampig. Wenn du ruhig bleibst, kannst du sehen, warum der Konter funktioniert hat, und daraus lernen."
+    },
+    "fr": {
+      "q": "Pendant un Randori, tu t'énerves parce que ton partenaire n'arrête pas de te contrer. Quelle est la meilleure réaction ?",
+      "opts": [
+        "Essayer de projeter plus fort et plus vite",
+        "Utiliser plus de force pour lui faire peur",
+        "Respirer, ralentir et considérer les contres comme des leçons",
+        "Arrêter de combattre et partir"
+      ],
+      "c": 2,
+      "exp": "La colère rend les techniques brouillonnes. Rester calme permet de voir pourquoi le contre a marché, et d'en tirer des leçons."
+    },
+    "es": {
+      "q": "En el Randori te estás enfadando porque tu compañero no deja de contraatacarte. ¿Cuál es la mejor respuesta?",
+      "opts": [
+        "Intentar proyectar con más fuerza y rapidez",
+        "Usar más fuerza para asustarlo",
+        "Respirar, ir más despacio y tomar los contraataques como lecciones",
+        "Dejar de luchar y marcharte"
+      ],
+      "c": 2,
+      "exp": "El enfado hace que las técnicas sean descuidadas. Mantener la calma te permite ver por qué funcionó el contraataque y aprender de ello."
+    },
+    "it": {
+      "q": "Nel Randori ti stai arrabbiando perché il tuo compagno continua a contrattaccarti. Qual è la risposta migliore?",
+      "opts": [
+        "Provare a proiettare più forte e più veloce",
+        "Usare più forza per spaventarlo",
+        "Respirare, rallentare e considerare i contrattacchi come lezioni",
+        "Smettere di combattere e andare via"
+      ],
+      "c": 2,
+      "exp": "La rabbia rende le tecniche sbadate. Restare calmo ti permette di capire perché il contrattacco ha funzionato e di imparare da esso."
+    },
+    "pt": {
+      "q": "No Randori você está ficando com raiva porque o seu parceiro não para de contra-atacar. Qual é a melhor resposta?",
+      "opts": [
+        "Tentar projetar com mais força e mais rápido",
+        "Usar mais força para assustá-lo",
+        "Respirar, ir mais devagar e tratar os contra-ataques como lições",
+        "Parar de lutar e ir embora"
+      ],
+      "c": 2,
+      "exp": "A raiva deixa as técnicas desleixadas. Manter a calma permite ver por que o contra-ataque funcionou e aprender com ele."
+    },
+    "ru": {
+      "q": "В рандори ты злишься, потому что партнёр всё время отвечает на твои атаки контрприёмами. Как лучше поступить?",
+      "opts": [
+        "Пытаться бросать сильнее и быстрее",
+        "Применить больше силы, чтобы напугать его",
+        "Подышать, замедлиться и считать его контрприёмы уроками",
+        "Прекратить борьбу и уйти"
+      ],
+      "c": 2,
+      "exp": "От злости приёмы получаются небрежными. Если сохранять спокойствие, можно понять, почему сработал контрприём, и научиться на нём."
+    }
+  },
+  {
+    "level": 3,
+    "levelLabel": "advanced",
+    "type": "situacija",
+    "videoId": null,
+    "c": 3,
+    "sr": {
+      "q": "Protivniku se tokom borbe odvezao džudogi. Šta radi sudija?",
+      "opts": [
+        "Pusti da borba teče dalje",
+        "Dosudi Shido tom džudoki",
+        "Završi borbu",
+        "Kaže 'Matte' da bi džudoka mogao da ga namesti"
+      ],
+      "c": 3,
+      "exp": "Sudija zaustavlja borbu komandom 'Matte', a džudoka namesti džudogi pre nego što nastavi."
+    },
+    "en": {
+      "q": "Your opponent's judogi comes undone during a contest. What does the referee do?",
+      "opts": [
+        "Lets the contest go on",
+        "Awards a Shido to that judoka",
+        "Ends the contest",
+        "Calls 'Matte' so the judoka can fix it"
+      ],
+      "c": 3,
+      "exp": "The referee stops the contest with 'Matte', and the judoka tidies the judogi before continuing."
+    },
+    "de": {
+      "q": "Der Judogi deines Gegners geht während eines Kampfes auf. Was macht der Kampfrichter?",
+      "opts": [
+        "Er lässt den Kampf weiterlaufen",
+        "Er gibt diesem Judoka ein Shido",
+        "Er beendet den Kampf",
+        "Er ruft 'Matte', damit der Judoka es richten kann"
+      ],
+      "c": 3,
+      "exp": "Der Kampfrichter unterbricht den Kampf mit 'Matte', und der Judoka bringt den Judogi in Ordnung, bevor es weitergeht."
+    },
+    "fr": {
+      "q": "Le judogi de ton adversaire se défait pendant un combat. Que fait l'arbitre ?",
+      "opts": [
+        "Laisse le combat continuer",
+        "Donne un Shido à ce judoka",
+        "Met fin au combat",
+        "Annonce 'Matte' pour que le judoka puisse le rajuster"
+      ],
+      "c": 3,
+      "exp": "L'arbitre arrête le combat avec 'Matte', et le judoka remet son judogi en ordre avant de continuer."
+    },
+    "es": {
+      "q": "Al judoka contrario se le desata el judogi durante un combate. ¿Qué hace el árbitro?",
+      "opts": [
+        "Deja que el combate continúe",
+        "Le pone un Shido a ese judoka",
+        "Termina el combate",
+        "Dice 'Matte' para que el judoka lo arregle"
+      ],
+      "c": 3,
+      "exp": "El árbitro detiene el combate con 'Matte', y el judoka se arregla el judogi antes de continuar."
+    },
+    "it": {
+      "q": "Durante un incontro il judogi del tuo avversario si slaccia. Cosa fa l'arbitro?",
+      "opts": [
+        "Lascia continuare l'incontro",
+        "Assegna uno Shido a quel judoka",
+        "Termina l'incontro",
+        "Dice 'Matte' così il judoka può sistemarlo"
+      ],
+      "c": 3,
+      "exp": "L'arbitro ferma l'incontro con 'Matte' e il judoka si sistema il judogi prima di continuare."
+    },
+    "pt": {
+      "q": "O judogi do seu adversário se solta durante um combate. O que o árbitro faz?",
+      "opts": [
+        "Deixa o combate continuar",
+        "Dá um Shido a esse judoca",
+        "Encerra o combate",
+        "Chama 'Matte' para o judoca arrumar"
+      ],
+      "c": 3,
+      "exp": "O árbitro interrompe o combate com 'Matte', e o judoca arruma o judogi antes de continuar."
+    },
+    "ru": {
+      "q": "Во время схватки у соперника развязалась куртка дзюдоги. Что делает судья?",
+      "opts": [
+        "Позволяет схватке продолжаться",
+        "Даёт этому дзюдоисту Шидо",
+        "Заканчивает схватку",
+        "Говорит «Маттэ», чтобы дзюдоист мог поправить форму"
+      ],
+      "c": 3,
+      "exp": "Судья останавливает схватку командой «Маттэ», и дзюдоист поправляет дзюдоги, прежде чем продолжить."
+    }
+  },
+  {
+    "level": 3,
+    "levelLabel": "advanced",
+    "type": "situacija",
+    "videoId": null,
+    "c": 0,
+    "sr": {
+      "q": "Bacio si protivnika i vidiš da je povređen, ali sudija to nije primetio. Šta radiš?",
+      "opts": [
+        "Odmah staneš i daš znak sudiji",
+        "Nastaviš sa zadržavanjem",
+        "Čekaš da sudija to primeti",
+        "Ignorišeš to da zadržiš prednost"
+      ],
+      "c": 0,
+      "exp": "Bezbednost je važnija od poena. Džudo vrednosti poštovanja i obostrane koristi su na prvom mestu."
+    },
+    "en": {
+      "q": "You throw your opponent and see they are injured, but the referee has not noticed. What do you do?",
+      "opts": [
+        "Stop and signal the referee at once",
+        "Continue to apply a hold",
+        "Wait for the referee to see it",
+        "Ignore it to keep the advantage"
+      ],
+      "c": 0,
+      "exp": "Safety is more important than scoring. Judo's values of respect and mutual benefit come first."
+    },
+    "de": {
+      "q": "Du wirfst deinen Gegner und siehst, dass er verletzt ist, aber der Kampfrichter hat es nicht bemerkt. Was tust du?",
+      "opts": [
+        "Sofort aufhören und dem Kampfrichter ein Zeichen geben",
+        "Weiter einen Haltegriff ansetzen",
+        "Warten, bis der Kampfrichter es sieht",
+        "Es ignorieren, um den Vorteil zu behalten"
+      ],
+      "c": 0,
+      "exp": "Sicherheit ist wichtiger als Punkte. Die Werte des Judo, Respekt und gegenseitiger Nutzen, kommen zuerst."
+    },
+    "fr": {
+      "q": "Tu projettes ton adversaire et tu vois qu'il est blessé, mais l'arbitre ne l'a pas remarqué. Que fais-tu ?",
+      "opts": [
+        "T'arrêter et le signaler tout de suite à l'arbitre",
+        "Continuer à appliquer une immobilisation",
+        "Attendre que l'arbitre le voie",
+        "L'ignorer pour garder l'avantage"
+      ],
+      "c": 0,
+      "exp": "La sécurité compte plus que les points. Les valeurs du judo, le respect et l'entraide, passent avant tout."
+    },
+    "es": {
+      "q": "Proyectas a tu adversario y ves que está lesionado, pero el árbitro no se ha dado cuenta. ¿Qué haces?",
+      "opts": [
+        "Parar y avisar al árbitro de inmediato",
+        "Seguir aplicando una inmovilización",
+        "Esperar a que el árbitro lo vea",
+        "Ignorarlo para mantener la ventaja"
+      ],
+      "c": 0,
+      "exp": "La seguridad es más importante que puntuar. Los valores del judo, el respeto y el beneficio mutuo, son lo primero."
+    },
+    "it": {
+      "q": "Proietti il tuo avversario e vedi che si è fatto male, ma l'arbitro non se n'è accorto. Cosa fai?",
+      "opts": [
+        "Ti fermi e lo segnali subito all'arbitro",
+        "Continui ad applicare un'immobilizzazione",
+        "Aspetti che l'arbitro se ne accorga",
+        "Lo ignori per mantenere il vantaggio"
+      ],
+      "c": 0,
+      "exp": "La sicurezza è più importante del punteggio. I valori del judo, rispetto e reciproco beneficio, vengono prima."
+    },
+    "pt": {
+      "q": "Você projeta o seu adversário e vê que ele se machucou, mas o árbitro não percebeu. O que você faz?",
+      "opts": [
+        "Parar e avisar o árbitro na hora",
+        "Continuar aplicando uma imobilização",
+        "Esperar o árbitro ver",
+        "Ignorar para manter a vantagem"
+      ],
+      "c": 0,
+      "exp": "A segurança é mais importante do que pontuar. Os valores do judô, respeito e benefício mútuo, vêm primeiro."
+    },
+    "ru": {
+      "q": "Ты бросил соперника и видишь, что он травмирован, но судья этого не заметил. Что ты делаешь?",
+      "opts": [
+        "Сразу останавливаешься и подаёшь знак судье",
+        "Продолжаешь проводить удержание",
+        "Ждёшь, пока судья заметит сам",
+        "Не обращаешь внимания, чтобы сохранить преимущество"
+      ],
+      "c": 0,
+      "exp": "Безопасность важнее очков. Ценности дзюдо – уважение и взаимная польза – стоят на первом месте."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "japanski",
+    "videoId": null,
+    "c": 1,
+    "sr": {
+      "q": "Šta znači 'Džudoka'?",
+      "opts": [
+        "Džudo sudija",
+        "Osoba koja trenira džudo",
+        "Džudo tatami",
+        "Džudo pojas"
+      ],
+      "c": 1,
+      "exp": "Nastavak '-ka' označava osobu koja se nečim bavi. Džudoka je svako ko trenira džudo, od belih pojaseva do šampiona."
+    },
+    "en": {
+      "q": "What does 'Judoka' mean?",
+      "opts": [
+        "A judo referee",
+        "A person who practises judo",
+        "A judo mat",
+        "A judo belt"
+      ],
+      "c": 1,
+      "exp": "The suffix '-ka' means a person who practises something. A judoka is anyone who trains in judo, from white belts to champions."
+    },
+    "de": {
+      "q": "Was bedeutet 'Judoka'?",
+      "opts": [
+        "Ein Judo-Kampfrichter",
+        "Eine Person, die Judo ausübt",
+        "Eine Judomatte",
+        "Ein Judogürtel"
+      ],
+      "c": 1,
+      "exp": "Die Endung '-ka' bedeutet eine Person, die etwas ausübt. Ein Judoka ist jeder, der Judo trainiert, vom Weißgurt bis zum Champion."
+    },
+    "fr": {
+      "q": "Que signifie 'Judoka' ?",
+      "opts": [
+        "Un arbitre de judo",
+        "Une personne qui pratique le judo",
+        "Un tapis de judo",
+        "Une ceinture de judo"
+      ],
+      "c": 1,
+      "exp": "Le suffixe '-ka' désigne une personne qui pratique quelque chose. Un judoka est toute personne qui s'entraîne au judo, des ceintures blanches aux champions."
+    },
+    "es": {
+      "q": "¿Qué significa 'Judoka'?",
+      "opts": [
+        "Un árbitro de judo",
+        "Una persona que practica judo",
+        "Un Tatami de judo",
+        "Un cinturón de judo"
+      ],
+      "c": 1,
+      "exp": "El sufijo '-ka' significa una persona que practica algo. Un judoka es cualquiera que entrena judo, desde los cinturones blancos hasta los campeones."
+    },
+    "it": {
+      "q": "Cosa significa 'Judoka'?",
+      "opts": [
+        "Un arbitro di judo",
+        "Una persona che pratica il judo",
+        "Un tatami da judo",
+        "Una cintura da judo"
+      ],
+      "c": 1,
+      "exp": "Il suffisso '-ka' indica una persona che pratica qualcosa. Un judoka è chiunque si alleni nel judo, dalle cinture bianche ai campioni."
+    },
+    "pt": {
+      "q": "O que significa 'Judoka'?",
+      "opts": [
+        "Um árbitro de judô",
+        "Uma pessoa que pratica judô",
+        "Um tatame de judô",
+        "Uma faixa de judô"
+      ],
+      "c": 1,
+      "exp": "O sufixo '-ka' significa uma pessoa que pratica algo. Judoka é qualquer pessoa que treina judô, das faixas brancas aos campeões."
+    },
+    "ru": {
+      "q": "Что означает слово «Дзюдока»?",
+      "opts": [
+        "Судья по дзюдо",
+        "Человек, который занимается дзюдо",
+        "Татами для дзюдо",
+        "Пояс для дзюдо"
+      ],
+      "c": 1,
+      "exp": "Окончание «-ка» означает человека, который чем-то занимается. Дзюдоист – это любой, кто тренируется в дзюдо, от белых поясов до чемпионов."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "japanski",
+    "videoId": null,
+    "c": 3,
+    "sr": {
+      "q": "Šta znači 'Ashi' u 'Ashi-waza'?",
+      "opts": [
+        "Ruka",
+        "Kuk",
+        "Rame",
+        "Stopalo ili noga"
+      ],
+      "c": 3,
+      "exp": "Ashi-waza su tehnike stopalima i nogama, kao što su O-soto-gari, Ko-uchi-gari i De-ashi-barai."
+    },
+    "en": {
+      "q": "What does 'Ashi' mean in 'Ashi-waza'?",
+      "opts": [
+        "Hand",
+        "Hip",
+        "Shoulder",
+        "Foot or leg"
+      ],
+      "c": 3,
+      "exp": "Ashi-waza are foot and leg techniques such as O-soto-gari, Ko-uchi-gari and De-ashi-barai."
+    },
+    "de": {
+      "q": "Was bedeutet 'Ashi' in 'Ashi-waza'?",
+      "opts": [
+        "Hand",
+        "Hüfte",
+        "Schulter",
+        "Fuß oder Bein"
+      ],
+      "c": 3,
+      "exp": "Ashi-waza sind Fuß- und Beintechniken wie O-soto-gari, Ko-uchi-gari und De-ashi-barai."
+    },
+    "fr": {
+      "q": "Que signifie 'Ashi' dans 'Ashi-waza' ?",
+      "opts": [
+        "Main",
+        "Hanche",
+        "Épaule",
+        "Pied ou jambe"
+      ],
+      "c": 3,
+      "exp": "Les Ashi-waza sont les techniques de pied et de jambe, comme O-soto-gari, Ko-uchi-gari et De-ashi-barai."
+    },
+    "es": {
+      "q": "¿Qué significa 'Ashi' en 'Ashi-waza'?",
+      "opts": [
+        "Mano",
+        "Cadera",
+        "Hombro",
+        "Pie o pierna"
+      ],
+      "c": 3,
+      "exp": "Las Ashi-waza son técnicas de pie y pierna como O-soto-gari, Ko-uchi-gari y De-ashi-barai."
+    },
+    "it": {
+      "q": "Cosa significa 'Ashi' in 'Ashi-waza'?",
+      "opts": [
+        "Mano",
+        "Anca",
+        "Spalla",
+        "Piede o gamba"
+      ],
+      "c": 3,
+      "exp": "Le Ashi-waza sono le tecniche di piede e gamba, come O-soto-gari, Ko-uchi-gari e De-ashi-barai."
+    },
+    "pt": {
+      "q": "O que significa 'Ashi' em 'Ashi-waza'?",
+      "opts": [
+        "Mão",
+        "Quadril",
+        "Ombro",
+        "Pé ou perna"
+      ],
+      "c": 3,
+      "exp": "Ashi-waza são as técnicas de pé e perna, como O-soto-gari, Ko-uchi-gari e De-ashi-barai."
+    },
+    "ru": {
+      "q": "Что означает «Аси» в слове «Аси-вадза»?",
+      "opts": [
+        "Рука",
+        "Бедро",
+        "Плечо",
+        "Стопа или нога"
+      ],
+      "c": 3,
+      "exp": "Аси-вадза – техники стопой и ногой, например О-сото-гари, Ко-ути-гари и Дэ-аси-барай."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "japanski",
+    "videoId": null,
+    "c": 3,
+    "sr": {
+      "q": "Šta znači 'Gatame' u 'Kesa-gatame'?",
+      "opts": [
+        "Bacanje",
+        "Naklon",
+        "Pojas",
+        "Zadržavanje ili zaključavanje"
+      ],
+      "c": 3,
+      "exp": "'Gatame' znači zadržavanje ili zaključavanje. Javlja se u nazivima zadržavanja i poluga na zglobove, kao Kesa-gatame i Juji-gatame."
+    },
+    "en": {
+      "q": "What does 'Gatame' mean in 'Kesa-gatame'?",
+      "opts": [
+        "Throw",
+        "Bow",
+        "Belt",
+        "Hold or lock"
+      ],
+      "c": 3,
+      "exp": "'Gatame' means hold or lock. It appears in the names of pins and joint locks, like Kesa-gatame and Juji-gatame."
+    },
+    "de": {
+      "q": "Was bedeutet 'Gatame' in 'Kesa-gatame'?",
+      "opts": [
+        "Wurf",
+        "Verbeugung",
+        "Gürtel",
+        "Haltegriff oder Hebel"
+      ],
+      "c": 3,
+      "exp": "'Gatame' bedeutet Haltegriff oder Hebel. Es kommt in den Namen von Haltegriffen und Gelenkhebeln vor, wie Kesa-gatame und Juji-gatame."
+    },
+    "fr": {
+      "q": "Que signifie 'Gatame' dans 'Kesa-gatame' ?",
+      "opts": [
+        "Projection",
+        "Salut",
+        "Ceinture",
+        "Immobilisation ou clé"
+      ],
+      "c": 3,
+      "exp": "'Gatame' signifie immobilisation ou clé. On le retrouve dans les noms des immobilisations et des clés articulaires, comme Kesa-gatame et Juji-gatame."
+    },
+    "es": {
+      "q": "¿Qué significa 'Gatame' en 'Kesa-gatame'?",
+      "opts": [
+        "Proyección",
+        "Reverencia",
+        "Cinturón",
+        "Inmovilización o luxación"
+      ],
+      "c": 3,
+      "exp": "'Gatame' significa inmovilización o luxación. Aparece en los nombres de las inmovilizaciones y de las luxaciones, como Kesa-gatame y Juji-gatame."
+    },
+    "it": {
+      "q": "Cosa significa 'Gatame' in 'Kesa-gatame'?",
+      "opts": [
+        "Proiezione",
+        "Inchino",
+        "Cintura",
+        "Immobilizzazione o leva"
+      ],
+      "c": 3,
+      "exp": "'Gatame' significa immobilizzazione o leva. Compare nei nomi delle immobilizzazioni e delle leve articolari, come Kesa-gatame e Juji-gatame."
+    },
+    "pt": {
+      "q": "O que significa 'Gatame' em 'Kesa-gatame'?",
+      "opts": [
+        "Projeção",
+        "Reverência",
+        "Faixa",
+        "Imobilização ou chave"
+      ],
+      "c": 3,
+      "exp": "'Gatame' significa imobilização ou chave. Aparece nos nomes de imobilizações e chaves de articulação, como Kesa-gatame e Juji-gatame."
+    },
+    "ru": {
+      "q": "Что означает «Гатамэ» в слове «Кэса-гатамэ»?",
+      "opts": [
+        "Бросок",
+        "Поклон",
+        "Пояс",
+        "Удержание или фиксация"
+      ],
+      "c": 3,
+      "exp": "«Гатамэ» значит «удержание» или «фиксация». Это слово есть в названиях удержаний и болевых, например Кэса-гатамэ и Дзюдзи-гатамэ."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "japanski",
+    "videoId": null,
+    "c": 2,
+    "sr": {
+      "q": "Šta znači 'Gari' u 'O-soto-gari'?",
+      "opts": [
+        "Pomesti rukom",
+        "Pasti",
+        "Pokositi",
+        "Podići"
+      ],
+      "c": 2,
+      "exp": "'Gari' znači pokositi ili seći. U O-soto-gari, Tori kosi Ukeovu nogu spolja."
+    },
+    "en": {
+      "q": "What does 'Gari' mean in 'O-soto-gari'?",
+      "opts": [
+        "To sweep with the hand",
+        "To fall",
+        "To reap",
+        "To lift"
+      ],
+      "c": 2,
+      "exp": "'Gari' means to reap or cut. In O-soto-gari, Tori reaps Uke's leg from the outside."
+    },
+    "de": {
+      "q": "Was bedeutet 'Gari' in 'O-soto-gari'?",
+      "opts": [
+        "Mit der Hand fegen",
+        "Fallen",
+        "Mähen",
+        "Heben"
+      ],
+      "c": 2,
+      "exp": "'Gari' bedeutet mähen oder schneiden. Bei O-soto-gari mäht Tori Ukes Bein von außen weg."
+    },
+    "fr": {
+      "q": "Que signifie 'Gari' dans 'O-soto-gari' ?",
+      "opts": [
+        "Balayer avec la main",
+        "Tomber",
+        "Faucher",
+        "Soulever"
+      ],
+      "c": 2,
+      "exp": "'Gari' signifie faucher ou couper. Dans O-soto-gari, Tori fauche la jambe d'Uke par l'extérieur."
+    },
+    "es": {
+      "q": "¿Qué significa 'Gari' en 'O-soto-gari'?",
+      "opts": [
+        "Barrer con la mano",
+        "Caer",
+        "Segar",
+        "Levantar"
+      ],
+      "c": 2,
+      "exp": "'Gari' significa segar o cortar. En O-soto-gari, Tori siega la pierna de Uke por el exterior."
+    },
+    "it": {
+      "q": "Cosa significa 'Gari' in 'O-soto-gari'?",
+      "opts": [
+        "Spazzare con la mano",
+        "Cadere",
+        "Falciare",
+        "Sollevare"
+      ],
+      "c": 2,
+      "exp": "'Gari' significa falciare o tagliare. Nell'O-soto-gari, Tori falcia la gamba di Uke dall'esterno."
+    },
+    "pt": {
+      "q": "O que significa 'Gari' em 'O-soto-gari'?",
+      "opts": [
+        "Varrer com a mão",
+        "Cair",
+        "Ceifar",
+        "Levantar"
+      ],
+      "c": 2,
+      "exp": "'Gari' significa ceifar ou cortar. No O-soto-gari, o Tori ceifa a perna do Uke por fora."
+    },
+    "ru": {
+      "q": "Что означает «Гари» в слове «О-сото-гари»?",
+      "opts": [
+        "Подсекать рукой",
+        "Падать",
+        "Косить, подсекать",
+        "Поднимать"
+      ],
+      "c": 2,
+      "exp": "«Гари» значит «косить» или «подсекать». В О-сото-гари Тори подсекает ногу Укэ снаружи."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "japanski",
+    "videoId": null,
+    "c": 1,
+    "sr": {
+      "q": "Šta znači 'Goshi' u 'O-goshi'?",
+      "opts": [
+        "Glava",
+        "Kuk",
+        "Stopalo",
+        "Ruka"
+      ],
+      "c": 1,
+      "exp": "'Goshi' (ili 'koshi') znači kuk. Sva 'goshi' bacanja koriste kuk kao glavnu osu ili tačku oslonca."
+    },
+    "en": {
+      "q": "What does 'Goshi' mean in 'O-goshi'?",
+      "opts": [
+        "Head",
+        "Hip",
+        "Foot",
+        "Arm"
+      ],
+      "c": 1,
+      "exp": "'Goshi' (or 'koshi') means hip. All 'goshi' throws use the hip as the main pivot or support point."
+    },
+    "de": {
+      "q": "Was bedeutet 'Goshi' in 'O-goshi'?",
+      "opts": [
+        "Kopf",
+        "Hüfte",
+        "Fuß",
+        "Arm"
+      ],
+      "c": 1,
+      "exp": "'Goshi' (oder 'koshi') bedeutet Hüfte. Alle 'Goshi'-Würfe nutzen die Hüfte als Hauptdrehpunkt oder Stützpunkt."
+    },
+    "fr": {
+      "q": "Que signifie 'Goshi' dans 'O-goshi' ?",
+      "opts": [
+        "Tête",
+        "Hanche",
+        "Pied",
+        "Bras"
+      ],
+      "c": 1,
+      "exp": "'Goshi' (ou 'koshi') signifie hanche. Toutes les projections en 'goshi' utilisent la hanche comme pivot ou point d'appui principal."
+    },
+    "es": {
+      "q": "¿Qué significa 'Goshi' en 'O-goshi'?",
+      "opts": [
+        "Cabeza",
+        "Cadera",
+        "Pie",
+        "Brazo"
+      ],
+      "c": 1,
+      "exp": "'Goshi' (o 'koshi') significa cadera. Todas las proyecciones 'goshi' usan la cadera como pivote o punto de apoyo principal."
+    },
+    "it": {
+      "q": "Cosa significa 'Goshi' in 'O-goshi'?",
+      "opts": [
+        "Testa",
+        "Anca",
+        "Piede",
+        "Braccio"
+      ],
+      "c": 1,
+      "exp": "'Goshi' (o 'koshi') significa anca. Tutte le proiezioni 'goshi' usano l'anca come principale punto di rotazione o di appoggio."
+    },
+    "pt": {
+      "q": "O que significa 'Goshi' em 'O-goshi'?",
+      "opts": [
+        "Cabeça",
+        "Quadril",
+        "Pé",
+        "Braço"
+      ],
+      "c": 1,
+      "exp": "'Goshi' (ou 'koshi') significa quadril. Todas as projeções 'goshi' usam o quadril como principal ponto de giro ou apoio."
+    },
+    "ru": {
+      "q": "Что означает «Госи» в слове «О-госи»?",
+      "opts": [
+        "Голова",
+        "Бедро",
+        "Стопа",
+        "Рука"
+      ],
+      "c": 1,
+      "exp": "«Госи» (или «коси») значит «бедро». Во всех бросках «госи» бедро служит главной осью вращения или опорой."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "japanski",
+    "videoId": null,
+    "c": 3,
+    "sr": {
+      "q": "Šta znači 'Otoshi' u 'Tai-otoshi'?",
+      "opts": [
+        "Zadržavanje",
+        "Podizanje",
+        "Okretanje",
+        "Pad"
+      ],
+      "c": 3,
+      "exp": "'Otoshi' znači pad. U Tai-otoshi, Tori obara Ukea preko noge koja ga blokira."
+    },
+    "en": {
+      "q": "What does 'Otoshi' mean in 'Tai-otoshi'?",
+      "opts": [
+        "Hold",
+        "Lift",
+        "Turn",
+        "Drop"
+      ],
+      "c": 3,
+      "exp": "'Otoshi' means to drop. In Tai-otoshi, Tori drops Uke over the blocking leg."
+    },
+    "de": {
+      "q": "Was bedeutet 'Otoshi' in 'Tai-otoshi'?",
+      "opts": [
+        "Halten",
+        "Heben",
+        "Drehen",
+        "Fallen lassen"
+      ],
+      "c": 3,
+      "exp": "'Otoshi' bedeutet fallen lassen. Bei Tai-otoshi lässt Tori Uke über das blockierende Bein fallen."
+    },
+    "fr": {
+      "q": "Que signifie 'Otoshi' dans 'Tai-otoshi' ?",
+      "opts": [
+        "Immobilisation",
+        "Soulèvement",
+        "Rotation",
+        "Chute"
+      ],
+      "c": 3,
+      "exp": "'Otoshi' signifie faire chuter. Dans Tai-otoshi, Tori fait chuter Uke par-dessus sa jambe qui bloque."
+    },
+    "es": {
+      "q": "¿Qué significa 'Otoshi' en 'Tai-otoshi'?",
+      "opts": [
+        "Inmovilización",
+        "Levantamiento",
+        "Giro",
+        "Caída"
+      ],
+      "c": 3,
+      "exp": "'Otoshi' significa dejar caer. En Tai-otoshi, Tori hace caer a Uke sobre la pierna que bloquea."
+    },
+    "it": {
+      "q": "Cosa significa 'Otoshi' in 'Tai-otoshi'?",
+      "opts": [
+        "Presa",
+        "Sollevamento",
+        "Rotazione",
+        "Caduta"
+      ],
+      "c": 3,
+      "exp": "'Otoshi' significa far cadere. Nel Tai-otoshi, Tori fa cadere Uke sopra la gamba che lo blocca."
+    },
+    "pt": {
+      "q": "O que significa 'Otoshi' em 'Tai-otoshi'?",
+      "opts": [
+        "Imobilizar",
+        "Levantar",
+        "Girar",
+        "Derrubar"
+      ],
+      "c": 3,
+      "exp": "'Otoshi' significa derrubar. No Tai-otoshi, o Tori derruba o Uke por cima da perna que bloqueia."
+    },
+    "ru": {
+      "q": "Что означает «Отоси» в слове «Тай-отоси»?",
+      "opts": [
+        "Удержание",
+        "Подъём",
+        "Поворот",
+        "Сбрасывание"
+      ],
+      "c": 3,
+      "exp": "«Отоси» значит «сбрасывать». В Тай-отоси Тори роняет Укэ через блокирующую ногу."
+    }
+  },
+  {
+    "level": 3,
+    "levelLabel": "advanced",
+    "type": "japanski",
+    "videoId": null,
+    "c": 3,
+    "sr": {
+      "q": "Šta znači 'Maitta' u džudou?",
+      "opts": [
+        "'Počni borbu'",
+        "'Zaustavi borbu'",
+        "'Odlično urađeno'",
+        "'Predajem se' – verbalna predaja"
+      ],
+      "c": 3,
+      "exp": "'Maitta' je verbalni način predaje kada je primenjeno zadržavanje, davljenje ili poluga, pored lupkanja."
+    },
+    "en": {
+      "q": "What does 'Maitta' mean in judo?",
+      "opts": [
+        "'Start the match'",
+        "'Stop the match'",
+        "'Well done'",
+        "'I give up' — a verbal submission"
+      ],
+      "c": 3,
+      "exp": "'Maitta' is a verbal way of surrendering when a hold, choke or lock is applied, in addition to tapping."
+    },
+    "de": {
+      "q": "Was bedeutet 'Maitta' im Judo?",
+      "opts": [
+        "'Den Kampf beginnen'",
+        "'Den Kampf stoppen'",
+        "'Gut gemacht'",
+        "'Ich gebe auf' – eine mündliche Aufgabe"
+      ],
+      "c": 3,
+      "exp": "'Maitta' ist die mündliche Art aufzugeben, wenn ein Haltegriff, Würgegriff oder Hebel angesetzt wird, zusätzlich zum Abklopfen."
+    },
+    "fr": {
+      "q": "Que signifie 'Maitta' en judo ?",
+      "opts": [
+        "'Commencer le combat'",
+        "'Arrêter le combat'",
+        "'Bien joué'",
+        "'J'abandonne' – une soumission verbale"
+      ],
+      "c": 3,
+      "exp": "'Maitta' est une façon de s'avouer vaincu à voix haute quand une immobilisation, un étranglement ou une clé est appliqué, en plus de taper."
+    },
+    "es": {
+      "q": "¿Qué significa 'Maitta' en judo?",
+      "opts": [
+        "'Empezar el combate'",
+        "'Parar el combate'",
+        "'Bien hecho'",
+        "'Me rindo': una rendición verbal"
+      ],
+      "c": 3,
+      "exp": "'Maitta' es una forma verbal de rendirse cuando se aplica una inmovilización, una estrangulación o una luxación, además de dar palmadas."
+    },
+    "it": {
+      "q": "Cosa significa 'Maitta' nel judo?",
+      "opts": [
+        "'Inizia l'incontro'",
+        "'Ferma l'incontro'",
+        "'Ben fatto'",
+        "'Mi arrendo' – una resa a voce"
+      ],
+      "c": 3,
+      "exp": "'Maitta' è un modo per arrendersi a voce quando viene applicata un'immobilizzazione, uno strangolamento o una leva, oltre a battere la mano."
+    },
+    "pt": {
+      "q": "O que significa 'Maitta' no judô?",
+      "opts": [
+        "'Começar o combate'",
+        "'Parar o combate'",
+        "'Muito bem'",
+        "'Eu desisto' – uma desistência falada"
+      ],
+      "c": 3,
+      "exp": "'Maitta' é uma forma falada de desistir quando uma imobilização, estrangulamento ou chave é aplicada, além de bater."
+    },
+    "ru": {
+      "q": "Что означает «Маитта» в дзюдо?",
+      "opts": [
+        "«Начать схватку»",
+        "«Остановить схватку»",
+        "«Молодец»",
+        "«Сдаюсь» – словесная сдача"
+      ],
+      "c": 3,
+      "exp": "«Маитта» – это словесная сдача, когда на тебя проводят удержание, удушение или болевой. Её говорят вместо хлопка или вместе с ним."
+    }
+  },
+  {
+    "level": 3,
+    "levelLabel": "advanced",
+    "type": "japanski",
+    "videoId": null,
+    "c": 2,
+    "sr": {
+      "q": "Šta je bukvalno značenje reči 'Ukemi'?",
+      "opts": [
+        "'Ustajanje'",
+        "'Padanje'",
+        "'Primanje telom'",
+        "'Prevrtanje'"
+      ],
+      "c": 2,
+      "exp": "Ukemi (受身) bukvalno znači 'primanje [telom]'. To je veština bezbednog padanja."
+    },
+    "en": {
+      "q": "What is the literal meaning of 'Ukemi'?",
+      "opts": [
+        "'Standing up'",
+        "'Falling down'",
+        "'Receiving with the body'",
+        "'Rolling over'"
+      ],
+      "c": 2,
+      "exp": "Ukemi (受身) literally means 'receiving [with] the body'. It is the art of taking a fall safely."
+    },
+    "de": {
+      "q": "Was ist die wörtliche Bedeutung von 'Ukemi'?",
+      "opts": [
+        "'Aufstehen'",
+        "'Hinfallen'",
+        "'Mit dem Körper empfangen'",
+        "'Sich überrollen'"
+      ],
+      "c": 2,
+      "exp": "Ukemi (受身) bedeutet wörtlich 'mit dem Körper empfangen'. Es ist die Kunst, sicher zu fallen."
+    },
+    "fr": {
+      "q": "Quel est le sens littéral de 'Ukemi' ?",
+      "opts": [
+        "'Se relever'",
+        "'Tomber'",
+        "'Recevoir avec le corps'",
+        "'Rouler'"
+      ],
+      "c": 2,
+      "exp": "Ukemi (受身) signifie littéralement 'recevoir [avec] le corps'. C'est l'art de chuter en toute sécurité."
+    },
+    "es": {
+      "q": "¿Cuál es el significado literal de 'Ukemi'?",
+      "opts": [
+        "'Levantarse'",
+        "'Caer al suelo'",
+        "'Recibir con el cuerpo'",
+        "'Rodar'"
+      ],
+      "c": 2,
+      "exp": "Ukemi (受身) significa literalmente 'recibir [con] el cuerpo'. Es el arte de caer de forma segura."
+    },
+    "it": {
+      "q": "Qual è il significato letterale di 'Ukemi'?",
+      "opts": [
+        "'Alzarsi in piedi'",
+        "'Cadere a terra'",
+        "'Ricevere con il corpo'",
+        "'Rotolare'"
+      ],
+      "c": 2,
+      "exp": "Ukemi (受身) significa letteralmente 'ricevere [con] il corpo'. È l'arte di cadere in sicurezza."
+    },
+    "pt": {
+      "q": "Qual é o significado literal de 'Ukemi'?",
+      "opts": [
+        "'Levantar-se'",
+        "'Cair'",
+        "'Receber com o corpo'",
+        "'Rolar'"
+      ],
+      "c": 2,
+      "exp": "Ukemi (受身) significa literalmente 'receber [com] o corpo'. É a arte de cair com segurança."
+    },
+    "ru": {
+      "q": "Что буквально означает «Укэми»?",
+      "opts": [
+        "«Вставание»",
+        "«Падение»",
+        "«Принятие телом»",
+        "«Переворот»"
+      ],
+      "c": 2,
+      "exp": "Укэми (受身) буквально значит «принятие [телом]». Это искусство безопасно падать."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "pravila",
+    "videoId": null,
+    "c": 1,
+    "sr": {
+      "q": "Šta treba da uradiš kada sudija kaže 'Matte'?",
+      "opts": [
+        "Nastaviš tehniku",
+        "Staneš i čekaš dalja uputstva",
+        "Baciš brzo pre nego što ponovo počnu",
+        "Napustiš tatami"
+      ],
+      "c": 1,
+      "exp": "'Matte' znači stani. Svi moraju odmah da stanu i da se vrate u početni položaj ako im se tako kaže."
+    },
+    "en": {
+      "q": "What should you do when the referee says 'Matte'?",
+      "opts": [
+        "Continue the technique",
+        "Stop and wait for further instructions",
+        "Throw quickly before they restart",
+        "Leave the mat"
+      ],
+      "c": 1,
+      "exp": "'Matte' means stop. Everyone must stop right away and return to the starting position if told to."
+    },
+    "de": {
+      "q": "Was solltest du tun, wenn der Kampfrichter 'Matte' sagt?",
+      "opts": [
+        "Die Technik fortsetzen",
+        "Stoppen und auf weitere Anweisungen warten",
+        "Schnell werfen, bevor es weitergeht",
+        "Die Matte verlassen"
+      ],
+      "c": 1,
+      "exp": "'Matte' bedeutet Stopp. Alle müssen sofort aufhören und, wenn es verlangt wird, in die Ausgangsposition zurückgehen."
+    },
+    "fr": {
+      "q": "Que dois-tu faire quand l'arbitre dit 'Matte' ?",
+      "opts": [
+        "Continuer la technique",
+        "T'arrêter et attendre les instructions",
+        "Projeter vite avant qu'il ne relance",
+        "Quitter le tapis"
+      ],
+      "c": 1,
+      "exp": "'Matte' signifie stop. Tout le monde doit s'arrêter tout de suite et retourner à la position de départ si on le demande."
+    },
+    "es": {
+      "q": "¿Qué debes hacer cuando el árbitro dice 'Matte'?",
+      "opts": [
+        "Continuar la técnica",
+        "Parar y esperar nuevas instrucciones",
+        "Proyectar rápido antes de que reanuden",
+        "Salir del Tatami"
+      ],
+      "c": 1,
+      "exp": "'Matte' significa parar. Todos deben detenerse de inmediato y volver a la posición inicial si se les indica."
+    },
+    "it": {
+      "q": "Cosa devi fare quando l'arbitro dice 'Matte'?",
+      "opts": [
+        "Continuare la tecnica",
+        "Fermarti e aspettare altre istruzioni",
+        "Proiettare in fretta prima che ripartano",
+        "Lasciare il tatami"
+      ],
+      "c": 1,
+      "exp": "'Matte' significa fermarsi. Tutti devono fermarsi subito e tornare alla posizione di partenza se richiesto."
+    },
+    "pt": {
+      "q": "O que você deve fazer quando o árbitro diz 'Matte'?",
+      "opts": [
+        "Continuar a técnica",
+        "Parar e esperar novas instruções",
+        "Projetar rápido antes que recomecem",
+        "Sair do tatame"
+      ],
+      "c": 1,
+      "exp": "'Matte' significa parar. Todos devem parar na hora e voltar à posição inicial, se for mandado."
+    },
+    "ru": {
+      "q": "Что нужно делать, когда судья говорит «Маттэ»?",
+      "opts": [
+        "Продолжить приём",
+        "Остановиться и ждать дальнейших указаний",
+        "Быстро бросить, пока не начали заново",
+        "Уйти с татами"
+      ],
+      "c": 1,
+      "exp": "«Маттэ» значит «стоп». Все должны сразу остановиться и, если скажут, вернуться на стартовые места."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "pravila",
+    "videoId": null,
+    "c": 1,
+    "sr": {
+      "q": "Koja radnja je zabranjena u džudou?",
+      "opts": [
+        "Hvatanje za džudogi",
+        "Udaranje ili šutiranje protivnika",
+        "Bacanje tehnikom kuka",
+        "Naklon protivniku"
+      ],
+      "c": 1,
+      "exp": "U džudou nema udaraca ni šutiranja. Sve tehnike su bacanja, zadržavanja, davljenja i poluge na ruku, izvedene bezbedno."
+    },
+    "en": {
+      "q": "Which action is forbidden in judo?",
+      "opts": [
+        "Gripping the judogi",
+        "Striking or kicking your opponent",
+        "Throwing with a hip technique",
+        "Bowing to your opponent"
+      ],
+      "c": 1,
+      "exp": "Judo has no strikes or kicks. All techniques are throws, holds, chokes and arm locks, done safely."
+    },
+    "de": {
+      "q": "Welche Handlung ist im Judo verboten?",
+      "opts": [
+        "Den Judogi greifen",
+        "Den Gegner schlagen oder treten",
+        "Mit einer Hüfttechnik werfen",
+        "Sich vor dem Gegner verbeugen"
+      ],
+      "c": 1,
+      "exp": "Im Judo gibt es keine Schläge oder Tritte. Alle Techniken sind Würfe, Haltegriffe, Würgegriffe und Armhebel, sicher ausgeführt."
+    },
+    "fr": {
+      "q": "Quelle action est interdite en judo ?",
+      "opts": [
+        "Saisir le judogi",
+        "Frapper ou donner des coups de pied à son adversaire",
+        "Projeter avec une technique de hanche",
+        "Saluer son adversaire"
+      ],
+      "c": 1,
+      "exp": "Le judo ne comporte ni coups de poing ni coups de pied. Toutes les techniques sont des projections, des immobilisations, des étranglements et des clés de bras, réalisés en toute sécurité."
+    },
+    "es": {
+      "q": "¿Qué acción está prohibida en judo?",
+      "opts": [
+        "Agarrar el judogi",
+        "Golpear o patear al adversario",
+        "Proyectar con una técnica de cadera",
+        "Hacer una reverencia al adversario"
+      ],
+      "c": 1,
+      "exp": "El judo no tiene golpes ni patadas. Todas las técnicas son proyecciones, inmovilizaciones, estrangulaciones y luxaciones de brazo, hechas con seguridad."
+    },
+    "it": {
+      "q": "Quale azione è vietata nel judo?",
+      "opts": [
+        "Afferrare il judogi",
+        "Colpire o calciare l'avversario",
+        "Proiettare con una tecnica d'anca",
+        "Fare un inchino all'avversario"
+      ],
+      "c": 1,
+      "exp": "Nel judo non ci sono colpi né calci. Tutte le tecniche sono proiezioni, immobilizzazioni, strangolamenti e leve al braccio, eseguite in sicurezza."
+    },
+    "pt": {
+      "q": "Qual ação é proibida no judô?",
+      "opts": [
+        "Agarrar o judogi",
+        "Bater ou chutar o adversário",
+        "Projetar com uma técnica de quadril",
+        "Fazer reverência ao adversário"
+      ],
+      "c": 1,
+      "exp": "O judô não tem golpes nem chutes. Todas as técnicas são projeções, imobilizações, estrangulamentos e chaves de braço, feitas com segurança."
+    },
+    "ru": {
+      "q": "Что запрещено в дзюдо?",
+      "opts": [
+        "Брать захват за дзюдоги",
+        "Бить или пинать соперника",
+        "Бросать приёмом через бедро",
+        "Кланяться сопернику"
+      ],
+      "c": 1,
+      "exp": "В дзюдо нет ударов и пинков. Все приёмы – это броски, удержания, удушения и болевые на руку, и выполняются они безопасно."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "pravila",
+    "videoId": null,
+    "c": 0,
+    "sr": {
+      "q": "Koji rezultat je viši: Waza-ari ili Ippon?",
+      "opts": [
+        "Ippon",
+        "Waza-ari",
+        "Isti su",
+        "Zavisi od sudije"
+      ],
+      "c": 0,
+      "exp": "Ippon je najviši rezultat i odmah završava borbu. Waza-ari je skoro Ippon, a dva Waza-ari zajedno se računaju kao Ippon."
+    },
+    "en": {
+      "q": "Which score is higher: Waza-ari or Ippon?",
+      "opts": [
+        "Ippon",
+        "Waza-ari",
+        "They are the same",
+        "It depends on the referee"
+      ],
+      "c": 0,
+      "exp": "Ippon is the highest score and ends the contest at once. Waza-ari is almost an Ippon, and two Waza-ari together count as Ippon."
+    },
+    "de": {
+      "q": "Welche Wertung ist höher: Waza-ari oder Ippon?",
+      "opts": [
+        "Ippon",
+        "Waza-ari",
+        "Sie sind gleich",
+        "Das hängt vom Kampfrichter ab"
+      ],
+      "c": 0,
+      "exp": "Ippon ist die höchste Wertung und beendet den Kampf sofort. Waza-ari ist fast ein Ippon, und zwei Waza-ari zusammen zählen als Ippon."
+    },
+    "fr": {
+      "q": "Quel score est le plus élevé : Waza-ari ou Ippon ?",
+      "opts": [
+        "Ippon",
+        "Waza-ari",
+        "Ils sont égaux",
+        "Ça dépend de l'arbitre"
+      ],
+      "c": 0,
+      "exp": "Ippon est le score le plus élevé et met fin au combat immédiatement. Waza-ari est presque un Ippon, et deux Waza-ari ensemble comptent comme Ippon."
+    },
+    "es": {
+      "q": "¿Qué puntuación es mayor: Waza-ari o Ippon?",
+      "opts": [
+        "Ippon",
+        "Waza-ari",
+        "Son iguales",
+        "Depende del árbitro"
+      ],
+      "c": 0,
+      "exp": "Ippon es la puntuación más alta y termina el combate de inmediato. Waza-ari es casi un Ippon, y dos Waza-ari juntos cuentan como Ippon."
+    },
+    "it": {
+      "q": "Quale punteggio è più alto: Waza-ari o Ippon?",
+      "opts": [
+        "Ippon",
+        "Waza-ari",
+        "Sono uguali",
+        "Dipende dall'arbitro"
+      ],
+      "c": 0,
+      "exp": "Ippon è il punteggio massimo e termina subito l'incontro. Waza-ari è quasi un Ippon, e due Waza-ari insieme valgono Ippon."
+    },
+    "pt": {
+      "q": "Qual pontuação é maior: Waza-ari ou Ippon?",
+      "opts": [
+        "Ippon",
+        "Waza-ari",
+        "São iguais",
+        "Depende do árbitro"
+      ],
+      "c": 0,
+      "exp": "O Ippon é a pontuação mais alta e termina o combate na hora. O Waza-ari é quase um Ippon, e dois Waza-ari juntos valem Ippon."
+    },
+    "ru": {
+      "q": "Какая оценка выше: Вадза-ари или Иппон?",
+      "opts": [
+        "Иппон",
+        "Вадза-ари",
+        "Они равны",
+        "Зависит от судьи"
+      ],
+      "c": 0,
+      "exp": "Иппон – высшая оценка, и схватка сразу заканчивается. Вадза-ари – почти Иппон, а два Вадза-ари вместе считаются за Иппон."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "pravila",
+    "videoId": null,
+    "c": 1,
+    "sr": {
+      "q": "Koliko mora da traje zadržavanje da bi bilo ocenjeno kao Yuko po IJF pravilima 2026–28?",
+      "opts": [
+        "1–4 sekunde",
+        "5–9 sekundi",
+        "10–19 sekundi",
+        "20 sekundi"
+      ],
+      "c": 1,
+      "exp": "Zadržavanje od 5–9 sekundi donosi Yuko. 10–19 sekundi donosi Waza-ari, a 20 sekundi Ippon."
+    },
+    "en": {
+      "q": "How long must a hold last to be scored as Yuko under the 2026–28 IJF rules?",
+      "opts": [
+        "1–4 seconds",
+        "5–9 seconds",
+        "10–19 seconds",
+        "20 seconds"
+      ],
+      "c": 1,
+      "exp": "A hold of 5–9 seconds scores Yuko. 10–19 seconds scores Waza-ari and 20 seconds scores Ippon."
+    },
+    "de": {
+      "q": "Wie lange muss ein Haltegriff dauern, um nach den IJF-Regeln 2026–28 als Yuko gewertet zu werden?",
+      "opts": [
+        "1–4 Sekunden",
+        "5–9 Sekunden",
+        "10–19 Sekunden",
+        "20 Sekunden"
+      ],
+      "c": 1,
+      "exp": "Ein Haltegriff von 5–9 Sekunden bringt Yuko. 10–19 Sekunden bringen Waza-ari und 20 Sekunden bringen Ippon."
+    },
+    "fr": {
+      "q": "Combien de temps une immobilisation doit-elle durer pour marquer Yuko selon les règles IJF 2026–28 ?",
+      "opts": [
+        "1–4 secondes",
+        "5–9 secondes",
+        "10–19 secondes",
+        "20 secondes"
+      ],
+      "c": 1,
+      "exp": "Une immobilisation de 5–9 secondes marque Yuko. 10–19 secondes marquent Waza-ari et 20 secondes marquent Ippon."
+    },
+    "es": {
+      "q": "¿Cuánto tiene que durar una inmovilización para puntuar Yuko según las reglas de la IJF 2026–28?",
+      "opts": [
+        "1–4 segundos",
+        "5–9 segundos",
+        "10–19 segundos",
+        "20 segundos"
+      ],
+      "c": 1,
+      "exp": "Una inmovilización de 5–9 segundos puntúa Yuko. De 10–19 segundos puntúa Waza-ari y de 20 segundos puntúa Ippon."
+    },
+    "it": {
+      "q": "Quanto deve durare un'immobilizzazione per valere Yuko secondo le regole IJF 2026–28?",
+      "opts": [
+        "1–4 secondi",
+        "5–9 secondi",
+        "10–19 secondi",
+        "20 secondi"
+      ],
+      "c": 1,
+      "exp": "Un'immobilizzazione di 5–9 secondi vale Yuko, di 10–19 secondi vale Waza-ari e di 20 secondi vale Ippon."
+    },
+    "pt": {
+      "q": "Quanto tempo uma imobilização precisa durar para valer Yuko pelas regras da IJF 2026–28?",
+      "opts": [
+        "1–4 segundos",
+        "5–9 segundos",
+        "10–19 segundos",
+        "20 segundos"
+      ],
+      "c": 1,
+      "exp": "Uma imobilização de 5–9 segundos vale Yuko. De 10–19 segundos vale Waza-ari e 20 segundos vale Ippon."
+    },
+    "ru": {
+      "q": "Сколько секунд должно длиться удержание, чтобы получить Юко по правилам IJF 2026–28?",
+      "opts": [
+        "1–4 секунды",
+        "5–9 секунд",
+        "10–19 секунд",
+        "20 секунд"
+      ],
+      "c": 1,
+      "exp": "Удержание в 5–9 секунд даёт Юко. 10–19 секунд дают Вадза-ари, а 20 секунд – Иппон."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "pravila",
+    "videoId": null,
+    "c": 0,
+    "sr": {
+      "q": "Šta jedan Shido donosi tvom protivniku?",
+      "opts": [
+        "Nijedan poen – računa se kao upozorenje",
+        "Jedan poen",
+        "Waza-ari",
+        "Ippon"
+      ],
+      "c": 0,
+      "exp": "Shido je samo kazna koja se računa do limita. Protivniku ne donosi nikakve poene."
+    },
+    "en": {
+      "q": "What does a single Shido give your opponent?",
+      "opts": [
+        "No points — it counts as a warning",
+        "One point",
+        "A Waza-ari",
+        "An Ippon"
+      ],
+      "c": 0,
+      "exp": "A Shido is only a penalty that counts towards the limit. It does not give the opponent any points."
+    },
+    "de": {
+      "q": "Was bekommt dein Gegner durch ein einzelnes Shido?",
+      "opts": [
+        "Keine Punkte – es zählt als Verwarnung",
+        "Einen Punkt",
+        "Ein Waza-ari",
+        "Ein Ippon"
+      ],
+      "c": 0,
+      "exp": "Ein Shido ist nur eine Strafe, die auf das Limit angerechnet wird. Es gibt dem Gegner keine Punkte."
+    },
+    "fr": {
+      "q": "Qu'est-ce qu'un seul Shido donne à ton adversaire ?",
+      "opts": [
+        "Aucun point – c'est un avertissement",
+        "Un point",
+        "Un Waza-ari",
+        "Un Ippon"
+      ],
+      "c": 0,
+      "exp": "Un Shido est seulement une pénalité qui compte vers la limite. Il ne donne aucun point à l'adversaire."
+    },
+    "es": {
+      "q": "¿Qué le da a tu adversario un solo Shido?",
+      "opts": [
+        "Ningún punto: cuenta como una advertencia",
+        "Un punto",
+        "Un Waza-ari",
+        "Un Ippon"
+      ],
+      "c": 0,
+      "exp": "Un Shido es solo una penalización que cuenta hacia el límite. No le da ningún punto al adversario."
+    },
+    "it": {
+      "q": "Cosa dà al tuo avversario un singolo Shido?",
+      "opts": [
+        "Nessun punto – conta come ammonizione",
+        "Un punto",
+        "Un Waza-ari",
+        "Un Ippon"
+      ],
+      "c": 0,
+      "exp": "Lo Shido è solo una penalità che conta verso il limite. Non dà alcun punto all'avversario."
+    },
+    "pt": {
+      "q": "O que um único Shido dá ao seu adversário?",
+      "opts": [
+        "Nenhum ponto – conta como advertência",
+        "Um ponto",
+        "Um Waza-ari",
+        "Um Ippon"
+      ],
+      "c": 0,
+      "exp": "Um Shido é só uma penalidade que conta para o limite. Não dá nenhum ponto ao adversário."
+    },
+    "ru": {
+      "q": "Что даёт сопернику одно Шидо?",
+      "opts": [
+        "Ничего – это просто предупреждение",
+        "Одно очко",
+        "Вадза-ари",
+        "Иппон"
+      ],
+      "c": 0,
+      "exp": "Шидо – это только штраф, который идёт в счёт до предела. Он не даёт сопернику никаких очков."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "pravila",
+    "videoId": null,
+    "c": 3,
+    "sr": {
+      "q": "Koja je najlakša težinska kategorija za žene na IJF takmičenjima?",
+      "opts": [
+        "-52 kg",
+        "-57 kg",
+        "-44 kg",
+        "-48 kg"
+      ],
+      "c": 3,
+      "exp": "Ženske kategorije idu od -48, -52, -57, -63, -70 i -78 kg do +78 kg."
+    },
+    "en": {
+      "q": "What is the lightest weight category for women in IJF competitions?",
+      "opts": [
+        "-52 kg",
+        "-57 kg",
+        "-44 kg",
+        "-48 kg"
+      ],
+      "c": 3,
+      "exp": "The women's categories go from -48, -52, -57, -63, -70 and -78 kg up to +78 kg."
+    },
+    "de": {
+      "q": "Welche ist die leichteste Gewichtsklasse für Frauen bei IJF-Wettkämpfen?",
+      "opts": [
+        "-52 kg",
+        "-57 kg",
+        "-44 kg",
+        "-48 kg"
+      ],
+      "c": 3,
+      "exp": "Die Frauenklassen reichen von -48, -52, -57, -63, -70 und -78 kg bis +78 kg."
+    },
+    "fr": {
+      "q": "Quelle est la catégorie de poids la plus légère pour les femmes dans les compétitions IJF ?",
+      "opts": [
+        "-52 kg",
+        "-57 kg",
+        "-44 kg",
+        "-48 kg"
+      ],
+      "c": 3,
+      "exp": "Les catégories féminines vont de -48, -52, -57, -63, -70 et -78 kg jusqu'à +78 kg."
+    },
+    "es": {
+      "q": "¿Cuál es la categoría de peso más ligera para mujeres en las competiciones de la IJF?",
+      "opts": [
+        "-52 kg",
+        "-57 kg",
+        "-44 kg",
+        "-48 kg"
+      ],
+      "c": 3,
+      "exp": "Las categorías femeninas van de -48, -52, -57, -63, -70 y -78 kg hasta +78 kg."
+    },
+    "it": {
+      "q": "Qual è la categoria di peso più leggera per le donne nelle competizioni IJF?",
+      "opts": [
+        "-52 kg",
+        "-57 kg",
+        "-44 kg",
+        "-48 kg"
+      ],
+      "c": 3,
+      "exp": "Le categorie femminili vanno da -48, -52, -57, -63, -70 e -78 kg fino a +78 kg."
+    },
+    "pt": {
+      "q": "Qual é a categoria de peso mais leve para mulheres nas competições da IJF?",
+      "opts": [
+        "-52 kg",
+        "-57 kg",
+        "-44 kg",
+        "-48 kg"
+      ],
+      "c": 3,
+      "exp": "As categorias femininas vão de -48, -52, -57, -63, -70 e -78 kg até +78 kg."
+    },
+    "ru": {
+      "q": "Какая самая лёгкая весовая категория у женщин на соревнованиях IJF?",
+      "opts": [
+        "-52 кг",
+        "-57 кг",
+        "-44 кг",
+        "-48 кг"
+      ],
+      "c": 3,
+      "exp": "Женские категории идут так: -48, -52, -57, -63, -70 и -78 кг, а затем +78 кг."
+    }
+  },
+  {
+    "level": 3,
+    "levelLabel": "advanced",
+    "type": "pravila",
+    "videoId": null,
+    "c": 0,
+    "sr": {
+      "q": "Šta znači komanda 'Waza-ari awasete Ippon'?",
+      "opts": [
+        "Dva Waza-ari se sabiraju u Ippon",
+        "Waza-ari se poništava",
+        "Ippon se dodeljuje za zadržavanje",
+        "Borba ide u Golden Score"
+      ],
+      "c": 0,
+      "exp": "Kada džudoka postigne drugi Waza-ari, sudija najavljuje 'Waza-ari awasete Ippon' i borba se završava."
+    },
+    "en": {
+      "q": "What does the call 'Waza-ari awasete Ippon' mean?",
+      "opts": [
+        "Two Waza-ari add up to Ippon",
+        "Waza-ari is cancelled",
+        "Ippon is awarded for a hold",
+        "The contest goes to Golden Score"
+      ],
+      "c": 0,
+      "exp": "When a judoka scores a second Waza-ari, the referee calls 'Waza-ari awasete Ippon' and the contest ends."
+    },
+    "de": {
+      "q": "Was bedeutet der Ruf 'Waza-ari awasete Ippon'?",
+      "opts": [
+        "Zwei Waza-ari ergeben zusammen Ippon",
+        "Waza-ari wird aufgehoben",
+        "Ippon wird für einen Haltegriff vergeben",
+        "Der Kampf geht in den Golden Score"
+      ],
+      "c": 0,
+      "exp": "Wenn ein Judoka ein zweites Waza-ari erzielt, ruft der Kampfrichter 'Waza-ari awasete Ippon', und der Kampf ist zu Ende."
+    },
+    "fr": {
+      "q": "Que signifie l'annonce 'Waza-ari awasete Ippon' ?",
+      "opts": [
+        "Deux Waza-ari s'additionnent pour donner Ippon",
+        "Le Waza-ari est annulé",
+        "L'Ippon est accordé pour une immobilisation",
+        "Le combat passe au Golden Score"
+      ],
+      "c": 0,
+      "exp": "Quand un judoka marque un deuxième Waza-ari, l'arbitre annonce 'Waza-ari awasete Ippon' et le combat se termine."
+    },
+    "es": {
+      "q": "¿Qué significa la orden 'Waza-ari awasete Ippon'?",
+      "opts": [
+        "Dos Waza-ari suman un Ippon",
+        "El Waza-ari se anula",
+        "Se concede Ippon por una inmovilización",
+        "El combate pasa al Golden Score"
+      ],
+      "c": 0,
+      "exp": "Cuando un judoka consigue un segundo Waza-ari, el árbitro anuncia 'Waza-ari awasete Ippon' y el combate termina."
+    },
+    "it": {
+      "q": "Cosa significa il richiamo 'Waza-ari awasete Ippon'?",
+      "opts": [
+        "Due Waza-ari sommati valgono Ippon",
+        "Il Waza-ari è annullato",
+        "L'Ippon viene assegnato per un'immobilizzazione",
+        "L'incontro passa al Golden Score"
+      ],
+      "c": 0,
+      "exp": "Quando un judoka ottiene un secondo Waza-ari, l'arbitro annuncia 'Waza-ari awasete Ippon' e l'incontro termina."
+    },
+    "pt": {
+      "q": "O que significa a chamada 'Waza-ari awasete Ippon'?",
+      "opts": [
+        "Dois Waza-ari somam um Ippon",
+        "O Waza-ari é cancelado",
+        "O Ippon é dado por uma imobilização",
+        "O combate vai para o Golden Score"
+      ],
+      "c": 0,
+      "exp": "Quando um judoca marca o segundo Waza-ari, o árbitro chama 'Waza-ari awasete Ippon' e o combate termina."
+    },
+    "ru": {
+      "q": "Что означает возглас «Вадза-ари авасэтэ Иппон»?",
+      "opts": [
+        "Два Вадза-ари складываются в Иппон",
+        "Вадза-ари отменяется",
+        "Иппон присуждается за удержание",
+        "Схватка переходит в Голден Скор"
+      ],
+      "c": 0,
+      "exp": "Когда дзюдоист получает второе Вадза-ари, судья объявляет «Вадза-ари авасэтэ Иппон», и схватка заканчивается."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "istorija",
+    "videoId": null,
+    "c": 2,
+    "sr": {
+      "q": "U kom veku je nastao džudo?",
+      "opts": [
+        "15. vek",
+        "17. vek",
+        "19. vek",
+        "20. vek"
+      ],
+      "c": 2,
+      "exp": "Jigoro Kano je osnovao džudo 1882. godine, krajem 19. veka."
+    },
+    "en": {
+      "q": "In which century was judo created?",
+      "opts": [
+        "The 15th century",
+        "The 17th century",
+        "The 19th century",
+        "The 20th century"
+      ],
+      "c": 2,
+      "exp": "Jigoro Kano founded judo in 1882, in the late 19th century."
+    },
+    "de": {
+      "q": "In welchem Jahrhundert wurde Judo erfunden?",
+      "opts": [
+        "Im 15. Jahrhundert",
+        "Im 17. Jahrhundert",
+        "Im 19. Jahrhundert",
+        "Im 20. Jahrhundert"
+      ],
+      "c": 2,
+      "exp": "Jigoro Kano gründete Judo 1882, im späten 19. Jahrhundert."
+    },
+    "fr": {
+      "q": "À quel siècle le judo a-t-il été créé ?",
+      "opts": [
+        "Le 15e siècle",
+        "Le 17e siècle",
+        "Le 19e siècle",
+        "Le 20e siècle"
+      ],
+      "c": 2,
+      "exp": "Jigoro Kano a fondé le judo en 1882, à la fin du 19e siècle."
+    },
+    "es": {
+      "q": "¿En qué siglo se creó el judo?",
+      "opts": [
+        "El siglo XV",
+        "El siglo XVII",
+        "El siglo XIX",
+        "El siglo XX"
+      ],
+      "c": 2,
+      "exp": "Jigoro Kano fundó el judo en 1882, a finales del siglo XIX."
+    },
+    "it": {
+      "q": "In quale secolo è stato creato il judo?",
+      "opts": [
+        "Il XV secolo",
+        "Il XVII secolo",
+        "Il XIX secolo",
+        "Il XX secolo"
+      ],
+      "c": 2,
+      "exp": "Jigoro Kano fondò il judo nel 1882, alla fine del XIX secolo."
+    },
+    "pt": {
+      "q": "Em que século o judô foi criado?",
+      "opts": [
+        "No século XV",
+        "No século XVII",
+        "No século XIX",
+        "No século XX"
+      ],
+      "c": 2,
+      "exp": "Jigoro Kano fundou o judô em 1882, no fim do século XIX."
+    },
+    "ru": {
+      "q": "В каком веке было создано дзюдо?",
+      "opts": [
+        "В XV веке",
+        "В XVII веке",
+        "В XIX веке",
+        "В XX веке"
+      ],
+      "c": 2,
+      "exp": "Дзигоро Кано основал дзюдо в 1882 году, в конце XIX века."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "istorija",
+    "videoId": null,
+    "c": 3,
+    "sr": {
+      "q": "Koliko je otprilike star džudo?",
+      "opts": [
+        "Oko 40 godina",
+        "Oko 400 godina",
+        "Oko 1000 godina",
+        "Više od 140 godina"
+      ],
+      "c": 3,
+      "exp": "Džudo je osnovan 1882. godine, pa je star više od 140 godina."
+    },
+    "en": {
+      "q": "About how old is judo?",
+      "opts": [
+        "About 40 years",
+        "About 400 years",
+        "About 1,000 years",
+        "More than 140 years"
+      ],
+      "c": 3,
+      "exp": "Judo was founded in 1882, so it is more than 140 years old."
+    },
+    "de": {
+      "q": "Wie alt ist Judo ungefähr?",
+      "opts": [
+        "Etwa 40 Jahre",
+        "Etwa 400 Jahre",
+        "Etwa 1.000 Jahre",
+        "Mehr als 140 Jahre"
+      ],
+      "c": 3,
+      "exp": "Judo wurde 1882 gegründet, ist also mehr als 140 Jahre alt."
+    },
+    "fr": {
+      "q": "Quel âge a le judo environ ?",
+      "opts": [
+        "Environ 40 ans",
+        "Environ 400 ans",
+        "Environ 1 000 ans",
+        "Plus de 140 ans"
+      ],
+      "c": 3,
+      "exp": "Le judo a été fondé en 1882, il a donc plus de 140 ans."
+    },
+    "es": {
+      "q": "¿Cuántos años tiene el judo aproximadamente?",
+      "opts": [
+        "Unos 40 años",
+        "Unos 400 años",
+        "Unos 1.000 años",
+        "Más de 140 años"
+      ],
+      "c": 3,
+      "exp": "El judo se fundó en 1882, así que tiene más de 140 años."
+    },
+    "it": {
+      "q": "Quanti anni ha circa il judo?",
+      "opts": [
+        "Circa 40 anni",
+        "Circa 400 anni",
+        "Circa 1.000 anni",
+        "Più di 140 anni"
+      ],
+      "c": 3,
+      "exp": "Il judo fu fondato nel 1882, quindi ha più di 140 anni."
+    },
+    "pt": {
+      "q": "Qual é, mais ou menos, a idade do judô?",
+      "opts": [
+        "Cerca de 40 anos",
+        "Cerca de 400 anos",
+        "Cerca de 1.000 anos",
+        "Mais de 140 anos"
+      ],
+      "c": 3,
+      "exp": "O judô foi fundado em 1882, então tem mais de 140 anos."
+    },
+    "ru": {
+      "q": "Сколько примерно лет дзюдо?",
+      "opts": [
+        "Около 40 лет",
+        "Около 400 лет",
+        "Около 1000 лет",
+        "Больше 140 лет"
+      ],
+      "c": 3,
+      "exp": "Дзюдо основано в 1882 году, поэтому ему больше 140 лет."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "istorija",
+    "videoId": null,
+    "c": 1,
+    "sr": {
+      "q": "Koje boje pojasa obično počinje početnik?",
+      "opts": [
+        "Crni",
+        "Beli",
+        "Plavi",
+        "Crveni"
+      ],
+      "c": 1,
+      "exp": "Većina džudoka počinje sa belim pojasom i napreduje kroz obojene pojaseve do crnog."
+    },
+    "en": {
+      "q": "Which belt colour does a beginner usually start with?",
+      "opts": [
+        "Black",
+        "White",
+        "Blue",
+        "Red"
+      ],
+      "c": 1,
+      "exp": "Most judoka begin with a white belt and work their way up to coloured belts and eventually black."
+    },
+    "de": {
+      "q": "Mit welcher Gürtelfarbe beginnt ein Anfänger normalerweise?",
+      "opts": [
+        "Schwarz",
+        "Weiß",
+        "Blau",
+        "Rot"
+      ],
+      "c": 1,
+      "exp": "Die meisten Judoka beginnen mit einem weißen Gürtel und arbeiten sich zu den farbigen Gürteln und schließlich zum schwarzen hoch."
+    },
+    "fr": {
+      "q": "De quelle couleur est la ceinture avec laquelle un débutant commence généralement ?",
+      "opts": [
+        "Noire",
+        "Blanche",
+        "Bleue",
+        "Rouge"
+      ],
+      "c": 1,
+      "exp": "La plupart des judokas commencent avec une ceinture blanche, puis progressent vers les ceintures de couleur et, un jour, la ceinture noire."
+    },
+    "es": {
+      "q": "¿Con qué color de cinturón suele empezar un principiante?",
+      "opts": [
+        "Negro",
+        "Blanco",
+        "Azul",
+        "Rojo"
+      ],
+      "c": 1,
+      "exp": "La mayoría de los judokas empiezan con cinturón blanco y avanzan hacia los cinturones de colores y, finalmente, el negro."
+    },
+    "it": {
+      "q": "Con quale colore di cintura inizia di solito un principiante?",
+      "opts": [
+        "Nera",
+        "Bianca",
+        "Blu",
+        "Rossa"
+      ],
+      "c": 1,
+      "exp": "La maggior parte dei judoka inizia con la cintura bianca e sale fino alle cinture colorate e, alla fine, alla nera."
+    },
+    "pt": {
+      "q": "Com qual cor de faixa um iniciante costuma começar?",
+      "opts": [
+        "Preta",
+        "Branca",
+        "Azul",
+        "Vermelha"
+      ],
+      "c": 1,
+      "exp": "A maioria dos judocas começa com a faixa branca e vai subindo pelas faixas coloridas até chegar à preta."
+    },
+    "ru": {
+      "q": "С пояса какого цвета обычно начинает новичок?",
+      "opts": [
+        "Чёрного",
+        "Белого",
+        "Синего",
+        "Красного"
+      ],
+      "c": 1,
+      "exp": "Большинство дзюдоистов начинают с белого пояса и постепенно доходят до цветных, а потом и до чёрного."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "istorija",
+    "videoId": null,
+    "c": 2,
+    "sr": {
+      "q": "Šta znači reč 'Kodokan'?",
+      "opts": [
+        "Škola mačeva",
+        "Dvorana šampiona",
+        "Mesto za učenje Puta",
+        "Kuća majstora"
+      ],
+      "c": 2,
+      "exp": "Kodokan znači 'mesto za učenje Puta'. To je škola koju je Jigoro Kano osnovao 1882."
+    },
+    "en": {
+      "q": "What does the word 'Kodokan' mean?",
+      "opts": [
+        "A school of swords",
+        "A hall of champions",
+        "A place for studying the way",
+        "A house of masters"
+      ],
+      "c": 2,
+      "exp": "Kodokan means 'a place for studying the way'. It is the school that Jigoro Kano founded in 1882."
+    },
+    "de": {
+      "q": "Was bedeutet das Wort 'Kodokan'?",
+      "opts": [
+        "Eine Schwertschule",
+        "Eine Halle der Champions",
+        "Ein Ort, um den Weg zu studieren",
+        "Ein Haus der Meister"
+      ],
+      "c": 2,
+      "exp": "Kodokan bedeutet 'Ort, um den Weg zu studieren'. Es ist die Schule, die Jigoro Kano 1882 gegründet hat."
+    },
+    "fr": {
+      "q": "Que signifie le mot 'Kodokan' ?",
+      "opts": [
+        "Une école de sabre",
+        "Une salle des champions",
+        "Un lieu pour étudier la Voie",
+        "Une maison de maîtres"
+      ],
+      "c": 2,
+      "exp": "Kodokan signifie 'lieu pour étudier la Voie'. C'est l'école que Jigoro Kano a fondée en 1882."
+    },
+    "es": {
+      "q": "¿Qué significa la palabra 'Kodokan'?",
+      "opts": [
+        "Una escuela de espadas",
+        "Un salón de campeones",
+        "Un lugar para estudiar el Camino",
+        "Una casa de maestros"
+      ],
+      "c": 2,
+      "exp": "Kodokan significa 'lugar para estudiar el Camino'. Es la escuela que fundó Jigoro Kano en 1882."
+    },
+    "it": {
+      "q": "Cosa significa la parola 'Kodokan'?",
+      "opts": [
+        "Una scuola di spada",
+        "Una sala dei campioni",
+        "Un luogo per studiare la Via",
+        "Una casa dei maestri"
+      ],
+      "c": 2,
+      "exp": "Kodokan significa 'luogo per studiare la Via'. È la scuola fondata da Jigoro Kano nel 1882."
+    },
+    "pt": {
+      "q": "O que significa a palavra 'Kodokan'?",
+      "opts": [
+        "Uma escola de espadas",
+        "Um salão de campeões",
+        "Um lugar para estudar o Caminho",
+        "Uma casa de mestres"
+      ],
+      "c": 2,
+      "exp": "Kodokan significa 'lugar para estudar o Caminho'. É a escola que Jigoro Kano fundou em 1882."
+    },
+    "ru": {
+      "q": "Что означает слово «Кодокан»?",
+      "opts": [
+        "Школа мечей",
+        "Зал чемпионов",
+        "Место для изучения Пути",
+        "Дом мастеров"
+      ],
+      "c": 2,
+      "exp": "Кодокан значит «место для изучения Пути». Это школа, которую Дзигоро Кано основал в 1882 году."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "istorija",
+    "videoId": null,
+    "c": 1,
+    "sr": {
+      "q": "Koja američka džudoka je 2008. postala prva Amerikanka koja je osvojila olimpijsku medalju u džudou?",
+      "opts": [
+        "Kayla Harrison",
+        "Ronda Rousey",
+        "Travis Stevens",
+        "Jimmy Pedro"
+      ],
+      "c": 1,
+      "exp": "Ronda Rousey je osvojila bronzu na Olimpijskim igrama u Pekingu 2008. u kategoriji -70 kg."
+    },
+    "en": {
+      "q": "Which American judoka became the first US woman to win an Olympic judo medal in 2008?",
+      "opts": [
+        "Kayla Harrison",
+        "Ronda Rousey",
+        "Travis Stevens",
+        "Jimmy Pedro"
+      ],
+      "c": 1,
+      "exp": "Ronda Rousey won bronze at the 2008 Beijing Olympics in the -70 kg category."
+    },
+    "de": {
+      "q": "Welche amerikanische Judoka wurde 2008 die erste US-Frau, die eine olympische Judomedaille gewann?",
+      "opts": [
+        "Kayla Harrison",
+        "Ronda Rousey",
+        "Travis Stevens",
+        "Jimmy Pedro"
+      ],
+      "c": 1,
+      "exp": "Ronda Rousey gewann 2008 bei den Olympischen Spielen in Peking Bronze in der Klasse bis 70 kg."
+    },
+    "fr": {
+      "q": "Quelle judoka américaine est devenue la première Américaine à remporter une médaille olympique en judo, en 2008 ?",
+      "opts": [
+        "Kayla Harrison",
+        "Ronda Rousey",
+        "Travis Stevens",
+        "Jimmy Pedro"
+      ],
+      "c": 1,
+      "exp": "Ronda Rousey a remporté le bronze aux Jeux olympiques de Pékin en 2008, dans la catégorie des -70 kg."
+    },
+    "es": {
+      "q": "¿Qué judoka estadounidense fue la primera mujer de EE. UU. en ganar una medalla olímpica de judo en 2008?",
+      "opts": [
+        "Kayla Harrison",
+        "Ronda Rousey",
+        "Travis Stevens",
+        "Jimmy Pedro"
+      ],
+      "c": 1,
+      "exp": "Ronda Rousey ganó el bronce en los Juegos Olímpicos de Pekín 2008 en la categoría de -70 kg."
+    },
+    "it": {
+      "q": "Quale judoka americana fu la prima donna statunitense a vincere una medaglia olimpica di judo, nel 2008?",
+      "opts": [
+        "Kayla Harrison",
+        "Ronda Rousey",
+        "Travis Stevens",
+        "Jimmy Pedro"
+      ],
+      "c": 1,
+      "exp": "Ronda Rousey vinse il bronzo alle Olimpiadi di Pechino 2008 nella categoria -70 kg."
+    },
+    "pt": {
+      "q": "Qual judoca americana foi a primeira mulher dos EUA a ganhar uma medalha olímpica de judô, em 2008?",
+      "opts": [
+        "Kayla Harrison",
+        "Ronda Rousey",
+        "Travis Stevens",
+        "Jimmy Pedro"
+      ],
+      "c": 1,
+      "exp": "Ronda Rousey ganhou o bronze nos Jogos Olímpicos de Pequim 2008, na categoria -70 kg."
+    },
+    "ru": {
+      "q": "Какая американская дзюдоистка в 2008 году стала первой женщиной из США, выигравшей олимпийскую медаль по дзюдо?",
+      "opts": [
+        "Кейла Харрисон",
+        "Ронда Раузи",
+        "Трэвис Стивенс",
+        "Джимми Педро"
+      ],
+      "c": 1,
+      "exp": "Ронда Раузи завоевала бронзу на Олимпийских играх 2008 года в Пекине в весовой категории до 70 кг."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "istorija",
+    "videoId": null,
+    "c": 0,
+    "sr": {
+      "q": "Koja evropska zemlja ima najviše licenciranih džudoka?",
+      "opts": [
+        "Francuska",
+        "Nemačka",
+        "Italija",
+        "Španija"
+      ],
+      "c": 0,
+      "exp": "Francuska ima stotine hiljada licenciranih džudoka i jedna je od najjačih džudo nacija."
+    },
+    "en": {
+      "q": "Which European country has the most licensed judo players?",
+      "opts": [
+        "France",
+        "Germany",
+        "Italy",
+        "Spain"
+      ],
+      "c": 0,
+      "exp": "France has hundreds of thousands of licensed judoka and is one of judo's strongest nations."
+    },
+    "de": {
+      "q": "Welches europäische Land hat die meisten lizenzierten Judoka?",
+      "opts": [
+        "Frankreich",
+        "Deutschland",
+        "Italien",
+        "Spanien"
+      ],
+      "c": 0,
+      "exp": "Frankreich hat Hunderttausende lizenzierte Judoka und ist eine der stärksten Judonationen."
+    },
+    "fr": {
+      "q": "Quel pays européen compte le plus de judokas licenciés ?",
+      "opts": [
+        "La France",
+        "L'Allemagne",
+        "L'Italie",
+        "L'Espagne"
+      ],
+      "c": 0,
+      "exp": "La France compte des centaines de milliers de judokas licenciés et c'est l'une des plus grandes nations du judo."
+    },
+    "es": {
+      "q": "¿Qué país europeo tiene más judokas con licencia?",
+      "opts": [
+        "Francia",
+        "Alemania",
+        "Italia",
+        "España"
+      ],
+      "c": 0,
+      "exp": "Francia tiene cientos de miles de judokas con licencia y es una de las naciones más fuertes del judo."
+    },
+    "it": {
+      "q": "Quale paese europeo ha il maggior numero di judoka tesserati?",
+      "opts": [
+        "Francia",
+        "Germania",
+        "Italia",
+        "Spagna"
+      ],
+      "c": 0,
+      "exp": "La Francia ha centinaia di migliaia di judoka tesserati ed è una delle nazioni più forti del judo."
+    },
+    "pt": {
+      "q": "Qual país europeu tem mais judocas federados?",
+      "opts": [
+        "França",
+        "Alemanha",
+        "Itália",
+        "Espanha"
+      ],
+      "c": 0,
+      "exp": "A França tem centenas de milhares de judocas federados e é uma das nações mais fortes do judô."
+    },
+    "ru": {
+      "q": "В какой европейской стране больше всего дзюдоистов с лицензией?",
+      "opts": [
+        "Во Франции",
+        "В Германии",
+        "В Италии",
+        "В Испании"
+      ],
+      "c": 0,
+      "exp": "Во Франции сотни тысяч дзюдоистов с лицензией, и это одна из сильнейших стран дзюдо."
+    }
+  },
+  {
+    "level": 3,
+    "levelLabel": "advanced",
+    "type": "istorija",
+    "videoId": null,
+    "c": 1,
+    "sr": {
+      "q": "Koje dve jujutsu škole je Kano najviše proučavao pre nego što je stvorio džudo?",
+      "opts": [
+        "Daito-ryu and Yagyu Shinkage-ryu",
+        "Tenjin Shin'yo-ryu and Kito-ryu",
+        "Kyokushin and Shotokan",
+        "Takenouchi-ryu and Aikido"
+      ],
+      "c": 1,
+      "exp": "Kano je trenirao jujutsu škole Tenjin Shin'yo-ryu i Kito-ryu, spojio ih je i unapredio u džudo."
+    },
+    "en": {
+      "q": "Which two jujutsu schools did Kano mainly study before creating judo?",
+      "opts": [
+        "Daito-ryu and Yagyu Shinkage-ryu",
+        "Tenjin Shin'yo-ryu and Kito-ryu",
+        "Kyokushin and Shotokan",
+        "Takenouchi-ryu and Aikido"
+      ],
+      "c": 1,
+      "exp": "Kano trained in Tenjin Shin'yo-ryu and Kito-ryu jujutsu and combined and improved them into judo."
+    },
+    "de": {
+      "q": "Welche zwei Jujutsu-Schulen hat Kano hauptsächlich studiert, bevor er Judo schuf?",
+      "opts": [
+        "Daito-ryu und Yagyu Shinkage-ryu",
+        "Tenjin Shin'yo-ryu und Kito-ryu",
+        "Kyokushin und Shotokan",
+        "Takenouchi-ryu und Aikido"
+      ],
+      "c": 1,
+      "exp": "Kano trainierte in den Jujutsu-Schulen Tenjin Shin'yo-ryu und Kito-ryu und verband und verbesserte sie zu Judo."
+    },
+    "fr": {
+      "q": "Quelles sont les deux écoles de jujutsu que Kano a principalement étudiées avant de créer le judo ?",
+      "opts": [
+        "Daito-ryu et Yagyu Shinkage-ryu",
+        "Tenjin Shin'yo-ryu et Kito-ryu",
+        "Kyokushin et Shotokan",
+        "Takenouchi-ryu et Aikido"
+      ],
+      "c": 1,
+      "exp": "Kano s'est entraîné au jujutsu Tenjin Shin'yo-ryu et Kito-ryu, puis les a combinés et améliorés pour créer le judo."
+    },
+    "es": {
+      "q": "¿Qué dos escuelas de jujutsu estudió principalmente Kano antes de crear el judo?",
+      "opts": [
+        "Daito-ryu y Yagyu Shinkage-ryu",
+        "Tenjin Shin'yo-ryu y Kito-ryu",
+        "Kyokushin y Shotokan",
+        "Takenouchi-ryu y Aikido"
+      ],
+      "c": 1,
+      "exp": "Kano entrenó jujutsu de las escuelas Tenjin Shin'yo-ryu y Kito-ryu, y las combinó y mejoró hasta crear el judo."
+    },
+    "it": {
+      "q": "Quali due scuole di jujutsu studiò principalmente Kano prima di creare il judo?",
+      "opts": [
+        "Daito-ryu e Yagyu Shinkage-ryu",
+        "Tenjin Shin'yo-ryu e Kito-ryu",
+        "Kyokushin e Shotokan",
+        "Takenouchi-ryu e Aikido"
+      ],
+      "c": 1,
+      "exp": "Kano si allenò nel jujutsu Tenjin Shin'yo-ryu e Kito-ryu, e le combinò e migliorò creando il judo."
+    },
+    "pt": {
+      "q": "Quais duas escolas de jujutsu Kano estudou principalmente antes de criar o judô?",
+      "opts": [
+        "Daito-ryu e Yagyu Shinkage-ryu",
+        "Tenjin Shin'yo-ryu e Kito-ryu",
+        "Kyokushin e Shotokan",
+        "Takenouchi-ryu e Aikido"
+      ],
+      "c": 1,
+      "exp": "Kano treinou o jujutsu Tenjin Shin'yo-ryu e Kito-ryu e os combinou e aprimorou para criar o judô."
+    },
+    "ru": {
+      "q": "Какие две школы дзю-дзюцу Кано изучал в основном, прежде чем создал дзюдо?",
+      "opts": [
+        "Дайто-рю и Ягю Синкагэ-рю",
+        "Тэндзин Синъё-рю и Кито-рю",
+        "Киокусинкай и Сётокан",
+        "Такэноути-рю и Айкидо"
+      ],
+      "c": 1,
+      "exp": "Кано занимался дзю-дзюцу в школах Тэндзин Синъё-рю и Кито-рю, объединил их и улучшил, так и появилось дзюдо."
+    }
+  },
+  {
+    "level": 3,
+    "levelLabel": "advanced",
+    "type": "istorija",
+    "videoId": null,
+    "c": 1,
+    "sr": {
+      "q": "Koje godine je žensko džudo prvi put prikazano kao demonstracioni sport na Olimpijskim igrama?",
+      "opts": [
+        "1964. (Tokio)",
+        "1988. (Seul)",
+        "1980. (Moskva)",
+        "1992. (Barselona)"
+      ],
+      "c": 1,
+      "exp": "Demonstraciono žensko takmičenje održano je u Seulu 1988. Žensko džudo postalo je punopravni olimpijski sport 1992."
+    },
+    "en": {
+      "q": "In which year was women's judo first shown as a demonstration event at the Olympics?",
+      "opts": [
+        "1964 (Tokyo)",
+        "1988 (Seoul)",
+        "1980 (Moscow)",
+        "1992 (Barcelona)"
+      ],
+      "c": 1,
+      "exp": "A women's demonstration event was held in Seoul in 1988. Women's judo became a full Olympic event in 1992."
+    },
+    "de": {
+      "q": "In welchem Jahr wurde Frauen-Judo bei den Olympischen Spielen zum ersten Mal als Demonstrationswettbewerb gezeigt?",
+      "opts": [
+        "1964 (Tokio)",
+        "1988 (Seoul)",
+        "1980 (Moskau)",
+        "1992 (Barcelona)"
+      ],
+      "c": 1,
+      "exp": "1988 in Seoul gab es einen Demonstrationswettbewerb für Frauen. 1992 wurde Frauen-Judo eine vollwertige olympische Disziplin."
+    },
+    "fr": {
+      "q": "En quelle année le judo féminin a-t-il été présenté pour la première fois en démonstration aux Jeux olympiques ?",
+      "opts": [
+        "1964 (Tokyo)",
+        "1988 (Séoul)",
+        "1980 (Moscou)",
+        "1992 (Barcelone)"
+      ],
+      "c": 1,
+      "exp": "Une démonstration de judo féminin a eu lieu à Séoul en 1988. Le judo féminin est devenu une épreuve olympique officielle en 1992."
+    },
+    "es": {
+      "q": "¿En qué año se mostró por primera vez el judo femenino como deporte de exhibición en los Juegos Olímpicos?",
+      "opts": [
+        "1964 (Tokio)",
+        "1988 (Seúl)",
+        "1980 (Moscú)",
+        "1992 (Barcelona)"
+      ],
+      "c": 1,
+      "exp": "En Seúl 1988 hubo una exhibición de judo femenino. El judo femenino pasó a ser un deporte olímpico oficial en 1992."
+    },
+    "it": {
+      "q": "In quale anno il judo femminile fu mostrato per la prima volta come evento dimostrativo alle Olimpiadi?",
+      "opts": [
+        "1964 (Tokyo)",
+        "1988 (Seul)",
+        "1980 (Mosca)",
+        "1992 (Barcellona)"
+      ],
+      "c": 1,
+      "exp": "Un evento dimostrativo femminile si tenne a Seul nel 1988. Il judo femminile divenne evento olimpico a pieno titolo nel 1992."
+    },
+    "pt": {
+      "q": "Em que ano o judô feminino foi apresentado pela primeira vez como demonstração nos Jogos Olímpicos?",
+      "opts": [
+        "1964 (Tóquio)",
+        "1988 (Seul)",
+        "1980 (Moscou)",
+        "1992 (Barcelona)"
+      ],
+      "c": 1,
+      "exp": "Uma demonstração feminina foi realizada em Seul, em 1988. O judô feminino passou a ser esporte olímpico oficial em 1992."
+    },
+    "ru": {
+      "q": "В каком году женское дзюдо впервые показали на Олимпийских играх как показательный вид?",
+      "opts": [
+        "1964 (Токио)",
+        "1988 (Сеул)",
+        "1980 (Москва)",
+        "1992 (Барселона)"
+      ],
+      "c": 1,
+      "exp": "Показательный турнир среди женщин прошёл в Сеуле в 1988 году. Полноценным олимпийским видом женское дзюдо стало в 1992 году."
+    }
+  },
+  {
+    "level": 3,
+    "levelLabel": "advanced",
+    "type": "istorija",
+    "videoId": null,
+    "c": 3,
+    "sr": {
+      "q": "Koji borilački sport iz SSSR-a je delimično inspirisan džudoom?",
+      "opts": [
+        "Tekvondo",
+        "Kapoeira",
+        "Kendo",
+        "Sambo"
+      ],
+      "c": 3,
+      "exp": "Sambo je nastao u Sovjetskom Savezu, pod uticajem džudoa, ali i drugih rvačkih stilova."
+    },
+    "en": {
+      "q": "Which combat sport from the USSR was partly inspired by judo?",
+      "opts": [
+        "Taekwondo",
+        "Capoeira",
+        "Kendo",
+        "Sambo"
+      ],
+      "c": 3,
+      "exp": "Sambo developed in the Soviet Union and was influenced by judo, among other wrestling styles."
+    },
+    "de": {
+      "q": "Welche Kampfsportart aus der UdSSR wurde teilweise vom Judo inspiriert?",
+      "opts": [
+        "Taekwondo",
+        "Capoeira",
+        "Kendo",
+        "Sambo"
+      ],
+      "c": 3,
+      "exp": "Sambo entwickelte sich in der Sowjetunion und wurde unter anderem vom Judo und anderen Ringkampfstilen beeinflusst."
+    },
+    "fr": {
+      "q": "Quel sport de combat venu d'URSS a été en partie inspiré par le judo ?",
+      "opts": [
+        "Le taekwondo",
+        "La capoeira",
+        "Le kendo",
+        "Le sambo"
+      ],
+      "c": 3,
+      "exp": "Le sambo s'est développé en Union soviétique et a été influencé par le judo, entre autres styles de lutte."
+    },
+    "es": {
+      "q": "¿Qué deporte de combate de la URSS se inspiró en parte en el judo?",
+      "opts": [
+        "Taekwondo",
+        "Capoeira",
+        "Kendo",
+        "Sambo"
+      ],
+      "c": 3,
+      "exp": "El Sambo se desarrolló en la Unión Soviética y fue influido por el judo, entre otros estilos de lucha."
+    },
+    "it": {
+      "q": "Quale sport da combattimento dell'URSS fu in parte ispirato dal judo?",
+      "opts": [
+        "Taekwondo",
+        "Capoeira",
+        "Kendo",
+        "Sambo"
+      ],
+      "c": 3,
+      "exp": "Il Sambo si sviluppò in Unione Sovietica e fu influenzato dal judo, tra gli altri stili di lotta."
+    },
+    "pt": {
+      "q": "Qual esporte de combate da URSS foi em parte inspirado no judô?",
+      "opts": [
+        "Taekwondo",
+        "Capoeira",
+        "Kendô",
+        "Sambo"
+      ],
+      "c": 3,
+      "exp": "O Sambo se desenvolveu na União Soviética e foi influenciado pelo judô, entre outros estilos de luta."
+    },
+    "ru": {
+      "q": "Какой боевой вид спорта родом из СССР отчасти вдохновлён дзюдо?",
+      "opts": [
+        "Тхэквондо",
+        "Капоэйра",
+        "Кэндо",
+        "Самбо"
+      ],
+      "c": 3,
+      "exp": "Самбо появилось в Советском Союзе, и на него повлияло дзюдо, как и другие стили борьбы."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "filozofija",
+    "videoId": null,
+    "c": 2,
+    "sr": {
+      "q": "Drug iz grupe se muči sa tehnikom. Šta ti sugeriše 'Jita-kyoei'?",
+      "opts": [
+        "Pokaži da si bolji",
+        "Ostavi ga na miru",
+        "Pomozi mu da nauči",
+        "Reci mu da se više potrudi"
+      ],
+      "c": 2,
+      "exp": "'Jita-kyoei' znači uzajamno blagostanje i korist. Pomaganje drugima da napreduju deo je džudo puta."
+    },
+    "en": {
+      "q": "A classmate is struggling with a technique. What does 'Jita-kyoei' suggest you do?",
+      "opts": [
+        "Show you are better",
+        "Leave them alone",
+        "Help them learn",
+        "Tell them to try harder"
+      ],
+      "c": 2,
+      "exp": "'Jita-kyoei' means mutual welfare and benefit. Helping others improve is part of the judo way."
+    },
+    "de": {
+      "q": "Ein Mitschüler tut sich mit einer Technik schwer. Was legt dir 'Jita-kyoei' nahe?",
+      "opts": [
+        "Zeigen, dass du besser bist",
+        "Ihn in Ruhe lassen",
+        "Ihm beim Lernen helfen",
+        "Ihm sagen, er soll sich mehr anstrengen"
+      ],
+      "c": 2,
+      "exp": "'Jita-kyoei' bedeutet gegenseitiges Wohl und gegenseitiger Nutzen. Anderen zu helfen, besser zu werden, gehört zum Weg des Judo."
+    },
+    "fr": {
+      "q": "Un camarade a du mal avec une technique. Que te suggère 'Jita-kyoei' ?",
+      "opts": [
+        "Montrer que tu es meilleur",
+        "Le laisser tranquille",
+        "L'aider à apprendre",
+        "Lui dire d'essayer plus fort"
+      ],
+      "c": 2,
+      "exp": "'Jita-kyoei' signifie entraide et bénéfice mutuel. Aider les autres à progresser fait partie de la voie du judo."
+    },
+    "es": {
+      "q": "Un compañero tiene dificultades con una técnica. ¿Qué te sugiere 'Jita-kyoei' que hagas?",
+      "opts": [
+        "Demostrar que eres mejor",
+        "Dejarlo en paz",
+        "Ayudarle a aprender",
+        "Decirle que se esfuerce más"
+      ],
+      "c": 2,
+      "exp": "'Jita-kyoei' significa bienestar y beneficio mutuos. Ayudar a los demás a mejorar es parte del camino del judo."
+    },
+    "it": {
+      "q": "Un compagno ha difficoltà con una tecnica. Cosa ti suggerisce di fare 'Jita-kyoei'?",
+      "opts": [
+        "Mostrare di essere più bravo",
+        "Lasciarlo stare",
+        "Aiutarlo a imparare",
+        "Dirgli di impegnarsi di più"
+      ],
+      "c": 2,
+      "exp": "'Jita-kyoei' significa benessere e beneficio reciproco. Aiutare gli altri a migliorare fa parte della via del judo."
+    },
+    "pt": {
+      "q": "Um colega está com dificuldade em uma técnica. O que 'Jita-kyoei' sugere que você faça?",
+      "opts": [
+        "Mostrar que você é melhor",
+        "Deixá-lo em paz",
+        "Ajudá-lo a aprender",
+        "Dizer para ele se esforçar mais"
+      ],
+      "c": 2,
+      "exp": "'Jita-kyoei' significa bem-estar e benefício mútuos. Ajudar os outros a melhorar faz parte do caminho do judô."
+    },
+    "ru": {
+      "q": "Твой одноклассник никак не может освоить приём. Что подсказывает тебе сделать «Дзита-кёэй»?",
+      "opts": [
+        "Показать, что ты лучше",
+        "Оставить его в покое",
+        "Помочь ему научиться",
+        "Сказать ему стараться сильнее"
+      ],
+      "c": 2,
+      "exp": "«Дзита-кёэй» значит «взаимная польза и благополучие». Помогать другим становиться лучше – часть пути дзюдо."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "filozofija",
+    "videoId": null,
+    "c": 2,
+    "sr": {
+      "q": "Zašto se klanjamo na početku časa?",
+      "opts": [
+        "Da pokažemo da se plašimo",
+        "Da zagrejemo leđa",
+        "Da pokažemo poštovanje prema dojou, senseiju i partnerima",
+        "Da se pozdravimo na odlasku"
+      ],
+      "c": 2,
+      "exp": "Naklon pokazuje poštovanje i zahvalnost. To je znak da smo spremni da učimo i treniramo zajedno."
+    },
+    "en": {
+      "q": "Why do we bow at the beginning of class?",
+      "opts": [
+        "To show we are afraid",
+        "To warm up our back",
+        "To show respect for the dojo, the Sensei and our partners",
+        "To say goodbye"
+      ],
+      "c": 2,
+      "exp": "The bow shows respect and gratitude. It is a sign that we are ready to learn and train together."
+    },
+    "de": {
+      "q": "Warum verbeugen wir uns zu Beginn des Trainings?",
+      "opts": [
+        "Um zu zeigen, dass wir Angst haben",
+        "Um unseren Rücken aufzuwärmen",
+        "Um Respekt vor dem Dojo, dem Sensei und unseren Partnern zu zeigen",
+        "Um uns zu verabschieden"
+      ],
+      "c": 2,
+      "exp": "Die Verbeugung zeigt Respekt und Dankbarkeit. Sie ist ein Zeichen, dass wir bereit sind, zusammen zu lernen und zu trainieren."
+    },
+    "fr": {
+      "q": "Pourquoi salue-t-on au début du cours ?",
+      "opts": [
+        "Pour montrer qu'on a peur",
+        "Pour échauffer son dos",
+        "Pour montrer du respect au dojo, au Sensei et à ses partenaires",
+        "Pour dire au revoir"
+      ],
+      "c": 2,
+      "exp": "Le salut montre le respect et la gratitude. C'est le signe qu'on est prêt à apprendre et à s'entraîner ensemble."
+    },
+    "es": {
+      "q": "¿Por qué hacemos una reverencia al comenzar la clase?",
+      "opts": [
+        "Para mostrar que tenemos miedo",
+        "Para calentar la espalda",
+        "Para mostrar respeto por el dojo, el Sensei y nuestros compañeros",
+        "Para despedirnos"
+      ],
+      "c": 2,
+      "exp": "La reverencia muestra respeto y gratitud. Es una señal de que estamos listos para aprender y entrenar juntos."
+    },
+    "it": {
+      "q": "Perché ci inchiniamo all'inizio della lezione?",
+      "opts": [
+        "Per mostrare che abbiamo paura",
+        "Per scaldare la schiena",
+        "Per mostrare rispetto per il dojo, il Sensei e i compagni",
+        "Per salutare prima di andare via"
+      ],
+      "c": 2,
+      "exp": "L'inchino mostra rispetto e gratitudine. È un segno che siamo pronti a imparare e ad allenarci insieme."
+    },
+    "pt": {
+      "q": "Por que fazemos reverência no começo da aula?",
+      "opts": [
+        "Para mostrar que temos medo",
+        "Para aquecer as costas",
+        "Para mostrar respeito pelo dojo, pelo Sensei e pelos parceiros",
+        "Para dizer adeus"
+      ],
+      "c": 2,
+      "exp": "A reverência mostra respeito e gratidão. É um sinal de que estamos prontos para aprender e treinar juntos."
+    },
+    "ru": {
+      "q": "Почему мы кланяемся в начале тренировки?",
+      "opts": [
+        "Чтобы показать, что боимся",
+        "Чтобы размять спину",
+        "Чтобы показать уважение к додзё, Сэнсэю и партнёрам",
+        "Чтобы попрощаться"
+      ],
+      "c": 2,
+      "exp": "Поклон выражает уважение и благодарность. Это знак того, что мы готовы учиться и тренироваться вместе."
+    }
+  },
+  {
+    "level": 1,
+    "levelLabel": "beginner",
+    "type": "filozofija",
+    "videoId": null,
+    "c": 0,
+    "sr": {
+      "q": "Koji kvalitet najviše pomaže kada stalno padaš i ponovo ustaješ?",
+      "opts": [
+        "Upornost",
+        "Brzina",
+        "Sreća",
+        "Snaga"
+      ],
+      "c": 0,
+      "exp": "Džudo nas uči da nastavimo da pokušavamo. Svaki pad je prilika da naučimo i ponovo ustanemo."
+    },
+    "en": {
+      "q": "Which quality helps most when you keep falling and getting up again?",
+      "opts": [
+        "Perseverance",
+        "Speed",
+        "Luck",
+        "Strength"
+      ],
+      "c": 0,
+      "exp": "Judo teaches us to keep trying. Each fall is a chance to learn and get back up."
+    },
+    "de": {
+      "q": "Welche Eigenschaft hilft am meisten, wenn du immer wieder hinfällst und wieder aufstehst?",
+      "opts": [
+        "Ausdauer",
+        "Schnelligkeit",
+        "Glück",
+        "Kraft"
+      ],
+      "c": 0,
+      "exp": "Judo lehrt uns, es immer wieder zu versuchen. Jeder Sturz ist eine Chance zu lernen und wieder aufzustehen."
+    },
+    "fr": {
+      "q": "Quelle qualité aide le plus quand on tombe et qu'on se relève sans cesse ?",
+      "opts": [
+        "La persévérance",
+        "La vitesse",
+        "La chance",
+        "La force"
+      ],
+      "c": 0,
+      "exp": "Le judo nous apprend à toujours réessayer. Chaque chute est une occasion d'apprendre et de se relever."
+    },
+    "es": {
+      "q": "¿Qué cualidad ayuda más cuando te caes una y otra vez y te vuelves a levantar?",
+      "opts": [
+        "La perseverancia",
+        "La velocidad",
+        "La suerte",
+        "La fuerza"
+      ],
+      "c": 0,
+      "exp": "El judo nos enseña a seguir intentándolo. Cada caída es una oportunidad de aprender y de volver a levantarse."
+    },
+    "it": {
+      "q": "Quale qualità aiuta di più quando continui a cadere e a rialzarti?",
+      "opts": [
+        "Perseveranza",
+        "Velocità",
+        "Fortuna",
+        "Forza"
+      ],
+      "c": 0,
+      "exp": "Il judo ci insegna a continuare a provare. Ogni caduta è un'occasione per imparare e rialzarsi."
+    },
+    "pt": {
+      "q": "Qual qualidade mais ajuda quando você cai e se levanta de novo várias vezes?",
+      "opts": [
+        "Perseverança",
+        "Velocidade",
+        "Sorte",
+        "Força"
+      ],
+      "c": 0,
+      "exp": "O judô nos ensina a continuar tentando. Cada queda é uma chance de aprender e se levantar de novo."
+    },
+    "ru": {
+      "q": "Какое качество больше всего помогает, когда ты снова и снова падаешь и поднимаешься?",
+      "opts": [
+        "Упорство",
+        "Скорость",
+        "Удача",
+        "Сила"
+      ],
+      "c": 0,
+      "exp": "Дзюдо учит не сдаваться. Каждое падение – шанс научиться и встать снова."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "filozofija",
+    "videoId": null,
+    "c": 3,
+    "sr": {
+      "q": "Šta znači japanska izreka 'Nanakorobi yaoki'?",
+      "opts": [
+        "Pobeda je sve",
+        "Nikada uopšte ne pasti",
+        "Vežba čini majstora",
+        "Padni sedam puta, ustani osam"
+      ],
+      "c": 3,
+      "exp": "Znači da nikada ne treba odustati. Možemo pasti mnogo puta, ali je važno da ponovo ustanemo."
+    },
+    "en": {
+      "q": "What does the Japanese saying 'Nanakorobi yaoki' mean?",
+      "opts": [
+        "Winning is everything",
+        "Never fall at all",
+        "Practice makes perfect",
+        "Fall seven times, stand up eight"
+      ],
+      "c": 3,
+      "exp": "It means we should never give up. We may fall many times, but what matters is that we stand up again."
+    },
+    "de": {
+      "q": "Was bedeutet das japanische Sprichwort 'Nanakorobi yaoki'?",
+      "opts": [
+        "Gewinnen ist alles",
+        "Nie hinfallen",
+        "Übung macht den Meister",
+        "Siebenmal fallen, achtmal aufstehen"
+      ],
+      "c": 3,
+      "exp": "Es bedeutet, dass wir nie aufgeben sollen. Wir können oft hinfallen, aber wichtig ist, dass wir wieder aufstehen."
+    },
+    "fr": {
+      "q": "Que signifie le proverbe japonais 'Nanakorobi yaoki' ?",
+      "opts": [
+        "Gagner, c'est tout",
+        "Ne jamais tomber du tout",
+        "C'est en s'entraînant qu'on progresse",
+        "Tomber sept fois, se relever huit"
+      ],
+      "c": 3,
+      "exp": "Il signifie qu'il ne faut jamais abandonner. On peut tomber de nombreuses fois, mais ce qui compte, c'est de se relever."
+    },
+    "es": {
+      "q": "¿Qué significa el dicho japonés 'Nanakorobi yaoki'?",
+      "opts": [
+        "Ganar lo es todo",
+        "No caerse nunca",
+        "La práctica hace al maestro",
+        "Caer siete veces, levantarse ocho"
+      ],
+      "c": 3,
+      "exp": "Significa que nunca debemos rendirnos. Podemos caer muchas veces, pero lo que importa es volver a levantarnos."
+    },
+    "it": {
+      "q": "Cosa significa il proverbio giapponese 'Nanakorobi yaoki'?",
+      "opts": [
+        "Vincere è tutto",
+        "Non cadere mai",
+        "La pratica rende perfetti",
+        "Cadi sette volte, rialzati otto"
+      ],
+      "c": 3,
+      "exp": "Significa che non dobbiamo mai arrenderci. Possiamo cadere molte volte, ma ciò che conta è rialzarsi di nuovo."
+    },
+    "pt": {
+      "q": "O que significa o provérbio japonês 'Nanakorobi yaoki'?",
+      "opts": [
+        "Vencer é tudo",
+        "Nunca cair",
+        "A prática leva à perfeição",
+        "Cair sete vezes, levantar oito"
+      ],
+      "c": 3,
+      "exp": "Significa que nunca devemos desistir. Podemos cair muitas vezes, mas o que importa é nos levantarmos de novo."
+    },
+    "ru": {
+      "q": "Что означает японская пословица «Нана короби я оки»?",
+      "opts": [
+        "Победа – это всё",
+        "Вообще никогда не падай",
+        "Практика ведёт к совершенству",
+        "Упади семь раз, встань восемь"
+      ],
+      "c": 3,
+      "exp": "Она означает, что нельзя сдаваться. Мы можем упасть много раз, но главное – снова встать."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "filozofija",
+    "videoId": null,
+    "c": 1,
+    "sr": {
+      "q": "Šta znači 'Kokoro' u dojou?",
+      "opts": [
+        "Samo borbeni duh",
+        "Srce, um i duh",
+        "Vrsta bacanja",
+        "Naklon poštovanja"
+      ],
+      "c": 1,
+      "exp": "Kokoro označava celo unutrašnje biće: srce, um i duh. U džudou je treniranje Kokoroa jednako važno kao treniranje tela."
+    },
+    "en": {
+      "q": "What does 'Kokoro' mean in the dojo?",
+      "opts": [
+        "Fighting spirit only",
+        "Heart, mind and spirit",
+        "A type of throw",
+        "A bow of respect"
+      ],
+      "c": 1,
+      "exp": "Kokoro stands for the whole inner self: heart, mind and spirit. In judo, training the Kokoro matters as much as training the body."
+    },
+    "de": {
+      "q": "Was bedeutet 'Kokoro' im Dojo?",
+      "opts": [
+        "Nur Kampfgeist",
+        "Herz, Geist und Seele",
+        "Eine Art von Wurf",
+        "Eine Verbeugung aus Respekt"
+      ],
+      "c": 1,
+      "exp": "Kokoro steht für das ganze Innere: Herz, Geist und Seele. Im Judo ist das Training des Kokoro genauso wichtig wie das Training des Körpers."
+    },
+    "fr": {
+      "q": "Que signifie 'Kokoro' dans le dojo ?",
+      "opts": [
+        "Uniquement l'esprit de combat",
+        "Le cœur, l'esprit et l'âme",
+        "Un type de projection",
+        "Un salut de respect"
+      ],
+      "c": 1,
+      "exp": "Kokoro représente tout l'être intérieur : le cœur, l'esprit et l'âme. En judo, entraîner le Kokoro compte autant qu'entraîner le corps."
+    },
+    "es": {
+      "q": "¿Qué significa 'Kokoro' en el dojo?",
+      "opts": [
+        "Solo espíritu de lucha",
+        "Corazón, mente y espíritu",
+        "Un tipo de proyección",
+        "Una reverencia de respeto"
+      ],
+      "c": 1,
+      "exp": "Kokoro representa todo el ser interior: corazón, mente y espíritu. En judo, entrenar el Kokoro es tan importante como entrenar el cuerpo."
+    },
+    "it": {
+      "q": "Cosa significa 'Kokoro' nel dojo?",
+      "opts": [
+        "Solo spirito combattivo",
+        "Cuore, mente e spirito",
+        "Un tipo di proiezione",
+        "Un inchino di rispetto"
+      ],
+      "c": 1,
+      "exp": "Kokoro rappresenta tutto il nostro mondo interiore: cuore, mente e spirito. Nel judo, allenare il Kokoro conta quanto allenare il corpo."
+    },
+    "pt": {
+      "q": "O que significa 'Kokoro' no dojo?",
+      "opts": [
+        "Apenas espírito de luta",
+        "Coração, mente e espírito",
+        "Um tipo de projeção",
+        "Uma reverência de respeito"
+      ],
+      "c": 1,
+      "exp": "Kokoro representa todo o nosso interior: coração, mente e espírito. No judô, treinar o Kokoro é tão importante quanto treinar o corpo."
+    },
+    "ru": {
+      "q": "Что означает «Кокоро» в додзё?",
+      "opts": [
+        "Только боевой дух",
+        "Сердце, разум и дух",
+        "Вид броска",
+        "Поклон уважения"
+      ],
+      "c": 1,
+      "exp": "Кокоро – это весь наш внутренний мир: сердце, разум и дух. В дзюдо тренировать Кокоро так же важно, как тренировать тело."
+    }
+  },
+  {
+    "level": 2,
+    "levelLabel": "intermediate",
+    "type": "filozofija",
+    "videoId": null,
+    "c": 1,
+    "sr": {
+      "q": "Šta još 'Rei' predstavlja osim naklona?",
+      "opts": [
+        "Snaga i brzina",
+        "Poštovanje i učtivost",
+        "Takmičenje i pobeda",
+        "Tišina i tajnovitost"
+      ],
+      "c": 1,
+      "exp": "Rei je i naklon i stav iza njega: pokazivanje poštovanja prema drugima, dojou i sebi."
+    },
+    "en": {
+      "q": "What does 'Rei' stand for beyond the bow?",
+      "opts": [
+        "Strength and speed",
+        "Respect and courtesy",
+        "Competition and winning",
+        "Silence and secrecy"
+      ],
+      "c": 1,
+      "exp": "Rei is both the bow and the attitude behind it: showing respect to others, the dojo and yourself."
+    },
+    "de": {
+      "q": "Wofür steht 'Rei' über die Verbeugung hinaus?",
+      "opts": [
+        "Kraft und Schnelligkeit",
+        "Respekt und Höflichkeit",
+        "Wettkampf und Gewinnen",
+        "Stille und Geheimhaltung"
+      ],
+      "c": 1,
+      "exp": "Rei ist beides, die Verbeugung und die Haltung dahinter: anderen, dem Dojo und dir selbst Respekt zu zeigen."
+    },
+    "fr": {
+      "q": "Que représente 'Rei' au-delà du salut ?",
+      "opts": [
+        "La force et la vitesse",
+        "Le respect et la courtoisie",
+        "La compétition et la victoire",
+        "Le silence et le secret"
+      ],
+      "c": 1,
+      "exp": "Rei, c'est à la fois le salut et l'attitude qui l'accompagne : montrer du respect envers les autres, le dojo et soi-même."
+    },
+    "es": {
+      "q": "¿Qué representa 'Rei' más allá de la reverencia?",
+      "opts": [
+        "Fuerza y velocidad",
+        "Respeto y cortesía",
+        "Competición y victoria",
+        "Silencio y secreto"
+      ],
+      "c": 1,
+      "exp": "Rei es tanto la reverencia como la actitud que hay detrás: mostrar respeto a los demás, al dojo y a uno mismo."
+    },
+    "it": {
+      "q": "Cosa rappresenta 'Rei' oltre all'inchino?",
+      "opts": [
+        "Forza e velocità",
+        "Rispetto e cortesia",
+        "Competizione e vittoria",
+        "Silenzio e segretezza"
+      ],
+      "c": 1,
+      "exp": "Rei è sia l'inchino sia l'atteggiamento che c'è dietro: mostrare rispetto per gli altri, per il dojo e per sé stessi."
+    },
+    "pt": {
+      "q": "O que o 'Rei' representa além da reverência?",
+      "opts": [
+        "Força e velocidade",
+        "Respeito e cortesia",
+        "Competição e vitória",
+        "Silêncio e segredo"
+      ],
+      "c": 1,
+      "exp": "O Rei é ao mesmo tempo a reverência e a atitude por trás dela: mostrar respeito pelos outros, pelo dojo e por você mesmo."
+    },
+    "ru": {
+      "q": "Что означает «Рэй», помимо поклона?",
+      "opts": [
+        "Силу и скорость",
+        "Уважение и вежливость",
+        "Соревнование и победу",
+        "Тишину и секретность"
+      ],
+      "c": 1,
+      "exp": "Рэй – это и сам поклон, и отношение за ним: уважение к другим, к додзё и к самому себе."
+    }
+  },
+  {
+    "level": 3,
+    "levelLabel": "advanced",
+    "type": "filozofija",
+    "videoId": null,
+    "c": 1,
+    "sr": {
+      "q": "Šta je 'Shu-ha-ri'?",
+      "opts": [
+        "Tri vrste bacanja",
+        "Tri faze učenja: slediti, odmaći se, nadići",
+        "Tri vrste zadržavanja",
+        "Tri džudo pojasa"
+      ],
+      "c": 1,
+      "exp": "U Shu tačno slediš učitelja. U Ha počinješ da se odmičeš i eksperimentišeš. U Ri ideš dalje i stvaraš svoj put."
+    },
+    "en": {
+      "q": "What is 'Shu-ha-ri'?",
+      "opts": [
+        "Three kinds of throws",
+        "Three stages of learning: follow, break away, transcend",
+        "Three types of holds",
+        "The three judo belts"
+      ],
+      "c": 1,
+      "exp": "In Shu, you follow the teacher exactly. In Ha, you start to break away and experiment. In Ri, you move beyond and create your own way."
+    },
+    "de": {
+      "q": "Was ist 'Shu-ha-ri'?",
+      "opts": [
+        "Drei Arten von Würfen",
+        "Drei Lernstufen: folgen, sich lösen, übertreffen",
+        "Drei Arten von Haltegriffen",
+        "Die drei Judogürtel"
+      ],
+      "c": 1,
+      "exp": "Bei Shu folgst du dem Lehrer genau. Bei Ha beginnst du, dich zu lösen und auszuprobieren. Bei Ri gehst du darüber hinaus und findest deinen eigenen Weg."
+    },
+    "fr": {
+      "q": "Qu'est-ce que le 'Shu-ha-ri' ?",
+      "opts": [
+        "Trois sortes de projections",
+        "Trois étapes de l'apprentissage : suivre, s'écarter, dépasser",
+        "Trois types d'immobilisations",
+        "Les trois ceintures de judo"
+      ],
+      "c": 1,
+      "exp": "Dans Shu, on suit exactement le professeur. Dans Ha, on commence à s'écarter et à expérimenter. Dans Ri, on va au-delà et on crée sa propre voie."
+    },
+    "es": {
+      "q": "¿Qué es 'Shu-ha-ri'?",
+      "opts": [
+        "Tres tipos de proyecciones",
+        "Tres etapas del aprendizaje: seguir, romper, trascender",
+        "Tres tipos de inmovilizaciones",
+        "Los tres cinturones del judo"
+      ],
+      "c": 1,
+      "exp": "En Shu, sigues exactamente al maestro. En Ha, empiezas a romper moldes y a experimentar. En Ri, vas más allá y creas tu propio camino."
+    },
+    "it": {
+      "q": "Cos'è lo 'Shu-ha-ri'?",
+      "opts": [
+        "Tre tipi di proiezioni",
+        "Tre fasi dell'apprendimento: seguire, staccarsi, superare",
+        "Tre tipi di immobilizzazioni",
+        "Le tre cinture del judo"
+      ],
+      "c": 1,
+      "exp": "Nello Shu si segue esattamente l'insegnante. Nello Ha si comincia a staccarsi e a sperimentare. Nel Ri si va oltre e si crea la propria via."
+    },
+    "pt": {
+      "q": "O que é 'Shu-ha-ri'?",
+      "opts": [
+        "Três tipos de projeções",
+        "Três etapas do aprendizado: seguir, romper, transcender",
+        "Três tipos de imobilizações",
+        "As três faixas do judô"
+      ],
+      "c": 1,
+      "exp": "No Shu, você segue o professor exatamente. No Ha, começa a romper e experimentar. No Ri, vai além e cria o seu próprio caminho."
+    },
+    "ru": {
+      "q": "Что такое «Сю-ха-ри»?",
+      "opts": [
+        "Три вида бросков",
+        "Три этапа обучения: следовать, отходить от образца, выходить за рамки",
+        "Три вида удержаний",
+        "Три пояса дзюдо"
+      ],
+      "c": 1,
+      "exp": "На этапе Сю ты в точности следуешь за учителем. На этапе Ха начинаешь отходить от образца и пробовать своё. На этапе Ри выходишь за рамки и создаёшь свой путь."
+    }
   }
 ]
