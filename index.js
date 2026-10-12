@@ -52,6 +52,16 @@ app.use((req, res, next) => {
   next();
 });
 
+// FIX (12.10.2026, Search Console: "Duplicate, Google chose different canonical than user" za /privacy):
+// express.static (na dnu fajla) servira i /privacy.html, /terms.html i /delete-account.html pored
+// cistih ruta /privacy, /terms, /delete-account - isti sadrzaj na dva URL-a, a canonical tag pokazuje
+// samo na cist URL. 301 sa .html varijante na cist URL ostavlja jedan jedini URL po stranici.
+app.use((req, res, next) => {
+  var m = req.path.match(/^\/(privacy|terms|delete-account)\.html$/);
+  if (m) return res.redirect(301, 'https://www.judoacademy.app/' + m[1]);
+  next();
+});
+
 // CORS headers — MORAJU biti pre ostalih middleware-a
 // FIX (13.09.2026, konsultantski nalaz): Allow-Headers je ranije dozvoljavao SAMO 'Content-Type',
 // a klijent salje i custom 'Authorization' i 'X-Integrity-Token' headere. Za bilo koji NE-native
