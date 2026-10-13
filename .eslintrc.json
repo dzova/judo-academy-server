@@ -1,0 +1,52 @@
+{
+  "root": true,
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "script"
+  },
+  "env": {
+    "node": true,
+    "es2022": true
+  },
+  "globals": {},
+  "rules": {
+    "no-undef": "error",
+    "no-const-assign": "error",
+    "no-dupe-keys": "error",
+    "no-dupe-else-if": "error",
+    "no-duplicate-case": "error",
+    "no-unreachable": "error",
+    "no-self-assign": "error",
+    "no-cond-assign": "error",
+    "no-sparse-arrays": "error",
+    "no-unsafe-negation": "error",
+    "use-isnan": "error",
+    "valid-typeof": "error",
+    "getter-return": "error",
+    "no-unsafe-finally": "error",
+    "no-compare-neg-zero": "error",
+    "no-self-compare": "warn",
+    "no-loss-of-precision": "warn",
+    "no-useless-catch": "warn",
+    "no-fallthrough": "warn",
+    "no-unused-labels": "warn",
+    "no-redeclare": "warn",
+    "no-func-assign": "off",
+    "no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "args": "none",
+        "caughtErrors": "none"
+      }
+    ],
+    "no-constant-condition": [
+      "warn",
+      {
+        "checkLoops": false
+      }
+    ],
+    "no-empty": "off",
+    "no-prototype-builtins": "off"
+  }
+}
