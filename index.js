@@ -1,6 +1,5 @@
 if (process.env.NODE_ENV !== 'production') { require('dotenv').config(); }
 const express = require('express');
-const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -462,7 +461,6 @@ app.get('/api/leaderboard', async (req, res) => {
   // NAPOMENA: 'metric' parametar se PRIMA ali se ne koristi za grananje ispod - vidi FIX
   // (12.09.2026) komentar dole ("XP metrika uklonjena") - ostavljeno ovde radi kompatibilnosti sa
   // klijentom koji ga i dalje salje u query string-u, bez efekta na ponasanje.
-  const metric = req.query.metric === 'quiz' ? 'quiz' : 'xp';
   try {
     const cached = _leaderboardCache[period];
     if (cached.rows && (Date.now() - cached.ts) < LEADERBOARD_CACHE_MS) {
@@ -524,7 +522,6 @@ app.get('/api/leaderboard', async (req, res) => {
 // trazimo - nema smisla bez ulogovanog korisnika.
 app.get('/api/leaderboard/me', _requireAuth, async (req, res) => {
   const period = req.query.period === 'month' ? 'month' : 'all';
-  const metric = req.query.metric === 'quiz' ? 'quiz' : 'xp';
   const userId = req.userId;
   try {
     if (period === 'all') {
@@ -834,7 +831,10 @@ async function _verifyAndApplySubscription(userId, purchaseToken, productId) {
 
   const subscription = result.data;
   const state = subscription.subscriptionState;
-  const isActive = state === 'SUBSCRIPTION_STATE_ACTIVE' || state === 'SUBSCRIPTION_STATE_IN_GRACE_PERIOD';
+  // SUBSCRIPTION_STATE_CANCELED = auto-renew iskljucen, ali korisnik JOS IMA placen pristup do expiryTime
+  const _canceledStillPaid = state === 'SUBSCRIPTION_STATE_CANCELED' &&
+    Date.parse(((subscription.lineItems || [])[0] || {}).expiryTime) > Date.now();
+  const isActive = state === 'SUBSCRIPTION_STATE_ACTIVE' || state === 'SUBSCRIPTION_STATE_IN_GRACE_PERIOD' || _canceledStillPaid;
 
   if (!isActive) {
     return { ok: false, status: 400, error: 'Pretplata nije aktivna', state };
@@ -1743,7 +1743,7 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
   if (!isSenseiPrompt) {
     return res.status(400).json({ error: 'Nevalidan system prompt' });
   }
-  if (!Array.isArray(messages) || messages.length === 0) {
+  if (!Array.isArray(messages) || messages.length === 0 || messages.some(m => !m || typeof m !== 'object')) {
     return res.status(400).json({ error: 'Nedostaju messages' });
   }
   const totalChars = staticPart.length + dynamicPart.length + messages.reduce((sum, m) => sum + (typeof m.content === 'string' ? m.content.length : JSON.stringify(m.content || '').length), 0);
@@ -1806,7 +1806,6 @@ app.post('/api/sensei/ask', aiLimiter, _requireAuth, _requireIntegrity, async (r
     reserved = true;
   } catch (err) {
     await client.query('ROLLBACK').catch(() => {});
-    client.release();
     return _sendServerError(res, err);
   } finally {
     client.release();
