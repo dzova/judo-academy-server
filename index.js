@@ -395,10 +395,10 @@ app.post('/api/user/update', _requireAuth, async (req, res) => {
   if (belt !== undefined && belt !== null && !VALID_BELTS.includes(belt)) {
     return res.status(400).json({ error: 'Nevalidna belt vrednost' });
   }
-  if (dominantSide !== undefined && dominantSide !== null && !VALID_DOMINANT_SIDES.includes(dominantSide)) {
+  if (dominantSide !== undefined && dominantSide !== null && dominantSide !== '' && !VALID_DOMINANT_SIDES.includes(dominantSide)) {
     return res.status(400).json({ error: 'Nevalidna vrednost za dominantnu stranu' });
   }
-  if (gender !== undefined && gender !== null && !VALID_GENDERS.includes(gender)) {
+  if (gender !== undefined && gender !== null && gender !== '' && !VALID_GENDERS.includes(gender)) {
     return res.status(400).json({ error: 'Nevalidna vrednost za pol' });
   }
   // Osnovna duzinska ogranicenja - ova polja se prikazuju na javnom /api/leaderboard bez
@@ -427,16 +427,19 @@ app.post('/api/user/update', _requireAuth, async (req, res) => {
   try {
     await db.query(
       `UPDATE users SET
-        club = COALESCE($1, club),
-        country = COALESCE($2, country),
+        club = CASE WHEN $1::text = '' THEN NULL ELSE COALESCE($1, club) END,
+        country = CASE WHEN $2::text = '' THEN NULL ELSE COALESCE($2, country) END,
         username = COALESCE($3, username),
         belt = COALESCE($4, belt),
         exam_date = COALESCE($5, exam_date),
         birth_year = COALESCE($6, birth_year),
-        dominant_side = COALESCE($7, dominant_side),
-        gender = COALESCE($8, gender)
+        dominant_side = CASE WHEN $7::text = '' THEN NULL ELSE COALESCE($7, dominant_side) END,
+        gender = CASE WHEN $8::text = '' THEN NULL ELSE COALESCE($8, gender) END
        WHERE id = $9`,
-      [club || null, country || null, username || null, belt || null, examDate || null, birthYear || null, dominantSide || null, gender || null, userId]
+      // FIX (13.10.2026): prazan string ('') za club/country/dominantSide/gender = eksplicitno BRISANJE polja
+      // (ranije se '' pretvarao u null pa se stara vrednost nikad nije mogla obrisati, a klijent bi je
+      // vratio pri sledecem pull-u). null/izostanak i dalje znaci "ne diraj".
+      [club === undefined ? null : club, country === undefined ? null : country, username || null, belt || null, examDate || null, birthYear || null, dominantSide === undefined ? null : dominantSide, gender === undefined ? null : gender, userId]
     );
     res.json({ success: true });
   } catch (err) { _sendServerError(res, err); }
@@ -2579,7 +2582,7 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
           AND created_at > now() - interval '14 days'
         GROUP BY user_id
         HAVING COUNT(*) >= 3
-          AND user_id NOT IN (SELECT user_id FROM analytics_events WHERE event_name = 'premium_checkout_confirmed')
+          AND user_id NOT IN (SELECT user_id FROM analytics_events WHERE event_name = 'premium_checkout_confirmed' AND user_id IS NOT NULL)
         ORDER BY paywall_hits DESC
       `),
       // IZMENJENO (22.09.2026, korisnikov zahtev): koristi qRange() umesto q() - postuje ?from/?to
