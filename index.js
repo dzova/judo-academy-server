@@ -1635,6 +1635,8 @@ function _loadStaticJsonCache(fileName, label) {
 }
 const _quizDataCache = _loadStaticJsonCache('all_questions_v2.json', 'quiz pitanja');
 const _randoriDataCache = _loadStaticJsonCache('randori_db_v2.json', 'randori baza');
+const _recnikDataCache = _loadStaticJsonCache('recnik_v1.json', 'recnik (glosar)');
+const _tehnikaDataCache = _loadStaticJsonCache('tehnika_db_v2.json', 'tehnika baza');
 
 app.get('/api/quiz', (req, res) => {
   res.setHeader('Cache-Control', 'public, max-age=86400');
@@ -1659,6 +1661,36 @@ app.get('/api/randori', (req, res) => {
     res.json(JSON.parse(data));
   } catch (err) {
     _sendServerError(res, err, 'randori][fajl');
+  }
+});
+
+// Recnik (glosar) - isti obrazac kao /api/randori: klijent ga povlaci sa servera i kesira lokalno
+// (JAStorage 'cached_recnik'), a u APK-u ostaje zapakovana pocetna kopija kao poslednji fallback.
+// Kraci max-age (1h) nego za kviz/randori da ispravke terminologije stignu brze.
+app.get('/api/recnik', (req, res) => {
+  res.setHeader('Cache-Control', 'public, max-age=3600');
+  if (_recnikDataCache) return res.json(_recnikDataCache);
+  try {
+    const filePath = path.join(__dirname, 'public', 'data', 'recnik_v1.json');
+    const data = fs.readFileSync(filePath, 'utf-8');
+    res.json(JSON.parse(data));
+  } catch (err) {
+    _sendServerError(res, err, 'recnik][fajl');
+  }
+});
+
+// Tehnika baza (~1.2MB) - isti obrazac kao /api/recnik. Klijent je kesira u IndexedDB (NE u
+// localStorage - vec drzi kviz+randori kes pa bi se priblizio limitu od ~5M karaktera), a u APK-u
+// ostaje zapakovana pocetna kopija kao poslednji fallback.
+app.get('/api/tehnika', (req, res) => {
+  res.setHeader('Cache-Control', 'public, max-age=3600');
+  if (_tehnikaDataCache) return res.json(_tehnikaDataCache);
+  try {
+    const filePath = path.join(__dirname, 'public', 'data', 'tehnika_db_v2.json');
+    const data = fs.readFileSync(filePath, 'utf-8');
+    res.json(JSON.parse(data));
+  } catch (err) {
+    _sendServerError(res, err, 'tehnika][fajl');
   }
 });
 

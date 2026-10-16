@@ -846,7 +846,7 @@
       "opts": [
         "Продолжать и стараться изо всех сил",
         "Снизить интенсивность",
-        "Попросить Сенсэя о перерыве",
+        "Попросить Сэнсэя о перерыве",
         "Немедленно остановиться"
       ],
       "c": 0,
@@ -1040,7 +1040,7 @@
         "Пауза!"
       ],
       "c": 0,
-      "exp": "Хадзимэ означает «Начинай!» – судья использует эту команду, чтобы начать схватку или тренировочный Рандори."
+      "exp": "Хадзимэ означает «Начинай!» – судья использует эту команду, чтобы начать схватку или тренировочное Рандори."
     },
     "c": 0
   },
@@ -3779,7 +3779,7 @@
       "q": "O que é o Renzoku-waza?",
       "opts": [
         "Uma série de técnicas sucessivas combinadas realizadas sem parar",
-        "Um ataque isolado sem combinação planeada nem continuação",
+        "Um ataque isolado sem combinação planejada nem continuação",
         "Uma técnica puramente defensiva para bloquear ataques do adversário",
         "Uma técnica de queda para pousar com segurança após uma projeção"
       ],
@@ -4161,7 +4161,7 @@
         "Formas pré-definidas que consistem em uma sequência precisa e prescrita de técnicas",
         "Combate livre entre dois parceiros sem sequência fixa",
         "Um tipo formal de competição com juízes e critérios de pontuação",
-        "Uma cerimônia formal para a apresentação e a atadura de uma nova faixa"
+        "Uma cerimônia formal para a apresentação e a entrega de uma nova faixa"
       ],
       "c": 0,
       "exp": "Os Kata são sequências pré-definidas de técnicas – os parceiros as praticam sem resistência, aperfeiçoando a forma, o equilíbrio e a compreensão dos princípios."
@@ -4693,7 +4693,7 @@
       "exp": "Mitsuyo Maeda, Kanos Eliteschüler, wanderte nach Brasilien aus und lehrte Carlos Gracie Judo und Jujutsu – und daraus entstand BJJ!"
     },
     "fr": {
-      "q": "Quel judoka a eu la plus grande influence sur le développement du Brazilian Jiu-Jitsu (BJJ) ?",
+      "q": "Quel judoka a eu la plus grande influence sur le développement du jiu-jitsu brésilien (JJB) ?",
       "opts": [
         "Mitsuyo Maeda (élève de Kano)",
         "Jigoro Kano lui-même",
@@ -4701,10 +4701,10 @@
         "Helio Gracie en partant de zéro"
       ],
       "c": 0,
-      "exp": "Mitsuyo Maeda, élève d'élite de Kano, a émigré au Brésil et a enseigné le judo et le jujutsu à Carlos Gracie – et c'est de là qu'est né le BJJ !"
+      "exp": "Mitsuyo Maeda, élève d'élite de Kano, a émigré au Brésil et a enseigné le judo et le jujutsu à Carlos Gracie – et c'est de là qu'est né le jiu-jitsu brésilien !"
     },
     "es": {
-      "q": "¿Qué judoka tuvo mayor influencia en el desarrollo del Brazilian Jiu-Jitsu (BJJ)?",
+      "q": "¿Qué judoka tuvo mayor influencia en el desarrollo del jiu-jitsu brasileño (BJJ)?",
       "opts": [
         "Mitsuyo Maeda (alumno de Kano)",
         "El propio Jigoro Kano",
@@ -4715,7 +4715,7 @@
       "exp": "Mitsuyo Maeda, alumno de élite de Kano, emigró a Brasil y enseñó judo y jujutsu a Carlos Gracie, ¡y de ahí nació el BJJ!"
     },
     "it": {
-      "q": "Quale judoka ha avuto la maggiore influenza sullo sviluppo del Brazilian Jiu-Jitsu (BJJ)?",
+      "q": "Quale judoka ha avuto la maggiore influenza sullo sviluppo del Jiu-Jitsu Brasiliano (BJJ)?",
       "opts": [
         "Mitsuyo Maeda (allievo di Kano)",
         "Jigoro Kano stesso",
@@ -5402,7 +5402,7 @@
       "exp": "Tsuri-komi-goshi – uma projeção de quadril com elevação ativa (tsuri) e puxada (komi). Exige uma coordenação perfeita!"
     },
     "ru": {
-      "q": "Что такое «Цури-коми-госи»?",
+      "q": "Что такое «Цурикоми-госи»?",
       "opts": [
         "Бросок через бедро, сочетающий движение вверх с тягой внутрь",
         "Чистый бросок через бедро с использованием только бедра без дополнительной тяги",
@@ -5410,7 +5410,7 @@
         "Бросок, выполняемый из низкой позиции на колене"
       ],
       "c": 0,
-      "exp": "Цури-коми-госи – бросок через бедро с активным подъёмом (цури) и тягой (коми). Этот приём требует идеальной координации!"
+      "exp": "Цурикоми-госи – бросок через бедро с активным подъёмом (цури) и тягой (коми). Этот приём требует идеальной координации!"
     },
     "c": 0
   },
@@ -5594,13 +5594,13 @@
     "ru": {
       "q": "Соперник крепко держит тебя и вообще не даёт двигаться. Что ты пробуешь в первую очередь?",
       "opts": [
-        "Сменить захват (кумиката), чтобы занять лучшую позицию",
+        "Сменить захват (куми-ката), чтобы занять лучшую позицию",
         "Отпустить захват и попросить перерыв",
         "Толкать изо всех сил прямо назад",
         "Ждать, пока судья остановит схватку"
       ],
       "c": 0,
-      "exp": "Кумиката (борьба за захват) — основа дзюдо: без хорошего захвата нет эффективного броска. Смена захвата — первое и самое важное действие против соперника, который тебя «зажал»."
+      "exp": "Куми-ката (борьба за захват) — основа дзюдо: без хорошего захвата нет эффективного броска. Смена захвата — первое и самое важное действие против соперника, который тебя «зажал»."
     },
     "c": 0
   },
@@ -5615,7 +5615,7 @@
         "Ostani aktivan i napadaj promišljeno da ne dobiješ Shido",
         "Idi u potpuno pasivnu odbranu i čekaj kraj vremena",
         "Odmah svim snagama napadaj bez taktičke procene",
-        "Tražiš pauzu od sudije da odmoriš između napada"
+        "Traži pauzu od sudije da odmoriš između napada"
       ],
       "c": 0,
       "exp": "Shido ne donosi prednost: ako je rezultat izjednačen na kraju vremena, borba ide u Golden Score. Ipak, protivnik je bliži trećem Shidu (Hansoku-make), pa ostani aktivan, napadaj promišljeno i ne daj sudiji razlog da i tebi dosudi Shido. Džudo IQ!"
@@ -5965,7 +5965,7 @@
       "opts": [
         "Para praticar Taisabaki e se soltar das pegadas",
         "Não lhe é útil",
-        "Para te poder projetar mais facilmente",
+        "Para poder projetar você mais facilmente",
         "Porque a lapela dele está fraca"
       ],
       "c": 0,
@@ -6626,15 +6626,15 @@
       "exp": "Grip = il modo in cui teniamo il kimono di Uke. Presa standard: una mano sulla manica, l'altra sul bavero. Senza una buona presa non c'è una buona proiezione!"
     },
     "pt": {
-      "q": "O que é o 'Grip' no judô?",
+      "q": "O que é a 'pegada' (Kumi-kata) no judô?",
       "opts": [
         "A pegada estabelecida no kimono do adversário",
         "Uma categoria específica de técnica de projeção usada em competição",
         "Uma postura adotada para assinalar ou celebrar a vitória após um combate",
-        "Uma técnica de queda para aterrar em segurança depois de ser projetado"
+        "Uma técnica de queda para aterrissar em segurança depois de ser projetado"
       ],
       "c": 0,
-      "exp": "Grip = a forma como seguramos o kimono do Uke. Pegada padrão: uma mão na manga, a outra na lapela. Sem uma boa pegada não há boa projeção!"
+      "exp": "Pegada (Kumi-kata) = a forma como seguramos o kimono do Uke. Pegada padrão: uma mão na manga, a outra na lapela. Sem uma boa pegada não há boa projeção!"
     },
     "ru": {
       "q": "Что такое захват в дзюдо?",
@@ -7017,7 +7017,7 @@
       "exp": "Nage-komi = projeções completas repetidas com execução total. O Uke tem de estar pronto para o Ukemi! É mais exigente do que o Uchi-komi, mas mais completo."
     },
     "ru": {
-      "q": "Что такое «Нагэкоми»?",
+      "q": "Что такое «Нагэ-коми»?",
       "opts": [
         "Многократные полноценные броски с полным выполнением и правильным падением каждый раз",
         "Мягкий бросок, который отрабатывается без полного падения партнёра",
@@ -7025,7 +7025,7 @@
         "Установленная форма Ката с фиксированной последовательностью приёмов дзюдо"
       ],
       "c": 0,
-      "exp": "Нагэкоми = многократные полноценные броски с полным выполнением. Укэ должен быть готов к Укэми! Сложнее, чем Ути-коми, но более полное упражнение."
+      "exp": "Нагэ-коми = многократные полноценные броски с полным выполнением. Укэ должен быть готов к Укэми! Сложнее, чем Ути-коми, но более полное упражнение."
     },
     "c": 0
   },
@@ -8260,7 +8260,7 @@
         "Нога и рука"
       ],
       "c": 0,
-      "exp": "Моротэ означает «обе руки». Мороти-сэои-нагэ = бросок через спину двумя руками. Даёт более надёжный захват, чем вариант с одной рукой."
+      "exp": "Моротэ означает «обе руки». Моротэ-сэои-нагэ = бросок через плечо двумя руками. Даёт более надёжный захват, чем вариант с одной рукой."
     },
     "c": 0
   },
@@ -8629,7 +8629,7 @@
         "Gake é reservado a judocas avançados, enquanto Gari é para principiantes"
       ],
       "c": 0,
-      "exp": "Gari = ceifar / varrer (a perna passa por baixo). Gake = enganchar (a perna fica enganchada). Uma distinção subtil mas importante!"
+      "exp": "Gari = ceifar / varrer (a perna passa por baixo). Gake = enganchar (a perna fica enganchada). Uma distinção sutil mas importante!"
     },
     "ru": {
       "q": "Чем Ко-сото-гакэ отличается от Ко-сото-гари?",
@@ -8658,7 +8658,7 @@
         "Pokos Ukeove noge oslonca sa strane, bez ikakvog blokiranja"
       ],
       "c": 0,
-      "exp": "Sasae-tsurikomi-ashi – 'podupirujuće podižuće-povlačno bacanje stopalom'. Tori postavlja stopalo kao prepreku i podiže Ukea dok ga vuče napred. Tehnika koja zahteva fin tajming."
+      "exp": "Sasae-tsurikomi-ashi – 'potporno podižuće-povlačeće bacanje stopalom'. Tori postavlja stopalo kao prepreku i podiže Ukea dok ga vuče napred. Tehnika koja zahteva fin tajming."
     },
     "en": {
       "q": "What is 'Sasae-tsurikomi-ashi'?",
@@ -8702,7 +8702,7 @@
         "Un barrido de la pierna de apoyo de Uke desde el lado, sin ningún bloqueo"
       ],
       "c": 0,
-      "exp": "Sasae-tsurikomi-ashi – proyección de tobillo con apoyo y tracción. Tori coloca el pie como bloque y eleva a Uke mientras lo arrastra hacia delante. Es una técnica de timing muy delicado."
+      "exp": "Sasae-tsurikomi-ashi – proyección de tobillo con apoyo y tracción. Tori coloca el pie como bloqueo y eleva a Uke mientras lo arrastra hacia delante. Es una técnica de timing muy delicado."
     },
     "it": {
       "q": "Cos'è Sasae-tsurikomi-ashi?",
@@ -8853,7 +8853,7 @@
     "en": {
       "q": "What does 'Osaekomi-waza' mean as a category?",
       "opts": [
-        "Ground holding and holding techniques used to immobilise the opponent",
+        "Ground holding and pinning techniques used to immobilise the opponent",
         "Standing throwing techniques that project the opponent to the mat",
         "Neck-pressure choking techniques that force submission on the ground",
         "All types of techniques performed while both judoka are on the ground"
@@ -9096,7 +9096,7 @@
       "exp": "Afferrare direttamente le gambe con le mani (senza aver prima stabilito una presa sulla parte superiore del corpo) è vietato dalle regole IJF. La penalità è Shido."
     },
     "pt": {
-      "q": "Qual pegada ou agarre é proibido no judô moderno da IJF?",
+      "q": "Qual pegada é proibida no judô moderno da IJF?",
       "opts": [
         "Agarrar diretamente as duas pernas sem primeiro estabelecer uma pegada no tronco",
         "Agarrar a gola do adversário como primeiro contato no combate",
@@ -10239,7 +10239,7 @@
       "q": "De que tradição desenvolveu Kano o judô?",
       "opts": [
         "Das antigas escolas japonesas de jujutsu Tenjin Shinyo e Kito-ryu",
-        "Da tradição do karatê de golpes, bloqueios e pontapés",
+        "Da tradição do karatê de golpes, bloqueios e chutes",
         "Da tradição do sumô de empurrar e lutar dentro de um círculo",
         "Da tradição do kendô de combate com armas de bambu"
       ],
@@ -10276,7 +10276,7 @@
       "exp": "Prvo Svetsko prvenstvo u džudou održano je 1956. u Tokiju, u apsolutnoj (open) kategoriji, bez podele na težinske klase."
     },
     "en": {
-      "q": "Where was the first Judo World Championships held, in 1956?",
+      "q": "Where were the first Judo World Championships held, in 1956?",
       "opts": [
         "Tokyo, Japan",
         "Paris, France",
@@ -10553,7 +10553,7 @@
       "q": "Zašto se u džudou uvek klanjamo protivniku POSLE borbe?",
       "opts": [
         "Zahvalnost, jer nam je protivnik bio učitelj",
-        "Jer je naklanjanje strogo propisano pravilima takmičenja",
+        "Jer je klanjanje strogo propisano pravilima takmičenja",
         "Jer smo izgubili borbu i dužni smo poštovanje",
         "Da publici i sudijama pokažemo da smo iscrpljeni"
       ],
@@ -10577,7 +10577,7 @@
         "Dankbarkeit – der Gegner war unser Lehrer und wir ehren ihn dafür",
         "Weil die Verbeugung nach dem Kampf eine streng vorgeschriebene Wettkampfregel ist",
         "Weil die Verbeugung die anerkannte Geste ist, wenn man verloren hat",
-        "Um Kampfrichtern und Zuschauern zu zeigen, dass wir erschöpfter sind"
+        "Um Kampfrichtern und Zuschauern zu zeigen, dass wir erschöpft sind"
       ],
       "c": 0,
       "exp": "Die Verbeugung nach dem Kampf ist echte Dankbarkeit. Unser Gegner hat seine Energie und sein Wissen eingesetzt, indem er gegen uns gekämpft hat. Das verdient tiefen Respekt."
@@ -11205,7 +11205,7 @@
         "Падать"
       ],
       "c": 0,
-      "exp": "Нагэ = бросать. Нагэ-вадза = техники бросков. Нагэкоми = многократное выполнение бросков. Тати-вадза = техники в стойке."
+      "exp": "Нагэ = бросать. Нагэ-вадза = техники бросков. Нагэ-коми = многократное выполнение бросков. Тати-вадза = техники в стойке."
     },
     "c": 0
   },
@@ -11647,7 +11647,7 @@
         "Agarrar directamente la garganta del adversario con ambas manos"
       ],
       "c": 0,
-      "exp": "Shime = constreñir, estrangular. Shime-waza son técnicas que comprimen las arterias carótidas o las vías respiratorias. ¡Uke debe rendirse golpeando (tap)!"
+      "exp": "Shime = constreñir, estrangular. Shime-waza son técnicas que comprimen las arterias carótidas o las vías respiratorias. ¡Uke debe rendirse golpeando dos veces!"
     },
     "it": {
       "q": "Cosa significa 'Shime' in Shime-waza?",
@@ -11854,7 +11854,7 @@
       "q": "Você recebe um Shido por passividade. O que você faz imediatamente?",
       "opts": [
         "Atacar com agressividade para mostrar atividade",
-        "Ficar passivo porque estou com medo de perder",
+        "Ficar passivo porque você está com medo de perder",
         "Sair do Tatame",
         "Pedir tempo"
       ],
@@ -12165,7 +12165,7 @@
     "type": "pravila",
     "videoId": null,
     "sr": {
-      "q": "Šta je 'Koka' u starim IJF pravilima i zašto je ukinuto?",
+      "q": "Šta je 'Koka' u starim IJF pravilima i zašto je ukinuta?",
       "opts": [
         "Najniži nivo bodovanja, ispod Yuko – ukinut jer je komplikovao suđenje",
         "Kazna za pasivnu igru i negativno ponašanje na tatamiju",
@@ -12907,7 +12907,7 @@
       "exp": "Com um Shido a menos, você está em melhor posição. Mantenha-se ativo para não receber outro, mas não precisa arriscar demais: um terceiro Shido para o seu adversário significa a sua vitória."
     },
     "ru": {
-      "q": "У соперника два Шидо, у тебя одно. Осталось 60 секунд. Что делаешь?",
+      "q": "У соперника два Шидо, у тебя одно. Осталось 60 секунд. Что делать?",
       "opts": [
         "Атаковать изо всех сил ради Вадза-ари или Иппона",
         "Оставаться активным и держать темп схватки, не идя на лишний риск",
@@ -13466,7 +13466,7 @@
       "exp": "La guardia dà controllo ma non dà punti. La priorità è tenere Uke vicino con le gambe, controllare le sue braccia e cercare un'apertura per una leva o uno strangolamento."
     },
     "pt": {
-      "q": "No Ne-waza, você está em posição de guarda (de costas no tatami, com o Uke entre as suas pernas). Qual é a sua prioridade?",
+      "q": "No Ne-waza, você está em posição de guarda (de costas no tatame, com o Uke entre as suas pernas). Qual é a sua prioridade?",
       "opts": [
         "Tentar imediatamente um estrangulamento",
         "Controlar a distância com as pernas e procurar um braço para Juji-gatame",
@@ -13603,7 +13603,7 @@
     "en": {
       "q": "Your partner says you should have thrown them but you did not feel the right position. Who is right?",
       "opts": [
-        "The partner, because they know it from his angle",
+        "The partner, because they know it from their angle",
         "You, because the sense of entry comes only from the thrower",
         "Both are right because you each have half the information",
         "Neither, the referee would decide"
@@ -13762,7 +13762,7 @@
       "exp": "Aumentar a força de repente pode lesionar os dois parceiros. Seguir a rotação do Uke, ajustando o ângulo, mantém o controle e aumenta a pressão no vetor correto — isso é técnica, não força."
     },
     "ru": {
-      "q": "Ты зафиксировал Дзюдзи-гатамэ, но Укэ не сдаётся и вращается, пытаясь уйти. Что делаешь?",
+      "q": "Ты зафиксировал Дзюдзи-гатамэ, но Укэ не сдаётся и вращается, пытаясь уйти. Что делать?",
       "opts": [
         "Резко усилить давление, чтобы вынудить сдаться",
         "Следовать за вращением и регулировать угол, не теряя контроля",
@@ -13949,10 +13949,10 @@
         "Você deve sempre escolher parceiros mais pesados para um treino mais útil"
       ],
       "c": 1,
-      "exp": "Um Uke mais leve permite trabalhar a entrada e a técnica de forma mais rápida e limpa. Mas não dá a verdadeira sensação de massa e resistência que um parceiro igual ou mais pesado oferece. Ambos são úteis para aspetos diferentes."
+      "exp": "Um Uke mais leve permite trabalhar a entrada e a técnica de forma mais rápida e limpa. Mas não dá a verdadeira sensação de massa e resistência que um parceiro igual ou mais pesado oferece. Ambos são úteis para aspectos diferentes."
     },
     "ru": {
-      "q": "Твой Укэ на Нагэкоми значительно легче тебя. Как это влияет на тренировку?",
+      "q": "Твой Укэ на Нагэ-коми значительно легче тебя. Как это влияет на тренировку?",
       "opts": [
         "Лёгкий Укэ — всегда плохая практика, так как он не даёт реального сопротивления",
         "Лёгкий Укэ отлично подходит для отработки входа и скорости, но плохо подходит для тренировки мощи броска",
@@ -14039,7 +14039,7 @@
       "q": "O árbitro dá um Shido a você, mas você não sabe por quê. O que você faz?",
       "opts": [
         "Protestar em voz alta com o árbitro",
-        "Perguntar imediatamente ao treinador, à beira do tatami, qual foi o motivo",
+        "Perguntar imediatamente ao treinador, à beira do tatame, qual foi o motivo",
         "Ignorar e continuar o combate",
         "Exigir uma explicação do árbitro durante o combate"
       ],
@@ -14047,7 +14047,7 @@
       "exp": "Durante o combate, os competidores não podem se comunicar diretamente com os árbitros. O treinador está ali justamente para isso — acompanha a situação e pode explicar durante uma pausa (Matte) ou no final do combate."
     },
     "ru": {
-      "q": "Судья назначает тебе Шидо, но ты не понимаешь за что. Что делаешь?",
+      "q": "Судья назначает тебе Шидо, но ты не понимаешь за что. Что делать?",
       "opts": [
         "Громко высказать протест судье",
         "Сразу спросить тренера на краю татами о причине",
@@ -14234,7 +14234,7 @@
         "Esperar o Uke se levantar e atacar novamente"
       ],
       "c": 1,
-      "exp": "A transição de Tachi-waza para Ne-waza é automática no treino. Na competição, a inércia e a velocidade de transição são decisivas — a indecisão faz perder a janela de tempo que só existe enquanto o Uke ainda está no tatami."
+      "exp": "A transição de Tachi-waza para Ne-waza é automática no treino. Na competição, a inércia e a velocidade de transição são decisivas — a indecisão faz perder a janela de tempo que só existe enquanto o Uke ainda está no tatame."
     },
     "ru": {
       "q": "После броска соперника на соревновании у тебя есть лишь короткий момент для перехода в партер (Нэ-вадза). Что самое важное?",
@@ -14409,8 +14409,8 @@
       "opts": [
         "Non appena lo vedi iniziare l'attacco",
         "Quando la sua gamba è in aria e il corpo è completamente ruotato",
-        "Dopo che completa la proiezione e fallisce",
-        "Qualsiasi momento va bene se sei abbastanza veloce"
+        "Dopo che ha completato la proiezione e questa è fallita",
+        "In qualsiasi momento va bene se sei abbastanza veloce"
       ],
       "c": 1,
       "exp": "Un contro all'Uchi-mata (Uchi-mata-gaeshi) funziona solo nel momento di massimo impegno — quando la gamba è in alto e il corpo è ruotato. Se reagisci troppo presto, Uke può correggersi. Se reagisci troppo tardi, è inutile."
@@ -15324,7 +15324,7 @@
     "de": {
       "q": "Was passiert, wenn beide Kämpfer am Ende der regulären Kampfzeit je ein Waza-ari haben?",
       "opts": [
-        "Der Kampf geht in die Golden Score Verlängerung",
+        "Der Kampf geht in die Golden-Score-Verlängerung",
         "Der Kämpfer, der zuerst gepunktet hat, gewinnt",
         "Die Kampfrichter stimmen über den Sieger ab",
         "Der Kampf endet unentschieden und wird ausgelost"
@@ -15463,7 +15463,7 @@
     "pt": {
       "q": "Por quais motivos o árbitro atribui um Shido?",
       "opts": [
-        "Apenas por sair do tatami",
+        "Apenas por sair do tatame",
         "Por passividade, pegada negativa, falso ataque e por sair da área",
         "Apenas por técnicas ilegais",
         "Por cada erro técnico na execução"
@@ -15746,7 +15746,7 @@
       "exp": "Uscire deliberatamente dall'area di gara per evitare una tecnica è un'infrazione punita con Shido. Gli arbitri distinguono un'uscita volontaria dall'essere spinti fuori dall'area dall'avversario."
     },
     "pt": {
-      "q": "Um competidor sai deliberadamente do tatami para evitar ser projetado. O que recebe?",
+      "q": "Um competidor sai deliberadamente do tatame para evitar ser projetado. O que recebe?",
       "opts": [
         "Um aviso sem penalização na primeira vez",
         "Shido por sair da área de combate",
@@ -15941,7 +15941,7 @@
         "Sim, o Shido se acumula em todos os combates",
         "Não, o Shido reinicia no início de cada combate",
         "Depende do organizador da competição",
-        "Sim, mas apenas se o Shido tiver sido por sair do tatami"
+        "Sim, mas apenas se o Shido tiver sido por sair do tatame"
       ],
       "c": 1,
       "exp": "As penalizações de Shido aplicam-se apenas dentro de um combate. No início de cada novo combate, todos os competidores começam com zero Shidos, independentemente dos combates anteriores."
@@ -16405,7 +16405,7 @@
         "Presidente dell'IJF che introdusse il moderno sistema di punteggio",
         "Leggendario maestro di 10° Dan della tecnica, conosciuto come il 'Dio del judo'",
         "Olimpionico giapponese che vinse le prime tre medaglie d'oro nel judo",
-        "Fondatore del Brazilian jiu-jitsu, allievo dell'allievo di Kano"
+        "Fondatore del jiu-jitsu brasiliano, allievo dell'allievo di Kano"
       ],
       "c": 1,
       "exp": "Kyuzo Mifune (1883-1965) raggiunse il 10° Dan ed era conosciuto come il 'Dio del judo' (Kami-waza) per la sua tecnica impeccabile nonostante la piccola statura. Il suo libro 'The Canon of Judo' rimane un'opera di riferimento."
@@ -16481,7 +16481,7 @@
         "1996"
       ],
       "c": 2,
-      "exp": "Le judo féminin a fait son entrée aux Jeux olympiques en 1992 à Barcelone. L'athlète japonaise Ryoko Tamura (plus tard Tani) est devenue l'une des judokates les plus remarquables de tous les temps, remportant cinq médailles olympiques."
+      "exp": "Le judo féminin a fait son entrée aux Jeux olympiques en 1992 à Barcelone. L'athlète japonaise Ryoko Tamura (plus tard Tani) est devenue l'une des judokas les plus remarquables de tous les temps, remportant cinq médailles olympiques."
     },
     "es": {
       "q": "¿En qué año compitieron las mujeres por primera vez en judo en los Juegos Olímpicos?",
@@ -16704,7 +16704,7 @@
         "Butokukai"
       ],
       "c": 0,
-      "exp": "O Kodokan (que significa 'lugar para estudar o Caminho') foi fundado em 1882 no templo Eishoji, em Tóquio. Começou com apenas 12 tatamis e cresceu até se tornar o centro mundial do judô."
+      "exp": "O Kodokan (que significa 'lugar para estudar o Caminho') foi fundado em 1882 no templo Eishoji, em Tóquio. Começou com apenas 12 tatames e cresceu até se tornar o centro mundial do judô."
     },
     "ru": {
       "q": "Как называлось первое додзё Дзигоро Кано?",
@@ -16727,8 +16727,8 @@
     "sr": {
       "q": "Kada i gde je osnovan IJF (International Judo Federation)?",
       "opts": [
-        "Tokyo, 1948",
-        "Paris, 1951",
+        "Tokio, 1948",
+        "Pariz, 1951",
         "London, 1951",
         "Amsterdam, 1948"
       ],
@@ -17361,7 +17361,7 @@
       "exp": "Zanshin significa 'consapevolezza che rimane': uno stato di attenzione focalizzata che non scompare nemmeno dopo che la tecnica è stata eseguita. Sul Tatami: il judoka non abbassa la guardia mentale nemmeno dopo una proiezione o al termine dell'incontro."
     },
     "pt": {
-      "q": "O que é 'Zanshin' e como se manifesta no Tatami?",
+      "q": "O que é 'Zanshin' e como se manifesta no Tatame?",
       "opts": [
         "Uma técnica de respiração após um Randori intenso",
         "Um estado de atenção alerta que permanece mesmo depois que a técnica termina",
@@ -17369,7 +17369,7 @@
         "Um sistema de pontuação para avaliação de Kata"
       ],
       "c": 1,
-      "exp": "Zanshin significa 'atenção persistente' — um estado de atenção focada que não desaparece mesmo depois que a técnica foi executada. No Tatami: o judoca não relaxa a vigilância mental mesmo depois de uma projeção ou após o fim do combate."
+      "exp": "Zanshin significa 'atenção persistente' — um estado de atenção focada que não desaparece mesmo depois que a técnica foi executada. No Tatame: o judoca não relaxa a vigilância mental mesmo depois de uma projeção ou após o fim do combate."
     },
     "ru": {
       "q": "Что такое «Дзансин» и как он проявляется на татами?",
@@ -17699,7 +17699,7 @@
     "de": {
       "q": "Was bedeutet 'Nage-waza'?",
       "opts": [
-        "Gewichthebtechniken",
+        "Gewichtheber-Techniken",
         "Wurftechniken",
         "Bodenkampftechniken",
         "Atemtechniken"
@@ -18124,12 +18124,12 @@
       "q": "O que significa 'Sutemi-waza'?",
       "opts": [
         "Técnica de agarrar as pernas",
-        "Projeção de sacrifício em que o Tori cai no Tatami",
+        "Projeção de sacrifício em que o Tori cai no Tatame",
         "Todas as técnicas a partir de uma posição baixa",
         "Técnicas de contra-ataque"
       ],
       "c": 1,
-      "exp": "Sutemi-waza (捨身技) são projeções de sacrifício em que o Tori cai deliberadamente no Tatami para projetar o Uke. Dividem-se em ma-sutemi-waza (queda de costas) e yoko-sutemi-waza (queda de lado)."
+      "exp": "Sutemi-waza (捨身技) são projeções de sacrifício em que o Tori cai deliberadamente no Tatame para projetar o Uke. Dividem-se em ma-sutemi-waza (queda de costas) e yoko-sutemi-waza (queda de lado)."
     },
     "ru": {
       "q": "Что означает «Сутэми-вадза»?",
@@ -18330,7 +18330,7 @@
         "Техники удержания"
       ],
       "c": 1,
-      "exp": "Симэ-вадза (絞技) — удушающие приёмы, воздействующие на сонные артерии или дыхательные пути. Действуют быстро: соперник может потерять сознание за считанные секунды. На соревнованиях IJF разрешены начиная с кадетов (до 18 лет), детям запрещены."
+      "exp": "Симэ-вадза (絞技) — удушающие приёмы, воздействующие на сонные артерии или дыхательные пути. Действуют быстро: соперник может потерять сознание за считанные секунды. На соревнованиях МФД разрешены начиная с кадетов (до 18 лет), детям запрещены."
     },
     "c": 1
   },
@@ -18439,7 +18439,7 @@
       "opts": [
         "Udaljenost i prostor između dva džudoke",
         "Tehnika kretanja",
-        "Ceremonijalni razmak pri naklonjanju",
+        "Ceremonijalni razmak pri klanjanju",
         "Taktika izbegavanja"
       ],
       "c": 0,
@@ -18615,7 +18615,7 @@
         "Церемониальное положение во время поклона"
       ],
       "c": 1,
-      "exp": "Сидзэнтай (自然体) означает «естественное тело» — базовая стойка в дзюдо. Три варианта: миги (правая нога впереди), хидари (левая нога впереди) и сидзэн хонтай (стопы параллельны)."
+      "exp": "Сидзэнтай (自然体) означает «естественное тело» — базовая стойка в дзюдо. Три варианта: миги (правая нога впереди), хидари (левая нога впереди) и сидзэн-хонтай (стопы параллельны)."
     },
     "c": 1
   },
@@ -18783,7 +18783,7 @@
         "Ritorno in piedi dopo una caduta"
       ],
       "c": 1,
-      "exp": "Kata (形) sono forme predefinite che Tori e Uke eseguono insieme in una sequenza precisa. La Kata insegna i principi e l'esecuzione corretta. Nage-no-kata e katame-no-kata sono le più conosciute."
+      "exp": "Kata (形) sono forme predefinite che Tori e Uke eseguono insieme in una sequenza precisa. Il Kata insegna i principi e l'esecuzione corretta. Nage-no-kata e katame-no-kata sono le più conosciute."
     },
     "pt": {
       "q": "O que significa 'Kata' no judô?",
@@ -19068,7 +19068,7 @@
         "Non c'è differenza — è la stessa proiezione"
       ],
       "c": 1,
-      "exp": "O-soto-gari usa un ampia falciata ad arco mentre O-soto-otoshi scarica il peso del corpo direttamente sulla gamba bloccata. L'Otoshi è più efficace contro gli avversari rigidi che riescono a bloccare la falciata."
+      "exp": "O-soto-gari usa un'ampia falciata ad arco mentre O-soto-otoshi scarica il peso del corpo direttamente sulla gamba bloccata. L'Otoshi è più efficace contro gli avversari rigidi che riescono a bloccare la falciata."
     },
     "pt": {
       "q": "Qual é a principal diferença entre O-soto-gari e O-soto-otoshi?",
@@ -19195,7 +19195,7 @@
     "type": "tehnika",
     "videoId": null,
     "sr": {
-      "q": "Koja je fundamentalna greška koja čini Harai-goshi neefektivnim?",
+      "q": "Koja je fundamentalna greška koja čini Harai-goshi neefikasnim?",
       "opts": [
         "Prebrzo okretanje — nedovoljno vremena za podsecanje",
         "Počinjati podsecanje nogom pre završetka rotacije kukova",
@@ -19524,7 +19524,7 @@
       "exp": "Makikomi (enroulement) signifie que Tori enroule un bras autour du bras d'Uke et tombe avec lui. Cela empêche Uke d'utiliser son Ukemi naturel pour s'échapper et ajoute la force de chute de Tori à la projection. Exemples : Uchi-mata-makikomi, Harai-makikomi."
     },
     "es": {
-      "q": "¿Qué es el principio 'Makikomi' en las proyecciones y en qué se diferencian de las proyecciones estándar?",
+      "q": "¿Qué es el principio 'Makikomi' en las proyecciones y en qué se diferencia de las proyecciones estándar?",
       "opts": [
         "Las proyecciones Makikomi usan dos piernas en lugar de una",
         "En las proyecciones Makikomi, Tori envuelve el brazo alrededor del brazo de Uke y cae JUNTO a Uke en lugar de proyectarlo de forma independiente",
@@ -19879,7 +19879,7 @@
         "Because it is always used paired with Ko-soto-gari"
       ],
       "c": 0,
-      "exp": "Ko-uchi-gari is a small fast technique with an entry that hardly telegraphs it. If it succeeds — ippon or waza-ari. If not, the opponent almost always reacts by moving the leg back or forward opening perfect position for O-uchi, O-soto or Seoi-nage."
+      "exp": "Ko-uchi-gari is a small fast technique with an entry that hardly telegraphs it. If it succeeds — ippon or waza-ari. If not, the opponent almost always reacts by moving the leg back or forward opening a perfect position for O-uchi, O-soto or Seoi-nage."
     },
     "de": {
       "q": "Warum ist Ko-uchi-gari eine der wirksamsten Kombinationstechniken?",
@@ -20021,7 +20021,7 @@
       "exp": "Dalla posizione di guardia, Tori usa le gambe come controllo principale del corpo di Uke, così le braccia sono libere per afferrare il braccio. Uke non può sfuggire facilmente perché le gambe di Tori sono una barriera attiva. Questa posizione è completa: il controllo e la leva nascono dallo stesso sistema."
     },
     "pt": {
-      "q": "Qual é a principal vantagem do Juji-gatame a partir da posição de 'guarda' (Tori de costas no tatami)?",
+      "q": "Qual é a principal vantagem do Juji-gatame a partir da posição de 'guarda' (Tori de costas no tatame)?",
       "opts": [
         "É uma posição fácil de aplicar porque os braços ficam livres",
         "O Tori pode controlar o corpo do Uke com as pernas enquanto procura a chave, sem expor as costas",
@@ -20116,7 +20116,7 @@
       "exp": "Osae-komi-waza (抑込技) sono le tecniche di controllo a terra da cui Uke non riesce a liberarsi: 5-9 secondi valgono Yuko, 10-19 secondi Waza-ari e 20 secondi Ippon. I tre esempi più comuni: Kesa-gatame (immobilizzazione laterale), Yoko-shiho-gatame (immobilizzazione di fianco) e Kami-shiho-gatame (immobilizzazione dall'alto)."
     },
     "pt": {
-      "q": "O que é o 'Osae-komi-waza' e quais são três exemplos?",
+      "q": "O que é o 'Osaekomi-waza' e quais são três exemplos?",
       "opts": [
         "Técnicas de estrangulamento: Okuri-eri-jime, Nami-juji-jime, Hadaka-jime",
         "Técnicas de imobilização: Kesa-gatame, Yoko-shiho-gatame, Kami-shiho-gatame",
@@ -20124,7 +20124,7 @@
         "Chaves de articulação: Juji-gatame, Ude-gatame, Waki-gatame"
       ],
       "c": 1,
-      "exp": "O Osae-komi-waza (抑込技) são técnicas de imobilização — controle no solo em que o Uke não consegue escapar: 5 a 9 segundos marca Yuko, 10 a 19 segundos Waza-ari e 20 segundos Ippon. Os três mais comuns: Kesa-gatame (imobilização lateral), Yoko-shiho-gatame (imobilização lateral dos quatro pontos) e Kami-shiho-gatame (imobilização superior)."
+      "exp": "O Osaekomi-waza (抑込技) são técnicas de imobilização — controle no solo em que o Uke não consegue escapar: 5 a 9 segundos marca Yuko, 10 a 19 segundos Waza-ari e 20 segundos Ippon. Os três mais comuns: Kesa-gatame (imobilização lateral), Yoko-shiho-gatame (imobilização lateral dos quatro pontos) e Kami-shiho-gatame (imobilização superior)."
     },
     "ru": {
       "q": "Что такое Осаэкоми-вадза и каковы три примера таких приёмов?",
@@ -20403,7 +20403,7 @@
     "pt": {
       "q": "Você perdeu um combate equilibrado no Golden Score. O que é construtivo fazer de imediato?",
       "opts": [
-        "Reclamar da decisão com o treinador imediatamente no Tatami",
+        "Reclamar da decisão com o treinador imediatamente no Tatame",
         "Pedir ao treinador que explique os momentos-chave que decidiram o combate",
         "Evitar a análise e ir para a próxima competição sem pensar no assunto",
         "Mudar de Tokui-waza imediatamente após a derrota"
@@ -20500,7 +20500,7 @@
       "opts": [
         "Usar a mesma pegada que usaria contra um adversário da mesma altura",
         "Buscar uma pegada baixa, abaixo dos cotovelos, e apostar em projeções de perna ou em uma entrada profunda abaixo do centro de massa",
-        "Evitar o contacto e esperar que ele ataque primeiro",
+        "Evitar o contato e esperar que ele ataque primeiro",
         "Usar uma pegada alta na gola para controlar a cabeça"
       ],
       "c": 1,
@@ -21451,13 +21451,13 @@
         "Tem de ser uma projeção completa com o Uke caído de costas",
         "O contragolpe tem de ser controlado e potente, e o adversário tem de cair com clareza suficiente para pontuar (Yuko, Waza-ari ou Ippon)",
         "Um contragolpe no Golden Score é sempre pontuado em dobro",
-        "Qualquer contacto com o chão no Golden Score é Ippon automático"
+        "Qualquer contato com o chão no Golden Score é Ippon automático"
       ],
       "c": 1,
       "exp": "No Golden Score aplicam-se os mesmos critérios do tempo regulamentar. Para Ippon: o Uke cai majoritariamente de costas, com força e controle. Para Waza-ari: parcialmente de costas. Para Yuko: de lado. Um contragolpe que apenas move o adversário, sem uma queda clara, não é pontuado — e no Golden Score qualquer pontuação dá a vitória imediata."
     },
     "ru": {
-      "q": "В Голден Скор ты успешно делаешь контрбросок О-сото-гаэши. Что должно быть выполнено, чтобы он был засчитан?",
+      "q": "В Голден Скор ты успешно делаешь контрбросок О-сото-гаэси. Что должно быть выполнено, чтобы он был засчитан?",
       "opts": [
         "Это должен быть полноценный бросок, при котором Укэ падает на спину",
         "Контрбросок должен быть контролируемым и мощным, а соперник должен упасть достаточно чётко для оценки (Юко, Вадза-ари или Иппон)",
@@ -21668,7 +21668,7 @@
       "q": "Na takmičenju si pobedio snažnog protivnika lakim bacanjem. Svi su iznenađeni. Kako objašnjavaš uspeh?",
       "opts": [
         "Protivnik je napravio grešku, to je bila sreća",
-        "Pronašao sam tačan trenutak kad je mu je težište bilo iznad najmanje baze i iskoristio sam to",
+        "Pronašao sam tačan trenutak kad mu je težište bilo iznad najmanje baze i iskoristio sam to",
         "Fizička snaga je ipak presudna u pravo vreme",
         "Moja tehnika je bila bolja od njegove, što ga je sprečilo da napadne"
       ],
@@ -21681,7 +21681,7 @@
         "The opponent made a mistake; it was luck",
         "I found the exact moment when their balance was at its weakest and used it",
         "Physical strength is still decisive at the right moment",
-        "My technique was better than theirs, which stopped him from attacking"
+        "My technique was better than theirs, which stopped them from attacking"
       ],
       "c": 1,
       "exp": "Throwing a powerful opponent effortlessly is not luck or coincidence. It is the result of precise timing — attacking when Uke is in their most vulnerable position. Seiryoku-zenyo: maximum efficiency by exploiting the moment Uke's balance is weakest. Such a throw is the pinnacle of judo understanding."
@@ -21734,7 +21734,7 @@
       "q": "Numa competição, você derrotou um adversário poderoso com uma projeção aparentemente sem esforço. Todos ficaram surpresos. Como você explica o sucesso?",
       "opts": [
         "O adversário cometeu um erro, foi sorte",
-        "Encontrei o momento exato em que o centro de equilíbrio dele estava com a menor base de apoio e aproveitei-o",
+        "Encontrei o momento exato em que o centro de equilíbrio dele estava com a menor base de apoio e o aproveitei",
         "A força física ainda é decisiva no momento certo",
         "A minha técnica foi melhor do que a dele, impedindo-o de atacar"
       ],
@@ -21834,7 +21834,7 @@
         "Os pés – dedos esticados"
       ],
       "c": 1,
-      "exp": "No Ushiro-ukemi o queixo fica sempre encostado ao peito para que a cabeça não bata no Tatami. Os braços batem no tapete e absorvem parte do impacto."
+      "exp": "No Ushiro-ukemi o queixo fica sempre encostado ao peito para que a cabeça não bata no Tatame. Os braços batem no tapete e absorvem parte do impacto."
     },
     "ru": {
       "q": "Что важнее всего защитить при падении назад (Усиро-укэми)?",
@@ -21921,7 +21921,7 @@
       "exp": "Nello Yoko-ukemi tutto il braccio teso, con il palmo verso il basso, batte sul Tatami a circa 30–45° dal corpo. Così l'impatto si distribuisce e spalla e gomito sono protetti."
     },
     "pt": {
-      "q": "Como é que o braço bate no Tatami numa queda lateral (Yoko-ukemi)?",
+      "q": "Como é que o braço bate no Tatame numa queda lateral (Yoko-ukemi)?",
       "opts": [
         "Com o cotovelo, braço dobrado debaixo do corpo",
         "Com o punho, o mais forte possível",
@@ -21929,7 +21929,7 @@
         "Todo o braço esticado e a palma, a cerca de 30–45° do corpo"
       ],
       "c": 3,
-      "exp": "No Yoko-ukemi todo o braço esticado, com a palma para baixo, bate no Tatami a cerca de 30–45° do corpo. Assim o impacto é distribuído e o ombro e o cotovelo ficam protegidos."
+      "exp": "No Yoko-ukemi todo o braço esticado, com a palma para baixo, bate no Tatame a cerca de 30–45° do corpo. Assim o impacto é distribuído e o ombro e o cotovelo ficam protegidos."
     },
     "ru": {
       "q": "Как рука ударяет по татами при падении на бок (Ёко-укэми)?",
@@ -21953,12 +21953,12 @@
       "q": "Šta je O-uchi-gari?",
       "opts": [
         "Bacanje preko ramena sa obe ruke",
-        "Spoljašnja kosa na zadnju nogu",
-        "Velika unutrašnja kosa – Tori iznutra kosi Ukeovu nogu i baca ga unazad",
+        "Spoljašnje košenje zadnje noge",
+        "Veliko unutrašnje košenje – Tori iznutra kosi Ukeovu nogu i baca ga unazad",
         "Žrtveno bacanje unazad"
       ],
       "c": 2,
-      "exp": "O-uchi-gari ('velika unutrašnja kosa'): Tori nogom iznutra kosi Ukeovu nogu i baca ga unazad. Odlično se kombinuje sa tehnikama Seoi-nage i Uchi-mata."
+      "exp": "O-uchi-gari ('veliko unutrašnje košenje'): Tori nogom iznutra kosi Ukeovu nogu i baca ga unazad. Odlično se kombinuje sa tehnikama Seoi-nage i Uchi-mata."
     },
     "en": {
       "q": "What is O-uchi-gari?",
@@ -22047,13 +22047,13 @@
     "sr": {
       "q": "Šta je Ko-soto-gari?",
       "opts": [
-        "Mala spoljašnja kosa – Tori stopalom spolja kosi Ukeovu petu",
-        "Velika unutrašnja kosa nogom",
+        "Malo spoljašnje košenje – Tori stopalom spolja kosi Ukeovu petu",
+        "Veliko unutrašnje košenje nogom",
         "Bacanje kukom sa hvatom za pojas",
         "Gušenje iz leđa"
       ],
       "c": 0,
-      "exp": "Ko-soto-gari ('mala spoljašnja kosa'): Tori tabanom spolja kosi Ukeovu petu u pravcu prstiju, dok rukama vodi Ukea unazad i u stranu."
+      "exp": "Ko-soto-gari ('malo spoljašnje košenje'): Tori tabanom spolja kosi Ukeovu petu u pravcu prstiju, dok rukama vodi Ukea unazad i u stranu."
     },
     "en": {
       "q": "What is Ko-soto-gari?",
@@ -23253,13 +23253,13 @@
     "pt": {
       "q": "O que é 'Seiza'?",
       "opts": [
-        "A posição formal de joelhos – sentado sobre os calcanhares com o peito dos pés no Tatami",
+        "A posição formal de joelhos – sentado sobre os calcanhares com o peito dos pés no Tatame",
         "Uma postura com os pés à largura dos ombros",
         "Sentado de pernas cruzadas",
         "Deitado de costas antes do ukemi"
       ],
       "c": 0,
-      "exp": "Seiza é a posição formal de joelhos: joelhos no Tatami, sentado sobre os calcanhares, costas retas. A partir dela se faz o Za-rei (a saudação de joelhos) no início e no fim do treino."
+      "exp": "Seiza é a posição formal de joelhos: joelhos no Tatame, sentado sobre os calcanhares, costas retas. A partir dela se faz o Za-rei (a saudação de joelhos) no início e no fim do treino."
     },
     "ru": {
       "q": "Что такое «Сэйдза»?",
@@ -23288,7 +23288,7 @@
         "'O' = napad, 'Ko' = odbrana"
       ],
       "c": 1,
-      "exp": "'O' znači veliki, a 'Ko' mali. O-soto-gari je velika spoljašnja kosa, a Ko-soto-gari mala. 'Soto' znači spolja, a 'Uchi' iznutra."
+      "exp": "'O' znači veliki, a 'Ko' mali. O-soto-gari je veliko spoljašnje košenje, a Ko-soto-gari malo. 'Soto' znači spolja, a 'Uchi' iznutra."
     },
     "en": {
       "q": "What do 'O' and 'Ko' mean in technique names (e.g. O-soto-gari and Ko-soto-gari)?",
@@ -23874,7 +23874,7 @@
     "de": {
       "q": "Was ist 'Fusen-gachi'?",
       "opts": [
-        "Ein Sieg nach drei Shidos des Gegners",
+        "Ein Sieg nach drei Shido des Gegners",
         "Ein Sieg im Golden Score",
         "Ein Sieg, weil der Gegner nicht zum Kampf erschienen ist",
         "Ein Sieg durch Würgen"
@@ -23924,7 +23924,7 @@
         "Uma vitória por estrangulamento"
       ],
       "c": 2,
-      "exp": "Fusen-gachi é uma vitória sem combate: é atribuída quando o adversário não se apresenta no Tatami ao ser chamado. Não confundir com Kiken-gachi, a vitória quando o adversário desiste durante o combate."
+      "exp": "Fusen-gachi é uma vitória sem combate: é atribuída quando o adversário não se apresenta no Tatame ao ser chamado. Não confundir com Kiken-gachi, a vitória quando o adversário desiste durante o combate."
     },
     "ru": {
       "q": "Что такое «Фусэн-гати»?",
@@ -24110,11 +24110,11 @@
       "opts": [
         "Levantando a mão para o árbitro",
         "Virando a cabeça para o outro lado",
-        "Batendo pelo menos duas vezes com a mão ou o pé no parceiro ou no Tatami, ou dizendo 'Maitta'",
+        "Batendo pelo menos duas vezes com a mão ou o pé no parceiro ou no Tatame, ou dizendo 'Maitta'",
         "Esperando que o árbitro interrompa"
       ],
       "c": 2,
-      "exp": "A desistência é sinalizada batendo pelo menos duas vezes com a mão ou o pé (no parceiro ou no Tatami) ou dizendo 'Maitta' ('desisto'). O parceiro tem de soltar imediatamente."
+      "exp": "A desistência é sinalizada batendo pelo menos duas vezes com a mão ou o pé (no parceiro ou no Tatame) ou dizendo 'Maitta' ('desisto'). O parceiro tem de soltar imediatamente."
     },
     "ru": {
       "q": "Как в дзюдо показывают сдачу (при удушении или болевом)?",
@@ -24212,7 +24212,7 @@
       "exp": "As mulheres e os homens seniores têm o mesmo tempo regulamentar – 4 minutos. Em caso de empate, o combate segue para o Golden Score, sem limite de tempo."
     },
     "ru": {
-      "q": "Сколько длится основное время схватки у взрослых женщин по правилам IJF?",
+      "q": "Сколько длится основное время схватки у взрослых женщин по правилам МФД?",
       "opts": [
         "3 минуты",
         "4 минуты – столько же, сколько у мужчин",
@@ -24307,7 +24307,7 @@
       "exp": "Nas competições da IJF o primeiro competidor chamado veste branco e o segundo veste azul. As cores diferentes ajudam árbitros e espectadores a acompanhar o combate."
     },
     "ru": {
-      "q": "Кто на соревнованиях IJF выступает в синем кимоно?",
+      "q": "Кто на соревнованиях МФД выступает в синем кимоно?",
       "opts": [
         "Спортсмен с более высоким поясом",
         "Спортсмен, стоящий ниже в мировом рейтинге",
@@ -24315,7 +24315,7 @@
         "Спортсмен, вызванный вторым"
       ],
       "c": 3,
-      "exp": "На соревнованиях IJF первый вызванный спортсмен выступает в белом кимоно, а второй – в синем. Разные цвета помогают судьям и зрителям следить за схваткой."
+      "exp": "На соревнованиях МФД первый вызванный спортсмен выступает в белом кимоно, а второй – в синем. Разные цвета помогают судьям и зрителям следить за схваткой."
     },
     "c": 3
   },
@@ -24581,7 +24581,7 @@
       "exp": "Tuffarsi di testa sul Tatami eseguendo una tecnica è punito con Hansoku-make diretto, perché comporta il rischio di gravi lesioni a collo e colonna. La sicurezza viene prima del punteggio."
     },
     "pt": {
-      "q": "O que acontece se um competidor 'mergulhar' de cabeça no Tatami ao projetar (por ex. no Uchi-mata)?",
+      "q": "O que acontece se um competidor 'mergulhar' de cabeça no Tatame ao projetar (por ex. no Uchi-mata)?",
       "opts": [
         "Nada, se a projeção resultou",
         "Hansoku-make – desqualificação direta pelo perigo para o pescoço",
@@ -24589,7 +24589,7 @@
         "A pontuação é anulada, mas sem penalização"
       ],
       "c": 1,
-      "exp": "Mergulhar de cabeça no Tatami ao executar uma técnica é punido com Hansoku-make direto, porque há risco de lesões graves no pescoço e na coluna. A segurança está acima da pontuação."
+      "exp": "Mergulhar de cabeça no Tatame ao executar uma técnica é punido com Hansoku-make direto, porque há risco de lesões graves no pescoço e na coluna. A segurança está acima da pontuação."
     },
     "ru": {
       "q": "Что последует, если спортсмен при броске «ныряет» головой вперёд в татами (например, при Ути-мате)?",
@@ -25357,7 +25357,7 @@
         "В Кодокане, во время тренировки",
         "На борту судна «Хикава-мару», возвращаясь с сессии МОК в Каире",
         "В Париже, во время турне по Европе",
-        "В Лондоне, при основании IJF"
+        "В Лондоне, при основании МФД"
       ],
       "c": 1,
       "exp": "Кано скончался от пневмонии в 1938 году на борту судна «Хикава-мару», возвращаясь с сессии МОК в Каире, где он отстаивал право Токио принять Олимпийские игры 1940 года."
@@ -25444,7 +25444,7 @@
         "Jigoro Kano, 1883"
       ],
       "c": 3,
-      "exp": "Em 1883 Jigoro Kano atribuiu os primeiros graus dan (Shodan) aos seus alunos Saigo Shiro e Tomita Tsunejiro. O sistema foi depois adotado pelo caratê, pelo aikido e por muitas outras artes."
+      "exp": "Em 1883 Jigoro Kano atribuiu os primeiros graus dan (Shodan) aos seus alunos Saigo Shiro e Tomita Tsunejiro. O sistema foi depois adotado pelo karatê, pelo aikido e por muitas outras artes."
     },
     "ru": {
       "q": "Кто первым ввёл систему данов в боевые искусства и когда?",
@@ -25535,7 +25535,7 @@
       "opts": [
         "Jigoro Kano",
         "Anton Geesink",
-        "Mikinosuke Kawaishi, em França nos anos 30",
+        "Mikinosuke Kawaishi, na França nos anos 30",
         "Kyuzo Mifune"
       ],
       "c": 2,
@@ -25725,7 +25725,7 @@
       "opts": [
         "Uma técnica de respiração antes do combate",
         "O sinal do árbitro para Waza-ari",
-        "O nome do Tatami numa sala de competição",
+        "O nome do Tatame numa sala de competição",
         "A etiqueta – as regras de respeito e conduta dentro e fora do dojo"
       ],
       "c": 3,
@@ -25984,7 +25984,7 @@
       "exp": "Taper signifie abandonner – on lâche IMMÉDIATEMENT, sans attendre. Vérifie ensuite que ton partenaire va bien. La confiance entre partenaires est la base d'un judo sûr."
     },
     "es": {
-      "q": "En el entrenamiento aplicas un estrangulamiento y tu compañero da golpecitos (tap). ¿Qué haces?",
+      "q": "En el entrenamiento aplicas un estrangulamiento y tu compañero da golpecitos. ¿Qué haces?",
       "opts": [
         "Aprietas un poco más para que lo recuerde",
         "Sueltas de inmediato y compruebas que tu compañero está bien",
@@ -26481,11 +26481,11 @@
       "exp": "Nel judo la vittoria si accetta con dignità: ritorno al proprio posto, saluto e rispetto per l'avversario. Esultanze eccessive e gesti antisportivi vanno contro lo spirito del judo e possono essere sanzionati."
     },
     "pt": {
-      "q": "Você acabou de vencer um combate importante. Como você se comporta no Tatami?",
+      "q": "Você acabou de vencer um combate importante. Como você se comporta no Tatame?",
       "opts": [
         "Comemora ruidosamente e faz gestos para o adversário",
         "Volta calmamente ao seu lugar, cumprimenta o adversário e mostra respeito",
-        "Corre logo para fora do Tatami, até o treinador",
+        "Corre logo para fora do Tatame, até o treinador",
         "Dá a mão ao adversário, mas pula a saudação"
       ],
       "c": 1,
@@ -26679,13 +26679,13 @@
         "Não – o Yuko é contado separadamente e nunca se soma ao Waza-ari"
       ],
       "c": 3,
-      "exp": "Os Yuko são registados separadamente (1, 2, 3...) e nunca se convertem em Waza-ari. Só dois Waza-ari fazem Ippon."
+      "exp": "Os Yuko são registrados separadamente (1, 2, 3...) e nunca se convertem em Waza-ari. Só dois Waza-ari fazem Ippon."
     },
     "ru": {
       "q": "Складываются ли два Юко в одно Вадза-ари?",
       "opts": [
         "Да — два Юко дают одно Вадза-ари",
-        "Да — но только в Golden Score",
+        "Да — но только в Голден Скор",
         "Да — четыре Юко дают Иппон",
         "Нет — Юко считается отдельно и никогда не складывается в Вадза-ари"
       ],
@@ -26890,7 +26890,7 @@
     "type": "tehnika",
     "videoId": null,
     "sr": {
-      "q": "Koja od ovih tehnika je davljenje (Shime-waza)?",
+      "q": "Koja od ovih tehnika je gušenje (Shime-waza)?",
       "opts": [
         "Kesa-gatame",
         "Ko-uchi-gari",
@@ -26898,7 +26898,7 @@
         "Harai-goshi"
       ],
       "c": 2,
-      "exp": "Hadaka-jime je davljenje s leđa, sa rukom oko vrata. Kesa-gatame je zadržavanje, a druga dva su bacanja."
+      "exp": "Hadaka-jime je gušenje s leđa, sa rukom oko vrata. Kesa-gatame je zadržavanje, a druga dva su bacanja."
     },
     "en": {
       "q": "Which of these is a choking technique (Shime-waza)?",
@@ -27059,7 +27059,7 @@
         "Kesa-gatame"
       ],
       "c": 3,
-      "exp": "O Kesa-gatame controla a cabeça e o ombro do Uke como um echarpe usado atravessado no corpo. É uma das primeiras imobilizações que os judocas aprendem."
+      "exp": "O Kesa-gatame controla a cabeça e o ombro do Uke como uma echarpe usado atravessado no corpo. É uma das primeiras imobilizações que os judocas aprendem."
     },
     "ru": {
       "q": "Какое удержание часто называют «удержанием шарфом»?",
@@ -27085,7 +27085,7 @@
         "Pometanje stopalom protiv noge koja korača napred",
         "Žrtveno bacanje u kom Tori pada unazad",
         "Bacanje 'rameni točak' preko Torijevih ramena",
-        "Davljenje s leđa"
+        "Gušenje s leđa"
       ],
       "c": 2,
       "exp": "Kata znači rame, a guruma točak. Tori podiže Ukea preko ramena i baca ga napred, kao u vatrogasnom nošenju."
@@ -27183,7 +27183,7 @@
         "Zadržavanje na tlu sa Ukeove strane"
       ],
       "c": 0,
-      "exp": "Ruke koje vuku i podižu izbacuju Ukea iz ravnoteže, dok Torijevo stopalo odmiče oslonu nogu. Tajming je važniji od snage."
+      "exp": "Ruke koje vuku i podižu izbacuju Ukea iz ravnoteže, dok Torijevo stopalo odmiče oslonsku nogu. Tajming je važniji od snage."
     },
     "en": {
       "q": "What is Harai-tsurikomi-ashi?",
@@ -27289,7 +27289,7 @@
         "From above Uke's head, chest to chest"
       ],
       "c": 3,
-      "exp": "Kami-shiho-gatame is the 'upper four-corner hold'. Tori lies across Uke's chest from the head side and controls with the arms and weight."
+      "exp": "Kami-shiho-gatame is the 'upper four-quarter hold'. Tori lies across Uke's chest from the head side and controls with the arms and weight."
     },
     "de": {
       "q": "Von wo aus hält Tori Uke bei Kami-shiho-gatame?",
@@ -27557,13 +27557,13 @@
     "sr": {
       "q": "Šta je Sankaku-jime?",
       "opts": [
-        "Davljenje s leđa podlakticom",
-        "Davljenje trouglom koje se izvodi Torijevim nogama",
+        "Gušenje s leđa podlakticom",
+        "Gušenje trouglom koje se izvodi Torijevim nogama",
         "Poluga na savijenu ruku primenjena na ramenu",
-        "Unakrsno davljenje obema rukama preko revera"
+        "Unakrsno gušenje obema rukama preko revera"
       ],
       "c": 1,
-      "exp": "Sankaku znači trougao. Torijeve noge prave trougao oko Ukeovog vrata i jedne ruke, a stezanje izaziva davljenje."
+      "exp": "Sankaku znači trougao. Torijeve noge prave trougao oko Ukeovog vrata i jedne ruke, a stezanje izaziva gušenje."
     },
     "en": {
       "q": "What is Sankaku-jime?",
@@ -27654,7 +27654,7 @@
       "opts": [
         "Utrčiš na tatami da stigneš ostale",
         "Odeš pravo svojim drugovima",
-        "Naklonis se na ivici i sačekaš senseijevu dozvolu da se pridružiš",
+        "Nakloniš se na ivici i sačekaš senseijevu dozvolu da se pridružiš",
         "Staneš na sredinu dok te neko ne primeti"
       ],
       "c": 2,
@@ -27935,9 +27935,9 @@
     "type": "situacija",
     "videoId": null,
     "sr": {
-      "q": "Izgubiš svoj prvi randori od druga iz grupe. Koja je najbolja reakcija?",
+      "q": "Izgubio si svoj prvi randori od druga iz grupe. Koja je najbolja reakcija?",
       "opts": [
-        "Naklonis se, zahvališ mu i naučiš nešto iz toga",
+        "Nakloniš se, zahvališ mu i naučiš nešto iz toga",
         "Odbiješ da ponovo vežbaš s njim",
         "Okriviš tatami ili džudogi",
         "Prestaneš da dolaziš na trening"
@@ -28012,7 +28012,7 @@
       "exp": "Toda derrota é uma lição. Agradecer ao seu parceiro mostra respeito e ajuda você a melhorar."
     },
     "ru": {
-      "q": "Ты проиграл свой первый рандори однокласснику. Какая реакция лучшая?",
+      "q": "Ты проиграл своё первое рандори однокласснику. Какая реакция лучшая?",
       "opts": [
         "Поклониться, поблагодарить и извлечь урок",
         "Отказаться снова заниматься с ним",
@@ -28074,7 +28074,7 @@
       "exp": "Une ceinture défaite pose un problème de sécurité et d'étiquette. En judo, on s'arrête, on la renoue correctement, puis on continue."
     },
     "es": {
-      "q": "Al cinturón de tu compañero se le ha desatado durante el entrenamiento. ¿Qué haces?",
+      "q": "El cinturón de tu compañero se ha desatado durante el entrenamiento. ¿Qué haces?",
       "opts": [
         "Hacer una pausa y dejar que se lo ate bien",
         "Ignorarlo y seguir practicando",
@@ -28988,7 +28988,7 @@
         "'Predajem se' (predaja rečima)"
       ],
       "c": 3,
-      "exp": "'Maitta' je verbalni način predaje kada je primenjeno zadržavanje, davljenje ili poluga, pored lupkanja."
+      "exp": "'Maitta' je verbalni način predaje kada je primenjeno zadržavanje, gušenje ili poluga, pored tapkanja."
     },
     "en": {
       "q": "What does 'Maitta' mean in judo?",
@@ -29273,7 +29273,7 @@
         "Naklon protivniku"
       ],
       "c": 1,
-      "exp": "U džudou nema udaraca ni šutiranja. Sve tehnike su bacanja, zadržavanja, davljenja i poluge na ruku, izvedene bezbedno."
+      "exp": "U džudou nema udaraca ni šutiranja. Sve tehnike su bacanja, zadržavanja, gušenja i poluge na ruku, izvedene bezbedno."
     },
     "en": {
       "q": "Which action is forbidden in judo?",
@@ -29532,7 +29532,7 @@
       "exp": "Uma imobilização de 5–9 segundos vale Yuko. De 10–19 segundos vale Waza-ari e 20 segundos vale Ippon."
     },
     "ru": {
-      "q": "Сколько секунд должно длиться удержание, чтобы получить Юко по правилам IJF 2026–28?",
+      "q": "Сколько секунд должно длиться удержание, чтобы получить Юко по правилам МФД 2026–28?",
       "opts": [
         "1–4 секунды",
         "5–9 секунд",
@@ -29722,7 +29722,7 @@
       "exp": "As categorias femininas vão de -48, -52, -57, -63, -70 e -78 kg até +78 kg."
     },
     "ru": {
-      "q": "Какая самая лёгкая весовая категория у женщин на соревнованиях IJF?",
+      "q": "Какая самая лёгкая весовая категория у женщин на соревнованиях МФД?",
       "opts": [
         "-52 кг",
         "-57 кг",
@@ -30407,10 +30407,10 @@
     "sr": {
       "q": "Koje dve jujutsu škole je Kano najviše proučavao pre nego što je stvorio džudo?",
       "opts": [
-        "Daito-ryu and Yagyu Shinkage-ryu",
-        "Tenjin Shin'yo-ryu and Kito-ryu",
-        "Kyokushin and Shotokan",
-        "Takenouchi-ryu and Aikido"
+        "Daito-ryu i Yagyu Shinkage-ryu",
+        "Tenjin Shin'yo-ryu i Kito-ryu",
+        "Kyokushin i Shotokan",
+        "Takenouchi-ryu i Aikido"
       ],
       "c": 1,
       "exp": "Kano je trenirao jujutsu škole Tenjin Shin'yo-ryu i Kito-ryu, spojio ih je i unapredio u džudo."
@@ -31608,7 +31608,7 @@
         "Un nodo piano"
       ],
       "c": 3,
-      "exp": "La cintura si allaccia con un nodo piatto, così resta chiusa durante l'allenamento. Un nodo allentato o storto va rifatto."
+      "exp": "La cintura si allaccia con un nodo piano, così resta chiusa durante l'allenamento. Un nodo allentato o storto va rifatto."
     },
     "pt": {
       "q": "Qual nó é usado para amarrar a faixa de judô?",
@@ -32061,7 +32061,7 @@
         "En travers de la poitrine d'Uke, par le côté"
       ],
       "c": 3,
-      "exp": "Le Yoko-shiho-gatame est la 'immobilisation des quatre points par le côté'. Tori est couché de côté en travers de la poitrine d'Uke et appuie avec la poitrine et les bras."
+      "exp": "Le Yoko-shiho-gatame est l'« immobilisation des quatre points par le côté ». Tori est couché de côté en travers de la poitrine d'Uke et appuie avec la poitrine et les bras."
     },
     "es": {
       "q": "Yoko-shiho-gatame es una inmovilización en la que Tori se tumba...",
@@ -32119,7 +32119,7 @@
       "opts": [
         "Žrtveno bacanje na Torijeva leđa",
         "Tehnika rukama koja obara Ukea napred",
-        "Davljenje s leđa",
+        "Gušenje s leđa",
         "Pometanje stopala ka unutra"
       ],
       "c": 1,
@@ -32363,7 +32363,7 @@
       "q": "Cos'è l'Hane-goshi?",
       "opts": [
         "Una proiezione d'anca con la presa sulla cintura",
-        "Una proiezione a 'anca a molla' con uno scatto della gamba",
+        "Una proiezione d'anca 'a molla' con uno scatto della gamba",
         "Una spazzata al tallone",
         "Una proiezione di spalla con un solo braccio"
       ],
@@ -32498,7 +32498,7 @@
       "q": "Šta je Koshi-guruma?",
       "opts": [
         "Zadržavanje sa Ukeove strane",
-        "Davljenje s leđa",
+        "Gušenje s leđa",
         "Žrtveno bacanje na leđa",
         "Bacanje 'točak kukom' uz hvat oko vrata"
       ],
@@ -32595,7 +32595,7 @@
         "Bočno žrtveno bacanje ('plutajuća tehnika')",
         "Stojeće bacanje kukom preko leđa",
         "Zadržavanje na tlu sa strane",
-        "Davljenje rukavom"
+        "Gušenje rukavom"
       ],
       "c": 0,
       "exp": "Uki-waza je bočno žrtveno bacanje. Tori se spusti u stranu, a Uke 'pluta' preko i pada na leđa."
@@ -32688,7 +32688,7 @@
       "q": "Šta je Kuzure-kesa-gatame?",
       "opts": [
         "Zadržavanje iza glave",
-        "Davljenje na tlu",
+        "Gušenje na tlu",
         "Bacanje sa kolena",
         "Izmenjeno držanje šalom"
       ],
@@ -32785,7 +32785,7 @@
         "Pometanje pete",
         "Pometanje spojeno sa uvijanjem",
         "Žrtveno bacanje na leđa",
-        "Davljenje spreda"
+        "Gušenje spreda"
       ],
       "c": 1,
       "exp": "Harai-makikomi spaja pometanje noge sa uvijanjem. Tori se okreće i pada na tatami, noseći Ukea preko sebe."
@@ -32912,7 +32912,7 @@
       "opts": [
         "Des techniques qui lancent le combat",
         "Des techniques utilisées seulement pour l'échauffement",
-        "Des techniques de contre contre une attaque",
+        "Des techniques de contre face à une attaque",
         "Des techniques pratiquées seulement par les débutants"
       ],
       "c": 2,
@@ -32949,7 +32949,7 @@
         "Técnicas praticadas só por iniciantes"
       ],
       "c": 2,
-      "exp": "Uma contra-projeção usa o impulso do adversário. O O-soto-gaeshi e o Uchi-mata-sukashi são exemplos."
+      "exp": "Uma contraprojeção usa o impulso do adversário. O O-soto-gaeshi e o Uchi-mata-sukashi são exemplos."
     },
     "ru": {
       "q": "Что такое Каэси-вадза?",
@@ -33079,7 +33079,7 @@
       "q": "A friend wants to practise a throw with you before the Sensei arrives. What do you do?",
       "opts": [
         "Try it quickly on the mat",
-        "Politely say you wait for the Sensei",
+        "Politely say you will wait for the Sensei",
         "Practise on the hard floor",
         "Ask others to watch you"
       ],
@@ -33570,7 +33570,7 @@
         "Leise das Gebäude verlassen"
       ],
       "c": 2,
-      "exp": "Deine Gesundheit ist wichtiger, als das Training zu beenden. Sag immer dem Sensei Bescheid, wenn es dir nicht gut geht."
+      "exp": "Deine Gesundheit ist wichtiger als das Training. Sag immer dem Sensei Bescheid, wenn es dir nicht gut geht."
     },
     "fr": {
       "q": "Tu as la tête qui tourne pendant l'entraînement. Que dois-tu faire ?",
@@ -33956,7 +33956,7 @@
       "q": "Un nouvel élève ne sait pas faire les ukemi et les autres rient. Que dois-tu faire ?",
       "opts": [
         "Rire un peu avec les autres",
-        "Quitter le cours et rentrer chez moi",
+        "Quitter le cours et rentrer chez toi",
         "L'encourager et rappeler aux autres d'être gentils",
         "Demander au Sensei de le renvoyer"
       ],
@@ -34132,7 +34132,7 @@
       "exp": "A tournament is not the time for new techniques. Practise what you know, stay healthy, and rest before the day."
     },
     "de": {
-      "q": "Du bereitest dich in zwei Wochen auf dein erstes Turnier vor. Wie solltest du trainieren?",
+      "q": "Du bereitest dich auf dein erstes Turnier in zwei Wochen vor. Wie solltest du trainieren?",
       "opts": [
         "Schnell fünf neue Techniken lernen",
         "Deine besten Techniken üben und dich gut erholen",
@@ -34205,7 +34205,7 @@
     "type": "situacija",
     "videoId": null,
     "sr": {
-      "q": "Tokom zadržavanja osetiš oštar bol u laktu. Šta radiš?",
+      "q": "Tokom poluge na ruku osetiš oštar bol u laktu. Šta radiš?",
       "opts": [
         "Pokušaš da izdržiš",
         "Odmah tapneš",
@@ -34216,7 +34216,7 @@
       "exp": "Rano tapkanje sprečava povredu. U džudou je to znak mudrosti, a ne slabosti."
     },
     "en": {
-      "q": "During a hold you feel a sharp pain in your elbow. What do you do?",
+      "q": "During an armlock you feel a sharp pain in your elbow. What do you do?",
       "opts": [
         "Try to push through",
         "Tap immediately",
@@ -34227,7 +34227,7 @@
       "exp": "Tapping early prevents injury. In judo, it is a sign of wisdom, not weakness."
     },
     "de": {
-      "q": "Bei einem Haltegriff spürst du einen stechenden Schmerz im Ellbogen. Was tust du?",
+      "q": "Bei einem Armhebel spürst du einen stechenden Schmerz im Ellbogen. Was tust du?",
       "opts": [
         "Versuchen, durchzuhalten",
         "Sofort abklopfen",
@@ -34238,7 +34238,7 @@
       "exp": "Frühes Abklopfen verhindert Verletzungen. Im Judo ist es ein Zeichen von Klugheit, nicht von Schwäche."
     },
     "fr": {
-      "q": "Pendant une immobilisation, tu ressens une douleur vive au coude. Que fais-tu ?",
+      "q": "Pendant une clé de bras, tu ressens une douleur vive au coude. Que fais-tu ?",
       "opts": [
         "J'essaie de tenir malgré tout",
         "Je tape tout de suite",
@@ -34249,7 +34249,7 @@
       "exp": "Taper tôt évite les blessures. En judo, c'est un signe de sagesse, pas de faiblesse."
     },
     "es": {
-      "q": "Durante una inmovilización sientes un dolor agudo en el codo. ¿Qué haces?",
+      "q": "Durante una luxación de brazo sientes un dolor agudo en el codo. ¿Qué haces?",
       "opts": [
         "Intentar aguantar",
         "Golpear enseguida",
@@ -34260,7 +34260,7 @@
       "exp": "Golpear pronto evita lesiones. En judo es una señal de sabiduría, no de debilidad."
     },
     "it": {
-      "q": "Durante un'immobilizzazione senti un dolore acuto al gomito. Cosa fai?",
+      "q": "Durante una leva articolare senti un dolore acuto al gomito. Cosa fai?",
       "opts": [
         "Cerchi di resistere",
         "Batti subito",
@@ -34271,7 +34271,7 @@
       "exp": "Battere presto previene gli infortuni. Nel judo è segno di saggezza, non di debolezza."
     },
     "pt": {
-      "q": "Durante uma imobilização, você sente uma dor aguda no cotovelo. O que faz?",
+      "q": "Durante uma chave de braço, você sente uma dor aguda no cotovelo. O que faz?",
       "opts": [
         "Tentar aguentar",
         "Bater no tatame imediatamente",
@@ -34282,7 +34282,7 @@
       "exp": "Bater cedo evita lesões. No judô, isso é sinal de sabedoria, não de fraqueza."
     },
     "ru": {
-      "q": "Во время удержания ты чувствуешь резкую боль в локте. Что ты делаешь?",
+      "q": "Во время болевого приёма ты чувствуешь резкую боль в локте. Что ты делаешь?",
       "opts": [
         "Пытаешься перетерпеть",
         "Сразу делаешь тап",
@@ -34585,7 +34585,7 @@
     "type": "japanski",
     "videoId": null,
     "sr": {
-      "q": "Šta znači 'Judogi'?",
+      "q": "Šta znači 'Džudogi'?",
       "opts": [
         "Džudo tatami",
         "Džudo učitelj",
@@ -34593,7 +34593,7 @@
         "Džudo odeća"
       ],
       "c": 3,
-      "exp": "'Gi' znači odeća, pa je judogi odeća za džudo. Čine je jakna, pantalone i pojas."
+      "exp": "'Gi' znači odeća, pa je džudogi odeća za džudo. Čine je jakna, pantalone i pojas."
     },
     "en": {
       "q": "What does 'Judogi' mean?",
@@ -34786,7 +34786,7 @@
       "exp": "Onegaishimasu je ljubazna molba. Pokazuje poštovanje i želju da zajedno učimo."
     },
     "en": {
-      "q": "What do judoka say when they begin a training together: 'Onegaishimasu'?",
+      "q": "What do judoka say when they begin training together: 'Onegaishimasu'?",
       "opts": [
         "'Please, let's train together'",
         "'Thank you very much for today'",
@@ -34797,7 +34797,7 @@
       "exp": "Onegaishimasu is a polite request. It shows respect and a wish to learn together."
     },
     "de": {
-      "q": "Was sagen Judoka zu Beginn eines gemeinsamen Trainings: 'Onegaishimasu'?",
+      "q": "Was bedeutet 'Onegaishimasu', das Judoka zu Beginn eines gemeinsamen Trainings sagen?",
       "opts": [
         "'Bitte, lass uns zusammen trainieren'",
         "'Vielen Dank für heute'",
@@ -34952,10 +34952,10 @@
         "Назад",
         "Бок",
         "Вверх",
-        "Перёд"
+        "Перед"
       ],
       "c": 3,
-      "exp": "«Маэ» значит «перёд» или «вперёд». Маэ-укэми – страховка при падении вперёд."
+      "exp": "«Маэ» значит «перед» или «вперёд». Маэ-укэми – страховка при падении вперёд."
     },
     "c": 3
   },
@@ -35045,7 +35045,7 @@
       "q": "Что означает «Усиро» в слове «Усиро-укэми»?",
       "opts": [
         "Назад или позади",
-        "Перёд или вперёд",
+        "Перед или вперёд",
         "Бок или в сторону",
         "Вниз"
       ],
@@ -35139,7 +35139,7 @@
     "ru": {
       "q": "Что означает «Ёко» в слове «Ёко-укэми»?",
       "opts": [
-        "Перёд",
+        "Перед",
         "Спина",
         "Бок",
         "Верх"
@@ -36657,7 +36657,7 @@
       "exp": "A prova por equipes mistas tem seis judocas de cada equipe: três mulheres e três homens em categorias de peso diferentes."
     },
     "ru": {
-      "q": "Сколько дзюдоистов в смешанной командной схватке IJF?",
+      "q": "Сколько дзюдоистов в смешанной командной схватке МФД?",
       "opts": [
         "4 (2 мужчины и 2 женщины)",
         "6 (3 мужчины и 3 женщины)",
@@ -37088,7 +37088,7 @@
       "exp": "Für Osaekomi hält Tori Uke hauptsächlich auf dem Rücken, in stabiler Position, ohne von Ukes Beinen gefangen zu werden."
     },
     "fr": {
-      "q": "Laquelle de ces conditions doit être vraie pour que l'arbitre annonce Osaekomi ?",
+      "q": "Laquelle de ces conditions doit être remplie pour que l'arbitre annonce Osaekomi ?",
       "opts": [
         "Uke est contrôlé surtout sur le dos",
         "Uke est debout sur ses deux pieds",
@@ -37278,7 +37278,7 @@
       "exp": "Ein direktes Hansoku-make gibt es bei schweren Verstößen. Die Kampfrichterkommission kann den Judoka vom Rest des Turniers ausschließen."
     },
     "fr": {
-      "q": "Que peut-il arriver après un Hansoku-make direct pour judo dangereux ?",
+      "q": "Que peut-il arriver après un Hansoku-make direct pour un judo dangereux ?",
       "opts": [
         "Rien ; le combat suivant commence normalement",
         "Une disqualification de tout le tournoi",
@@ -37403,7 +37403,7 @@
         "Los Angeles"
       ],
       "c": 0,
-      "exp": "Il judo faceva parte dei Giochi Olimpici di Parigi 2024. Si è svolto al Champ-de-Mars Arena."
+      "exp": "Il judo faceva parte dei Giochi Olimpici di Parigi 2024. Si è svolto alla Champ-de-Mars Arena."
     },
     "pt": {
       "q": "Em que cidade foram realizados os Jogos Olímpicos de 2024, nos quais o judô foi um esporte com medalhas?",
@@ -37546,7 +37546,7 @@
         "In about 20 countries",
         "In more than 200 countries",
         "In about 50 countries",
-        "In only Japan"
+        "Only in Japan"
       ],
       "c": 1,
       "exp": "Judo is one of the most widely practised sports in the world. The IJF has more than 200 national federations."
@@ -37615,7 +37615,7 @@
         "Только в Японии"
       ],
       "c": 1,
-      "exp": "Дзюдо – один из самых распространённых видов спорта в мире. В IJF более 200 национальных федераций."
+      "exp": "Дзюдо – один из самых распространённых видов спорта в мире. В МФД более 200 национальных федераций."
     },
     "c": 1
   },
@@ -38005,7 +38005,7 @@
     "type": "istorija",
     "videoId": null,
     "sr": {
-      "q": "Ko je bio prvi Amerikanac koji je osvojio olimpijsko zlato u džudou?",
+      "q": "Ko je prvi američki džudoka koji je osvojio olimpijsko zlato u džudou?",
       "opts": [
         "Ronda Rousey",
         "Jimmy Pedro",
@@ -38082,7 +38082,7 @@
       "exp": "Kayla Harrison ganhou o ouro olímpico em 2012 e 2016. Ela foi a primeira americana a ganhar um ouro no judô."
     },
     "ru": {
-      "q": "Кто был первым американцем, выигравшим олимпийское золото по дзюдо?",
+      "q": "Кто из американцев первым выиграл олимпийское золото по дзюдо?",
       "opts": [
         "Ронда Раузи",
         "Джимми Педро",
@@ -38670,7 +38670,7 @@
     "type": "istorija",
     "videoId": null,
     "sr": {
-      "q": "Šta je Kano pomogao da Tokio osvoji 1938?",
+      "q": "Šta je Kano pomogao da Tokio osvoji 1936?",
       "opts": [
         "Pravo da bude domaćin Olimpijskih igara 1940",
         "Prvo olimpijsko takmičenje u džudou",
@@ -38681,7 +38681,7 @@
       "exp": "Kano je, kao član MOK-a, pomogao da Tokio dobije pravo domaćinstva Igara 1940. One su kasnije otkazane zbog rata."
     },
     "en": {
-      "q": "What did Kano help win for Tokyo in 1938?",
+      "q": "What did Kano help win for Tokyo in 1936?",
       "opts": [
         "The right to host the 1940 Olympic Games",
         "The first judo Olympic event",
@@ -38692,7 +38692,7 @@
       "exp": "Kano, as an IOC member, helped Tokyo win the hosting rights for the 1940 Games. They were later cancelled because of the war."
     },
     "de": {
-      "q": "Wofür half Kano 1938 Tokio zu gewinnen?",
+      "q": "Wofür half Kano 1936 Tokio zu gewinnen?",
       "opts": [
         "Das Recht, die Olympischen Spiele 1940 auszurichten",
         "Den ersten olympischen Judo-Wettbewerb",
@@ -38703,7 +38703,7 @@
       "exp": "Kano half als IOC-Mitglied Tokio, das Recht zur Ausrichtung der Spiele 1940 zu gewinnen. Sie wurden später wegen des Krieges abgesagt."
     },
     "fr": {
-      "q": "Qu'est-ce que Kano a aidé à obtenir pour Tokyo en 1938 ?",
+      "q": "Qu'est-ce que Kano a aidé à obtenir pour Tokyo en 1936 ?",
       "opts": [
         "Le droit d'accueillir les Jeux olympiques de 1940",
         "La première épreuve olympique de judo",
@@ -38714,7 +38714,7 @@
       "exp": "Kano, en tant que membre du CIO, a aidé Tokyo à obtenir l'organisation des Jeux de 1940. Ils furent ensuite annulés à cause de la guerre."
     },
     "es": {
-      "q": "¿Qué ayudó a conseguir Kano para Tokio en 1938?",
+      "q": "¿Qué ayudó a conseguir Kano para Tokio en 1936?",
       "opts": [
         "El derecho a ser sede de los Juegos Olímpicos de 1940",
         "La primera competición olímpica de judo",
@@ -38725,7 +38725,7 @@
       "exp": "Kano, como miembro del COI, ayudó a que Tokio obtuviera el derecho a acoger los Juegos de 1940. Más tarde se cancelaron por la guerra."
     },
     "it": {
-      "q": "Cosa ha contribuito a ottenere Kano per Tokyo nel 1938?",
+      "q": "Cosa ha contribuito a ottenere Kano per Tokyo nel 1936?",
       "opts": [
         "Il diritto di ospitare i Giochi Olimpici del 1940",
         "La prima gara olimpica di judo",
@@ -38736,7 +38736,7 @@
       "exp": "Kano, come membro del CIO, ha aiutato Tokyo a ottenere il diritto di ospitare i Giochi del 1940. Furono poi annullati a causa della guerra."
     },
     "pt": {
-      "q": "O que Kano ajudou a conquistar para Tóquio em 1938?",
+      "q": "O que Kano ajudou a conquistar para Tóquio em 1936?",
       "opts": [
         "O direito de sediar os Jogos Olímpicos de 1940",
         "A primeira prova olímpica de judô",
@@ -38747,7 +38747,7 @@
       "exp": "Kano, como membro do COI, ajudou Tóquio a conquistar o direito de sediar os Jogos de 1940. Eles foram cancelados mais tarde por causa da guerra."
     },
     "ru": {
-      "q": "Чему помог Кано добиться для Токио в 1938 году?",
+      "q": "Чему помог Кано добиться для Токио в 1936 году?",
       "opts": [
         "Права провести Олимпийские игры 1940 года",
         "Первого олимпийского турнира по дзюдо",
@@ -39178,7 +39178,7 @@
       "exp": "Aufrichtigkeit ist einer der Werte des Judo. Ein guter Judoka ist ehrlich zu anderen und zu sich selbst."
     },
     "fr": {
-      "q": "Quelle valeur signifie dire la vérité et être honnête ?",
+      "q": "Quelle valeur consiste à dire la vérité et à être honnête ?",
       "opts": [
         "La vitesse",
         "Le courage",
@@ -39498,7 +39498,7 @@
     "pt": {
       "q": "Por que é importante chegar na hora para a aula?",
       "opts": [
-        "Mostra respeito pelos outros",
+        "Para mostrar respeito pelos outros",
         "Para ganhar uma faixa melhor",
         "Para ser sempre o primeiro da fila",
         "É só uma regra da escola"
@@ -40462,10 +40462,10 @@
         "Точно следовать за учителем",
         "Учить других учеников",
         "Отдыхать после тренировки",
-        "Отходить от образца и приспосабливать"
+        "Отходить от образца и приспосабливать приёмы под себя"
       ],
       "c": 3,
-      "exp": "На этапе Ха ученик начинает задавать вопросы и приспосабливать. Это вторая ступень обучения."
+      "exp": "На этапе Ха ученик начинает задавать вопросы и приспосабливать приёмы под себя. Это вторая ступень обучения."
     },
     "c": 3
   },
@@ -40606,7 +40606,7 @@
       "q": "Que signifie 'Bunbu-ryodo' ?",
       "opts": [
         "Combattre sans aucune règle",
-        "Le stylo et le sabre ensemble",
+        "La plume et le sabre ensemble",
         "Gagner à tout prix",
         "Seule la technique compte"
       ],
