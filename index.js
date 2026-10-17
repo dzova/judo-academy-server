@@ -1694,6 +1694,14 @@ app.get('/api/tehnika', (req, res) => {
   }
 });
 
+// Obavestenje o novoj verziji (16.10.2026). Prazno/neodredjeno = klijent ne prikazuje nista.
+// Postavi LATEST_APP_VERSION (Railway Variables) TEK kad nova verzija postane dostupna na Play Store-u.
+app.get('/api/app-version', (req, res) => {
+  res.setHeader('Cache-Control', 'public, max-age=600');
+  const latest = (process.env.LATEST_APP_VERSION || '').trim();
+  res.json({ latest: /^\d+(\.\d+){0,2}$/.test(latest) ? latest : null });
+});
+
 // ════════════════════════════════════════ AI SENSEI PROXY ════════════════════════════════════════
 
 // Osnovna zastita protiv zloupotrebe: limit velicine payload-a (sprecava da 5x/dan limit
