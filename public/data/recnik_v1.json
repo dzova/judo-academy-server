@@ -16,8 +16,7 @@
     "es_name": "Ippon",
     "it_name": "Ippon",
     "pt_name": "Ippon",
-    "ru_name": "Ippon",
-    "needs_ru_translation": false
+    "ru_name": "Ippon"
   },
   {
     "jp": "Waza-ari",
@@ -36,8 +35,7 @@
     "es_name": "Waza-ari",
     "it_name": "Waza-ari",
     "pt_name": "Waza-ari",
-    "ru_name": "Waza-ari",
-    "needs_ru_translation": false
+    "ru_name": "Waza-ari"
   },
   {
     "jp": "Yuko",
@@ -56,8 +54,7 @@
     "es_name": "Yuko",
     "it_name": "Yuko",
     "pt_name": "Yuko",
-    "ru_name": "Yuko",
-    "needs_ru_translation": false
+    "ru_name": "Yuko"
   },
   {
     "jp": "Shido",
@@ -76,8 +73,7 @@
     "es_name": "Shido",
     "it_name": "Shido",
     "pt_name": "Shido",
-    "ru_name": "Shido",
-    "needs_ru_translation": false
+    "ru_name": "Shido"
   },
   {
     "jp": "Hansoku-make",
@@ -96,8 +92,7 @@
     "es_name": "Hansoku-make",
     "it_name": "Hansoku-make",
     "pt_name": "Hansoku-make",
-    "ru_name": "Hansoku-make",
-    "needs_ru_translation": false
+    "ru_name": "Hansoku-make"
   },
   {
     "jp": "Osaekomi",
@@ -116,8 +111,7 @@
     "es_name": "Osaekomi",
     "it_name": "Osaekomi",
     "pt_name": "Osaekomi",
-    "ru_name": "Osaekomi",
-    "needs_ru_translation": false
+    "ru_name": "Osaekomi"
   },
   {
     "jp": "Toketa",
@@ -136,8 +130,7 @@
     "es_name": "Toketa",
     "it_name": "Toketa",
     "pt_name": "Toketa",
-    "ru_name": "Toketa",
-    "needs_ru_translation": false
+    "ru_name": "Toketa"
   },
   {
     "jp": "Matte",
@@ -156,8 +149,7 @@
     "es_name": "Matte",
     "it_name": "Matte",
     "pt_name": "Matte",
-    "ru_name": "Matte",
-    "needs_ru_translation": false
+    "ru_name": "Matte"
   },
   {
     "jp": "Hajime",
@@ -176,8 +168,7 @@
     "es_name": "Hajime",
     "it_name": "Hajime",
     "pt_name": "Hajime",
-    "ru_name": "Hajime",
-    "needs_ru_translation": false
+    "ru_name": "Hajime"
   },
   {
     "jp": "Sono-mama",
@@ -196,8 +187,7 @@
     "es_name": "Sono-mama",
     "it_name": "Sono-mama",
     "pt_name": "Sono-mama",
-    "ru_name": "Sono-mama",
-    "needs_ru_translation": false
+    "ru_name": "Sono-mama"
   },
   {
     "jp": "Yoshi",
@@ -216,8 +206,7 @@
     "es_name": "Yoshi",
     "it_name": "Yoshi",
     "pt_name": "Yoshi",
-    "ru_name": "Yoshi",
-    "needs_ru_translation": false
+    "ru_name": "Yoshi"
   },
   {
     "jp": "Tori",
@@ -236,8 +225,7 @@
     "es_name": "Tori",
     "it_name": "Tori",
     "pt_name": "Tori",
-    "ru_name": "Tori",
-    "needs_ru_translation": false
+    "ru_name": "Tori"
   },
   {
     "jp": "Uke",
@@ -256,8 +244,7 @@
     "es_name": "Uke",
     "it_name": "Uke",
     "pt_name": "Uke",
-    "ru_name": "Uke",
-    "needs_ru_translation": false
+    "ru_name": "Uke"
   },
   {
     "jp": "Nage-waza",
@@ -276,8 +263,7 @@
     "es_name": "Nage-waza",
     "it_name": "Nage-waza",
     "pt_name": "Nage-waza",
-    "ru_name": "Nage-waza",
-    "needs_ru_translation": false
+    "ru_name": "Nage-waza"
   },
   {
     "jp": "Katame-waza",
@@ -296,8 +282,7 @@
     "es_name": "Katame-waza",
     "it_name": "Katame-waza",
     "pt_name": "Katame-waza",
-    "ru_name": "Katame-waza",
-    "needs_ru_translation": false
+    "ru_name": "Katame-waza"
   },
   {
     "jp": "Ukemi",
@@ -316,8 +301,7 @@
     "es_name": "Ukemi",
     "it_name": "Ukemi",
     "pt_name": "Ukemi",
-    "ru_name": "Ukemi",
-    "needs_ru_translation": false
+    "ru_name": "Ukemi"
   },
   {
     "jp": "Kuzushi",
@@ -336,8 +320,7 @@
     "es_name": "Kuzushi",
     "it_name": "Kuzushi",
     "pt_name": "Kuzushi",
-    "ru_name": "Kuzushi",
-    "needs_ru_translation": false
+    "ru_name": "Kuzushi"
   },
   {
     "jp": "Tsukuri",
@@ -356,8 +339,7 @@
     "es_name": "Tsukuri",
     "it_name": "Tsukuri",
     "pt_name": "Tsukuri",
-    "ru_name": "Tsukuri",
-    "needs_ru_translation": false
+    "ru_name": "Tsukuri"
   },
   {
     "jp": "Kake",
@@ -376,8 +358,7 @@
     "es_name": "Kake",
     "it_name": "Kake",
     "pt_name": "Kake",
-    "ru_name": "Kake",
-    "needs_ru_translation": false
+    "ru_name": "Kake"
   },
   {
     "jp": "Randori",
@@ -396,8 +377,7 @@
     "es_name": "Randori",
     "it_name": "Randori",
     "pt_name": "Randori",
-    "ru_name": "Randori",
-    "needs_ru_translation": false
+    "ru_name": "Randori"
   },
   {
     "jp": "Shiai",
@@ -416,8 +396,7 @@
     "es_name": "Shiai",
     "it_name": "Shiai",
     "pt_name": "Shiai",
-    "ru_name": "Shiai",
-    "needs_ru_translation": false
+    "ru_name": "Shiai"
   },
   {
     "jp": "Kata",
@@ -436,8 +415,7 @@
     "es_name": "Kata",
     "it_name": "Kata",
     "pt_name": "Kata",
-    "ru_name": "Kata",
-    "needs_ru_translation": false
+    "ru_name": "Kata"
   },
   {
     "jp": "Dojo",
@@ -456,8 +434,7 @@
     "es_name": "Dojo",
     "it_name": "Dojo",
     "pt_name": "Dojo",
-    "ru_name": "Dojo",
-    "needs_ru_translation": false
+    "ru_name": "Dojo"
   },
   {
     "jp": "Tatami",
@@ -476,8 +453,7 @@
     "es_name": "Tatami",
     "it_name": "Tatami",
     "pt_name": "Tatami",
-    "ru_name": "Tatami",
-    "needs_ru_translation": false
+    "ru_name": "Tatami"
   },
   {
     "jp": "Gi / Judogi",
@@ -496,8 +472,7 @@
     "es_name": "Gi / Judogi",
     "it_name": "Gi / Judogi",
     "pt_name": "Gi / Judogi",
-    "ru_name": "Gi / Judogi",
-    "needs_ru_translation": false
+    "ru_name": "Gi / Judogi"
   },
   {
     "jp": "Obi",
@@ -516,8 +491,7 @@
     "es_name": "Obi",
     "it_name": "Obi",
     "pt_name": "Obi",
-    "ru_name": "Obi",
-    "needs_ru_translation": false
+    "ru_name": "Obi"
   },
   {
     "jp": "Rei",
@@ -536,8 +510,7 @@
     "es_name": "Rei",
     "it_name": "Rei",
     "pt_name": "Rei",
-    "ru_name": "Rei",
-    "needs_ru_translation": false
+    "ru_name": "Rei"
   },
   {
     "jp": "Sensei",
@@ -556,8 +529,7 @@
     "es_name": "Sensei",
     "it_name": "Sensei",
     "pt_name": "Sensei",
-    "ru_name": "Sensei",
-    "needs_ru_translation": false
+    "ru_name": "Sensei"
   },
   {
     "jp": "Sempai",
@@ -576,8 +548,7 @@
     "es_name": "Sempai",
     "it_name": "Sempai",
     "pt_name": "Sempai",
-    "ru_name": "Sempai",
-    "needs_ru_translation": false
+    "ru_name": "Sempai"
   },
   {
     "jp": "Kohai",
@@ -596,8 +567,7 @@
     "es_name": "Kohai",
     "it_name": "Kohai",
     "pt_name": "Kohai",
-    "ru_name": "Kohai",
-    "needs_ru_translation": false
+    "ru_name": "Kohai"
   },
   {
     "jp": "Seiryoku-zenyo",
@@ -616,8 +586,7 @@
     "es_name": "Seiryoku-zenyo",
     "it_name": "Seiryoku-zenyo",
     "pt_name": "Seiryoku-zenyo",
-    "ru_name": "Seiryoku-zenyo",
-    "needs_ru_translation": false
+    "ru_name": "Seiryoku-zenyo"
   },
   {
     "jp": "Mushin",
@@ -636,8 +605,7 @@
     "es_name": "Mushin",
     "it_name": "Mushin",
     "pt_name": "Mushin",
-    "ru_name": "Mushin",
-    "needs_ru_translation": false
+    "ru_name": "Mushin"
   },
   {
     "jp": "Tokui-waza",
@@ -656,8 +624,7 @@
     "es_name": "Tokui-waza",
     "it_name": "Tokui-waza",
     "pt_name": "Tokui-waza",
-    "ru_name": "Tokui-waza",
-    "needs_ru_translation": false
+    "ru_name": "Tokui-waza"
   },
   {
     "jp": "Uchi-komi",
@@ -676,8 +643,7 @@
     "es_name": "Uchi-komi",
     "it_name": "Uchi-komi",
     "pt_name": "Uchi-komi",
-    "ru_name": "Uchi-komi",
-    "needs_ru_translation": false
+    "ru_name": "Uchi-komi"
   },
   {
     "jp": "Nage-komi",
@@ -696,8 +662,7 @@
     "es_name": "Nage-komi",
     "it_name": "Nage-komi",
     "pt_name": "Nage-komi",
-    "ru_name": "Nage-komi",
-    "needs_ru_translation": false
+    "ru_name": "Nage-komi"
   },
   {
     "jp": "Sutemi-waza",
@@ -716,8 +681,7 @@
     "es_name": "Sutemi-waza",
     "it_name": "Sutemi-waza",
     "pt_name": "Sutemi-waza",
-    "ru_name": "Sutemi-waza",
-    "needs_ru_translation": false
+    "ru_name": "Sutemi-waza"
   },
   {
     "jp": "Kansetsu-waza",
@@ -736,8 +700,7 @@
     "es_name": "Kansetsu-waza",
     "it_name": "Kansetsu-waza",
     "pt_name": "Kansetsu-waza",
-    "ru_name": "Kansetsu-waza",
-    "needs_ru_translation": false
+    "ru_name": "Kansetsu-waza"
   },
   {
     "jp": "Shime-waza",
@@ -756,8 +719,7 @@
     "es_name": "Shime-waza",
     "it_name": "Shime-waza",
     "pt_name": "Shime-waza",
-    "ru_name": "Shime-waza",
-    "needs_ru_translation": false
+    "ru_name": "Shime-waza"
   },
   {
     "jp": "Kodokan",
@@ -776,8 +738,7 @@
     "es_name": "Kodokan",
     "it_name": "Kodokan",
     "pt_name": "Kodokan",
-    "ru_name": "Kodokan",
-    "needs_ru_translation": false
+    "ru_name": "Kodokan"
   },
   {
     "jp": "Dan",
@@ -796,8 +757,7 @@
     "es_name": "Dan",
     "it_name": "Dan",
     "pt_name": "Dan",
-    "ru_name": "Dan",
-    "needs_ru_translation": false
+    "ru_name": "Dan"
   },
   {
     "jp": "Kyu",
@@ -816,8 +776,7 @@
     "es_name": "Kyu",
     "it_name": "Kyu",
     "pt_name": "Kyu",
-    "ru_name": "Kyu",
-    "needs_ru_translation": false
+    "ru_name": "Kyu"
   },
   {
     "jp": "Happo-no-kuzushi",
@@ -836,8 +795,7 @@
     "es_name": "Happo-no-kuzushi",
     "it_name": "Happo-no-kuzushi",
     "pt_name": "Happo-no-kuzushi",
-    "ru_name": "Happo-no-kuzushi",
-    "needs_ru_translation": false
+    "ru_name": "Happo-no-kuzushi"
   },
   {
     "jp": "Kami-shiho",
@@ -856,8 +814,7 @@
     "es_name": "Kami-shiho",
     "it_name": "Kami-shiho",
     "pt_name": "Kami-shiho",
-    "ru_name": "Kami-shiho",
-    "needs_ru_translation": false
+    "ru_name": "Kami-shiho"
   },
   {
     "jp": "Kesa-gatame",
@@ -876,8 +833,7 @@
     "es_name": "Kesa-gatame",
     "it_name": "Kesa-gatame",
     "pt_name": "Kesa-gatame",
-    "ru_name": "Kesa-gatame",
-    "needs_ru_translation": false
+    "ru_name": "Kesa-gatame"
   },
   {
     "jp": "Yoko-shiho",
@@ -896,8 +852,7 @@
     "es_name": "Yoko-shiho",
     "it_name": "Yoko-shiho",
     "pt_name": "Yoko-shiho",
-    "ru_name": "Yoko-shiho",
-    "needs_ru_translation": false
+    "ru_name": "Yoko-shiho"
   },
   {
     "jp": "Tate-shiho",
@@ -916,8 +871,7 @@
     "es_name": "Tate-shiho",
     "it_name": "Tate-shiho",
     "pt_name": "Tate-shiho",
-    "ru_name": "Tate-shiho",
-    "needs_ru_translation": false
+    "ru_name": "Tate-shiho"
   },
   {
     "jp": "O / Ko",
@@ -936,8 +890,7 @@
     "es_name": "O / Ko",
     "it_name": "O / Ko",
     "pt_name": "O / Ko",
-    "ru_name": "O / Ko",
-    "needs_ru_translation": false
+    "ru_name": "O / Ko"
   },
   {
     "jp": "Gari",
@@ -956,8 +909,7 @@
     "es_name": "Gari",
     "it_name": "Gari",
     "pt_name": "Gari",
-    "ru_name": "Gari",
-    "needs_ru_translation": false
+    "ru_name": "Gari"
   },
   {
     "jp": "Gake",
@@ -976,8 +928,7 @@
     "es_name": "Gake",
     "it_name": "Gake",
     "pt_name": "Gake",
-    "ru_name": "Gake",
-    "needs_ru_translation": false
+    "ru_name": "Gake"
   },
   {
     "jp": "Otoshi",
@@ -996,8 +947,7 @@
     "es_name": "Otoshi",
     "it_name": "Otoshi",
     "pt_name": "Otoshi",
-    "ru_name": "Otoshi",
-    "needs_ru_translation": false
+    "ru_name": "Otoshi"
   },
   {
     "jp": "Nage",
@@ -1016,8 +966,7 @@
     "es_name": "Nage",
     "it_name": "Nage",
     "pt_name": "Nage",
-    "ru_name": "Nage",
-    "needs_ru_translation": false
+    "ru_name": "Nage"
   },
   {
     "jp": "Guruma",
@@ -1036,8 +985,7 @@
     "es_name": "Guruma",
     "it_name": "Guruma",
     "pt_name": "Guruma",
-    "ru_name": "Guruma",
-    "needs_ru_translation": false
+    "ru_name": "Guruma"
   },
   {
     "jp": "Barai / Harai",
@@ -1056,8 +1004,7 @@
     "es_name": "Barai / Harai",
     "it_name": "Barai / Harai",
     "pt_name": "Barai / Harai",
-    "ru_name": "Barai / Harai",
-    "needs_ru_translation": false
+    "ru_name": "Barai / Harai"
   },
   {
     "jp": "Makikomi",
@@ -1076,8 +1023,7 @@
     "es_name": "Makikomi",
     "it_name": "Makikomi",
     "pt_name": "Makikomi",
-    "ru_name": "Makikomi",
-    "needs_ru_translation": false
+    "ru_name": "Makikomi"
   },
   {
     "jp": "Sukashi",
@@ -1096,8 +1042,7 @@
     "es_name": "Sukashi",
     "it_name": "Sukashi",
     "pt_name": "Sukashi",
-    "ru_name": "Sukashi",
-    "needs_ru_translation": false
+    "ru_name": "Sukashi"
   },
   {
     "jp": "Ashi",
@@ -1116,8 +1061,7 @@
     "es_name": "Ashi",
     "it_name": "Ashi",
     "pt_name": "Ashi",
-    "ru_name": "Ashi",
-    "needs_ru_translation": false
+    "ru_name": "Ashi"
   },
   {
     "jp": "Te",
@@ -1136,8 +1080,7 @@
     "es_name": "Te",
     "it_name": "Te",
     "pt_name": "Te",
-    "ru_name": "Te",
-    "needs_ru_translation": false
+    "ru_name": "Te"
   },
   {
     "jp": "Koshi / Goshi",
@@ -1156,8 +1099,7 @@
     "es_name": "Koshi / Goshi",
     "it_name": "Koshi / Goshi",
     "pt_name": "Koshi / Goshi",
-    "ru_name": "Koshi / Goshi",
-    "needs_ru_translation": false
+    "ru_name": "Koshi / Goshi"
   },
   {
     "jp": "Seoi",
@@ -1176,8 +1118,7 @@
     "es_name": "Seoi",
     "it_name": "Seoi",
     "pt_name": "Seoi",
-    "ru_name": "Seoi",
-    "needs_ru_translation": false
+    "ru_name": "Seoi"
   },
   {
     "jp": "Uchi",
@@ -1196,8 +1137,7 @@
     "es_name": "Uchi",
     "it_name": "Uchi",
     "pt_name": "Uchi",
-    "ru_name": "Uchi",
-    "needs_ru_translation": false
+    "ru_name": "Uchi"
   },
   {
     "jp": "Soto",
@@ -1216,8 +1156,7 @@
     "es_name": "Soto",
     "it_name": "Soto",
     "pt_name": "Soto",
-    "ru_name": "Soto",
-    "needs_ru_translation": false
+    "ru_name": "Soto"
   },
   {
     "jp": "Mae",
@@ -1236,8 +1175,7 @@
     "es_name": "Mae",
     "it_name": "Mae",
     "pt_name": "Mae",
-    "ru_name": "Mae",
-    "needs_ru_translation": false
+    "ru_name": "Mae"
   },
   {
     "jp": "Ushiro",
@@ -1256,8 +1194,7 @@
     "es_name": "Ushiro",
     "it_name": "Ushiro",
     "pt_name": "Ushiro",
-    "ru_name": "Ushiro",
-    "needs_ru_translation": false
+    "ru_name": "Ushiro"
   },
   {
     "jp": "Yoko",
@@ -1276,8 +1213,7 @@
     "es_name": "Yoko",
     "it_name": "Yoko",
     "pt_name": "Yoko",
-    "ru_name": "Yoko",
-    "needs_ru_translation": false
+    "ru_name": "Yoko"
   },
   {
     "jp": "Tachi-waza",
@@ -1296,8 +1232,7 @@
     "es_name": "Tachi-waza",
     "it_name": "Tachi-waza",
     "pt_name": "Tachi-waza",
-    "ru_name": "Tachi-waza",
-    "needs_ru_translation": false
+    "ru_name": "Tachi-waza"
   },
   {
     "jp": "Ne-waza",
@@ -1316,8 +1251,7 @@
     "es_name": "Ne-waza",
     "it_name": "Ne-waza",
     "pt_name": "Ne-waza",
-    "ru_name": "Ne-waza",
-    "needs_ru_translation": false
+    "ru_name": "Ne-waza"
   },
   {
     "jp": "Morote",
@@ -1336,8 +1270,7 @@
     "es_name": "Morote",
     "it_name": "Morote",
     "pt_name": "Morote",
-    "ru_name": "Morote",
-    "needs_ru_translation": false
+    "ru_name": "Morote"
   },
   {
     "jp": "Ippon-seoi",
@@ -1356,8 +1289,7 @@
     "es_name": "Ippon-seoi",
     "it_name": "Ippon-seoi",
     "pt_name": "Ippon-seoi",
-    "ru_name": "Ippon-seoi",
-    "needs_ru_translation": false
+    "ru_name": "Ippon-seoi"
   },
   {
     "jp": "Kumi-kata",
@@ -1376,8 +1308,7 @@
     "es_name": "Kumi-kata",
     "it_name": "Kumi-kata",
     "pt_name": "Kumi-kata",
-    "ru_name": "Kumi-kata",
-    "needs_ru_translation": false
+    "ru_name": "Kumi-kata"
   },
   {
     "jp": "Shizen-hontai",
@@ -1396,8 +1327,7 @@
     "es_name": "Shizen-hontai",
     "it_name": "Shizen-hontai",
     "pt_name": "Shizen-hontai",
-    "ru_name": "Shizen-hontai",
-    "needs_ru_translation": false
+    "ru_name": "Shizen-hontai"
   },
   {
     "jp": "Jigo-tai",
@@ -1416,8 +1346,7 @@
     "es_name": "Jigo-tai",
     "it_name": "Jigo-tai",
     "pt_name": "Jigo-tai",
-    "ru_name": "Jigo-tai",
-    "needs_ru_translation": false
+    "ru_name": "Jigo-tai"
   },
   {
     "jp": "Seiza",
@@ -1436,8 +1365,7 @@
     "es_name": "Seiza",
     "it_name": "Seiza",
     "pt_name": "Seiza",
-    "ru_name": "Seiza",
-    "needs_ru_translation": false
+    "ru_name": "Seiza"
   },
   {
     "jp": "Shugyo",
@@ -1456,8 +1384,7 @@
     "es_name": "Shugyo",
     "it_name": "Shugyo",
     "pt_name": "Shugyo",
-    "ru_name": "Shugyo",
-    "needs_ru_translation": false
+    "ru_name": "Shugyo"
   },
   {
     "jp": "Fudoshin",
@@ -1476,8 +1403,7 @@
     "es_name": "Fudoshin",
     "it_name": "Fudoshin",
     "pt_name": "Fudoshin",
-    "ru_name": "Fudoshin",
-    "needs_ru_translation": false
+    "ru_name": "Fudoshin"
   },
   {
     "jp": "Ichi-go ichi-e",
@@ -1496,8 +1422,7 @@
     "es_name": "Ichi-go ichi-e",
     "it_name": "Ichi-go ichi-e",
     "pt_name": "Ichi-go ichi-e",
-    "ru_name": "Ichi-go ichi-e",
-    "needs_ru_translation": false
+    "ru_name": "Ichi-go ichi-e"
   },
   {
     "jp": "Golden Score",
@@ -1516,8 +1441,7 @@
     "es_name": "Golden Score",
     "it_name": "Golden Score",
     "pt_name": "Golden Score",
-    "ru_name": "Золотой счёт",
-    "needs_ru_translation": false
+    "ru_name": "Золотой счёт"
   },
   {
     "jp": "Shido sistem",
@@ -1536,8 +1460,7 @@
     "es_name": "Sistema Shido",
     "it_name": "Sistema Shido",
     "pt_name": "Sistema Shido",
-    "ru_name": "Система Шидо",
-    "needs_ru_translation": false
+    "ru_name": "Система Шидо"
   },
   {
     "jp": "Waza-ari i kombinacije",
@@ -1556,8 +1479,7 @@
     "es_name": "Waza-ari y combinaciones",
     "it_name": "Waza-ari e combinazioni",
     "pt_name": "Waza-ari e combinações",
-    "ru_name": "Вадза-ари и комбинации",
-    "needs_ru_translation": false
+    "ru_name": "Вадза-ари и комбинации"
   },
   {
     "jp": "Dojo etiketa",
@@ -1576,8 +1498,7 @@
     "es_name": "Etiqueta del dojo",
     "it_name": "Etichetta del dojo",
     "pt_name": "Etiqueta do dojo",
-    "ru_name": "Этикет додзё",
-    "needs_ru_translation": false
+    "ru_name": "Этикет додзё"
   },
   {
     "jp": "Kohai i Sempai odnos",
@@ -1596,8 +1517,7 @@
     "es_name": "Relación entre Kohai y Sempai",
     "it_name": "Relazione tra Kohai e Sempai",
     "pt_name": "Relação Kohai e Sempai",
-    "ru_name": "Кохай и Сэмпай",
-    "needs_ru_translation": false
+    "ru_name": "Кохай и Сэмпай"
   },
   {
     "jp": "Grip fighting – borba za hvat",
@@ -1616,8 +1536,7 @@
     "es_name": "Lucha por el agarre",
     "it_name": "Lotta per la presa",
     "pt_name": "Luta pela pegada",
-    "ru_name": "Борьба за захват",
-    "needs_ru_translation": false
+    "ru_name": "Борьба за захват"
   },
   {
     "jp": "Henka-waza – Promena tehnike",
@@ -1636,8 +1555,7 @@
     "es_name": "Henka-waza – Cambio de técnica",
     "it_name": "Henka-waza – Cambio di tecnica",
     "pt_name": "Henka-waza – Mudança de técnica",
-    "ru_name": "Хэнка-вадза — Смена техники",
-    "needs_ru_translation": false
+    "ru_name": "Хэнка-вадза — Смена техники"
   },
   {
     "jp": "Kombinacije tehnika",
@@ -1656,8 +1574,7 @@
     "es_name": "Técnicas de combinación",
     "it_name": "Combinazioni di tecniche",
     "pt_name": "Combinações de técnicas",
-    "ru_name": "Комбинации техник",
-    "needs_ru_translation": false
+    "ru_name": "Комбинации техник"
   },
   {
     "jp": "Maai – Razdaljina u borbi",
@@ -1676,8 +1593,7 @@
     "es_name": "Maai – Distancia de combate",
     "it_name": "Maai – Distanza di combattimento",
     "pt_name": "Maai – Distância de combate",
-    "ru_name": "Маай — Дистанция боя",
-    "needs_ru_translation": false
+    "ru_name": "Маай — Дистанция боя"
   },
   {
     "jp": "Nage-komi praksa",
@@ -1696,8 +1612,7 @@
     "es_name": "Práctica de Nage-komi",
     "it_name": "Pratica di Nage-komi",
     "pt_name": "Prática de Nage-komi",
-    "ru_name": "Практика Нагэ-коми",
-    "needs_ru_translation": false
+    "ru_name": "Практика Нагэ-коми"
   },
   {
     "jp": "Renraku-waza – Povezane tehnike",
@@ -1716,8 +1631,7 @@
     "es_name": "Renraku-waza – Técnicas enlazadas",
     "it_name": "Renraku-waza – Tecniche collegate",
     "pt_name": "Renraku-waza – Técnicas encadeadas",
-    "ru_name": "Рэнраку-вадза — Связанные техники",
-    "needs_ru_translation": false
+    "ru_name": "Рэнраку-вадза — Связанные техники"
   },
   {
     "jp": "Shisei – Držanje tela",
@@ -1736,8 +1650,7 @@
     "es_name": "Shisei – Postura corporal",
     "it_name": "Shisei – Postura del corpo",
     "pt_name": "Shisei – Postura corporal",
-    "ru_name": "Сисэй — Осанка",
-    "needs_ru_translation": false
+    "ru_name": "Сисэй — Осанка"
   },
   {
     "jp": "Tai-otoshi – Obaranje telom",
@@ -1756,8 +1669,7 @@
     "es_name": "Tai-otoshi – Caída del cuerpo",
     "it_name": "Tai-otoshi – Caduta del corpo",
     "pt_name": "Tai-otoshi – Queda do corpo",
-    "ru_name": "Тай-отоси — Падение тела",
-    "needs_ru_translation": false
+    "ru_name": "Тай-отоси — Падение тела"
   },
   {
     "jp": "Taisabaki – Pokret tela",
@@ -1776,8 +1688,7 @@
     "es_name": "Taisabaki – Movimiento corporal",
     "it_name": "Taisabaki – Movimento del corpo",
     "pt_name": "Taisabaki – Movimento corporal",
-    "ru_name": "Тайсабаки — Движение тела",
-    "needs_ru_translation": false
+    "ru_name": "Тайсабаки — Движение тела"
   },
   {
     "jp": "Uchi-komi praksa",
@@ -1796,8 +1707,7 @@
     "es_name": "Práctica de Uchi-komi",
     "it_name": "Pratica di Uchi-komi",
     "pt_name": "Prática de Uchi-komi",
-    "ru_name": "Практика Учи-коми",
-    "needs_ru_translation": false
+    "ru_name": "Практика Учи-коми"
   },
   {
     "jp": "Džudo i disciplina uma",
@@ -1816,8 +1726,7 @@
     "es_name": "El judo y la disciplina mental",
     "it_name": "Il judo e la disciplina mentale",
     "pt_name": "O judô e a disciplina mental",
-    "ru_name": "Дзюдо и дисциплина ума",
-    "needs_ru_translation": false
+    "ru_name": "Дзюдо и дисциплина ума"
   },
   {
     "jp": "Džudo i prijatelji",
@@ -1836,8 +1745,7 @@
     "es_name": "El judo y la amistad",
     "it_name": "Il judo e l'amicizia",
     "pt_name": "O judô e a amizade",
-    "ru_name": "Дзюдо и дружба",
-    "needs_ru_translation": false
+    "ru_name": "Дзюдо и дружба"
   },
   {
     "jp": "Džudo vrednosti – 8 vrlina",
@@ -1856,8 +1764,7 @@
     "es_name": "Valores del judo – 8 virtudes",
     "it_name": "Valori del judo – 8 virtù",
     "pt_name": "Valores do judô – 8 virtudes",
-    "ru_name": "Ценности дзюдо — 8 добродетелей",
-    "needs_ru_translation": false
+    "ru_name": "Ценности дзюдо — 8 добродетелей"
   },
   {
     "jp": "Jita-kyoei",
@@ -1876,8 +1783,7 @@
     "es_name": "Jita-kyoei",
     "it_name": "Jita-kyoei",
     "pt_name": "Jita-kyoei",
-    "ru_name": "Дзита-кёэй",
-    "needs_ru_translation": false
+    "ru_name": "Дзита-кёэй"
   },
   {
     "jp": "Randori filozofija",
@@ -1896,8 +1802,7 @@
     "es_name": "Filosofía del Randori",
     "it_name": "Filosofia del Randori",
     "pt_name": "Filosofia do Randori",
-    "ru_name": "Философия Рандори",
-    "needs_ru_translation": false
+    "ru_name": "Философия Рандори"
   },
   {
     "jp": "Sutemi i hrabrost",
@@ -1916,8 +1821,7 @@
     "es_name": "Sutemi y valentía",
     "it_name": "Sutemi e coraggio",
     "pt_name": "Sutemi e coragem",
-    "ru_name": "Жертвенность и смелость",
-    "needs_ru_translation": false
+    "ru_name": "Жертвенность и смелость"
   },
   {
     "jp": "Zanshin – Preostala budnost",
@@ -1936,7 +1840,6 @@
     "es_name": "Zanshin – Vigilancia continua",
     "it_name": "Zanshin – Vigilanza continua",
     "pt_name": "Zanshin – Vigilância contínua",
-    "ru_name": "Дзансин — Остаточная бдительность",
-    "needs_ru_translation": false
+    "ru_name": "Дзансин — Остаточная бдительность"
   }
 ]
