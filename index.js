@@ -1987,11 +1987,12 @@ app.post('/api/quiz/stats', _requireAuth, async (req, res) => {
   const t = Number(total) || 0;
   const ms = Number(maxStreak) || 0;
   // Osnovna logicka provera - correct/maxStreak ne mogu premasiti total, sprecava
-  // ocigledno lazirane vrednosti poslate direktnim API pozivom (ne app-om). Plafon 400 je
-  // namerna rezerva iznad trenutnih ~252 pitanja u bazi (frontend salje ukupan broj pitanja
-  // u rundi, ne broj odigranih) - ostavlja prostor za buduce dodavanje pitanja bez potrebe
-  // da se server hitno menja svaki put kad JSON baza pitanja poraste.
-  if (c < 0 || t < 0 || c > t || ms > t || t > 400 || s < 0 || s > 5000) {
+  // ocigledno lazirane vrednosti poslate direktnim API pozivom (ne app-om). Plafon je podignut
+  // sa 400 na 1000 jer app v1.16 salje ukupan broj pitanja (527) kao total, a baza pitanja je
+  // porasla preko 400 (frontend salje ukupan broj pitanja u rundi, ne broj odigranih) -
+  // ostavlja prostor za buduce dodavanje pitanja bez potrebe da se server hitno menja.
+  if (c < 0 || t < 0 || c > t || ms > t || t > 1000 || s < 0 || s > 5000) {
+    console.warn('[quiz][rejected-basic] user=' + userId + ' score=' + s + ' correct=' + c + ' total=' + t + ' maxStreak=' + ms);
     return res.status(400).json({ error: 'Nevalidni podaci o rezultatu' });
   }
   // DODATAK (05.10.2026, sumnjiv rezultat 1690 na rang listi): klijent dodaje poene ISKLJUCIVO uz tacan
