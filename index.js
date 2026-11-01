@@ -937,10 +937,18 @@ app.post('/api/billing/refresh', _requireAuth, async (req, res) => {
       return res.json({ success: true, active: _effTh.active, expires_at: _effTh.expires, throttled: true });
     }
 
-    const userResult = await db.query('SELECT play_purchase_token FROM users WHERE id = $1', [userId]);
+    const userResult = await db.query('SELECT play_purchase_token, subscription_tier, subscription_expires, promo_premium_until FROM users WHERE id = $1', [userId]);
     if (userResult.rows.length === 0) return res.status(404).json({ error: 'Korisnik nije pronadjen' });
     const token = userResult.rows[0].play_purchase_token;
-    if (!token) return res.status(400).json({ error: 'Nema sacuvane kupovine za osvezavanje' });
+    if (!token) {
+      // FIX (01.11.2026, analitika): korisnik sa Premium-om iz promo koda nema Play kupovinu pa nema sta da se
+      // osvezava kod Google-a. Ranije je ovo vracalo 400 (belezilo se kao greska u HTTP statistici). Ako je
+      // Premium i dalje vazeci (promo ili stariji grant bez tokena), vrati trenutno stanje kao uspeh; 400 ostaje
+      // samo kad nema ni tokena ni vazeceg Premium-a (kao i ranije).
+      const _effNoTok = _effectivePremium(userResult.rows[0]);
+      if (_effNoTok.active) return res.json({ success: true, active: true, expires_at: _effNoTok.expires, promo: true, noPlayPurchase: true });
+      return res.status(400).json({ error: 'Nema sacuvane kupovine za osvezavanje' });
+    }
 
     // productId nije poznat iz baze (ne cuvamo ga posebno), ali je potreban samo za
     // acknowledge poziv koji se svakako preskace ako je pretplata vec potvrdjena -
