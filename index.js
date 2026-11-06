@@ -805,7 +805,8 @@ app.post('/api/promo/redeem', strictLimiter, _requireAuth, _requireIntegrity, as
     await client.query('UPDATE promo_codes SET used_count = used_count + 1 WHERE code = $1', [code.toUpperCase()]);
 
     await client.query('COMMIT');
-    res.json({ success: true, duration_days: respDays, expires_at: expiresAt });
+    // campaign = oznaka kampanje (promo_codes.note) - klijent je salje u analitici (promo_redeemed).
+    res.json({ success: true, duration_days: respDays, expires_at: expiresAt, campaign: p.note || null });
   } catch (err) {
     await client.query('ROLLBACK').catch(() => {});
     _sendServerError(res, err);
@@ -1425,6 +1426,10 @@ function _generatePromoCode() {
 app.post('/api/admin/promo/generate', adminLimiter, async (req, res) => {
   if (!_checkAdminKey(req, res)) return;
   const { count, duration_days, note, valid_days, max_uses } = req.body;
+  // 06.11.2026: `note` je ujedno OZNAKA KAMPANJE (admin dashboard grupise konverziju po njoj) - obavezna,
+  // da se ne pojave kodovi "(bez napomene)" koje ne mozemo da pripisemo kampanji.
+  const campaignNote = (typeof note === 'string') ? note.trim().replace(/\s+/g, ' ').slice(0, 80) : '';
+  if (!campaignNote) return res.status(400).json({ error: 'note (oznaka kampanje) je obavezna, npr. "FB grupa pt-BR nov" ili "Klub Trudbenik"' });
   const n = parseInt(count);
   const duration = parseInt(duration_days);
   const uses = max_uses ? parseInt(max_uses) : 1;
@@ -1452,7 +1457,7 @@ app.post('/api/admin/promo/generate', adminLimiter, async (req, res) => {
       await db.query(
         `INSERT INTO promo_codes (code, duration_days, max_uses, used_count, valid_until, note)
          VALUES ($1, $2, $3, 0, $4, $5)`,
-        [code, duration, uses, validUntil, note || null]
+        [code, duration, uses, validUntil, campaignNote]
       );
       codes.push(code);
     }
@@ -1607,7 +1612,8 @@ app.delete('/api/account/me', strictLimiter, _requireAuth, async (req, res) => {
       'DELETE FROM users WHERE id = $1 RETURNING id, username, email',
       [req.userId]
     );
-    console.warn('[account][self-delete] Korisnik obrisao sopstveni nalog:', result.rows[0]);
+    // 06.11.2026 (privatnost): u logu samo id - ime i email se ne upisuju u Railway logove.
+    console.warn('[account][self-delete] Korisnik obrisao sopstveni nalog: id=' + (result.rows[0] ? result.rows[0].id : req.userId));
     res.json({ success: true });
   } catch (err) { _sendServerError(res, err); }
 });
@@ -3008,9 +3014,24 @@ app.get('/api/admin/dashboard', adminLimiter, async (req, res) => {
         FROM users
         GROUP BY LOWER(NULLIF(TRIM(club), '')) ORDER BY users DESC LIMIT 30
       `),
+      // 06.11.2026: korisnici bez zemlje u profilu dobijaju IZVEDENU zemlju iz regiona jezika uredjaja
+      // (localeRegion, salje ga v1.17+ u svakom dogadjaju). Samo citanje, nista se ne upisuje u users.
+      // Prikazuje se odvojeno kao "(izvedeno) BR" jer region jezika uredjaja nije isto sto i zemlja boravka.
       users_by_country: q(`
-        SELECT COALESCE(NULLIF(TRIM(country), ''), '(bez zemlje)') AS country, COUNT(*) AS users
-        FROM users
+        WITH inferred AS (
+          SELECT DISTINCT ON (user_id) user_id, UPPER(event_data->>'localeRegion') AS region
+          FROM analytics_events
+          WHERE event_name = 'app_session_start' AND user_id IS NOT NULL
+            AND event_data->>'localeRegion' ~ '^[A-Za-z]{2}$'
+            AND created_at > NOW() - INTERVAL '90 days'
+          ORDER BY user_id, created_at DESC
+        )
+        SELECT COALESCE(NULLIF(TRIM(u.country), ''),
+                        CASE WHEN i.region IS NOT NULL THEN '(izvedeno) ' || i.region END,
+                        '(bez zemlje)') AS country,
+               COUNT(*) AS users
+        FROM users u
+        LEFT JOIN inferred i ON i.user_id = u.id
         GROUP BY 1 ORDER BY users DESC LIMIT 30
       `),
 
