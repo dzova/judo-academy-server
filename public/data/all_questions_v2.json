@@ -7412,7 +7412,7 @@
   {
     "level": 2,
     "levelLabel": "intermediate",
-    "type": "istorija",
+    "type": "pravila",
     "videoId": null,
     "sr": {
       "q": "Šta je 'Kyu' a šta 'Dan' u sistemu pojaseva?",
@@ -7507,92 +7507,92 @@
   {
     "level": 1,
     "levelLabel": "beginner",
-    "type": "tehnika",
+    "type": "pravila",
     "videoId": null,
     "sr": {
-      "q": "Koliko boja pojaseva postoji u standardnom džudou za decu?",
+      "q": "Koji je tipičan redosled pojaseva u džudou za decu, od početnika do crnog pojasa?",
       "opts": [
-        "6-7 pojaseva: beli, žuti, narandžasti, zeleni, plavi, braon, crni",
-        "Samo 3 pojasa: beli, žuti i crni u svim klubovima",
-        "10 ili više različitih boja pojaseva u džudou",
-        "Samo beli i crni pojas se koriste u džudou"
+        "Beli → Žuti → Narandžasti → Zeleni → Plavi → Braon → Crni",
+        "Crni → Braon → Plavi → Zeleni → Narandžasti → Žuti → Beli",
+        "Beli → Plavi → Žuti → Zeleni → Narandžasti → Crni",
+        "Žuti → Beli → Zeleni → Narandžasti → Braon → Plavi → Crni"
       ],
       "c": 0,
       "exp": "Tipičan sistem za mlade: Beli → Žuti → Narandžasti → Zeleni → Plavi → Braon → Crni. Svaki zahteva znanje tehnika i minimum treninga!"
     },
     "en": {
-      "q": "How many belt colours are there in standard judo for children?",
+      "q": "What is the typical order of belts in children's judo, from beginner to black belt?",
       "opts": [
-        "6–7 belts: white, yellow, orange, green, blue, brown and black",
-        "Only 3 belts exist: white, yellow and black in all clubs",
-        "10 or more different belt colours are used in judo worldwide",
-        "Only white and black belts are used across all judo clubs"
+        "White → Yellow → Orange → Green → Blue → Brown → Black",
+        "Black → Brown → Blue → Green → Orange → Yellow → White",
+        "White → Blue → Yellow → Green → Orange → Black",
+        "Yellow → White → Green → Orange → Brown → Blue → Black"
       ],
       "c": 0,
       "exp": "Typical junior system: White → Yellow → Orange → Green → Blue → Brown → Black. Each requires knowledge of techniques and a minimum training period!"
     },
     "de": {
-      "q": "Wie viele Gürtelfarben gibt es im Standard-Judo für Kinder?",
+      "q": "Wie lautet die typische Reihenfolge der Gürtel im Kinder-Judo, vom Anfänger bis zum Schwarzgurt?",
       "opts": [
-        "6–7 Gürtel: weiß, gelb, orange, grün, blau, braun und schwarz",
-        "Es gibt nur 3 Gürtel: weiß, gelb und schwarz in allen Vereinen",
-        "Im Judo werden weltweit 10 oder mehr verschiedene Gürtelfarben verwendet",
-        "In allen Judo-Vereinen werden nur weiße und schwarze Gürtel verwendet"
+        "Weiß → Gelb → Orange → Grün → Blau → Braun → Schwarz",
+        "Schwarz → Braun → Blau → Grün → Orange → Gelb → Weiß",
+        "Weiß → Blau → Gelb → Grün → Orange → Schwarz",
+        "Gelb → Weiß → Grün → Orange → Braun → Blau → Schwarz"
       ],
       "c": 0,
       "exp": "Typisches Jugendsystem: Weiß → Gelb → Orange → Grün → Blau → Braun → Schwarz. Jeder erfordert Kenntnisse von Techniken und eine Mindest-Trainingszeit!"
     },
     "fr": {
-      "q": "Combien de couleurs de ceintures existe-t-il en judo standard pour les enfants ?",
+      "q": "Quel est l'ordre typique des ceintures en judo pour enfants, du débutant à la ceinture noire ?",
       "opts": [
-        "6 à 7 ceintures : blanche, jaune, orange, verte, bleue, marron et noire",
-        "Il n'existe que 3 ceintures : blanche, jaune et noire dans tous les clubs",
-        "Plus de 10 couleurs de ceintures différentes sont utilisées dans le monde du judo",
-        "Seules les ceintures blanche et noire sont utilisées dans tous les clubs de judo"
+        "Blanche → Jaune → Orange → Verte → Bleue → Marron → Noire",
+        "Noire → Marron → Bleue → Verte → Orange → Jaune → Blanche",
+        "Blanche → Bleue → Jaune → Verte → Orange → Noire",
+        "Jaune → Blanche → Verte → Orange → Marron → Bleue → Noire"
       ],
       "c": 0,
       "exp": "Le système junior typique : Blanche → Jaune → Orange → Verte → Bleue → Marron → Noire. Chaque grade nécessite la connaissance de techniques et une période d'entraînement minimale !"
     },
     "es": {
-      "q": "¿Cuántos colores de cinturón hay en el judo estándar para niños?",
+      "q": "¿Cuál es el orden típico de los cinturones en el judo infantil, desde principiante hasta cinturón negro?",
       "opts": [
-        "6-7 cinturones: blanco, amarillo, naranja, verde, azul, marrón y negro",
-        "Solo existen 3 cinturones: blanco, amarillo y negro en todos los clubes",
-        "Se usan 10 o más colores de cinturón distintos en el judo de todo el mundo",
-        "Solo se usan el cinturón blanco y el negro en todos los clubes de judo"
+        "Blanco → Amarillo → Naranja → Verde → Azul → Marrón → Negro",
+        "Negro → Marrón → Azul → Verde → Naranja → Amarillo → Blanco",
+        "Blanco → Azul → Amarillo → Verde → Naranja → Negro",
+        "Amarillo → Blanco → Verde → Naranja → Marrón → Azul → Negro"
       ],
       "c": 0,
       "exp": "Sistema júnior típico: Blanco → Amarillo → Naranja → Verde → Azul → Marrón → Negro. ¡Cada uno exige conocer técnicas y cumplir un período mínimo de entrenamiento!"
     },
     "it": {
-      "q": "Quanti colori di cintura esistono nel judo standard per bambini?",
+      "q": "Qual è l'ordine tipico delle cinture nel judo per bambini, dal principiante alla cintura nera?",
       "opts": [
-        "6–7 cinture: bianca, gialla, arancione, verde, blu, marrone e nera",
-        "Esistono solo 3 cinture: bianca, gialla e nera in tutti i club",
-        "Nel judo vengono usati in tutto il mondo 10 o più colori di cintura diversi",
-        "Solo la cintura bianca e la nera sono usate in tutti i club di judo"
+        "Bianca → Gialla → Arancione → Verde → Blu → Marrone → Nera",
+        "Nera → Marrone → Blu → Verde → Arancione → Gialla → Bianca",
+        "Bianca → Blu → Gialla → Verde → Arancione → Nera",
+        "Gialla → Bianca → Verde → Arancione → Marrone → Blu → Nera"
       ],
       "c": 0,
       "exp": "Sistema junior tipico: Bianca → Gialla → Arancione → Verde → Blu → Marrone → Nera. Ognuna richiede la conoscenza delle tecniche e un periodo minimo di allenamento!"
     },
     "pt": {
-      "q": "Quantas cores de faixa existem no judô padrão para crianças?",
+      "q": "Qual é a ordem típica das faixas no judô infantil, do iniciante até a faixa preta?",
       "opts": [
-        "6-7 faixas: branca, amarela, laranja, verde, azul, marrom e preta",
-        "Existem apenas 3 faixas: branca, amarela e preta em todos os clubes",
-        "São usadas 10 ou mais cores de faixa diferentes no judô em todo o mundo",
-        "Apenas as faixas branca e preta são usadas em todos os clubes de judô"
+        "Branca → Amarela → Laranja → Verde → Azul → Marrom → Preta",
+        "Preta → Marrom → Azul → Verde → Laranja → Amarela → Branca",
+        "Branca → Azul → Amarela → Verde → Laranja → Preta",
+        "Amarela → Branca → Verde → Laranja → Marrom → Azul → Preta"
       ],
       "c": 0,
       "exp": "Sistema júnior típico: Branca → Amarela → Laranja → Verde → Azul → Marrom → Preta. Cada uma exige conhecimento de técnicas e um período mínimo de treino!"
     },
     "ru": {
-      "q": "Сколько цветов поясов существует в стандартном дзюдо для детей?",
+      "q": "Каков типичный порядок поясов в детском дзюдо — от новичка до чёрного пояса?",
       "opts": [
-        "6–7 поясов: белый, жёлтый, оранжевый, зелёный, синий, коричневый и чёрный",
-        "Существует только 3 пояса: белый, жёлтый и чёрный во всех клубах",
-        "В дзюдо по всему миру используется 10 и более цветов поясов",
-        "Во всех клубах дзюдо используются только белый и чёрный пояса"
+        "Белый → Жёлтый → Оранжевый → Зелёный → Синий → Коричневый → Чёрный",
+        "Чёрный → Коричневый → Синий → Зелёный → Оранжевый → Жёлтый → Белый",
+        "Белый → Синий → Жёлтый → Зелёный → Оранжевый → Чёрный",
+        "Жёлтый → Белый → Зелёный → Оранжевый → Коричневый → Синий → Чёрный"
       ],
       "c": 0,
       "exp": "Типичная система для юниоров: белый → жёлтый → оранжевый → зелёный → синий → коричневый → чёрный. Каждый требует знания техник и минимального срока тренировок!"
@@ -16725,92 +16725,92 @@
     "type": "filozofija",
     "videoId": null,
     "sr": {
-      "q": "Šta znači izraz 'Džudo' na japanskom?",
+      "q": "Šta znači 'Do' u reči 'Džudo'?",
       "opts": [
-        "Veština borbe i snage",
-        "Blagi put",
-        "Borba bez oružja",
-        "Veština slabih nad jakim"
+        "Snaga",
+        "Borba",
+        "Put",
+        "Oružje"
       ],
-      "c": 1,
-      "exp": "Džudo znači 'blagi put' (Ju = blagost/popuštanje, Do = put). Kano je namerno odabrao ovaj naziv da naglasi filozofski i obrazovni aspekt, za razliku od jujutsua, koji je naglašavao borbenu veštinu."
+      "c": 2,
+      "exp": "'Do' znači put – životni put učenja i ličnog razvoja, a ne samo borbena veština. Isti 'Do' nalazi se u nazivima karate-do, aikido i kendo."
     },
     "en": {
-      "q": "What does the word 'Judo' mean in Japanese?",
+      "q": "What does 'Do' mean in the word 'Judo'?",
       "opts": [
-        "The art of fighting and strength",
-        "The Gentle Way",
-        "Unarmed combat",
-        "The art of the weak over the strong"
+        "Strength",
+        "Fight",
+        "Way",
+        "Weapon"
       ],
-      "c": 1,
-      "exp": "Judo means 'the Gentle Way' (Ju = gentleness/yielding, Do = Way). Kano deliberately chose this name to emphasise the philosophical and educational aspect, unlike jujutsu which emphasised combat skill."
+      "c": 2,
+      "exp": "'Do' means way – a lifelong path of learning and personal growth, not just a fighting skill. The same 'Do' appears in karate-do, aikido and kendo."
     },
     "de": {
-      "q": "Was bedeutet das Wort 'Judo' auf Japanisch?",
+      "q": "Was bedeutet 'Do' im Wort 'Judo'?",
       "opts": [
-        "Die Kunst des Kampfes und der Stärke",
-        "Der sanfte Weg",
-        "Waffenloser Kampf",
-        "Die Kunst der Schwachen über die Starken"
+        "Kraft",
+        "Kampf",
+        "Weg",
+        "Waffe"
       ],
-      "c": 1,
-      "exp": "Judo bedeutet 'der sanfte Weg' (Ju = Sanftheit/Nachgeben, Do = Weg). Kano wählte diesen Namen bewusst, um den philosophischen und erzieherischen Aspekt zu betonen – anders als Jujutsu, das die Kampffertigkeit in den Vordergrund stellte."
+      "c": 2,
+      "exp": "'Do' bedeutet Weg – ein lebenslanger Weg des Lernens und der persönlichen Entwicklung, nicht nur eine Kampfkunst. Dasselbe 'Do' steckt in Karate-do, Aikido und Kendo."
     },
     "fr": {
-      "q": "Que signifie le mot 'Judo' en japonais ?",
+      "q": "Que signifie « Do » dans le mot « judo » ?",
       "opts": [
-        "L'art du combat et de la force",
-        "La Voie de la souplesse",
-        "Le combat sans armes",
-        "L'art du faible sur le fort"
+        "Force",
+        "Combat",
+        "Voie",
+        "Arme"
       ],
-      "c": 1,
-      "exp": "Judo signifie 'la Voie de la souplesse' (Ju = souplesse/flexibilité, Do = Voie). Kano a délibérément choisi ce nom pour mettre en avant l'aspect philosophique et éducatif, contrairement au jujutsu qui mettait l'accent sur le combat."
+      "c": 2,
+      "exp": "« Do » signifie voie – un chemin d'apprentissage et de développement personnel tout au long de la vie, pas seulement une technique de combat. On retrouve le même « Do » dans karaté-do, aïkido et kendo."
     },
     "es": {
-      "q": "¿Qué significa la palabra 'Judo' en japonés?",
+      "q": "¿Qué significa «Do» en la palabra «judo»?",
       "opts": [
-        "El arte de la lucha y la fuerza",
-        "El Camino Suave",
-        "Combate sin armas",
-        "El arte del débil sobre el fuerte"
+        "Fuerza",
+        "Lucha",
+        "Camino",
+        "Arma"
       ],
-      "c": 1,
-      "exp": "Judo significa 'el Camino Suave' (Ju = suavidad/ceder, Do = Camino). Kano eligió este nombre deliberadamente para subrayar el aspecto filosófico y educativo, a diferencia del jujutsu, que hacía hincapié en la habilidad de combate."
+      "c": 2,
+      "exp": "«Do» significa camino: una senda de aprendizaje y crecimiento personal para toda la vida, no solo una habilidad de combate. El mismo «Do» aparece en karate-do, aikido y kendo."
     },
     "it": {
-      "q": "Cosa significa la parola 'Judo' in giapponese?",
+      "q": "Che cosa significa «Do» nella parola «judo»?",
       "opts": [
-        "L'arte del combattimento e della forza",
-        "La Via della Gentilezza",
-        "Il combattimento senz'armi",
-        "L'arte del debole sul forte"
+        "Forza",
+        "Combattimento",
+        "Via",
+        "Arma"
       ],
-      "c": 1,
-      "exp": "Judo significa 'la Via della Gentilezza' (Ju = gentilezza/cedevolezza, Do = Via). Kano scelse deliberatamente questo nome per sottolineare l'aspetto filosofico ed educativo, a differenza del jujutsu che puntava sull'abilità di combattimento."
+      "c": 2,
+      "exp": "«Do» significa via: un percorso di apprendimento e crescita personale per tutta la vita, non solo un'abilità di combattimento. Lo stesso «Do» compare in karate-do, aikido e kendo."
     },
     "pt": {
-      "q": "O que significa a palavra 'Judô' em japonês?",
+      "q": "O que significa «Do» na palavra «judô»?",
       "opts": [
-        "A arte do combate e da força",
-        "O Caminho Suave",
-        "Combate sem armas",
-        "A arte do fraco sobre o forte"
+        "Força",
+        "Luta",
+        "Caminho",
+        "Arma"
       ],
-      "c": 1,
-      "exp": "Judô significa 'o Caminho Suave' (Ju = suavidade/flexibilidade, Do = Caminho). Kano escolheu esse nome deliberadamente para ressaltar o aspecto filosófico e educativo, ao contrário do jujutsu, que enfatizava a habilidade de combate."
+      "c": 2,
+      "exp": "«Do» significa caminho: uma trilha de aprendizado e crescimento pessoal para toda a vida, não apenas uma habilidade de luta. O mesmo «Do» aparece em karatê-do, aikidô e kendô."
     },
     "ru": {
-      "q": "Что означает слово «дзюдо» по-японски?",
+      "q": "Что означает «до» в слове «дзюдо»?",
       "opts": [
-        "Искусство борьбы и силы",
-        "Мягкий путь",
-        "Рукопашный бой без оружия",
-        "Искусство слабого над сильным"
+        "Сила",
+        "Борьба",
+        "Путь",
+        "Оружие"
       ],
-      "c": 1,
-      "exp": "Дзюдо означает «мягкий путь» (Дзю = мягкость/уступчивость, До = путь). Кано намеренно выбрал это название, чтобы подчеркнуть философский и воспитательный аспект, в отличие от дзю-дзюцу, которое делало упор на боевое мастерство."
+      "c": 2,
+      "exp": "«До» означает путь — путь обучения и личного развития на всю жизнь, а не только боевое умение. То же «до» есть в каратэ-до, айкидо и кэндо."
     },
     "c": 1
   },
@@ -29927,10 +29927,10 @@
   {
     "level": 1,
     "levelLabel": "beginner",
-    "type": "istorija",
+    "type": "pravila",
     "videoId": null,
     "sr": {
-      "q": "Koje boje pojasa obično počinje početnik?",
+      "q": "Koji pojas obično nosi početnik?",
       "opts": [
         "Crni",
         "Beli",
@@ -37337,10 +37337,10 @@
   {
     "level": 1,
     "levelLabel": "beginner",
-    "type": "istorija",
+    "type": "pravila",
     "videoId": null,
     "sr": {
-      "q": "Koje boje je pojas džudoke sa 1. danom?",
+      "q": "Koji pojas nosi džudoka sa 1. dan stepenom (šodan)?",
       "opts": [
         "Beli",
         "Crni",
@@ -37717,10 +37717,10 @@
   {
     "level": 2,
     "levelLabel": "intermediate",
-    "type": "istorija",
+    "type": "pravila",
     "videoId": null,
     "sr": {
-      "q": "Koji pojas nose nosioci 9. i 10. dana?",
+      "q": "Koji pojas nose džudoke sa 9. i 10. dan stepenom?",
       "opts": [
         "Crni",
         "Crveni",
@@ -38287,10 +38287,10 @@
   {
     "level": 3,
     "levelLabel": "advanced",
-    "type": "istorija",
+    "type": "pravila",
     "videoId": null,
     "sr": {
-      "q": "Koji pojas nose nosioci od 6. do 8. dana?",
+      "q": "Koji pojas nose džudoke od 6. do 8. dan stepena?",
       "opts": [
         "Crveno-beli",
         "Običan crni",
