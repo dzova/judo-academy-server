@@ -12357,7 +12357,7 @@
     "sr": {
       "q": "Šta je 'Hikite' u bacanju?",
       "opts": [
-        "Ruka koja povlači – obično hvata Ukeov rukav – narušava Ukeovu ravnotežu i vodi bacanje",
+        "Ruka koja povlači (obično za rukav) i vodi bacanje",
         "Ruka koja hvata rever i podiže ga",
         "Noga koja pokosi Ukeovu nogu oslonca",
         "Tehnika povlačenja Ukea dole u ne-waza"
@@ -12368,7 +12368,7 @@
     "en": {
       "q": "What is 'Hikite' in a throw?",
       "opts": [
-        "The pulling hand – usually gripping Uke's sleeve – that breaks Uke's balance and guides the throw",
+        "The pulling hand, usually on the sleeve, that guides the throw",
         "The hand that grips the lapel and lifts it",
         "The leg that sweeps Uke's supporting foot",
         "A technique of pulling Uke down into ne-waza"
@@ -12379,7 +12379,7 @@
     "de": {
       "q": "Was ist 'Hikite' bei einem Wurf?",
       "opts": [
-        "Die ziehende Hand – meist am Ärmel von Uke –, die Ukes Gleichgewicht bricht und den Wurf führt",
+        "Die ziehende Hand, meist am Ärmel, die den Wurf führt",
         "Die Hand, die den Revers greift und hebt",
         "Das Bein, das Ukes Standfuß fegt",
         "Eine Technik, bei der Uke in den Bodenkampf (Ne-waza) gezogen wird"
@@ -12390,7 +12390,7 @@
     "fr": {
       "q": "Qu'est-ce que le 'Hikite' dans une projection ?",
       "opts": [
-        "La main qui tire – généralement saisissant la manche d'Uke – qui rompt l'équilibre d'Uke et guide la projection",
+        "La main qui tire, souvent sur la manche, et guide la projection",
         "La main qui saisit le revers et le soulève",
         "La jambe qui balaie le pied d'appui d'Uke",
         "Une technique pour tirer Uke vers le Ne-waza"
@@ -12401,7 +12401,7 @@
     "es": {
       "q": "¿Qué es 'Hikite' en una proyección?",
       "opts": [
-        "La mano de tracción – normalmente agarrando la manga de Uke – que rompe el equilibrio de Uke y guía la proyección",
+        "La mano que tira, normalmente de la manga, y guía la proyección",
         "La mano que agarra la solapa y la levanta",
         "La pierna que barre el pie de apoyo de Uke",
         "Una técnica para llevar a Uke hacia abajo, al Ne-waza"
@@ -12412,7 +12412,7 @@
     "it": {
       "q": "Cos'è l'Hikite in una proiezione?",
       "opts": [
-        "La mano che tira – di solito sulla manica di Uke – che rompe l'equilibrio di Uke e guida la proiezione",
+        "La mano che tira, di solito sulla manica, e guida la proiezione",
         "La mano che afferra il bavero e lo solleva",
         "La gamba che spazza il piede d'appoggio di Uke",
         "Una tecnica per trascinare Uke a terra nel Ne-waza"
@@ -12423,7 +12423,7 @@
     "pt": {
       "q": "O que é 'Hikite' em uma projeção?",
       "opts": [
-        "A mão que puxa – normalmente agarrando a manga do Uke – que quebra o equilíbrio do Uke e guia a projeção",
+        "A mão que puxa, normalmente na manga, e guia a projeção",
         "A mão que agarra a lapela e a levanta",
         "A perna que varre o pé de apoio do Uke",
         "Uma técnica de puxar o Uke para baixo, para o Ne-waza"
@@ -12434,7 +12434,7 @@
     "ru": {
       "q": "Что такое «Хикитэ» в броске?",
       "opts": [
-        "Тянущая рука — обычно держащая рукав Укэ, — которая выводит Укэ из равновесия и направляет бросок",
+        "Тянущая рука, обычно на рукаве, которая ведёт бросок",
         "Рука, которая захватывает отворот и поднимает его",
         "Нога, которая подсекает опорную стопу Укэ",
         "Приём, при котором Укэ тянут вниз в нэ-вадза"
@@ -13308,7 +13308,7 @@
       "q": "U ne-wazi si u guard poziciji (na leđima, Uke između tvojih nogu). Šta je tvoj prioritet?",
       "opts": [
         "Odmah pokušavam gušenje",
-        "Kontrolišem distancu nogama, kontrolišem Ukeove ruke i tražim otvaranje za predaju",
+        "Držim distancu nogama, kontrolišem ruke i tražim predaju",
         "Napadam mostom i pokušavam da se preokrenem",
         "Čekam da Uke napadne pa kontriram"
       ],
@@ -13319,7 +13319,7 @@
       "q": "In ne-waza you are in guard position (on your back, Uke between your legs). What is your priority?",
       "opts": [
         "Immediately attempt a choke",
-        "Control distance with legs, control Uke's arms and look for an opening for a submission",
+        "Control distance with legs and arms, look for a submission",
         "Bridge and try to roll over",
         "Wait for Uke to attack and counter"
       ],
@@ -13330,7 +13330,7 @@
       "q": "Im Ne-waza bist du in der Guard-Position (auf dem Rücken, Uke zwischen deinen Beinen). Was hat Priorität?",
       "opts": [
         "Sofort eine Würgetechnik versuchen",
-        "Den Abstand mit den Beinen kontrollieren, Ukes Arme kontrollieren und nach einer Möglichkeit für einen Aufgabegriff suchen",
+        "Abstand mit den Beinen halten, Arme kontrollieren, Aufgabegriff suchen",
         "Brücke bauen und versuchen zu rollen",
         "Warten, bis Uke angreift, und kontern"
       ],
@@ -13341,7 +13341,7 @@
       "q": "En Ne-waza, tu es en position de garde (sur le dos, Uke entre tes jambes). Quelle est ta priorité ?",
       "opts": [
         "Tenter immédiatement un étranglement",
-        "Contrôler la distance avec les jambes, contrôler les bras d'Uke et chercher une ouverture pour une soumission",
+        "Contrôler la distance avec les jambes et les bras, chercher une soumission",
         "Faire un pont et essayer de rouler",
         "Attendre qu'Uke attaque et contrer"
       ],
@@ -13352,7 +13352,7 @@
       "q": "En Ne-waza estás en posición de guardia (boca arriba, con Uke entre tus piernas). ¿Cuál es tu prioridad?",
       "opts": [
         "Intentar un estrangulamiento de inmediato",
-        "Controlar la distancia con las piernas, controlar los brazos de Uke y buscar una oportunidad de sumisión",
+        "Controlar la distancia con piernas y brazos, buscar una sumisión",
         "Hacer el puente e intentar rodar",
         "Esperar a que Uke ataque y contraatacar"
       ],
@@ -13363,7 +13363,7 @@
       "q": "In Ne-waza sei in guardia (sulla schiena con Uke tra le tue gambe). Qual è la tua priorità?",
       "opts": [
         "Tentare subito uno strangolamento",
-        "Controllare la distanza con le gambe, controllare le braccia di Uke e cercare un'opportunità per una sottomissione",
+        "Controllare la distanza con gambe e braccia, cercare una sottomissione",
         "Fare il ponte e cercare di ribaltarlo",
         "Aspettare che Uke attacchi e contrattaccare"
       ],
@@ -13374,7 +13374,7 @@
       "q": "No Ne-waza, você está em posição de guarda (de costas no tatame, com o Uke entre as suas pernas). Qual é a sua prioridade?",
       "opts": [
         "Tentar imediatamente um estrangulamento",
-        "Controlar a distância com as pernas, controlar os braços do Uke e procurar uma oportunidade de finalização",
+        "Controlar a distância com pernas e braços, buscar uma finalização",
         "Fazer ponte e tentar rolar",
         "Esperar que o Uke ataque e contra-atacar"
       ],
@@ -13385,7 +13385,7 @@
       "q": "В партере ты в позиции гарда (на спине, Укэ между твоих ног). Что для тебя главное?",
       "opts": [
         "Сразу пробовать удушающий приём",
-        "Контролировать дистанцию ногами, контролировать руки Укэ и искать момент для болевого или удушающего",
+        "Держать дистанцию ногами, контролировать руки, искать болевой",
         "Сделать мост и попробовать перевернуть",
         "Ждать атаки Укэ и делать контрприём"
       ],
@@ -19293,7 +19293,7 @@
       "q": "Zašto je Uchi-mata efikasan u oba smera (na obe strane)?",
       "opts": [
         "Zato što noga može biti usmerena u oba smera",
-        "Zato što ulaz može biti sa levom ili desnom nogom napred, a bacanje funkcioniše sa obe strane centra tela Ukea",
+        "Zato što ulaz radi sa obe noge i na obe strane",
         "Zato što je dozvoljen samo uz hvat za pojas",
         "Zato što je dozvoljen samo kad su oba hvata za revere"
       ],
@@ -19304,7 +19304,7 @@
       "q": "Why is Uchi-mata effective in both directions (to both sides)?",
       "opts": [
         "Because the leg can be directed in both directions",
-        "Because the entry can use left or right lead foot and the throw works on either side of Uke's body centre",
+        "Because the entry works with either foot and on both sides",
         "Because it is allowed only with a belt grip",
         "Because it is allowed only with both hands on the lapels"
       ],
@@ -19315,7 +19315,7 @@
       "q": "Warum ist Uchi-mata in beide Richtungen (auf beide Seiten) wirksam?",
       "opts": [
         "Weil das Bein in beide Richtungen gelenkt werden kann",
-        "Weil das Eindrehen mit dem linken oder rechten Führungsbein erfolgen kann und der Wurf auf beiden Seiten von Ukes Körpermitte funktioniert",
+        "Weil der Eingang mit beiden Füßen und auf beiden Seiten funktioniert",
         "Weil er nur mit Gürtelgriff erlaubt ist",
         "Weil er nur mit beiden Händen am Revers erlaubt ist"
       ],
@@ -19326,7 +19326,7 @@
       "q": "Pourquoi l'Uchi-mata est-il efficace dans les deux directions (des deux côtés) ?",
       "opts": [
         "Parce que la jambe peut être dirigée dans les deux directions",
-        "Parce que l'entrée peut utiliser le pied avant gauche ou droit et la projection fonctionne des deux côtés du centre du corps d'Uke",
+        "Parce que l'entrée marche avec les deux pieds et des deux côtés",
         "Parce qu'il n'est autorisé qu'avec une saisie de ceinture",
         "Parce qu'il n'est permis qu'avec les deux mains aux revers"
       ],
@@ -19337,7 +19337,7 @@
       "q": "¿Por qué Uchi-mata es eficaz en ambas direcciones (hacia ambos lados)?",
       "opts": [
         "Porque la pierna puede dirigirse en ambas direcciones",
-        "Porque la entrada puede usar el pie adelantado izquierdo o derecho y la proyección funciona a ambos lados del centro del cuerpo de Uke",
+        "Porque la entrada funciona con ambos pies y por ambos lados",
         "Porque solo está permitido con un agarre de cinturón",
         "Porque solo se permite con ambas manos en las solapas"
       ],
@@ -19348,7 +19348,7 @@
       "q": "Perché l'Uchi-mata è efficace in entrambe le direzioni (su entrambi i lati)?",
       "opts": [
         "Perché la gamba può essere diretta in entrambe le direzioni",
-        "Perché l'entrata può usare il piede guida destro o sinistro e la proiezione funziona su entrambi i lati del centro del corpo di Uke",
+        "Perché l'entrata funziona con entrambi i piedi e da entrambi i lati",
         "Perché è consentito solo con una presa alla cintura",
         "Perché è consentita solo con entrambe le mani sui baveri"
       ],
@@ -19359,7 +19359,7 @@
       "q": "Por que o Uchi-mata é eficaz nos dois lados?",
       "opts": [
         "Porque a perna pode ser direcionada para os dois lados",
-        "Porque a entrada pode usar o pé de apoio esquerdo ou direito e a projeção funciona de qualquer lado do centro do corpo do Uke",
+        "Porque a entrada funciona com os dois pés e dos dois lados",
         "Porque só é permitido com pegada na faixa",
         "Porque só é permitido com as duas mãos nas lapelas"
       ],
@@ -19370,7 +19370,7 @@
       "q": "Почему Ути-мата эффективна в обе стороны?",
       "opts": [
         "Потому что ногу можно направить в обе стороны",
-        "Потому что вход возможен с левой или правой ноги, и бросок работает в обе стороны от центра тела Укэ",
+        "Потому что вход работает с обеих ног и в обе стороны",
         "Потому что она разрешена только с захватом за пояс",
         "Потому что разрешена только с обоими захватами за отвороты"
       ],
@@ -20908,7 +20908,7 @@
       "q": "Sensei ti kaže: 'Tvoje tehnike izgledaju lepo, ali ne funkcionišu u randoriju.' Šta to najverovatnije znači?",
       "opts": [
         "Tvoje tehnike su previše napredne za randori",
-        "Tehnike se rade ispravno u kontrolisanim uslovima, ali nedostaje adaptacija na dinamiku i otpor živog protivnika",
+        "Tehnike rade uz saradnju partnera, ali ne protiv pravog otpora",
         "Treba manje trenirati randori i više raditi kata",
         "To je kompliment — izgledati lepo je cilj džudoa"
       ],
@@ -20919,7 +20919,7 @@
       "q": "Sensei tells you: 'Your techniques look beautiful but do not work in randori.' What does this most likely mean?",
       "opts": [
         "Your techniques are too advanced for randori",
-        "Techniques are performed correctly in controlled conditions but lack adaptation to the dynamics and resistance of a live opponent",
+        "Techniques work with a cooperative partner but not against live resistance",
         "You should train randori less and do more kata",
         "It is a compliment — looking beautiful is the goal of judo"
       ],
@@ -20930,7 +20930,7 @@
       "q": "Sensei sagt dir: 'Deine Techniken sehen schön aus, funktionieren aber nicht im Randori.' Was bedeutet das wahrscheinlich?",
       "opts": [
         "Deine Techniken sind zu fortgeschritten für Randori",
-        "Die Techniken werden unter kontrollierten Bedingungen richtig ausgeführt, aber es fehlt die Anpassung an die Dynamik und den Widerstand eines echten Gegners",
+        "Die Techniken klappen mit Partner, aber nicht gegen echten Widerstand",
         "Du solltest weniger Randori trainieren und mehr Kata machen",
         "Es ist ein Kompliment – schön aussehen ist das Ziel im Judo"
       ],
@@ -20941,7 +20941,7 @@
       "q": "Sensei te dit : 'Tes techniques sont belles mais ne fonctionnent pas en Randori.' Qu'est-ce que cela signifie le plus probablement ?",
       "opts": [
         "Tes techniques sont trop avancées pour le Randori",
-        "Les techniques sont correctement exécutées dans des conditions contrôlées mais manquent d'adaptation à la dynamique et à la résistance d'un adversaire réel",
+        "Les techniques marchent avec un partenaire, pas face à une vraie résistance",
         "Tu devrais faire moins de Randori et plus de Kata",
         "C'est un compliment — être beau est l'objectif du judo"
       ],
@@ -20952,7 +20952,7 @@
       "q": "Tu Sensei te dice: 'Tus técnicas se ven bonitas pero no funcionan en Randori.' ¿Qué significa esto con más probabilidad?",
       "opts": [
         "Tus técnicas son demasiado avanzadas para el Randori",
-        "Las técnicas se ejecutan correctamente en condiciones controladas, pero les falta adaptación a la dinámica y la resistencia de un adversario real",
+        "Las técnicas funcionan con compañero, pero no ante resistencia real",
         "Deberías entrenar menos Randori y hacer más Kata",
         "Es un cumplido: verse bonito es el objetivo del judo"
       ],
@@ -20963,7 +20963,7 @@
       "q": "Il Sensei ti dice: 'Le tue tecniche sono belle ma non funzionano nel Randori.' Cosa significa più probabilmente?",
       "opts": [
         "Le tue tecniche sono troppo avanzate per il Randori",
-        "Le tecniche vengono eseguite correttamente in condizioni controllate, ma manca l'adattamento alla dinamica e alla resistenza di un avversario reale",
+        "Le tecniche funzionano con un partner, ma non contro una vera resistenza",
         "Dovresti fare meno Randori e più Kata",
         "È un complimento: sembrare belle è l'obiettivo del judo"
       ],
@@ -20974,7 +20974,7 @@
       "q": "O Sensei diz a você: 'As suas técnicas ficam bonitas, mas não funcionam no Randori.' O que isso provavelmente significa?",
       "opts": [
         "As suas técnicas são avançadas demais para o Randori",
-        "As técnicas são executadas corretamente em condições controladas, mas falta adaptação à dinâmica e resistência de um adversário real",
+        "As técnicas funcionam com parceiro, mas não diante de resistência real",
         "Você deve treinar menos Randori e fazer mais Kata",
         "É um elogio — ficar bonito é o objetivo do judô"
       ],
@@ -20985,7 +20985,7 @@
       "q": "Сэнсэй говорит тебе: «Твои техники выглядят красиво, но не работают в Рандори». Что это скорее всего означает?",
       "opts": [
         "Твои техники слишком продвинуты для Рандори",
-        "Техники выполняются правильно в контролируемых условиях, но не приспособлены к динамике и сопротивлению живого соперника",
+        "Техники получаются с партнёром, но не против живого сопротивления",
         "Тебе нужно меньше заниматься Рандори и больше делать Ката",
         "Это комплимент — красиво выглядеть и есть цель дзюдо"
       ],
@@ -21098,7 +21098,7 @@
       "q": "U borbi primećuješ da Uke čvrsto drži glavu napred kada napadaš. Šta to govori o njegovom odbrambenom stilu?",
       "opts": [
         "Drži glavu napred jer ima lošu posturu",
-        "Glava napred znači da je centar mase pomeren napred — takvog protivnika lako je baciti unapred, ali teže unazad",
+        "Težište mu je napred – lako ga je baciti unapred",
         "Glava napred je taktika za zastrašivanje",
         "Ne govori ništa — postura i glava nisu relevantni u džudou"
       ],
@@ -21109,7 +21109,7 @@
       "q": "During the match you notice Uke keeps their head forward when you attack. What does this say about their defensive style?",
       "opts": [
         "They keep the head forward because of poor posture",
-        "Head forward means centre of mass shifted forward — this opponent can easily be thrown forward but less easily backward",
+        "His weight is forward – he is easy to throw forward",
         "Head forward is an intimidation tactic",
         "It says nothing — posture and head position are not relevant in judo"
       ],
@@ -21120,7 +21120,7 @@
       "q": "Im Kampf bemerkst du, dass Uke bei deinen Angriffen immer den Kopf nach vorne hält. Was sagt dir das über seinen Verteidigungsstil?",
       "opts": [
         "Er hält den Kopf nach vorne wegen schlechter Haltung",
-        "Kopf nach vorne bedeutet Schwerpunkt nach vorne verlagert – dieser Gegner lässt sich leicht nach vorne werfen, aber schwerer nach hinten",
+        "Sein Gewicht ist vorn – er lässt sich leicht nach vorne werfen",
         "Kopf nach vorne ist eine Einschüchterungstaktik",
         "Das sagt nichts – Haltung und Kopfposition sind im Judo nicht relevant"
       ],
@@ -21131,7 +21131,7 @@
       "q": "Pendant le combat, tu remarques qu'Uke garde la tête en avant quand tu attaques. Qu'est-ce que cela révèle sur son style défensif ?",
       "opts": [
         "Il garde la tête en avant à cause d'une mauvaise posture",
-        "La tête en avant signifie que le centre de masse est décalé vers l'avant — cet adversaire peut facilement être projeté vers l'avant mais moins facilement vers l'arrière",
+        "Son poids est en avant – il se projette facilement vers l'avant",
         "La tête en avant est une tactique d'intimidation",
         "Cela ne dit rien — la posture et la position de la tête ne sont pas pertinentes en judo"
       ],
@@ -21142,7 +21142,7 @@
       "q": "Durante el combate, notas que Uke mantiene la cabeza hacia adelante cuando atacas. ¿Qué te dice esto sobre su estilo defensivo?",
       "opts": [
         "Mantiene la cabeza hacia adelante por mala postura",
-        "La cabeza hacia adelante significa que el centro de masa está desplazado hacia adelante: este adversario puede proyectarse fácilmente hacia adelante, pero menos fácilmente hacia atrás",
+        "Su peso está adelante: es fácil proyectarlo hacia adelante",
         "La cabeza hacia adelante es una táctica de intimidación",
         "No dice nada: la postura y la posición de la cabeza no son relevantes en judo"
       ],
@@ -21153,7 +21153,7 @@
       "q": "Durante il combattimento noti che Uke tiene la testa in avanti quando attacchi. Cosa ti dice del suo stile difensivo?",
       "opts": [
         "Tiene la testa in avanti per una cattiva postura",
-        "La testa in avanti significa il centro di massa spostato in avanti: questo avversario può essere proiettato facilmente in avanti, ma meno facilmente all'indietro",
+        "Il suo peso è in avanti: è facile proiettarlo in avanti",
         "La testa in avanti è una tattica di intimidazione",
         "Non dice niente: la postura e la posizione della testa non sono rilevanti nel judo"
       ],
@@ -21164,7 +21164,7 @@
       "q": "Durante o combate, você percebe que o Uke sempre mantém a cabeça para a frente quando você ataca. O que isso diz sobre o estilo defensivo dele?",
       "opts": [
         "Mantém a cabeça para a frente por causa de uma má postura",
-        "Cabeça para a frente significa o centro de massa deslocado para a frente — este adversário se desequilibra facilmente para a frente, mas menos para trás",
+        "O peso dele está à frente – é fácil projetá-lo para a frente",
         "Cabeça para a frente é uma tática de intimidação",
         "Não diz nada — a postura e a posição da cabeça não são relevantes no judô"
       ],
@@ -21175,7 +21175,7 @@
       "q": "Во время схватки ты замечаешь, что Укэ наклоняет голову вперёд при каждой твоей атаке. Что это говорит о его стиле защиты?",
       "opts": [
         "Он держит голову вперёд из-за плохой осанки",
-        "Голова вперёд означает, что центр тяжести смещён вперёд: этого соперника легко бросить вперёд, но труднее — назад",
+        "Его вес смещён вперёд – его легко бросить вперёд",
         "Голова вперёд — это тактика запугивания",
         "Это ни о чём не говорит: осанка и положение головы не важны в дзюдо"
       ],
@@ -21288,7 +21288,7 @@
       "q": "U Golden Scoreu uspešno kontriraš tehnikom O-soto-gaeshi. Šta mora biti zadovoljeno da bi bilo ocenjeno?",
       "opts": [
         "Mora biti potpuno bacanje sa Ukeom na leđima",
-        "Kontra mora biti kontrolisana i snažna, a protivnik mora pasti dovoljno jasno za ocenu (Yuko, Waza-ari ili Ippon)",
+        "Kontra mora biti kontrolisana, a pad jasan",
         "Kontra se ne ocenjuje ako Uke padne na bok",
         "Dovoljno je da Uke dodirne tatami kolenom"
       ],
@@ -21299,7 +21299,7 @@
       "q": "In Golden Score you successfully counter with O-soto-gaeshi. What must be satisfied for it to be scored?",
       "opts": [
         "It must be a complete throw with Uke on their back",
-        "The counter must be controlled and powerful, and the opponent must land clearly enough to score (Yuko, Waza-ari or Ippon)",
+        "The counter must be controlled and the fall clear",
         "A counter is not scored if Uke lands on his side",
         "It is enough for Uke to touch the mat with a knee"
       ],
@@ -21310,7 +21310,7 @@
       "q": "Im Golden Score konterst du erfolgreich mit O-soto-gaeshi. Was muss erfüllt sein, damit er gewertet wird?",
       "opts": [
         "Es muss ein vollständiger Wurf sein, bei dem Uke auf dem Rücken landet",
-        "Der Konter muss kontrolliert und kraftvoll sein, und der Gegner muss klar genug für eine Wertung fallen (Yuko, Waza-ari oder Ippon)",
+        "Der Konter muss kontrolliert und der Fall klar sein",
         "Ein Konter zählt nicht, wenn Uke auf die Seite fällt",
         "Es genügt, wenn Uke die Matte mit dem Knie berührt"
       ],
@@ -21321,7 +21321,7 @@
       "q": "En Golden Score, tu réussis un contre avec O-soto-gaeshi. Que faut-il pour qu'il soit marqué ?",
       "opts": [
         "Ce doit être une projection complète avec Uke sur le dos",
-        "Le contre doit être contrôlé et puissant, et l'adversaire doit tomber assez nettement pour marquer (Yuko, Waza-ari ou Ippon)",
+        "Le contre doit être contrôlé et la chute nette",
         "Un contre n'est pas noté si Uke tombe sur le côté",
         "Il suffit qu'Uke touche le tatami avec un genou"
       ],
@@ -21332,7 +21332,7 @@
       "q": "En Golden Score contraatacas con éxito con O-soto-gaeshi. ¿Qué condiciones deben cumplirse para que sea puntuado?",
       "opts": [
         "Debe ser una proyección completa con Uke sobre su espalda",
-        "El contraataque debe ser controlado y potente, y el adversario debe caer con suficiente claridad para puntuar (Yuko, Waza-ari o Ippon)",
+        "El contraataque debe ser controlado y la caída clara",
         "Un contraataque no puntúa si Uke cae de lado",
         "Basta con que Uke toque el tatami con la rodilla"
       ],
@@ -21343,7 +21343,7 @@
       "q": "In Golden Score riesci a contrattaccare con O-soto-gaeshi. Cosa deve succedere perché venga assegnato un punteggio?",
       "opts": [
         "Deve essere una proiezione completa con Uke sulla schiena",
-        "Il contrattacco deve essere controllato e potente, e l'avversario deve cadere in modo abbastanza netto da ottenere un punteggio (Yuko, Waza-ari o Ippon)",
+        "Il contrattacco deve essere controllato e la caduta netta",
         "Un contrattacco non è valutato se Uke cade di lato",
         "Basta che Uke tocchi il tatami con un ginocchio"
       ],
@@ -21354,7 +21354,7 @@
       "q": "No Golden Score, você consegue fazer um contragolpe com O-soto-gaeshi. O que é necessário para ser pontuado?",
       "opts": [
         "Precisa ser uma projeção completa com o Uke caído de costas",
-        "O contragolpe precisa ser controlado e potente, e o adversário precisa cair com clareza suficiente para pontuar (Yuko, Waza-ari ou Ippon)",
+        "O contragolpe deve ser controlado e a queda clara",
         "Um contra-ataque não pontua se Uke cair de lado",
         "Basta que Uke toque o tatame com o joelho"
       ],
@@ -21365,7 +21365,7 @@
       "q": "В Голден Скор ты успешно делаешь контрбросок О-сото-гаэси. Что должно быть выполнено, чтобы он был засчитан?",
       "opts": [
         "Это должен быть полноценный бросок, при котором Укэ падает на спину",
-        "Контрбросок должен быть контролируемым и мощным, а соперник должен упасть достаточно чётко для оценки (Юко, Вадза-ари или Иппон)",
+        "Контрбросок должен быть контролируемым, а падение — чётким",
         "Контрприём не оценивается, если Укэ упал на бок",
         "Достаточно, чтобы Укэ коснулся татами коленом"
       ],
@@ -21478,7 +21478,7 @@
       "q": "Čuješ od starijeg člana kluba: 'U džudou se nikad ne prestaje učiti.' Šta to zapravo znači?",
       "opts": [
         "Džudo je toliko složen da ga niko nikad ne može savladati",
-        "Svaki protivnik, svaka borba i svaki trening otkriva nešto novo — rast u džudou je neprekidan proces bez završnice",
+        "Učenje nikad ne staje – svaki trening donosi nešto novo",
         "To je motivacioni govor bez stvarnog značenja",
         "To znači da džudoka nikad ne sme da ode u penziju"
       ],
@@ -21489,7 +21489,7 @@
       "q": "You hear from a senior club member: 'In judo one never stops learning.' What does this actually mean?",
       "opts": [
         "Judo is so complex that no one can ever master it",
-        "Every opponent, every match and every training reveals something new — growth in judo is a continuous process without end",
+        "Learning never stops – every training brings something new",
         "It is a motivational speech with no real meaning",
         "It means judoka should never retire"
       ],
@@ -21500,7 +21500,7 @@
       "q": "Du hörst von einem erfahrenen Clubmitglied: 'Im Judo hört man nie auf zu lernen.' Was bedeutet das eigentlich?",
       "opts": [
         "Judo ist so komplex, dass es niemand je vollständig beherrschen kann",
-        "Jeder Gegner, jeder Kampf und jedes Training zeigt etwas Neues – Wachstum im Judo ist ein kontinuierlicher Prozess ohne Ende",
+        "Lernen hört nie auf – jedes Training bringt Neues",
         "Es ist eine motivierende Aussage ohne wirkliche Bedeutung",
         "Es bedeutet, dass Judoka niemals aufhören sollten zu kämpfen"
       ],
@@ -21511,7 +21511,7 @@
       "q": "Tu entends un membre confirmé du club dire : 'En judo, on n'arrête jamais d'apprendre.' Qu'est-ce que ça veut dire concrètement ?",
       "opts": [
         "Le judo est si complexe que personne ne peut jamais le maîtriser totalement",
-        "Chaque adversaire, chaque combat et chaque entraînement révèle quelque chose de nouveau — la progression en judo est un processus continu sans fin",
+        "On n'arrête jamais d'apprendre – chaque entraînement apporte du nouveau",
         "C'est un discours de motivation sans réelle signification",
         "Cela signifie que les judokas ne devraient jamais prendre leur retraite"
       ],
@@ -21522,7 +21522,7 @@
       "q": "Un miembro veterano del club te dice: 'En judo nunca se deja de aprender.' ¿Qué significa esto en realidad?",
       "opts": [
         "El judo es tan complejo que nadie puede dominarlo completamente",
-        "Cada adversario, cada combate y cada entrenamiento revelan algo nuevo: el crecimiento en judo es un proceso continuo sin fin",
+        "Nunca se deja de aprender: cada entrenamiento aporta algo nuevo",
         "Es un discurso motivador sin ningún significado real",
         "Significa que los judokas nunca deben retirarse"
       ],
@@ -21533,7 +21533,7 @@
       "q": "Senti dire da un membro più esperto del club: 'Nel judo non si smette mai di imparare.' Cosa significa davvero?",
       "opts": [
         "Il judo è così complesso che nessuno può padroneggiarlo completamente",
-        "Ogni avversario, ogni incontro e ogni allenamento rivela qualcosa di nuovo — la crescita nel judo è un processo continuo senza fine",
+        "Non si smette mai di imparare: ogni allenamento porta qualcosa di nuovo",
         "È un discorso motivazionale senza un vero significato",
         "Significa che i judoka non dovrebbero mai ritirarsi"
       ],
@@ -21544,7 +21544,7 @@
       "q": "Você ouve um membro mais experiente do clube dizer: 'No judô, nunca se para de aprender.' O que isso significa na prática?",
       "opts": [
         "O judô é tão complexo que ninguém consegue dominá-lo completamente",
-        "Cada adversário, cada combate e cada treino revelam algo novo — a evolução no judô é um processo contínuo e sem fim",
+        "Nunca se para de aprender – cada treino traz algo novo",
         "É um discurso motivacional sem significado real",
         "Significa que os judocas nunca devem se aposentar"
       ],
@@ -21555,7 +21555,7 @@
       "q": "Ты слышишь от старшего члена клуба: «В дзюдо никогда не перестают учиться». Что это на самом деле означает?",
       "opts": [
         "Дзюдо настолько сложно, что никто не может освоить его до конца",
-        "Каждый соперник, каждая схватка и каждая тренировка открывают что-то новое, а рост в дзюдо — непрерывный процесс без конца",
+        "Учёба не заканчивается – каждая тренировка даёт что-то новое",
         "Это мотивационная речь без реального смысла",
         "Это означает, что дзюдоисты никогда не должны уходить на пенсию"
       ],
@@ -21859,7 +21859,7 @@
       "opts": [
         "Bacanje preko ramena sa obe ruke",
         "Spoljašnje košenje zadnje noge",
-        "Veliko unutrašnje košenje – Tori iznutra kosi Ukeovu nogu i baca ga unazad",
+        "Veliko unutrašnje košenje – kosi se noga iznutra",
         "Žrtveno bacanje unazad"
       ],
       "c": 2,
@@ -21870,7 +21870,7 @@
       "opts": [
         "A shoulder throw using both hands",
         "An outer reap on the rear leg",
-        "Major inner reap – Tori reaps Uke's leg from the inside and throws backward",
+        "Major inner reap – Tori reaps the leg from inside",
         "A backward sacrifice throw"
       ],
       "c": 2,
@@ -21881,7 +21881,7 @@
       "opts": [
         "Ein Schulterwurf mit beiden Händen",
         "Eine Außensichel am hinteren Bein",
-        "Große Innensichel – Tori sichelt Ukes Bein von innen und wirft nach hinten",
+        "Große Innensichel – Tori sichelt das Bein von innen",
         "Ein Opferwurf nach hinten"
       ],
       "c": 2,
@@ -21892,7 +21892,7 @@
       "opts": [
         "Une projection d'épaule à deux mains",
         "Un fauchage extérieur sur la jambe arrière",
-        "Grand fauchage intérieur – Tori fauche la jambe d'Uke de l'intérieur et projette vers l'arrière",
+        "Grand fauchage intérieur – Tori fauche la jambe de l'intérieur",
         "Un sacrifice vers l'arrière"
       ],
       "c": 2,
@@ -21903,7 +21903,7 @@
       "opts": [
         "Una proyección de hombro con ambas manos",
         "Una siega exterior sobre la pierna atrasada",
-        "Gran siega interior: Tori siega la pierna de Uke desde dentro y proyecta hacia atrás",
+        "Gran siega interior: Tori siega la pierna desde dentro",
         "Un sacrificio hacia atrás"
       ],
       "c": 2,
@@ -21914,7 +21914,7 @@
       "opts": [
         "Una proiezione di spalla a due mani",
         "Una falciata esterna sulla gamba arretrata",
-        "Grande falciata interna – Tori falcia la gamba di Uke dall'interno e proietta all'indietro",
+        "Grande falciata interna – Tori falcia la gamba dall'interno",
         "Una proiezione di sacrificio all'indietro"
       ],
       "c": 2,
@@ -21925,7 +21925,7 @@
       "opts": [
         "Uma projeção de ombro com as duas mãos",
         "Uma ceifada externa na perna de trás",
-        "Grande ceifada interna – o Tori ceifa a perna do Uke por dentro e projeta para trás",
+        "Grande ceifada interna – o Tori ceifa a perna por dentro",
         "Um sacrifício para trás"
       ],
       "c": 2,
@@ -21936,7 +21936,7 @@
       "opts": [
         "Бросок через плечо двумя руками",
         "Подсечка снаружи под заднюю ногу",
-        "Большая внутренняя подсечка – Тори изнутри подсекает ногу Укэ и бросает назад",
+        "Большая внутренняя подсечка – Тори подсекает ногу изнутри",
         "Бросок с падением назад"
       ],
       "c": 2,
@@ -22048,7 +22048,7 @@
       "q": "Kada se izvodi Okuri-ashi-harai?",
       "opts": [
         "Kada Uke klekne na jedno koleno",
-        "Kada se Uke kreće bočno – Tori čisti obe njegove noge u pravcu kretanja",
+        "Kad se Uke kreće bočno – Tori kosi obe noge",
         "Samo kada Uke stoji potpuno mirno",
         "Kada je Uke na leđima u parteru"
       ],
@@ -22059,7 +22059,7 @@
       "q": "When is Okuri-ashi-harai performed?",
       "opts": [
         "When Uke kneels on one knee",
-        "When Uke moves sideways – Tori sweeps both feet in the direction of movement",
+        "When Uke moves sideways – Tori sweeps both feet",
         "Only when Uke stands completely still",
         "When Uke is on their back in groundwork"
       ],
@@ -22070,7 +22070,7 @@
       "q": "Wann wird Okuri-ashi-harai ausgeführt?",
       "opts": [
         "Wenn Uke auf ein Knie geht",
-        "Wenn Uke sich seitwärts bewegt – Tori fegt beide Füße in Bewegungsrichtung",
+        "Wenn Uke seitwärts geht – Tori fegt beide Füße",
         "Nur wenn Uke völlig still steht",
         "Wenn Uke im Bodenkampf auf dem Rücken liegt"
       ],
@@ -22081,7 +22081,7 @@
       "q": "Quand exécute-t-on Okuri-ashi-harai ?",
       "opts": [
         "Quand Uke pose un genou au sol",
-        "Quand Uke se déplace latéralement – Tori balaie ses deux pieds dans le sens du déplacement",
+        "Quand Uke se déplace de côté – Tori balaie les deux pieds",
         "Seulement quand Uke est complètement immobile",
         "Quand Uke est sur le dos au sol"
       ],
@@ -22092,7 +22092,7 @@
       "q": "¿Cuándo se ejecuta Okuri-ashi-harai?",
       "opts": [
         "Cuando Uke apoya una rodilla en el suelo",
-        "Cuando Uke se desplaza lateralmente: Tori barre ambos pies en la dirección del movimiento",
+        "Cuando Uke se mueve de lado: Tori barre ambos pies",
         "Solo cuando Uke está completamente quieto",
         "Cuando Uke está de espaldas en el suelo"
       ],
@@ -22103,7 +22103,7 @@
       "q": "Quando si esegue Okuri-ashi-harai?",
       "opts": [
         "Quando Uke appoggia un ginocchio a terra",
-        "Quando Uke si sposta lateralmente – Tori spazza entrambi i piedi nella direzione del movimento",
+        "Quando Uke si sposta di lato – Tori spazza entrambi i piedi",
         "Solo quando Uke è completamente fermo",
         "Quando Uke è sulla schiena a terra"
       ],
@@ -22114,7 +22114,7 @@
       "q": "Quando se executa Okuri-ashi-harai?",
       "opts": [
         "Quando o Uke apoia um joelho no chão",
-        "Quando o Uke se desloca lateralmente – o Tori varre os dois pés na direção do movimento",
+        "Quando o Uke se move de lado – o Tori varre os dois pés",
         "Só quando o Uke está completamente parado",
         "Quando o Uke está de costas no solo"
       ],
@@ -22125,7 +22125,7 @@
       "q": "Когда выполняется Окури-аси-барай?",
       "opts": [
         "Когда Укэ встаёт на одно колено",
-        "Когда Укэ движется в сторону – Тори подметает обе его стопы по направлению движения",
+        "Когда Укэ движется боком – Тори подметает обе стопы",
         "Только когда Укэ стоит совершенно неподвижно",
         "Когда Укэ лежит на спине в партере"
       ],
@@ -22145,7 +22145,7 @@
         "Bacanje preko leđa sa hvatom za pojas",
         "Poluga na koleno u parteru",
         "Bacanje gde Tori pada na leđa",
-        "'Točak preko kolena' – Tori tabanom blokira Ukeovo koleno i rotira ga rukama"
+        "'Točak preko kolena' – blok Ukeovog kolena tabanom"
       ],
       "c": 3,
       "exp": "Hiza-guruma ('točak preko kolena'): Tori stavlja taban na spoljnu stranu Ukeovog kolena kao osu i rukama ga rotira preko nje. Jedna od prvih Ashi-waza tehnika koje se uče."
@@ -22156,7 +22156,7 @@
         "A back throw with a belt grip",
         "A knee lock in groundwork",
         "A throw where Tori falls on their back",
-        "'Knee wheel' – Tori blocks Uke's knee with the sole and rotates Uke with the hands"
+        "'Knee wheel' – Tori blocks Uke's knee with the sole"
       ],
       "c": 3,
       "exp": "Hiza-guruma ('knee wheel'): Tori places the sole on the outside of Uke's knee as an axis and turns Uke over it with the hands. One of the first Ashi-waza techniques taught."
@@ -22167,7 +22167,7 @@
         "Ein Rückenwurf mit Gürtelgriff",
         "Ein Kniehebel im Bodenkampf",
         "Ein Wurf, bei dem Tori auf den Rücken fällt",
-        "'Knierad' – Tori blockiert Ukes Knie mit der Fußsohle und dreht Uke mit den Händen"
+        "'Knierad' – Tori blockiert Ukes Knie mit der Fußsohle"
       ],
       "c": 3,
       "exp": "Hiza-guruma ('Knierad'): Tori setzt die Fußsohle als Drehachse an die Außenseite von Ukes Knie und dreht Uke mit den Händen darüber. Eine der ersten Ashi-waza-Techniken, die man lernt."
@@ -22178,7 +22178,7 @@
         "Une projection dans le dos avec saisie de ceinture",
         "Une clé de genou au sol",
         "Une projection où Tori tombe sur le dos",
-        "'Roue autour du genou' – Tori bloque le genou d'Uke avec la plante du pied et le fait tourner avec les mains"
+        "'Roue autour du genou' – Tori bloque le genou d'Uke du pied"
       ],
       "c": 3,
       "exp": "Hiza-guruma ('roue autour du genou') : Tori place la plante du pied sur l'extérieur du genou d'Uke comme axe et le fait tourner par-dessus avec les mains. L'une des premières techniques d'Ashi-waza apprises."
@@ -22189,7 +22189,7 @@
         "Una proyección por la espalda con agarre al cinturón",
         "Una luxación de rodilla en el suelo",
         "Una proyección en la que Tori cae de espaldas",
-        "'Rueda sobre la rodilla': Tori bloquea la rodilla de Uke con la planta y lo hace girar con las manos"
+        "'Rueda sobre la rodilla': Tori bloquea la rodilla de Uke con la planta"
       ],
       "c": 3,
       "exp": "Hiza-guruma ('rueda sobre la rodilla'): Tori coloca la planta del pie en el exterior de la rodilla de Uke como eje y lo hace girar sobre ella con las manos. Una de las primeras técnicas de Ashi-waza que se aprenden."
@@ -22200,7 +22200,7 @@
         "Una proiezione sulla schiena con presa alla cintura",
         "Una leva al ginocchio a terra",
         "Una proiezione in cui Tori cade sulla schiena",
-        "'Ruota sul ginocchio' – Tori blocca il ginocchio di Uke con la pianta del piede e lo fa ruotare con le mani"
+        "'Ruota sul ginocchio' – Tori blocca il ginocchio di Uke col piede"
       ],
       "c": 3,
       "exp": "Hiza-guruma ('ruota sul ginocchio'): Tori appoggia la pianta del piede all'esterno del ginocchio di Uke come asse e lo fa ruotare sopra con le mani. Una delle prime tecniche di Ashi-waza che si imparano."
@@ -22211,7 +22211,7 @@
         "Uma projeção pelas costas com pegada na faixa",
         "Uma chave de joelho no solo",
         "Uma projeção em que o Tori cai de costas",
-        "'Roda sobre o joelho' – o Tori bloqueia o joelho do Uke com a planta do pé e o gira com as mãos"
+        "'Roda sobre o joelho' – o Tori bloqueia o joelho do Uke com o pé"
       ],
       "c": 3,
       "exp": "Hiza-guruma ('roda sobre o joelho'): o Tori coloca a planta do pé na parte externa do joelho do Uke como eixo e o gira por cima com as mãos. Uma das primeiras técnicas de Ashi-waza que se aprendem."
@@ -22222,7 +22222,7 @@
         "Бросок через спину с захватом пояса",
         "Болевой на колено в партере",
         "Бросок, при котором Тори падает на спину",
-        "«Колесо через колено» – Тори блокирует колено Укэ подошвой и вращает его руками"
+        "«Колесо через колено» – Тори блокирует колено Укэ стопой"
       ],
       "c": 3,
       "exp": "Хидза-гурума («колесо через колено»): Тори ставит подошву на внешнюю сторону колена Укэ как ось и руками проворачивает его через неё. Одна из первых техник Аси-вадза, которые изучают."
@@ -22239,7 +22239,7 @@
       "opts": [
         "Držanje sa strane, grudi uz grudi",
         "Gušenje iz leđa podlakticom",
-        "Držanje u kome Tori sedi opkoračen preko Ukea i kontroliše mu ruku i glavu",
+        "Držanje u kome Tori sedi opkoračen preko Ukea",
         "Poluga na lakat iz stojećeg stava"
       ],
       "c": 2,
@@ -22250,7 +22250,7 @@
       "opts": [
         "A side hold, chest to chest",
         "A choke from behind with the forearm",
-        "A hold in which Tori sits astride Uke, controlling the arm and head",
+        "A hold where Tori sits astride Uke",
         "An elbow lock from standing"
       ],
       "c": 2,
@@ -22261,7 +22261,7 @@
       "opts": [
         "Ein Seitenhaltegriff, Brust an Brust",
         "Ein Würger von hinten mit dem Unterarm",
-        "Ein Haltegriff, bei dem Tori rittlings auf Uke sitzt und Arm und Kopf kontrolliert",
+        "Ein Haltegriff, bei dem Tori rittlings auf Uke sitzt",
         "Ein Armhebel aus dem Stand"
       ],
       "c": 2,
@@ -22272,7 +22272,7 @@
       "opts": [
         "Une immobilisation latérale, poitrine contre poitrine",
         "Un étranglement par derrière avec l'avant-bras",
-        "Une immobilisation où Tori est assis à califourchon sur Uke en contrôlant bras et tête",
+        "Une immobilisation où Tori est à califourchon sur Uke",
         "Une clé de bras debout"
       ],
       "c": 2,
@@ -22283,7 +22283,7 @@
       "opts": [
         "Una inmovilización lateral, pecho con pecho",
         "Un estrangulamiento por la espalda con el antebrazo",
-        "Una inmovilización en la que Tori está sentado a horcajadas sobre Uke controlando brazo y cabeza",
+        "Una inmovilización con Tori sentado a horcajadas sobre Uke",
         "Una luxación de codo de pie"
       ],
       "c": 2,
@@ -22294,7 +22294,7 @@
       "opts": [
         "Un'immobilizzazione laterale, petto contro petto",
         "Uno strangolamento da dietro con l'avambraccio",
-        "Un'immobilizzazione in cui Tori siede a cavalcioni su Uke controllando braccio e testa",
+        "Un'immobilizzazione con Tori seduto a cavalcioni su Uke",
         "Una leva al gomito in piedi"
       ],
       "c": 2,
@@ -22305,7 +22305,7 @@
       "opts": [
         "Uma imobilização lateral, peito com peito",
         "Um estrangulamento por trás com o antebraço",
-        "Uma imobilização em que o Tori está sentado montado sobre o Uke, controlando braço e cabeça",
+        "Uma imobilização com o Tori montado sobre o Uke",
         "Uma chave de cotovelo em pé"
       ],
       "c": 2,
@@ -22316,7 +22316,7 @@
       "opts": [
         "Удержание сбоку, грудь к груди",
         "Удушение сзади предплечьем",
-        "Удержание, при котором Тори сидит верхом на Укэ и контролирует руку и голову",
+        "Удержание, при котором Тори сидит верхом на Укэ",
         "Болевой на локоть из стойки"
       ],
       "c": 2,
@@ -22525,7 +22525,7 @@
         "Bacanje preko kuka sa hvatom oko vrata",
         "Kontra na Uchi-matu iz stojećeg stava",
         "Držanje sa strane u parteru",
-        "Žrtveno bacanje unazad – Tori pada na leđa i stopalom/potkolenicom podiže Ukea preko sebe"
+        "Žrtveno bacanje unazad – Tori pada na leđa i podiže Ukea"
       ],
       "c": 3,
       "exp": "Sumi-gaeshi ('ugaono prevrtanje') je Ma-sutemi-waza: Tori pada na leđa, stavlja stopalo ili potkolenicu sa unutrašnje strane Ukeove butine i prebacuje ga preko sebe. Često se koristi kada Uke stoji pognut."
@@ -22536,7 +22536,7 @@
         "A hip throw with an arm around the neck",
         "A counter to Uchi-mata from standing",
         "A side hold in groundwork",
-        "A backward sacrifice throw – Tori falls on the back and lifts Uke over with the foot/shin"
+        "A backward sacrifice throw – Tori falls on the back and lifts Uke"
       ],
       "c": 3,
       "exp": "Sumi-gaeshi ('corner reversal') is a Ma-sutemi-waza: Tori falls on the back, places the foot or shin against the inside of Uke's thigh and flips Uke over. Common when Uke stands bent forward."
@@ -22547,7 +22547,7 @@
         "Ein Hüftwurf mit Arm um den Hals",
         "Ein Konter gegen Uchi-mata aus dem Stand",
         "Ein Seitenhaltegriff im Bodenkampf",
-        "Ein Opferwurf nach hinten – Tori fällt auf den Rücken und hebt Uke mit Fuß/Schienbein über sich"
+        "Ein Opferwurf nach hinten – Tori fällt auf den Rücken und hebt Uke"
       ],
       "c": 3,
       "exp": "Sumi-gaeshi ('Eckenkippe') ist eine Ma-sutemi-waza: Tori fällt auf den Rücken, setzt Fuß oder Schienbein an die Innenseite von Ukes Oberschenkel und kippt Uke über sich. Wird oft angewendet, wenn Uke vorgebeugt steht."
@@ -22558,7 +22558,7 @@
         "Une projection de hanche avec un bras autour du cou",
         "Un contre sur Uchi-mata debout",
         "Une immobilisation latérale au sol",
-        "Un sacrifice arrière – Tori tombe sur le dos et soulève Uke par-dessus lui avec le pied/le tibia"
+        "Un sacrifice arrière – Tori tombe sur le dos et soulève Uke"
       ],
       "c": 3,
       "exp": "Sumi-gaeshi ('renversement dans l'angle') est un Ma-sutemi-waza : Tori tombe sur le dos, place le pied ou le tibia contre l'intérieur de la cuisse d'Uke et le fait basculer par-dessus lui. Fréquent quand Uke est penché en avant."
@@ -22569,7 +22569,7 @@
         "Una proyección de cadera con un brazo alrededor del cuello",
         "Un contraataque a Uchi-mata de pie",
         "Una inmovilización lateral en el suelo",
-        "Un sacrificio hacia atrás: Tori cae de espaldas y eleva a Uke por encima con el pie/la espinilla"
+        "Un sacrificio hacia atrás: Tori cae de espaldas y eleva a Uke"
       ],
       "c": 3,
       "exp": "Sumi-gaeshi ('volteo de esquina') es un Ma-sutemi-waza: Tori cae de espaldas, coloca el pie o la espinilla en el interior del muslo de Uke y lo voltea por encima. Habitual cuando Uke está inclinado hacia delante."
@@ -22580,7 +22580,7 @@
         "Una proiezione d'anca con un braccio attorno al collo",
         "Un contrattacco a Uchi-mata in piedi",
         "Un'immobilizzazione laterale a terra",
-        "Una proiezione di sacrificio all'indietro – Tori cade sulla schiena e solleva Uke sopra di sé con il piede/la tibia"
+        "Una proiezione di sacrificio all'indietro – Tori cade sulla schiena e solleva Uke"
       ],
       "c": 3,
       "exp": "Sumi-gaeshi ('ribaltamento d'angolo') è un Ma-sutemi-waza: Tori cade sulla schiena, appoggia il piede o la tibia all'interno della coscia di Uke e lo ribalta sopra di sé. Frequente quando Uke è piegato in avanti."
@@ -22591,7 +22591,7 @@
         "Uma projeção de quadril com um braço ao redor do pescoço",
         "Um contragolpe ao Uchi-mata em pé",
         "Uma imobilização lateral no solo",
-        "Um sacrifício para trás – o Tori cai de costas e eleva o Uke por cima com o pé/a canela"
+        "Um sacrifício para trás – o Tori cai de costas e eleva o Uke"
       ],
       "c": 3,
       "exp": "Sumi-gaeshi ('reviramento de canto') é um Ma-sutemi-waza: o Tori cai de costas, coloca o pé ou a canela na parte interna da coxa do Uke e o vira por cima de si. Frequente quando o Uke está curvado para a frente."
@@ -22602,7 +22602,7 @@
         "Бросок через бедро с захватом шеи",
         "Контрприём против Ути-маты в стойке",
         "Удержание сбоку в партере",
-        "Бросок с падением назад – Тори падает на спину и стопой/голенью перебрасывает Укэ через себя"
+        "Бросок с падением назад – Тори падает на спину и перебрасывает Укэ"
       ],
       "c": 3,
       "exp": "Суми-гаэси («угловой переворот») – Ма-сутэми-вадза: Тори падает на спину, упирает стопу или голень во внутреннюю сторону бедра Укэ и перебрасывает его через себя. Часто применяется, когда Укэ стоит согнувшись."
@@ -22617,7 +22617,7 @@
     "sr": {
       "q": "Šta je Ura-nage?",
       "opts": [
-        "Žrtveno bacanje – Tori obuhvati Ukea oko struka, podigne ga i padne unazad bacajući ga preko svog ramena",
+        "Žrtveno bacanje – Tori obuhvati Ukea oko struka i pada unazad",
         "Bacanje unapred preko ramena sa jednom rukom",
         "Čišćenje obe noge pri bočnom kretanju",
         "Držanje odozgo preko glave"
@@ -22628,7 +22628,7 @@
     "en": {
       "q": "What is Ura-nage?",
       "opts": [
-        "A sacrifice throw – Tori wraps Uke's waist, lifts and falls backward, throwing Uke over the shoulder",
+        "A sacrifice throw – Tori wraps Uke's waist and falls backward",
         "A one-armed forward shoulder throw",
         "A sweep of both feet during sideways movement",
         "A hold from above the head"
@@ -22639,7 +22639,7 @@
     "de": {
       "q": "Was ist Ura-nage?",
       "opts": [
-        "Ein Opferwurf – Tori umfasst Ukes Taille, hebt ihn an und fällt nach hinten, wobei Uke über die Schulter geworfen wird",
+        "Ein Opferwurf – Tori umfasst Ukes Taille und fällt nach hinten",
         "Ein einarmiger Schulterwurf nach vorne",
         "Ein Fußfeger beider Füße bei seitlicher Bewegung",
         "Ein Haltegriff von oberhalb des Kopfes"
@@ -22650,7 +22650,7 @@
     "fr": {
       "q": "Qu'est-ce que Ura-nage ?",
       "opts": [
-        "Un sacrifice – Tori ceinture Uke à la taille, le soulève et tombe en arrière en le projetant par-dessus son épaule",
+        "Un sacrifice – Tori ceinture Uke et tombe en arrière",
         "Une projection d'épaule vers l'avant à un bras",
         "Un balayage des deux pieds lors d'un déplacement latéral",
         "Une immobilisation par le haut de la tête"
@@ -22661,7 +22661,7 @@
     "es": {
       "q": "¿Qué es Ura-nage?",
       "opts": [
-        "Un sacrificio: Tori abraza la cintura de Uke, lo levanta y cae hacia atrás proyectándolo por encima del hombro",
+        "Un sacrificio: Tori abraza la cintura de Uke y cae hacia atrás",
         "Una proyección de hombro hacia delante con un brazo",
         "Un barrido de ambos pies durante un desplazamiento lateral",
         "Una inmovilización desde arriba de la cabeza"
@@ -22672,7 +22672,7 @@
     "it": {
       "q": "Cos'è Ura-nage?",
       "opts": [
-        "Una proiezione di sacrificio – Tori cinge Uke alla vita, lo solleva e cade all'indietro proiettandolo sopra la spalla",
+        "Una proiezione di sacrificio – Tori cinge Uke alla vita e cade all'indietro",
         "Una proiezione di spalla in avanti con un braccio",
         "Una spazzata di entrambi i piedi durante uno spostamento laterale",
         "Un'immobilizzazione dall'alto della testa"
@@ -22683,7 +22683,7 @@
     "pt": {
       "q": "O que é Ura-nage?",
       "opts": [
-        "Um sacrifício – o Tori agarra o Uke pela cintura, levanta-o e cai para trás projetando-o por cima do ombro",
+        "Um sacrifício – o Tori agarra o Uke pela cintura e cai para trás",
         "Uma projeção de ombro para a frente com um braço",
         "Uma varredura dos dois pés durante um deslocamento lateral",
         "Uma imobilização a partir de cima da cabeça"
@@ -22694,7 +22694,7 @@
     "ru": {
       "q": "Что такое Ура-нагэ?",
       "opts": [
-        "Бросок с падением – Тори обхватывает Укэ за пояс, поднимает и падает назад, перебрасывая его через плечо",
+        "Бросок с падением – Тори обхватывает Укэ за пояс и падает назад",
         "Бросок вперёд через плечо одной рукой",
         "Подсечка обеих стоп при движении в сторону",
         "Удержание со стороны головы"
@@ -23092,7 +23092,7 @@
     "sr": {
       "q": "Šta je 'Seiza'?",
       "opts": [
-        "Formalno klečeće sedenje – sedi se na petama, sa stopalima položenim na tatami",
+        "Formalno klečeće sedenje na petama",
         "Stav sa nogama u širini ramena",
         "Sedenje sa prekrštenim nogama",
         "Ležanje na leđima pre ukemija"
@@ -23103,7 +23103,7 @@
     "en": {
       "q": "What is 'Seiza'?",
       "opts": [
-        "The formal kneeling seat – sitting on the heels with the insteps flat on the Tatami",
+        "Formal kneeling seat on the heels",
         "A stance with feet shoulder-width apart",
         "Sitting cross-legged",
         "Lying on the back before ukemi"
@@ -23114,7 +23114,7 @@
     "de": {
       "q": "Was ist 'Seiza'?",
       "opts": [
-        "Der formelle Kniesitz – man sitzt auf den Fersen, die Fußrücken flach auf der Tatami",
+        "Formeller Kniesitz auf den Fersen",
         "Ein Stand mit schulterbreiten Füßen",
         "Der Schneidersitz",
         "Rückenlage vor dem Ukemi"
@@ -23125,7 +23125,7 @@
     "fr": {
       "q": "Qu'est-ce que 'Seiza' ?",
       "opts": [
-        "La position assise formelle à genoux – assis sur les talons, le dessus des pieds à plat sur le Tatami",
+        "Position formelle à genoux, assis sur les talons",
         "Une garde avec les pieds écartés de la largeur des épaules",
         "La position assise en tailleur",
         "Être allongé sur le dos avant l'ukemi"
@@ -23136,7 +23136,7 @@
     "es": {
       "q": "¿Qué es 'Seiza'?",
       "opts": [
-        "La posición formal de rodillas: sentado sobre los talones con el empeine apoyado en el Tatami",
+        "Posición formal de rodillas, sentado sobre los talones",
         "Una postura con los pies a la anchura de los hombros",
         "Sentarse con las piernas cruzadas",
         "Estar tumbado de espaldas antes del ukemi"
@@ -23147,7 +23147,7 @@
     "it": {
       "q": "Cos'è 'Seiza'?",
       "opts": [
-        "La posizione seduta formale in ginocchio – seduti sui talloni con il dorso dei piedi sul Tatami",
+        "Posizione formale in ginocchio, seduti sui talloni",
         "Una posizione con i piedi alla larghezza delle spalle",
         "Seduti a gambe incrociate",
         "Sdraiati sulla schiena prima dell'ukemi"
@@ -23158,7 +23158,7 @@
     "pt": {
       "q": "O que é 'Seiza'?",
       "opts": [
-        "A posição formal de joelhos – sentado sobre os calcanhares com o peito dos pés no Tatame",
+        "Posição formal de joelhos, sentado sobre os calcanhares",
         "Uma postura com os pés à largura dos ombros",
         "Sentado de pernas cruzadas",
         "Deitado de costas antes do ukemi"
@@ -23169,7 +23169,7 @@
     "ru": {
       "q": "Что такое «Сэйдза»?",
       "opts": [
-        "Формальная посадка на коленях – сидя на пятках, подъёмы стоп лежат на татами",
+        "Формальная посадка на коленях, сидя на пятках",
         "Стойка с ногами на ширине плеч",
         "Сидение со скрещёнными ногами",
         "Положение лёжа на спине перед укэми"
@@ -23472,7 +23472,7 @@
     "sr": {
       "q": "Šta je 'Mokuso'?",
       "opts": [
-        "Kratka meditacija zatvorenih očiju na početku ili kraju treninga",
+        "Kratka meditacija zatvorenih očiju",
         "Komanda za početak randorija",
         "Vežba disanja tokom borbe",
         "Pozdrav sudiji pre borbe"
@@ -23483,7 +23483,7 @@
     "en": {
       "q": "What is 'Mokuso'?",
       "opts": [
-        "A short meditation with closed eyes at the start or end of training",
+        "A short meditation with closed eyes",
         "The command to start randori",
         "A breathing exercise during a contest",
         "The greeting to the referee before a contest"
@@ -23494,7 +23494,7 @@
     "de": {
       "q": "Was ist 'Mokuso'?",
       "opts": [
-        "Eine kurze Meditation mit geschlossenen Augen zu Beginn oder am Ende des Trainings",
+        "Eine kurze Meditation mit geschlossenen Augen",
         "Das Kommando zum Beginn des Randori",
         "Eine Atemübung während des Kampfes",
         "Der Gruß an den Kampfrichter vor dem Kampf"
@@ -23505,7 +23505,7 @@
     "fr": {
       "q": "Qu'est-ce que 'Mokuso' ?",
       "opts": [
-        "Une courte méditation les yeux fermés au début ou à la fin de l'entraînement",
+        "Une courte méditation les yeux fermés",
         "Le commandement pour commencer le randori",
         "Un exercice de respiration pendant le combat",
         "Le salut à l'arbitre avant le combat"
@@ -23516,7 +23516,7 @@
     "es": {
       "q": "¿Qué es 'Mokuso'?",
       "opts": [
-        "Una breve meditación con los ojos cerrados al principio o al final del entrenamiento",
+        "Una breve meditación con los ojos cerrados",
         "La orden para empezar el randori",
         "Un ejercicio de respiración durante el combate",
         "El saludo al árbitro antes del combate"
@@ -23527,7 +23527,7 @@
     "it": {
       "q": "Cos'è 'Mokuso'?",
       "opts": [
-        "Una breve meditazione a occhi chiusi all'inizio o alla fine dell'allenamento",
+        "Una breve meditazione a occhi chiusi",
         "Il comando per iniziare il randori",
         "Un esercizio di respirazione durante l'incontro",
         "Il saluto all'arbitro prima dell'incontro"
@@ -23538,7 +23538,7 @@
     "pt": {
       "q": "O que é 'Mokuso'?",
       "opts": [
-        "Uma breve meditação de olhos fechados no início ou no fim do treino",
+        "Uma breve meditação de olhos fechados",
         "A ordem para começar o randori",
         "Um exercício de respiração durante o combate",
         "A saudação ao árbitro antes do combate"
@@ -23549,7 +23549,7 @@
     "ru": {
       "q": "Что такое «Мокусо»?",
       "opts": [
-        "Короткая медитация с закрытыми глазами в начале или в конце тренировки",
+        "Короткая медитация с закрытыми глазами",
         "Команда к началу рандори",
         "Дыхательное упражнение во время схватки",
         "Приветствие судье перед схваткой"
@@ -23949,7 +23949,7 @@
       "opts": [
         "Podigne se ruka prema sudiji",
         "Okrene se glava na drugu stranu",
-        "Tapka se rukom ili nogom bar dva puta po partneru ili tatamiju, ili se izgovori 'Maitta'",
+        "Tapka se rukom ili nogom ili se kaže 'Maitta'",
         "Čeka se da sudija sam prekine"
       ],
       "c": 2,
@@ -23960,7 +23960,7 @@
       "opts": [
         "By raising a hand toward the referee",
         "By turning the head to the other side",
-        "By tapping at least twice with hand or foot on the partner or the Tatami, or saying 'Maitta'",
+        "Tapping with hand or foot, or saying 'Maitta'",
         "By waiting for the referee to stop it"
       ],
       "c": 2,
@@ -23971,7 +23971,7 @@
       "opts": [
         "Man hebt die Hand zum Kampfrichter",
         "Man dreht den Kopf zur anderen Seite",
-        "Man klopft mindestens zweimal mit Hand oder Fuß auf den Partner oder die Tatami oder sagt 'Maitta'",
+        "Mit Hand oder Fuß klopfen oder 'Maitta' sagen",
         "Man wartet, bis der Kampfrichter abbricht"
       ],
       "c": 2,
@@ -23982,7 +23982,7 @@
       "opts": [
         "En levant la main vers l'arbitre",
         "En tournant la tête de l'autre côté",
-        "En tapant au moins deux fois de la main ou du pied sur le partenaire ou le Tatami, ou en disant 'Maitta'",
+        "En tapant de la main ou du pied, ou en disant 'Maitta'",
         "En attendant que l'arbitre arrête"
       ],
       "c": 2,
@@ -23993,7 +23993,7 @@
       "opts": [
         "Levantando la mano hacia el árbitro",
         "Girando la cabeza hacia el otro lado",
-        "Golpeando al menos dos veces con la mano o el pie sobre el compañero o el Tatami, o diciendo 'Maitta'",
+        "Golpeando con mano o pie, o diciendo 'Maitta'",
         "Esperando a que el árbitro lo detenga"
       ],
       "c": 2,
@@ -24004,7 +24004,7 @@
       "opts": [
         "Alzando la mano verso l'arbitro",
         "Girando la testa dall'altra parte",
-        "Battendo almeno due volte con la mano o il piede sul compagno o sul Tatami, oppure dicendo 'Maitta'",
+        "Battendo con mano o piede, oppure dicendo 'Maitta'",
         "Aspettando che l'arbitro interrompa"
       ],
       "c": 2,
@@ -24015,7 +24015,7 @@
       "opts": [
         "Levantando a mão para o árbitro",
         "Virando a cabeça para o outro lado",
-        "Batendo pelo menos duas vezes com a mão ou o pé no parceiro ou no Tatame, ou dizendo 'Maitta'",
+        "Batendo com a mão ou o pé, ou dizendo 'Maitta'",
         "Esperando que o árbitro interrompa"
       ],
       "c": 2,
@@ -24026,7 +24026,7 @@
       "opts": [
         "Поднимают руку к судье",
         "Отворачивают голову в другую сторону",
-        "Хлопают рукой или ногой не менее двух раз по партнёру или татами либо говорят «Маитта»",
+        "Хлопком рукой или ногой либо словом «Маитта»",
         "Ждут, пока судья остановит схватку"
       ],
       "c": 2,
@@ -25658,7 +25658,7 @@
       "q": "Koja su tri cilja džudoa prema Kanu?",
       "opts": [
         "Brzina, snaga i izdržljivost",
-        "Fizičko vaspitanje (Rentai-ho), borbena veština (Shobu-ho) i moralno-duhovno vaspitanje (Shushin-ho)",
+        "Telesni razvoj, borba i moral",
         "Pobeda, slava i medalje",
         "Kata, randori i takmičenje"
       ],
@@ -25669,7 +25669,7 @@
       "q": "What are the three aims of judo according to Kano?",
       "opts": [
         "Speed, strength and endurance",
-        "Physical education (Rentai-ho), martial skill (Shobu-ho) and moral-mental training (Shushin-ho)",
+        "Body, combat skill and morals",
         "Victory, fame and medals",
         "Kata, randori and competition"
       ],
@@ -25680,7 +25680,7 @@
       "q": "Was sind nach Kano die drei Ziele des Judo?",
       "opts": [
         "Schnelligkeit, Kraft und Ausdauer",
-        "Körpererziehung (Rentai-ho), Kampfkunst (Shobu-ho) und moralisch-geistige Bildung (Shushin-ho)",
+        "Körper, Kampfkunst und Moral",
         "Sieg, Ruhm und Medaillen",
         "Kata, Randori und Wettkampf"
       ],
@@ -25691,7 +25691,7 @@
       "q": "Quels sont les trois buts du judo selon Kano ?",
       "opts": [
         "Vitesse, force et endurance",
-        "L'éducation physique (Rentai-ho), l'art du combat (Shobu-ho) et la formation morale et mentale (Shushin-ho)",
+        "Corps, art du combat et morale",
         "La victoire, la gloire et les médailles",
         "Le kata, le randori et la compétition"
       ],
@@ -25702,7 +25702,7 @@
       "q": "¿Cuáles son los tres objetivos del judo según Kano?",
       "opts": [
         "Velocidad, fuerza y resistencia",
-        "Educación física (Rentai-ho), habilidad de combate (Shobu-ho) y formación moral y mental (Shushin-ho)",
+        "Cuerpo, habilidad de combate y moral",
         "Victoria, fama y medallas",
         "Kata, randori y competición"
       ],
@@ -25713,7 +25713,7 @@
       "q": "Quali sono i tre obiettivi del judo secondo Kano?",
       "opts": [
         "Velocità, forza e resistenza",
-        "L'educazione fisica (Rentai-ho), l'abilità di combattimento (Shobu-ho) e la formazione morale e mentale (Shushin-ho)",
+        "Corpo, abilità di combattimento e morale",
         "Vittoria, fama e medaglie",
         "Kata, randori e gara"
       ],
@@ -25724,7 +25724,7 @@
       "q": "Quais são os três objetivos do judô segundo Kano?",
       "opts": [
         "Velocidade, força e resistência",
-        "Educação física (Rentai-ho), habilidade de combate (Shobu-ho) e formação moral e mental (Shushin-ho)",
+        "Corpo, habilidade de combate e moral",
         "Vitória, fama e medalhas",
         "Kata, randori e competição"
       ],
@@ -25735,7 +25735,7 @@
       "q": "Каковы три цели дзюдо по Кано?",
       "opts": [
         "Скорость, сила и выносливость",
-        "Физическое воспитание (Рэнтай-хо), боевое мастерство (Сёбу-хо) и нравственно-духовное воспитание (Сюсин-хо)",
+        "Тело, боевое мастерство и нравственность",
         "Победа, слава и медали",
         "Ката, рандори и соревнования"
       ],
@@ -26037,7 +26037,7 @@
     "sr": {
       "q": "Na randoriju ti je partner početnik i mnogo je manji od tebe. Kako treba da se boriš?",
       "opts": [
-        "Smanjiš intenzitet, pustiš ga da radi i koristiš priliku da vežbaš tehniku i kretanje",
+        "Smanjiš intenzitet i vežbaš tehniku i kretanje",
         "Bacaš ga što češće da vidi kako je to",
         "Odbijaš randori sa njim",
         "Boriš se punom snagom kao na takmičenju"
@@ -26048,7 +26048,7 @@
     "en": {
       "q": "In randori your partner is a much smaller beginner. How should you fight?",
       "opts": [
-        "Lower the intensity, let them work and use the chance to practise technique and movement",
+        "Lower the intensity and practise technique and movement",
         "Throw them as often as possible so they see what it is like",
         "Refuse to do randori with them",
         "Fight at full strength as in competition"
@@ -26059,7 +26059,7 @@
     "de": {
       "q": "Im Randori ist dein Partner ein viel kleinerer Anfänger. Wie solltest du kämpfen?",
       "opts": [
-        "Die Intensität senken, ihn arbeiten lassen und die Gelegenheit nutzen, Technik und Bewegung zu üben",
+        "Intensität senken und Technik und Bewegung üben",
         "Ihn so oft wie möglich werfen, damit er sieht, wie es ist",
         "Das Randori mit ihm verweigern",
         "Mit voller Kraft kämpfen wie im Wettkampf"
@@ -26070,7 +26070,7 @@
     "fr": {
       "q": "En randori, ton partenaire est un débutant beaucoup plus petit. Comment dois-tu combattre ?",
       "opts": [
-        "Baisser l'intensité, le laisser travailler et en profiter pour travailler ta technique et tes déplacements",
+        "Baisser l'intensité et travailler technique et déplacements",
         "Le projeter le plus souvent possible pour qu'il voie ce que c'est",
         "Refuser le randori avec lui",
         "Combattre à pleine puissance comme en compétition"
@@ -26081,7 +26081,7 @@
     "es": {
       "q": "En randori tu compañero es un principiante mucho más pequeño. ¿Cómo debes combatir?",
       "opts": [
-        "Bajar la intensidad, dejarle trabajar y aprovechar para practicar técnica y desplazamientos",
+        "Bajar la intensidad y practicar técnica y desplazamientos",
         "Proyectarlo lo más a menudo posible para que vea cómo es",
         "Negarte a hacer randori con él",
         "Combatir con toda tu fuerza como en competición"
@@ -26092,7 +26092,7 @@
     "it": {
       "q": "Nel randori il tuo compagno è un principiante molto più piccolo. Come dovresti combattere?",
       "opts": [
-        "Abbassare l'intensità, lasciarlo lavorare e approfittarne per esercitare tecnica e spostamenti",
+        "Abbassare l'intensità e allenare tecnica e spostamenti",
         "Proiettarlo il più spesso possibile perché veda com'è",
         "Rifiutare il randori con lui",
         "Combattere a piena forza come in gara"
@@ -26103,7 +26103,7 @@
     "pt": {
       "q": "No randori, seu parceiro é um iniciante bem menor. Como você deve combater?",
       "opts": [
-        "Diminuir a intensidade, deixá-lo trabalhar e aproveitar para treinar técnica e deslocamentos",
+        "Diminuir a intensidade e treinar técnica e deslocamentos",
         "Projetá-lo o maior número de vezes possível para ele ver como é",
         "Recusar-se a fazer randori com ele",
         "Combater com toda a força como em competição"
@@ -26114,7 +26114,7 @@
     "ru": {
       "q": "В рандори твой партнёр – гораздо более лёгкий новичок. Как тебе бороться?",
       "opts": [
-        "Снизить интенсивность, дать ему работать и использовать возможность отработать технику и передвижение",
+        "Снизить интенсивность и отрабатывать технику и передвижение",
         "Бросать его как можно чаще, чтобы он понял, каково это",
         "Отказаться от рандори с ним",
         "Бороться в полную силу, как на соревнованиях"
@@ -26134,7 +26134,7 @@
       "opts": [
         "Čekaš da se sam okrene",
         "Pustiš ga i vratiš se u stav",
-        "Odmah napadaš okretanje u držanje, jer će sudija brzo dati Matte ako nema napretka",
+        "Odmah napadaš okretanje u držanje",
         "Tražiš od sudije Shido za njega"
       ],
       "c": 2,
@@ -26145,7 +26145,7 @@
       "opts": [
         "Wait for them to turn over on their own",
         "Let go and return to standing",
-        "Attack a turnover into a hold immediately, because the referee will soon call Matte if there is no progress",
+        "Immediately attack a turnover into a hold",
         "Ask the referee to give them a Shido"
       ],
       "c": 2,
@@ -26156,7 +26156,7 @@
       "opts": [
         "Warten, bis er sich von selbst dreht",
         "Loslassen und in den Stand zurückkehren",
-        "Sofort ein Umdrehen in einen Haltegriff angreifen, weil der Kampfrichter ohne Fortschritt bald Matte gibt",
+        "Sofort ein Umdrehen in einen Haltegriff angreifen",
         "Vom Kampfrichter ein Shido für ihn verlangen"
       ],
       "c": 2,
@@ -26167,7 +26167,7 @@
       "opts": [
         "Attendre qu'il se retourne tout seul",
         "Le lâcher et revenir debout",
-        "Attaquer tout de suite un retournement vers une immobilisation, car l'arbitre annoncera bientôt Matte sans progression",
+        "Attaquer aussitôt un retournement vers une immobilisation",
         "Demander un Shido contre lui à l'arbitre"
       ],
       "c": 2,
@@ -26178,7 +26178,7 @@
       "opts": [
         "Esperar a que se dé la vuelta solo",
         "Soltarlo y volver a ponerte de pie",
-        "Atacar de inmediato un volteo hacia una inmovilización, porque el árbitro dirá pronto Matte si no hay progreso",
+        "Atacar de inmediato un volteo a inmovilización",
         "Pedir al árbitro un Shido para él"
       ],
       "c": 2,
@@ -26189,7 +26189,7 @@
       "opts": [
         "Aspettare che si giri da solo",
         "Lasciarlo e tornare in piedi",
-        "Attaccare subito un ribaltamento verso un'immobilizzazione, perché l'arbitro dirà presto Matte se non c'è progresso",
+        "Attaccare subito un ribaltamento in immobilizzazione",
         "Chiedere all'arbitro uno Shido per lui"
       ],
       "c": 2,
@@ -26200,7 +26200,7 @@
       "opts": [
         "Esperar que ele se vire sozinho",
         "Soltá-lo e voltar a ficar em pé",
-        "Atacar imediatamente uma virada para uma imobilização, porque o árbitro dirá Matte em breve se não houver progresso",
+        "Atacar logo uma virada para imobilização",
         "Pedir ao árbitro um Shido para ele"
       ],
       "c": 2,
@@ -26211,7 +26211,7 @@
       "opts": [
         "Ждать, пока он сам перевернётся",
         "Отпустить его и вернуться в стойку",
-        "Сразу атаковать переворот в удержание, потому что судья скоро объявит Маттэ, если нет продвижения",
+        "Сразу атаковать переворот в удержание",
         "Попросить судью дать ему Шидо"
       ],
       "c": 2,
@@ -26230,7 +26230,7 @@
         "Prestaneš da piješ vodu do merenja",
         "Treniraš u najlonskom odelu na vrućini",
         "Ne jedeš ništa tri dana",
-        "Posavetuješ se sa trenerom; ubuduće težinu reguliši postepeno, a sad je možda bolje nastupiti u višoj kategoriji"
+        "Posavetuješ se sa trenerom i razmotriš višu kategoriju"
       ],
       "c": 3,
       "exp": "Naglo skidanje kilograma dehidracijom i gladovanjem slabi snagu i koncentraciju i opasno je po zdravlje. Težina se reguliše postepeno, uz trenera i ishranu, a zdravlje je uvek ispred jedne medalje."
@@ -26241,7 +26241,7 @@
         "Stop drinking water until the weigh-in",
         "Train in a plastic suit in the heat",
         "Eat nothing for three days",
-        "Talk to your coach; manage weight gradually in future, and now it may be better to compete in the higher category"
+        "Talk to your coach and consider the higher category"
       ],
       "c": 3,
       "exp": "Rapid weight loss through dehydration and starvation weakens strength and concentration and is dangerous to health. Weight is managed gradually, with the coach and proper nutrition – health always comes before a single medal."
@@ -26252,7 +26252,7 @@
         "Bis zum Wiegen kein Wasser mehr trinken",
         "In einem Plastikanzug in der Hitze trainieren",
         "Drei Tage lang nichts essen",
-        "Mit dem Trainer sprechen; künftig das Gewicht schrittweise regeln – jetzt ist es vielleicht besser, in der höheren Klasse zu starten"
+        "Mit dem Trainer sprechen und die höhere Klasse erwägen"
       ],
       "c": 3,
       "exp": "Schnelles Abnehmen durch Austrocknen und Hungern schwächt Kraft und Konzentration und ist gesundheitsgefährdend. Das Gewicht wird schrittweise geregelt, mit Trainer und richtiger Ernährung – Gesundheit geht immer vor einer Medaille."
@@ -26263,7 +26263,7 @@
         "Arrêter de boire de l'eau jusqu'à la pesée",
         "T'entraîner dans une combinaison en plastique en pleine chaleur",
         "Ne rien manger pendant trois jours",
-        "En parler à ton entraîneur ; à l'avenir gérer ton poids progressivement, et là il vaut peut-être mieux combattre dans la catégorie supérieure"
+        "En parler à ton entraîneur et envisager la catégorie supérieure"
       ],
       "c": 3,
       "exp": "Perdre du poids rapidement par déshydratation et privation affaiblit la force et la concentration et est dangereux pour la santé. Le poids se gère progressivement, avec l'entraîneur et une bonne alimentation – la santé passe toujours avant une médaille."
@@ -26274,7 +26274,7 @@
         "Dejar de beber agua hasta el pesaje",
         "Entrenar con un traje de plástico con calor",
         "No comer nada durante tres días",
-        "Hablar con tu entrenador; en el futuro controlar el peso de forma gradual, y ahora quizá sea mejor competir en la categoría superior"
+        "Hablar con tu entrenador y considerar la categoría superior"
       ],
       "c": 3,
       "exp": "Bajar peso rápido deshidratándose y sin comer debilita la fuerza y la concentración y es peligroso para la salud. El peso se controla de forma gradual, con el entrenador y una buena alimentación: la salud siempre va antes que una medalla."
@@ -26285,7 +26285,7 @@
         "Smettere di bere acqua fino alla pesata",
         "Allenarti con una tuta di plastica al caldo",
         "Non mangiare niente per tre giorni",
-        "Parlarne con l'allenatore; in futuro gestire il peso gradualmente; per ora forse è meglio gareggiare nella categoria superiore"
+        "Parlarne con l'allenatore e valutare la categoria superiore"
       ],
       "c": 3,
       "exp": "Perdere peso in fretta disidratandosi e digiunando indebolisce forza e concentrazione ed è pericoloso per la salute. Il peso si gestisce gradualmente, con l'allenatore e una corretta alimentazione – la salute viene sempre prima di una medaglia."
@@ -26296,7 +26296,7 @@
         "Parar de beber água até a pesagem",
         "Treinar com uma roupa de plástico no calor",
         "Não comer nada durante três dias",
-        "Conversar com o treinador; no futuro, controlar o peso gradualmente e, agora, talvez seja melhor competir na categoria acima"
+        "Conversar com o treinador e considerar a categoria acima"
       ],
       "c": 3,
       "exp": "Perder peso rapidamente por desidratação e jejum enfraquece a força e a concentração e é perigoso para a saúde. O peso deve ser controlado gradualmente, com o treinador e uma boa alimentação – a saúde vem sempre antes de uma medalha."
@@ -26307,7 +26307,7 @@
         "Перестать пить воду до взвешивания",
         "Тренироваться в пластиковом костюме в жару",
         "Ничего не есть три дня",
-        "Посоветоваться с тренером; в будущем регулировать вес постепенно, а сейчас, возможно, лучше выступить в более тяжёлой категории"
+        "Посоветоваться с тренером и рассмотреть более тяжёлую категорию"
       ],
       "c": 3,
       "exp": "Резкая сгонка веса через обезвоживание и голодание снижает силу и концентрацию и опасна для здоровья. Вес регулируют постепенно, вместе с тренером и правильным питанием – здоровье всегда важнее одной медали."
@@ -26419,7 +26419,7 @@
       "opts": [
         "Kazna za pasivnost",
         "Ocena veća od Ippona",
-        "Ocena ispod Waza-ari – npr. bacanje na bok ili zadržavanje od 5 do 9 sekundi",
+        "Ocena niža od Waza-ari",
         "Drugi naziv za Waza-ari"
       ],
       "c": 2,
@@ -26430,7 +26430,7 @@
       "opts": [
         "A penalty for passivity",
         "A score higher than Ippon",
-        "A score below Waza-ari – for example a throw landing on the side, or a 5–9 second hold",
+        "A score lower than Waza-ari",
         "Another name for Waza-ari"
       ],
       "c": 2,
@@ -26441,7 +26441,7 @@
       "opts": [
         "Eine Strafe für Passivität",
         "Eine Wertung höher als Ippon",
-        "Eine Wertung unterhalb von Waza-ari – z. B. ein Wurf mit Landung auf der Seite oder ein Haltegriff von 5 bis 9 Sekunden",
+        "Eine Wertung unterhalb von Waza-ari",
         "Ein anderer Name für Waza-ari"
       ],
       "c": 2,
@@ -26452,7 +26452,7 @@
       "opts": [
         "Une pénalité pour passivité",
         "Un score supérieur à l'Ippon",
-        "Un score inférieur au Waza-ari – par exemple une projection avec réception sur le côté, ou une immobilisation de 5 à 9 secondes",
+        "Un score inférieur au Waza-ari",
         "Un autre nom pour le Waza-ari"
       ],
       "c": 2,
@@ -26463,7 +26463,7 @@
       "opts": [
         "Una penalización por pasividad",
         "Una puntuación superior al Ippon",
-        "Una puntuación inferior al Waza-ari – por ejemplo una proyección con caída de lado o una inmovilización de 5 a 9 segundos",
+        "Una puntuación inferior al Waza-ari",
         "Otro nombre para el Waza-ari"
       ],
       "c": 2,
@@ -26474,7 +26474,7 @@
       "opts": [
         "Una penalità per passività",
         "Un punteggio superiore all'Ippon",
-        "Un punteggio inferiore al Waza-ari – ad esempio una proiezione con caduta sul fianco o un'immobilizzazione da 5 a 9 secondi",
+        "Un punteggio inferiore al Waza-ari",
         "Un altro nome per il Waza-ari"
       ],
       "c": 2,
@@ -26485,7 +26485,7 @@
       "opts": [
         "Uma penalidade por passividade",
         "Uma pontuação superior ao Ippon",
-        "Uma pontuação abaixo do Waza-ari – por exemplo uma projeção com queda de lado ou uma imobilização de 5 a 9 segundos",
+        "Uma pontuação abaixo do Waza-ari",
         "Outro nome para o Waza-ari"
       ],
       "c": 2,
@@ -26496,7 +26496,7 @@
       "opts": [
         "Штраф за пассивность",
         "Оценка выше Иппона",
-        "Оценка ниже Вадза-ари — например, бросок с приземлением на бок или удержание 5–9 секунд",
+        "Оценка ниже Вадза-ари",
         "Другое название Вадза-ари"
       ],
       "c": 2,
@@ -29835,7 +29835,7 @@
     "type": "istorija",
     "videoId": null,
     "sr": {
-      "q": "Koliko je otprilike star džudo?",
+      "q": "Koliko je otprilike star džudo kao sport?",
       "opts": [
         "Oko 40 godina",
         "Oko 400 godina",
@@ -29846,7 +29846,7 @@
       "exp": "Džudo je osnovan 1882. godine, pa je star više od 140 godina."
     },
     "en": {
-      "q": "About how old is judo?",
+      "q": "About how old is judo as a sport?",
       "opts": [
         "About 40 years",
         "About 400 years",
@@ -29857,7 +29857,7 @@
       "exp": "Judo was founded in 1882, so it is more than 140 years old."
     },
     "de": {
-      "q": "Wie alt ist Judo ungefähr?",
+      "q": "Wie alt ist Judo als Sport ungefähr?",
       "opts": [
         "Etwa 40 Jahre",
         "Etwa 400 Jahre",
@@ -29868,7 +29868,7 @@
       "exp": "Judo wurde 1882 gegründet, ist also mehr als 140 Jahre alt."
     },
     "fr": {
-      "q": "Quel âge a le judo environ ?",
+      "q": "Quel âge a le judo en tant que sport, environ ?",
       "opts": [
         "Environ 40 ans",
         "Environ 400 ans",
@@ -29879,7 +29879,7 @@
       "exp": "Le judo a été fondé en 1882, il a donc plus de 140 ans."
     },
     "es": {
-      "q": "¿Cuántos años tiene el judo aproximadamente?",
+      "q": "¿Cuántos años tiene aproximadamente el judo como deporte?",
       "opts": [
         "Unos 40 años",
         "Unos 400 años",
@@ -29890,7 +29890,7 @@
       "exp": "El judo se fundó en 1882, así que tiene más de 140 años."
     },
     "it": {
-      "q": "Quanti anni ha circa il judo?",
+      "q": "Quanti anni ha circa il judo come sport?",
       "opts": [
         "Circa 40 anni",
         "Circa 400 anni",
@@ -29901,7 +29901,7 @@
       "exp": "Il judo fu fondato nel 1882, quindi ha più di 140 anni."
     },
     "pt": {
-      "q": "Qual é, mais ou menos, a idade do judô?",
+      "q": "Qual é, mais ou menos, a idade do judô como esporte?",
       "opts": [
         "Cerca de 40 anos",
         "Cerca de 400 anos",
@@ -29912,7 +29912,7 @@
       "exp": "O judô foi fundado em 1882, então tem mais de 140 anos."
     },
     "ru": {
-      "q": "Сколько примерно лет дзюдо?",
+      "q": "Сколько примерно лет дзюдо как виду спорта?",
       "opts": [
         "Около 40 лет",
         "Около 400 лет",
@@ -38575,7 +38575,7 @@
     "type": "istorija",
     "videoId": null,
     "sr": {
-      "q": "Šta je Kano pomogao da Tokio osvoji 1936?",
+      "q": "Šta je Jigoro Kano, kao član MOK-a, pomogao da Tokio dobije 1936. godine?",
       "opts": [
         "Pravo da bude domaćin Olimpijskih igara 1940",
         "Prvo olimpijsko takmičenje u džudou",
@@ -38586,7 +38586,7 @@
       "exp": "Kano je, kao član MOK-a, pomogao da Tokio dobije pravo domaćinstva Igara 1940. One su kasnije otkazane zbog rata."
     },
     "en": {
-      "q": "What did Kano help win for Tokyo in 1936?",
+      "q": "What did Jigoro Kano, as an IOC member, help Tokyo win in 1936?",
       "opts": [
         "The right to host the 1940 Olympic Games",
         "The first judo Olympic event",
@@ -38597,7 +38597,7 @@
       "exp": "Kano, as an IOC member, helped Tokyo win the hosting rights for the 1940 Games. They were later cancelled because of the war."
     },
     "de": {
-      "q": "Was half Kano 1936, für Tokio zu gewinnen?",
+      "q": "Wofür setzte sich Jigoro Kano als IOC-Mitglied 1936 erfolgreich für Tokio ein?",
       "opts": [
         "Das Recht, die Olympischen Spiele 1940 auszurichten",
         "Den ersten olympischen Judo-Wettbewerb",
@@ -38608,7 +38608,7 @@
       "exp": "Kano half als IOC-Mitglied Tokio, das Recht zur Ausrichtung der Spiele 1940 zu gewinnen. Sie wurden später wegen des Krieges abgesagt."
     },
     "fr": {
-      "q": "Qu'est-ce que Kano a aidé à obtenir pour Tokyo en 1936 ?",
+      "q": "Qu'a aidé Jigoro Kano, en tant que membre du CIO, à obtenir pour Tokyo en 1936 ?",
       "opts": [
         "Le droit d'accueillir les Jeux olympiques de 1940",
         "La première épreuve olympique de judo",
@@ -38619,7 +38619,7 @@
       "exp": "Kano, en tant que membre du CIO, a aidé Tokyo à obtenir l'organisation des Jeux de 1940. Ils furent ensuite annulés à cause de la guerre."
     },
     "es": {
-      "q": "¿Qué ayudó a conseguir Kano para Tokio en 1936?",
+      "q": "¿Qué ayudó a conseguir Jigoro Kano, como miembro del COI, para Tokio en 1936?",
       "opts": [
         "El derecho a ser sede de los Juegos Olímpicos de 1940",
         "La primera competición olímpica de judo",
@@ -38630,7 +38630,7 @@
       "exp": "Kano, como miembro del COI, ayudó a que Tokio obtuviera el derecho a acoger los Juegos de 1940. Más tarde se cancelaron por la guerra."
     },
     "it": {
-      "q": "Cosa ha contribuito a ottenere Kano per Tokyo nel 1936?",
+      "q": "Che cosa ha contribuito a ottenere per Tokyo, nel 1936, Jigoro Kano in qualità di membro del CIO?",
       "opts": [
         "Il diritto di ospitare i Giochi Olimpici del 1940",
         "La prima gara olimpica di judo",
@@ -38641,7 +38641,7 @@
       "exp": "Kano, come membro del CIO, ha aiutato Tokyo a ottenere il diritto di ospitare i Giochi del 1940. Furono poi annullati a causa della guerra."
     },
     "pt": {
-      "q": "O que Kano ajudou a conquistar para Tóquio em 1936?",
+      "q": "O que Jigoro Kano, como membro do COI, ajudou Tóquio a conquistar em 1936?",
       "opts": [
         "O direito de sediar os Jogos Olímpicos de 1940",
         "A primeira prova olímpica de judô",
@@ -38652,7 +38652,7 @@
       "exp": "Kano, como membro do COI, ajudou Tóquio a conquistar o direito de sediar os Jogos de 1940. Eles foram cancelados mais tarde por causa da guerra."
     },
     "ru": {
-      "q": "Чему помог Кано добиться для Токио в 1936 году?",
+      "q": "Чему помог Дзигоро Кано, как член МОК, добиться для Токио в 1936 году?",
       "opts": [
         "Права провести Олимпийские игры 1940 года",
         "Первого олимпийского турнира по дзюдо",
@@ -41239,7 +41239,7 @@
       "opts": [
         "Gušenje rukavom iz stojećeg stava",
         "Bacanje kukom uz zahvat Ukeove glave i kuka",
-        "Žrtveno bacanje: Tori obuhvati Ukea oko trupa spreda, padne unazad i prebaci ga preko sebe",
+        "Žrtveno bacanje – Tori obuhvati Ukea spreda i pada unazad",
         "Poluga na lakat iz zadržavanja"
       ],
       "c": 2,
@@ -41250,7 +41250,7 @@
       "opts": [
         "A sleeve choke from a standing position",
         "A hip throw with a grip on Uke's head and hip",
-        "A sacrifice throw: Tori wraps both arms around Uke's body from the front, falls backward and throws Uke over themselves",
+        "A sacrifice throw – Tori hugs Uke from the front and falls backward",
         "An armlock from a hold-down"
       ],
       "c": 2,
@@ -41261,7 +41261,7 @@
       "opts": [
         "Ein Würgegriff mit dem Ärmel aus dem Stand",
         "Ein Hüftwurf mit Griff um Ukes Kopf und Hüfte",
-        "Ein Opferwurf: Tori umfasst Uke von vorn am Rumpf, lässt sich nach hinten fallen und befördert ihn über sich",
+        "Ein Opferwurf – Tori umfasst Uke von vorn und fällt nach hinten",
         "Ein Armhebel aus dem Haltegriff"
       ],
       "c": 2,
@@ -41272,7 +41272,7 @@
       "opts": [
         "Un étranglement avec la manche depuis la position debout",
         "Une projection de hanche en saisissant la tête et la hanche d’Uke",
-        "Une projection de sacrifice : Tori entoure Uke à la taille par devant, tombe en arrière et le fait passer par-dessus lui",
+        "Un sacrifice – Tori entoure Uke par devant et tombe en arrière",
         "Une clé de coude à partir d’une immobilisation"
       ],
       "c": 2,
@@ -41283,7 +41283,7 @@
       "opts": [
         "Una estrangulación con la manga de pie",
         "Una proyección de cadera sujetando la cabeza y la cadera de Uke",
-        "Una proyección de sacrificio: Tori rodea a Uke por el tronco de frente, cae hacia atrás y lo lanza por encima de sí",
+        "Un sacrificio: Tori rodea a Uke de frente y cae hacia atrás",
         "Una luxación de codo desde una inmovilización"
       ],
       "c": 2,
@@ -41294,7 +41294,7 @@
       "opts": [
         "Uno strangolamento con la manica da in piedi",
         "Una proiezione d'anca afferrando la testa e l'anca di Uke",
-        "Una proiezione di sacrificio: Tori abbraccia Uke attorno al busto da davanti, cade all'indietro e lo scaraventa sopra di sé",
+        "Una proiezione di sacrificio – Tori abbraccia Uke da davanti e cade all'indietro",
         "Una leva al gomito da un'immobilizzazione"
       ],
       "c": 2,
@@ -41305,7 +41305,7 @@
       "opts": [
         "Estrangulamento com a manga a partir da posição em pé",
         "Projeção de quadril com pegada na cabeça e no quadril do Uke",
-        "Projeção de sacrifício: o Tori abraça o Uke pelo tronco, pela frente, cai para trás e o joga por cima de si",
+        "Um sacrifício – o Tori abraça o Uke pela frente e cai para trás",
         "Chave de cotovelo a partir de uma imobilização"
       ],
       "c": 2,
@@ -41316,7 +41316,7 @@
       "opts": [
         "Удушающий приём рукавом из стойки",
         "Бросок бедром с захватом головы и бедра Укэ",
-        "Жертвенный бросок: Тори обхватывает Укэ спереди за туловище, падает назад и перебрасывает его через себя",
+        "Жертвенный бросок – Тори обхватывает Укэ спереди и падает назад",
         "Болевой приём на локоть из удержания"
       ],
       "c": 2,
@@ -41334,7 +41334,7 @@
       "opts": [
         "Bacanje podmetom noge spolja",
         "Gušenje reverom sa ukrštenim rukama",
-        "Poluga na lakat u kojoj Tori Ukeovu ispruženu ruku steže uz svoje pazuho i pritiska lakat",
+        "Poluga na lakat – Ukeova ruka stegnuta uz Torijevo pazuho",
         "Zadržavanje preko Ukeovih grudi"
       ],
       "c": 2,
@@ -41345,7 +41345,7 @@
       "opts": [
         "A throw with a foot sweep from the outside",
         "A lapel choke with crossed hands",
-        "An armlock in which Tori clamps Uke's extended arm against their own armpit and presses on the elbow",
+        "An armlock – Uke's arm clamped under Tori's armpit",
         "A hold-down across Uke's chest"
       ],
       "c": 2,
@@ -41356,7 +41356,7 @@
       "opts": [
         "Ein Wurf mit Beinsteller von außen",
         "Ein Würgegriff am Revers mit gekreuzten Armen",
-        "Ein Armhebel, bei dem Tori Ukes gestreckten Arm an seine Achselhöhle klemmt und auf den Ellbogen drückt",
+        "Ein Armhebel – Ukes Arm unter Toris Achsel geklemmt",
         "Ein Haltegriff über Ukes Brust"
       ],
       "c": 2,
@@ -41367,7 +41367,7 @@
       "opts": [
         "Une projection en plaçant le pied à l’extérieur",
         "Un étranglement avec le revers, les bras croisés",
-        "Une clé de coude dans laquelle Tori serre le bras tendu d’Uke contre son aisselle et appuie sur le coude",
+        "Une clé de coude – bras d'Uke serré sous l'aisselle de Tori",
         "Une immobilisation sur la poitrine d’Uke"
       ],
       "c": 2,
@@ -41378,7 +41378,7 @@
       "opts": [
         "Una proyección barriendo la pierna por fuera",
         "Una estrangulación con la solapa con los brazos cruzados",
-        "Una luxación de codo en la que Tori sujeta el brazo extendido de Uke contra su axila y presiona el codo",
+        "Una luxación de codo: brazo de Uke sujeto bajo la axila de Tori",
         "Una inmovilización sobre el pecho de Uke"
       ],
       "c": 2,
@@ -41389,7 +41389,7 @@
       "opts": [
         "Una proiezione con sgambetto esterno",
         "Uno strangolamento col bavero a braccia incrociate",
-        "Una leva al gomito in cui Tori stringe il braccio teso di Uke sotto la propria ascella e preme sul gomito",
+        "Una leva al gomito – braccio di Uke sotto l'ascella di Tori",
         "Un'immobilizzazione sul petto di Uke"
       ],
       "c": 2,
@@ -41400,7 +41400,7 @@
       "opts": [
         "Projeção com varredura de perna por fora",
         "Estrangulamento com a gola e os braços cruzados",
-        "Chave de cotovelo em que o Tori prende o braço esticado do Uke sob a sua axila e pressiona o cotovelo",
+        "Chave de cotovelo – braço do Uke preso sob a axila do Tori",
         "Imobilização sobre o peito do Uke"
       ],
       "c": 2,
@@ -41411,7 +41411,7 @@
       "opts": [
         "Бросок подсечкой ноги снаружи",
         "Удушение отворотом с перекрещёнными руками",
-        "Болевой приём на локоть, при котором Тори зажимает вытянутую руку Укэ под своей мышкой и давит на локоть",
+        "Болевой на локоть – рука Укэ зажата под мышкой Тори",
         "Удержание поперёк груди Укэ"
       ],
       "c": 2,
@@ -45702,7 +45702,7 @@
     "sr": {
       "q": "Šta je 'repesaž' na džudo takmičenju?",
       "opts": [
-        "Dodatna runda u kojoj se bore takmičari koji su izgubili od finalista, a pobednici ulaze u bronzane borbe",
+        "Dodatna runda za takmičare koji su izgubili od finalista",
         "Prva runda protiv najslabijih takmičara",
         "Borba za treće mesto između poraženih finalista",
         "Dodatna borba za pobednika grupe"
@@ -45713,7 +45713,7 @@
     "en": {
       "q": "What is a 'repechage' at a judo competition?",
       "opts": [
-        "An extra round in which competitors who lost to the finalists fight, and the winners go on to the bronze-medal contests",
+        "An extra round for competitors who lost to the finalists",
         "A first round against the weakest competitors",
         "A contest for third place between the losing finalists",
         "An extra contest for the group winner"
@@ -45724,7 +45724,7 @@
     "de": {
       "q": "Was ist eine „Hoffnungsrunde“ (Repechage) bei einem Judo-Wettkampf?",
       "opts": [
-        "Eine zusätzliche Runde, in der die gegen die Finalisten unterlegenen Kämpfer antreten und deren Sieger in die Bronzekämpfe kommen",
+        "Eine Zusatzrunde für die gegen Finalisten Unterlegenen",
         "Die erste Runde gegen die schwächsten Wettkämpfer",
         "Ein Kampf um Platz drei zwischen den unterlegenen Finalisten",
         "Ein Zusatzkampf um den Gruppensieg"
@@ -45735,7 +45735,7 @@
     "fr": {
       "q": "Qu’est-ce que le « repêchage » dans une compétition de judo ?",
       "opts": [
-        "Un tour supplémentaire où combattent les compétiteurs battus par les finalistes, et dont les vainqueurs accèdent aux combats pour le bronze",
+        "Un tour supplémentaire pour les battus des finalistes",
         "Le premier tour contre les compétiteurs les plus faibles",
         "Le combat pour la troisième place entre les finalistes battus",
         "Un combat supplémentaire pour désigner le vainqueur du groupe"
@@ -45746,7 +45746,7 @@
     "es": {
       "q": "¿Qué es la 'repesca' en una competición de judo?",
       "opts": [
-        "Una ronda adicional en la que combaten los competidores que perdieron contra los finalistas y cuyos ganadores pasan a los combates por el bronce",
+        "Una ronda adicional para quienes perdieron ante los finalistas",
         "La primera ronda contra los competidores más débiles",
         "El combate por el tercer puesto entre los finalistas derrotados",
         "Un combate adicional para el ganador del grupo"
@@ -45757,7 +45757,7 @@
     "it": {
       "q": "Che cos'è il 'ripescaggio' in una gara di judo?",
       "opts": [
-        "Un turno aggiuntivo in cui combattono gli atleti battuti dai finalisti, e i vincitori accedono agli incontri per il bronzo",
+        "Un turno aggiuntivo per chi ha perso con i finalisti",
         "Il primo turno contro gli atleti più deboli",
         "Un incontro per il terzo posto tra i finalisti sconfitti",
         "Un incontro aggiuntivo per il vincitore del girone"
@@ -45768,7 +45768,7 @@
     "pt": {
       "q": "O que é a 'repescagem' em uma competição de judô?",
       "opts": [
-        "Rodada extra em que lutam os competidores que perderam para os finalistas, e os vencedores vão para as lutas pelo bronze",
+        "Uma rodada extra para quem perdeu para os finalistas",
         "Primeira rodada contra os competidores mais fracos",
         "Luta pelo terceiro lugar entre os finalistas derrotados",
         "Luta extra para decidir o vencedor do grupo"
@@ -45779,7 +45779,7 @@
     "ru": {
       "q": "Что такое «репешаж» на соревнованиях по дзюдо?",
       "opts": [
-        "Дополнительный раунд, в котором встречаются спортсмены, проигравшие финалистам, а победители выходят в схватки за бронзу",
+        "Дополнительный раунд для проигравших финалистам",
         "Первый раунд против самых слабых участников",
         "Схватка за третье место между проигравшими финалистами",
         "Дополнительная схватка за победу в группе"
@@ -49124,7 +49124,7 @@
       "opts": [
         "Dosudi Shido povređenom",
         "Diskvalifikuje oba takmičara",
-        "Prekine borbu i dozvoli da se krvarenje zaustavi i očisti pre nastavka",
+        "Prekine borbu dok se krvarenje ne zaustavi",
         "Nastavi borbu da ne gubi vreme"
       ],
       "c": 2,
@@ -49135,7 +49135,7 @@
       "opts": [
         "Awards a Shido to the injured competitor",
         "Disqualifies both competitors",
-        "Stops the contest and lets the bleeding be stopped and cleaned before continuing",
+        "Stops the contest until the bleeding is stopped",
         "Continues the contest so as not to lose time"
       ],
       "c": 2,
@@ -49146,7 +49146,7 @@
       "opts": [
         "Er gibt dem Verletzten ein Shido",
         "Er disqualifiziert beide Wettkämpfer",
-        "Er unterbricht den Kampf und lässt die Blutung stillen und säubern, bevor es weitergeht",
+        "Er unterbricht den Kampf, bis die Blutung gestillt ist",
         "Er lässt weiterkämpfen, um keine Zeit zu verlieren"
       ],
       "c": 2,
@@ -49157,7 +49157,7 @@
       "opts": [
         "Il donne un Shido au blessé",
         "Il disqualifie les deux compétiteurs",
-        "Il arrête le combat et laisse le temps d’arrêter et de nettoyer le saignement avant de reprendre",
+        "Il arrête le combat le temps d'arrêter le saignement",
         "Il continue le combat pour ne pas perdre de temps"
       ],
       "c": 2,
@@ -49168,7 +49168,7 @@
       "opts": [
         "Sanciona con Shido al lesionado",
         "Descalifica a los dos competidores",
-        "Interrumpe el combate y permite que se detenga y se limpie la hemorragia antes de continuar",
+        "Interrumpe el combate hasta detener la hemorragia",
         "Continúa el combate para no perder tiempo"
       ],
       "c": 2,
@@ -49179,7 +49179,7 @@
       "opts": [
         "Assegna uno Shido all'infortunato",
         "Squalifica entrambi gli atleti",
-        "Interrompe l'incontro e permette di fermare e pulire il sanguinamento prima di riprendere",
+        "Interrompe l'incontro finché il sanguinamento non si ferma",
         "Continua l'incontro per non perdere tempo"
       ],
       "c": 2,
@@ -49190,7 +49190,7 @@
       "opts": [
         "Aplica Shido ao lesionado",
         "Desclassifica os dois competidores",
-        "Interrompe a luta e permite que o sangramento seja estancado e limpo antes de continuar",
+        "Interrompe a luta até estancar o sangramento",
         "Continua a luta para não perder tempo"
       ],
       "c": 2,
@@ -49201,7 +49201,7 @@
       "opts": [
         "Назначает Шидо травмированному",
         "Дисквалифицирует обоих спортсменов",
-        "Прерывает схватку и даёт остановить и вытереть кровь перед продолжением",
+        "Прерывает схватку, пока кровь не остановят",
         "Продолжает схватку, чтобы не терять время"
       ],
       "c": 2,
