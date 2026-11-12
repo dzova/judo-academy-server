@@ -3142,13 +3142,13 @@
     "sr": {
       "q": "Šta je O-soto-gari?",
       "opts": [
-        "Spoljašnji podmet noge",
+        "Veliko spoljašnje košenje noge",
         "Unutrašnje bacanje",
         "Bacanje kukom gde Tori koristi kuk kao rotacionu tačku",
         "Bacanje ramenom"
       ],
       "c": 0,
-      "exp": "O-soto-gari ('veliki spoljašnji podmet') – podmećemo nogu spolja iza Ukeove noge i bacamo ga unazad. Klasika!"
+      "exp": "O-soto-gari ('veliko spoljašnje košenje') – kosimo nogu spolja iza Ukeove noge i bacamo ga unazad. Klasika!"
     },
     "en": {
       "q": "What is O-soto-gari?",
@@ -3225,7 +3225,7 @@
         "Бросок через плечо"
       ],
       "c": 0,
-      "exp": "О-сото-гари («большой наружный подхват») – подхватываешь ногу Укэ снаружи сзади и бросаешь его назад. Настоящая классика!"
+      "exp": "О-сото-гари («большая наружная подсечка») – подсекаешь ногу Укэ снаружи сзади и бросаешь его назад. Настоящая классика!"
     },
     "c": 0
   },
@@ -3237,13 +3237,13 @@
     "sr": {
       "q": "Šta je Ko-uchi-gari?",
       "opts": [
-        "Mali unutrašnji podmet",
+        "Malo unutrašnje košenje",
         "Veliki kuk",
         "Bacanje ramenom",
-        "Spoljašnje čišćenje"
+        "Spoljašnje pometanje"
       ],
       "c": 0,
-      "exp": "Ko-uchi-gari ('mali unutrašnji podmet') – podmećemo Ukeovu nogu iznutra kratkim, kompaktnim pokretom. Odlično za kombinacije!"
+      "exp": "Ko-uchi-gari ('malo unutrašnje košenje') – kosimo Ukeovu nogu iznutra kratkim, kompaktnim pokretom. Odlično za kombinacije!"
     },
     "en": {
       "q": "What is Ko-uchi-gari?",
@@ -3320,7 +3320,7 @@
         "Подсечка снаружи"
       ],
       "c": 0,
-      "exp": "Ко-ути-гари («малый внутренний подхват») – подхватываешь ногу Укэ изнутри компактным движением. Отлично подходит для комбинаций!"
+      "exp": "Ко-ути-гари («малая внутренняя подсечка») – подсекаешь ногу Укэ изнутри компактным движением. Отлично подходит для комбинаций!"
     },
     "c": 0
   },
@@ -3522,13 +3522,13 @@
     "sr": {
       "q": "Šta je 'Harai-goshi' i čime se razlikuje od Uchi-mate?",
       "opts": [
-        "Harai-goshi čisti spoljašnjom butinom, Uchi-mata podiže unutrašnjom butinom",
+        "Harai-goshi pometa spoljašnjom butinom, Uchi-mata podiže unutrašnjom butinom",
         "Harai-goshi je žrtveno bacanje, a Uchi-mata stojeće",
         "Harai koristi rame kao oslonac, Uchi-mata koristi kuk",
         "Harai koristi unutrašnju, a Uchi-mata spoljašnju butinu"
       ],
       "c": 0,
-      "exp": "Harai-goshi koristi spoljašnje čišćenje butinom, dok Uchi-mata podiže unutrašnjom butinom. Razlika je ključna za tajming i ulaz!"
+      "exp": "Harai-goshi koristi spoljašnje pometanje butinom, dok Uchi-mata podiže unutrašnjom butinom. Razlika je ključna za tajming i ulaz!"
     },
     "en": {
       "q": "What is 'Harai-goshi' and how does it differ from Uchi-mata?",
@@ -5042,13 +5042,13 @@
     "sr": {
       "q": "Šta je De-ashi-barai?",
       "opts": [
-        "Čišćenje iskoračene noge taman pre nego što se spusti i preuzme težinu",
-        "Unutrašnji podmet nogom od iznutra prema spolja",
+        "Pometanje iskoračene noge taman pre nego što se spusti i preuzme težinu",
+        "Unutrašnje košenje noge",
         "Bacanje kukom gde Tori rotira Ukea preko kukova",
         "Rameno bacanje gde Uke prelazi preko Torijevih ramena"
       ],
       "c": 0,
-      "exp": "De-ashi-barai ('čišćenje prednje noge') – brišemo Ukeovu nogu taman pre nego što preuzme težinu. Tajming je SVE!"
+      "exp": "De-ashi-barai ('pometanje prednje noge') – brišemo Ukeovu nogu taman pre nego što preuzme težinu. Tajming je SVE!"
     },
     "en": {
       "q": "What is De-ashi-barai?",
@@ -7322,7 +7322,7 @@
     "sr": {
       "q": "Šta je 'Ashi-waza'?",
       "opts": [
-        "Stojeće tehnike nogama kao što su podmeti, čišćenja i blokade",
+        "Stojeće tehnike nogama kao što su košenja, pometanja i blokade",
         "Sve džudo tehnike koje se izvode nogama dok si na podu",
         "Žrtvena bacanja nogama gde Tori pada na tatami",
         "Odbrambene tehnike korišćenjem nogu u džudo borbi"
@@ -22048,12 +22048,12 @@
       "q": "Kada se izvodi Okuri-ashi-harai?",
       "opts": [
         "Kada Uke klekne na jedno koleno",
-        "Kad se Uke kreće bočno – Tori kosi obe noge",
+        "Kad se Uke kreće bočno – Tori pometa obe noge",
         "Samo kada Uke stoji potpuno mirno",
         "Kada je Uke na leđima u parteru"
       ],
       "c": 1,
-      "exp": "Okuri-ashi-harai ('čišćenje obe noge'): dok se Uke kreće u stranu i noge mu se približavaju, Tori tabanom čisti obe noge u pravcu kretanja. Tehnika čistog tajminga!"
+      "exp": "Okuri-ashi-harai ('pometanje obe noge'): dok se Uke kreće u stranu i noge mu se približavaju, Tori tabanom pometa obe noge u pravcu kretanja. Tehnika čistog tajminga!"
     },
     "en": {
       "q": "When is Okuri-ashi-harai performed?",
@@ -22145,10 +22145,10 @@
         "Bacanje preko leđa sa hvatom za pojas",
         "Poluga na koleno u parteru",
         "Bacanje gde Tori pada na leđa",
-        "'Točak preko kolena' – blok Ukeovog kolena tabanom"
+        "Tori tabanom blokira Ukeovo koleno i okreće ga preko njega"
       ],
       "c": 3,
-      "exp": "Hiza-guruma ('točak preko kolena'): Tori stavlja taban na spoljnu stranu Ukeovog kolena kao osu i rukama ga rotira preko nje. Jedna od prvih Ashi-waza tehnika koje se uče."
+      "exp": "Hiza-guruma (hiza = koleno, guruma = točak): Tori stavlja taban na spoljnu stranu Ukeovog kolena kao osu i rukama ga rotira preko nje. Jedna od prvih Ashi-waza tehnika koje se uče."
     },
     "en": {
       "q": "What is Hiza-guruma?",
@@ -22156,7 +22156,7 @@
         "A back throw with a belt grip",
         "A knee lock in groundwork",
         "A throw where Tori falls on their back",
-        "'Knee wheel' – Tori blocks Uke's knee with the sole"
+        "Tori blocks Uke's knee with the sole and turns Uke over it"
       ],
       "c": 3,
       "exp": "Hiza-guruma ('knee wheel'): Tori places the sole on the outside of Uke's knee as an axis and turns Uke over it with the hands. One of the first Ashi-waza techniques taught."
@@ -22167,7 +22167,7 @@
         "Ein Rückenwurf mit Gürtelgriff",
         "Ein Kniehebel im Bodenkampf",
         "Ein Wurf, bei dem Tori auf den Rücken fällt",
-        "'Knierad' – Tori blockiert Ukes Knie mit der Fußsohle"
+        "Tori blockiert Ukes Knie mit der Fußsohle und dreht Uke darüber"
       ],
       "c": 3,
       "exp": "Hiza-guruma ('Knierad'): Tori setzt die Fußsohle als Drehachse an die Außenseite von Ukes Knie und dreht Uke mit den Händen darüber. Eine der ersten Ashi-waza-Techniken, die man lernt."
@@ -22178,7 +22178,7 @@
         "Une projection dans le dos avec saisie de ceinture",
         "Une clé de genou au sol",
         "Une projection où Tori tombe sur le dos",
-        "'Roue autour du genou' – Tori bloque le genou d'Uke du pied"
+        "Tori bloque le genou d'Uke avec la plante du pied et le fait tourner par-dessus"
       ],
       "c": 3,
       "exp": "Hiza-guruma ('roue autour du genou') : Tori place la plante du pied sur l'extérieur du genou d'Uke comme axe et le fait tourner par-dessus avec les mains. L'une des premières techniques d'Ashi-waza apprises."
@@ -22189,7 +22189,7 @@
         "Una proyección por la espalda con agarre al cinturón",
         "Una luxación de rodilla en el suelo",
         "Una proyección en la que Tori cae de espaldas",
-        "'Rueda sobre la rodilla': Tori bloquea la rodilla de Uke con la planta"
+        "Tori bloquea la rodilla de Uke con la planta del pie y lo hace girar sobre ella"
       ],
       "c": 3,
       "exp": "Hiza-guruma ('rueda sobre la rodilla'): Tori coloca la planta del pie en el exterior de la rodilla de Uke como eje y lo hace girar sobre ella con las manos. Una de las primeras técnicas de Ashi-waza que se aprenden."
@@ -22200,7 +22200,7 @@
         "Una proiezione sulla schiena con presa alla cintura",
         "Una leva al ginocchio a terra",
         "Una proiezione in cui Tori cade sulla schiena",
-        "'Ruota sul ginocchio' – Tori blocca il ginocchio di Uke col piede"
+        "Tori blocca il ginocchio di Uke con la pianta del piede e lo fa ruotare sopra"
       ],
       "c": 3,
       "exp": "Hiza-guruma ('ruota sul ginocchio'): Tori appoggia la pianta del piede all'esterno del ginocchio di Uke come asse e lo fa ruotare sopra con le mani. Una delle prime tecniche di Ashi-waza che si imparano."
@@ -22211,7 +22211,7 @@
         "Uma projeção pelas costas com pegada na faixa",
         "Uma chave de joelho no solo",
         "Uma projeção em que o Tori cai de costas",
-        "'Roda sobre o joelho' – o Tori bloqueia o joelho do Uke com o pé"
+        "O Tori bloqueia o joelho do Uke com a planta do pé e o gira por cima"
       ],
       "c": 3,
       "exp": "Hiza-guruma ('roda sobre o joelho'): o Tori coloca a planta do pé na parte externa do joelho do Uke como eixo e o gira por cima com as mãos. Uma das primeiras técnicas de Ashi-waza que se aprendem."
@@ -22222,7 +22222,7 @@
         "Бросок через спину с захватом пояса",
         "Болевой на колено в партере",
         "Бросок, при котором Тори падает на спину",
-        "«Колесо через колено» – Тори блокирует колено Укэ стопой"
+        "Тори блокирует колено Укэ подошвой и вращает его через него"
       ],
       "c": 3,
       "exp": "Хидза-гурума («колесо через колено»): Тори ставит подошву на внешнюю сторону колена Укэ как ось и руками проворачивает его через неё. Одна из первых техник Аси-вадза, которые изучают."
@@ -22619,7 +22619,7 @@
       "opts": [
         "Žrtveno bacanje – Tori obuhvati Ukea oko struka i pada unazad",
         "Bacanje unapred preko ramena sa jednom rukom",
-        "Čišćenje obe noge pri bočnom kretanju",
+        "Pometanje obe noge pri bočnom kretanju",
         "Držanje odozgo preko glave"
       ],
       "c": 0,
@@ -26989,7 +26989,7 @@
       "opts": [
         "Pometanje stopalom protiv noge koja korača napred",
         "Žrtveno bacanje u kom Tori pada unazad",
-        "Bacanje 'rameni točak' preko Torijevih ramena",
+        "Bacanje preko Torijevih ramena (vatrogasno nošenje)",
         "Gušenje s leđa"
       ],
       "c": 2,
@@ -27000,7 +27000,7 @@
       "opts": [
         "A foot sweep against the advancing leg",
         "A sacrifice throw where Tori falls backward",
-        "A 'shoulder wheel' throw over Tori's shoulders",
+        "A throw with Uke lifted across Tori's shoulders (fireman's carry)",
         "A choke applied from behind"
       ],
       "c": 2,
@@ -27011,7 +27011,7 @@
       "opts": [
         "Ein Fußfeger gegen das vorrückende Bein",
         "Ein Opferwurf, bei dem Tori nach hinten fällt",
-        "Ein 'Schulterrad'-Wurf über Toris Schultern",
+        "Ein Wurf mit Uke quer über Toris Schultern (Feuerwehrgriff)",
         "Ein Würgegriff von hinten"
       ],
       "c": 2,
@@ -27022,7 +27022,7 @@
       "opts": [
         "Un balayage de pied contre la jambe qui avance",
         "Une projection en sacrifice où Tori tombe en arrière",
-        "Une projection en 'roue d'épaule' par-dessus les épaules de Tori",
+        "Une projection avec Uke soulevé sur les épaules de Tori (portage de pompier)",
         "Un étranglement réalisé par derrière"
       ],
       "c": 2,
@@ -27033,7 +27033,7 @@
       "opts": [
         "Un barrido de pie contra la pierna que avanza",
         "Una proyección de sacrificio en la que Tori cae hacia atrás",
-        "Una proyección de 'rueda de hombro' sobre los hombros de Tori",
+        "Una proyección con Uke levantado sobre los hombros de Tori (transporte de bombero)",
         "Una estrangulación aplicada por la espalda"
       ],
       "c": 2,
@@ -27044,7 +27044,7 @@
       "opts": [
         "Una spazzata al piede contro la gamba che avanza",
         "Una proiezione di sacrificio in cui Tori cade all'indietro",
-        "Una proiezione a 'ruota di spalla' sulle spalle di Tori",
+        "Una proiezione con Uke sollevato sulle spalle di Tori (trasporto del pompiere)",
         "Uno strangolamento eseguito da dietro"
       ],
       "c": 2,
@@ -27055,7 +27055,7 @@
       "opts": [
         "Uma rasteira no pé da perna que avança",
         "Uma projeção de sacrifício em que o Tori cai para trás",
-        "Uma projeção de 'roda de ombro' sobre os ombros do Tori",
+        "Uma projeção com o Uke levantado sobre os ombros do Tori (carregamento de bombeiro)",
         "Um estrangulamento aplicado por trás"
       ],
       "c": 2,
@@ -27066,7 +27066,7 @@
       "opts": [
         "Подсечка по ноге, выходящей вперёд",
         "Бросок с падением, при котором Тори падает назад",
-        "Бросок «колесо через плечо» через плечи Тори",
+        "Бросок, при котором Укэ поднят на плечи Тори (переноска пожарным)",
         "Удушение сзади"
       ],
       "c": 2,
@@ -27367,18 +27367,18 @@
     "sr": {
       "q": "Šta je O-guruma?",
       "opts": [
-        "'Veliki točak': bacanje preko Torijeve ispružene noge",
+        "Tori ispruženom nogom preko Ukeovih bedara okreće Ukea",
         "Bacanje kukom koje podiže pomoću hvata za pojas",
         "Žrtveno bacanje u kom se gura pomoću obe noge",
         "Bacanje košenjem Ukeove unutrašnje noge"
       ],
       "c": 0,
-      "exp": "Tori ispruži jednu nogu preko Ukeovih bedara i okreće ga preko nje kao točak. Za to je potrebno precizno vučenje."
+      "exp": "O-guruma ('veliki točak'): Tori ispruži jednu nogu preko Ukeovih bedara i okreće ga preko nje kao točak oko osovine. Za to je potrebno precizno vučenje."
     },
     "en": {
       "q": "What is O-guruma?",
       "opts": [
-        "A 'large wheel' throw over Tori's straight leg",
+        "Tori's extended leg across Uke's thighs turns Uke over it",
         "A hip throw using the belt grip to lift",
         "A sacrifice throw using both feet to push",
         "A reaping throw to the inner leg of Uke"
@@ -27389,7 +27389,7 @@
     "de": {
       "q": "Was ist O-guruma?",
       "opts": [
-        "Ein 'großes Rad'-Wurf über Toris gestrecktes Bein",
+        "Toris gestrecktes Bein quer vor Ukes Oberschenkeln dreht Uke darüber",
         "Ein Hüftwurf, der mit dem Gürtelgriff hebt",
         "Ein Opferwurf, bei dem beide Füße schieben",
         "Ein Mähwurf gegen Ukes Innenbein"
@@ -27400,7 +27400,7 @@
     "fr": {
       "q": "Qu'est-ce que l'O-guruma ?",
       "opts": [
-        "Une projection en 'grande roue' par-dessus la jambe tendue de Tori",
+        "La jambe tendue de Tori en travers des cuisses d'Uke le fait tourner par-dessus",
         "Une projection de hanche utilisant la saisie de la ceinture pour soulever",
         "Une projection en sacrifice utilisant les deux pieds pour pousser",
         "Un fauchage de la jambe intérieure d'Uke"
@@ -27411,7 +27411,7 @@
     "es": {
       "q": "¿Qué es O-guruma?",
       "opts": [
-        "Una proyección de 'rueda grande' sobre la pierna estirada de Tori",
+        "La pierna estirada de Tori sobre los muslos de Uke lo hace girar por encima",
         "Una proyección de cadera que usa el agarre del cinturón para levantar",
         "Una proyección de sacrificio que empuja con ambos pies",
         "Una siega a la pierna interior de Uke"
@@ -27422,7 +27422,7 @@
     "it": {
       "q": "Cos'è l'O-guruma?",
       "opts": [
-        "Una proiezione a 'grande ruota' sopra la gamba tesa di Tori",
+        "La gamba tesa di Tori davanti alle cosce di Uke lo fa ruotare sopra di essa",
         "Una proiezione d'anca che usa la presa sulla cintura per sollevare",
         "Una proiezione di sacrificio che usa entrambi i piedi per spingere",
         "Una falciata alla gamba interna di Uke"
@@ -27433,7 +27433,7 @@
     "pt": {
       "q": "O que é O-guruma?",
       "opts": [
-        "Uma projeção de 'roda grande' sobre a perna esticada do Tori",
+        "A perna esticada do Tori atravessada nas coxas do Uke o gira por cima",
         "Uma projeção de quadril usando a pegada na faixa para levantar",
         "Uma projeção de sacrifício usando os dois pés para empurrar",
         "Uma projeção de ceifada na perna por dentro do Uke"
@@ -27444,7 +27444,7 @@
     "ru": {
       "q": "Что такое О-гурума?",
       "opts": [
-        "Бросок «большое колесо» через прямую ногу Тори",
+        "Вытянутая нога Тори поперёк бёдер Укэ вращает его через неё",
         "Бросок через бедро, где для подъёма используется захват за пояс",
         "Бросок с падением, где для толчка используются обе ноги",
         "Подхват по внутренней стороне ноги Укэ"
@@ -32213,12 +32213,12 @@
       "q": "Šta je Hane-goshi?",
       "opts": [
         "Bacanje kukom uz hvat za pojas",
-        "Bacanje 'opružni kuk' uz zamah nogom",
+        "Bacanje kukom uz odskok noge (hane = opruga)",
         "Pometanje pete",
         "Bacanje preko ramena jednom rukom"
       ],
       "c": 1,
-      "exp": "'Hane' znači opruga. Tori se okreće i zamahne nogom nagore i nazad da prebaci Ukea preko kuka."
+      "exp": "'Hane' znači opruga, odskok. Tori se okreće i oštro odbaci nogu nagore i nazad da prebaci Ukea preko kuka."
     },
     "en": {
       "q": "What is Hane-goshi?",
@@ -32307,18 +32307,18 @@
     "sr": {
       "q": "Šta je Ashi-guruma?",
       "opts": [
-        "Bacanje 'točak nogom' preko Torijeve noge",
+        "Tori ispruženom nogom blokira Ukeovu nogu i okreće ga",
         "Bacanje kukom uz hvat za pojas",
         "Žrtveno bacanje na leđa",
         "Dvostruko pometanje stopala ka spolja"
       ],
       "c": 0,
-      "exp": "'Ashi' znači noga, a 'guruma' točak. Uke se prevrće preko Torijeve ispružene noge kao točak."
+      "exp": "'Ashi' znači noga, a 'guruma' točak. Torijeva ispružena noga je osovina oko koje se Uke okreće kao točak."
     },
     "en": {
       "q": "What is Ashi-guruma?",
       "opts": [
-        "A 'leg wheel' throw over Tori's leg",
+        "Tori blocks Uke's leg with an extended leg and turns Uke",
         "A hip throw using the belt grip",
         "A sacrifice throw onto the back",
         "A double foot sweep to the outside"
@@ -32329,7 +32329,7 @@
     "de": {
       "q": "Was ist Ashi-guruma?",
       "opts": [
-        "Ein 'Beinrad'-Wurf über Toris Bein",
+        "Tori blockiert Ukes Bein mit gestrecktem Bein und dreht ihn",
         "Ein Hüftwurf mit Gürtelgriff",
         "Ein Opferwurf auf den Rücken",
         "Ein doppelter Fußfeger nach außen"
@@ -32340,7 +32340,7 @@
     "fr": {
       "q": "Qu'est-ce que l'Ashi-guruma ?",
       "opts": [
-        "Une projection en 'roue de jambe' par-dessus la jambe de Tori",
+        "Tori bloque la jambe d'Uke avec sa jambe tendue et le fait tourner",
         "Une projection de hanche avec la saisie de la ceinture",
         "Une projection en sacrifice sur le dos",
         "Un double balayage de pied vers l'extérieur"
@@ -32351,7 +32351,7 @@
     "es": {
       "q": "¿Qué es Ashi-guruma?",
       "opts": [
-        "Una proyección de 'rueda de pierna' sobre la pierna de Tori",
+        "Tori bloquea la pierna de Uke con la pierna estirada y lo hace girar",
         "Una proyección de cadera con agarre del cinturón",
         "Una proyección de sacrificio sobre la espalda",
         "Un doble barrido de pie hacia el exterior"
@@ -32362,7 +32362,7 @@
     "it": {
       "q": "Cos'è l'Ashi-guruma?",
       "opts": [
-        "Una proiezione a 'ruota di gamba' sopra la gamba di Tori",
+        "Tori blocca la gamba di Uke con la gamba tesa e lo fa ruotare",
         "Una proiezione d'anca con la presa sulla cintura",
         "Una proiezione di sacrificio sulla schiena",
         "Una doppia spazzata al piede verso l'esterno"
@@ -32373,7 +32373,7 @@
     "pt": {
       "q": "O que é Ashi-guruma?",
       "opts": [
-        "Uma projeção de 'roda de perna' sobre a perna do Tori",
+        "O Tori bloqueia a perna do Uke com a perna esticada e o gira",
         "Uma projeção de quadril usando a pegada na faixa",
         "Uma projeção de sacrifício nas costas",
         "Uma rasteira dupla para fora"
@@ -32384,7 +32384,7 @@
     "ru": {
       "q": "Что такое Аси-гурума?",
       "opts": [
-        "Бросок «колесо через ногу» через ногу Тори",
+        "Тори блокирует ногу Укэ вытянутой ногой и вращает его",
         "Бросок через бедро с захватом за пояс",
         "Бросок с падением на спину",
         "Двойная подсечка снаружи"
@@ -32405,10 +32405,10 @@
         "Zadržavanje sa Ukeove strane",
         "Gušenje s leđa",
         "Žrtveno bacanje na leđa",
-        "Bacanje 'točak kukom' uz hvat oko vrata"
+        "Tori obuhvata Ukeov vrat i okreće ga preko kuka"
       ],
       "c": 3,
-      "exp": "'Koshi' znači kuk, a 'guruma' točak. Tori stavi ruku oko Ukeovog vrata i prevrne ga preko kuka."
+      "exp": "'Koshi' znači kuk, a 'guruma' točak. Tori stavi ruku oko Ukeovog vrata i okreće ga preko kuka, kao točak oko osovine."
     },
     "en": {
       "q": "What is Koshi-guruma?",
@@ -32416,7 +32416,7 @@
         "A hold from the side of Uke",
         "A choke applied from behind",
         "A sacrifice throw onto the back",
-        "A 'hip wheel' throw with a neck grip"
+        "Tori hooks an arm around Uke's neck and rolls Uke over the hip"
       ],
       "c": 3,
       "exp": "'Koshi' means hip and 'guruma' means wheel. Tori puts an arm around Uke's neck and rolls them over the hip."
@@ -32427,7 +32427,7 @@
         "Ein Haltegriff von der Seite",
         "Ein Würgegriff von hinten",
         "Ein Opferwurf auf den Rücken",
-        "Ein 'Hüftrad'-Wurf mit Nackengriff"
+        "Tori legt einen Arm um Ukes Nacken und rollt Uke über die Hüfte"
       ],
       "c": 3,
       "exp": "'Koshi' bedeutet Hüfte und 'guruma' Rad. Tori legt einen Arm um Ukes Nacken und rollt Uke über die Hüfte."
@@ -32438,7 +32438,7 @@
         "Une immobilisation par le côté d'Uke",
         "Un étranglement réalisé par derrière",
         "Une projection en sacrifice sur le dos",
-        "Une projection en 'roue de hanche' avec une saisie du cou"
+        "Tori passe un bras autour du cou d'Uke et le fait rouler sur la hanche"
       ],
       "c": 3,
       "exp": "'Koshi' signifie hanche et 'guruma' signifie roue. Tori passe un bras autour du cou d'Uke et le fait rouler par-dessus sa hanche."
@@ -32449,7 +32449,7 @@
         "Una inmovilización desde el costado de Uke",
         "Una estrangulación aplicada por detrás",
         "Una proyección de sacrificio sobre la espalda",
-        "Una proyección de 'rueda de cadera' con agarre del cuello"
+        "Tori pasa un brazo por el cuello de Uke y lo hace rodar sobre la cadera"
       ],
       "c": 3,
       "exp": "'Koshi' significa cadera y 'guruma' significa rueda. Tori pasa un brazo alrededor del cuello de Uke y lo hace rodar sobre la cadera."
@@ -32460,7 +32460,7 @@
         "Un'immobilizzazione di lato rispetto a Uke",
         "Uno strangolamento eseguito da dietro",
         "Una proiezione di sacrificio sulla schiena",
-        "Una proiezione a 'ruota d'anca' con la presa al collo"
+        "Tori mette un braccio attorno al collo di Uke e lo fa rotolare sull'anca"
       ],
       "c": 3,
       "exp": "'Koshi' significa anca e 'guruma' significa ruota. Tori mette un braccio attorno al collo di Uke e lo fa rotolare sopra l'anca."
@@ -32471,7 +32471,7 @@
         "Uma imobilização pelo lado do Uke",
         "Um estrangulamento aplicado por trás",
         "Uma projeção de sacrifício nas costas",
-        "Uma projeção de 'roda de quadril' com pegada no pescoço"
+        "O Tori passa um braço em volta do pescoço do Uke e o faz rolar sobre o quadril"
       ],
       "c": 3,
       "exp": "'Koshi' significa quadril e 'guruma' significa roda. O Tori passa um braço em volta do pescoço do Uke e o faz rolar sobre o quadril."
@@ -32482,7 +32482,7 @@
         "Удержание сбоку от Укэ",
         "Удушение сзади",
         "Бросок с падением на спину",
-        "Бросок «колесо через бедро» с захватом шеи"
+        "Тори обнимает шею Укэ рукой и перекатывает его через бедро"
       ],
       "c": 3,
       "exp": "«Коси» значит «бедро», а «гурума» – «колесо». Тори обнимает шею Укэ рукой и перекатывает его через бедро."
@@ -41332,7 +41332,7 @@
     "sr": {
       "q": "Šta je Waki-gatame?",
       "opts": [
-        "Bacanje podmetom noge spolja",
+        "Bacanje košenjem noge spolja",
         "Gušenje reverom sa ukrštenim rukama",
         "Poluga na lakat – Ukeova ruka stegnuta uz Torijevo pazuho",
         "Zadržavanje preko Ukeovih grudi"
